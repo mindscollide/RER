@@ -6,7 +6,9 @@ import "./ar.css";
 import { logoutAllTabs } from "./store/actions/Auth_Sign_Out";
 import moment from "moment";
 import "./assets/font-icons/font-icons.css";
+import Header from "./components/layout/header/Header";
 const App = () => {
+  <Header />;
   useEffect(() => {
     logoutAllTabs();
   }, []);
