@@ -1,38 +1,85 @@
-.App {
-  text-align: center;
+/* this is for the whole body of project */
+body {
+  background: #f4f4f4;
+  color: #45494d;
+  font-family: "Montserrat", sans-serif;
+  font-size: 14px;
+  font-weight: 500;
+  overflow-x: hidden;
+  height: 100%;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+/* this is the header css  */
+.site-header {
+  padding: 15px 0px;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+.page-gutter {
+  padding: 0 15px;
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+.lang-dd {
+  position: relative;
 }
 
-.App-link {
-  color: #61dafb;
+.lang-dd:after {
+  font-family: "custom-icon" !important;
+  font-style: normal;
+  font-weight: normal;
+  font-variant: normal;
+  text-transform: none;
+  line-height: 1;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  position: absolute;
+  top: 50%;
+  transform: translate(0, -50%);
+  content: "\e98e";
+  display: block;
+  right: 0;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.lang-dd select {
+  background: transparent !important;
+  border: 0px;
+}
+
+.lang-dd .select2-selection__arrow {
+  display: none;
+}
+
+.lang-dd .select2-selection {
+  background: transparent !important;
+  text-align: right;
+}
+
+.lang-dd .select2-selection .select2-selection__rendered {
+  font-size: 14px !important;
+  font-weight: bold !important;
+}
+
+.user-ddd {
+  background: #ffffff;
+  border-radius: 4px;
+  height: 48px;
+  padding: 1px 0px;
+  border-radius: 25px;
+  box-shadow: 10px 10px 40px rgb(0 0 0 / 5%);
+  padding-left: 8px;
+}
+
+.user-dd .user-name {
+  display: inline-block;
+  background: transparent !important;
+}
+
+.user-dd .user-thumb {
+  width: 40px;
+  display: inline-block;
+  transform: translate(0px, 0px);
+}
+
+.button-background {
+  background: transparent;
+  border: none;
 }

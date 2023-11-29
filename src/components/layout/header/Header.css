@@ -1,0 +1,80 @@
+/* styles.css or your preferred stylesheet file */
+
+/* styles.css */
+
+.header-inner {
+  display: flex;
+  align-items: center;
+}
+
+.site-logo a {
+  text-decoration: none;
+}
+
+.site-logo img {
+  width: 110px;
+  height: auto;
+}
+
+.ms-auto {
+  margin-left: auto;
+}
+
+.d-flex {
+  display: flex;
+}
+
+.align-items-center {
+  align-items: center;
+}
+
+.custom-width {
+  min-width: 80px;
+  max-width: 200px;
+}
+
+.me-3 {
+  margin-right: 1rem;
+}
+
+.user-dd {
+  display: flex;
+  align-items: center;
+  padding-left: 0.5rem;
+}
+
+.user-name {
+  max-width: 100px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.user-thumb img {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+}
+
+.dropdown-menu {
+  position: absolute;
+  inset: 0px 0px auto auto;
+  margin: 0px;
+  transform: translate(0px, 46px);
+}
+
+.dropdown-menu.show {
+  display: block;
+}
+
+.dropdown-item {
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.user-dd .dropdown-menu {
+  /* Add any styles specific to the dropdown menu here */
+}
+
+/* Add any other styles as needed */
