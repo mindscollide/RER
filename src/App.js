@@ -1,27 +1,16 @@
-import logo from "./logo.svg";
+import React, { useEffect } from "react";
 import "./App.css";
-import Header from "./components/layout/header/Header";
-
-function App() {
-  return (
-    <div className="App">
-      {/* <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header> */}
-      <Header />
-    </div>
-  );
-}
+import "./Fonts.css";
+import "./fr.css";
+import "./ar.css";
+import { logoutAllTabs } from "./store/actions/Auth_Sign_Out";
+import moment from "moment";
+import "./assets/font-icons/font-icons.css";
+const App = () => {
+  useEffect(() => {
+    logoutAllTabs();
+  }, []);
+  moment.tz.setDefault("America/New_York");
+};
 
 export default App;
