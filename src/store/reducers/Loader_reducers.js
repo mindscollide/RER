@@ -9,7 +9,7 @@ const loader_Reducers = (state = initialState, action) => {
     case actions.SET_LOADER_STATES: {
       return {
         ...state,
-        Loading: actions.response,
+        Loading: action.response,
       };
     }
     default:
