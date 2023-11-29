@@ -1,5 +1,4 @@
 import React from "react";
-// import "./Page_404.css";
 import { useTranslation } from "react-i18next";
 
 const NotFound = () => {
