@@ -8,7 +8,7 @@ input[type="checkbox"][disabled] + span:after,
 }
 
 .ant-checkbox-checked .ant-checkbox-inner {
-  background: linear-gradient(to left, #49dbdb 0%, #6172d6 100%);
+  background: #0d6efd;
   border: none !important;
   display: flex;
   justify-content: center;
@@ -17,7 +17,7 @@ input[type="checkbox"][disabled] + span:after,
 }
 
 body[dir="rtl"] .ant-checkbox-checked .ant-checkbox-inner {
-  background: linear-gradient(to right, #49dbdb 0%, #6172d6 100%);
+  background: #0d6efd;
   border: none !important;
   display: flex;
   justify-content: center;
