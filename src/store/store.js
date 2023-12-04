@@ -6,14 +6,14 @@ import * as actions from "./action_types";
 // No need to import combineReducers
 
 const rootReducer = (state, action) => {
-    if (action.type === actions.SIGN_OUT) {
-      return undefined; // Reset the entire state
-    }
-    return {
-      ...state,
-      Loading: loader_Reducers(state?.Loading, action),
-    };
+  if (action.type === actions.SIGN_OUT) {
+    return undefined; // Reset the entire state
+  }
+  return {
+    ...state,
+    Loading: loader_Reducers(state?.Loading, action),
   };
+};
 
 const store = configureStore({
   reducer: rootReducer,
