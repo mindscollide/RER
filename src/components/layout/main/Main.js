@@ -15,15 +15,7 @@ const Main = () => {
       <Row>
         <Col lg={12} md={12} sm={12}>
           <Row>
-            <Col
-              sm={12}
-              md={12}
-              lg={12}
-              //   style={{
-              //     width: "100%",
-              //   }}
-              //   className="d-flex gap-4"
-            >
+            <Col sm={12} md={12} lg={12} className="d-flex gap-4">
               <Sidebar />
               <Outlet />
             </Col>
