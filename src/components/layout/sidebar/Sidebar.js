@@ -1,16 +1,36 @@
 // Import necessary components from Ant Design
+import React, { useState } from "react";
 import { Layout, Menu } from "antd";
 import "./Sidebar.css";
 
 const { Sider } = Layout;
 
 const Sidebar = () => {
+  const [openKeys, setOpenKeys] = useState([]);
+
+  const handleOpenChange = (keys) => {
+    // Ensure only one submenu is open at a time
+    if (keys.length > 0) {
+      setOpenKeys([keys[keys.length - 1]]);
+    } else {
+      setOpenKeys([]);
+    }
+  };
   return (
-    <Sider width={250} className="site-layout-background">
+    <Sider
+      width={250}
+      className="site-layout-background"
+      style={{
+        position: "fixed",
+        height: "86%", // Set the total height to 86%
+        background: "#fff", // White background color
+      }}
+    >
       <Menu
         mode="inline"
         defaultSelectedKeys={["1"]}
-        defaultOpenKeys={["sub1"]}
+        openKeys={openKeys}
+        onOpenChange={handleOpenChange}
         style={{
           height: "100%",
           borderTopRightRadius: "10px",

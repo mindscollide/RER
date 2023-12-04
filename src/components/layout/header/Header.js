@@ -1,5 +1,6 @@
 import React, { useState, useRef, useEffect } from "react";
 import "./Header.css";
+import { LanguageSelector } from "../../elements";
 import imageProfile from "../../../assets/images/profile3.png";
 import { Navbar, Container, Nav, NavDropdown, Dropdown } from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
@@ -49,29 +50,7 @@ const Header = () => {
               className={`custom-dropdown ${dropdownVisible ? "open" : ""}`}
               onClick={handleTitleClick}
             >
-              <span
-                className={`custom-dropdown-title ${
-                  selectedLanguage === "En" ? "english" : "arabic"
-                }`}
-              >
-                {selectedLanguage === "En" ? "English" : "عربى"}
-              </span>
-              {dropdownVisible && (
-                <div className="custom-dropdown-content">
-                  <span
-                    className={selectedLanguage === "En" ? "english" : "arabic"}
-                    onClick={() => handleLanguageSelect("En")}
-                  >
-                    English
-                  </span>
-                  <span
-                    className={selectedLanguage === "Ar" ? "english" : "arabic"}
-                    onClick={() => handleLanguageSelect("Ar")}
-                  >
-                    عربى
-                  </span>
-                </div>
-              )}
+              <LanguageSelector dropdownVisible={dropdownVisible} />
             </div>
             <i className="icon-globe"></i>
             {/* Language Dropdown */}
