@@ -18,7 +18,7 @@ const BranchAdmin = () => {
         </Row>
         <Row>
           <Col lg={12} md={12} sm={12}>
-            <Paper></Paper>
+            <Paper className="Branch-Admin-paper"></Paper>
           </Col>
         </Row>
       </section>
