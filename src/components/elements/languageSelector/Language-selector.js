@@ -1,24 +1,24 @@
 import React from "react";
 import { useEffect, useState, useRef } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import LanguageIcon from "../../../assets/images/Language.svg";
-import LanguageArrowDown from "../../../assets/images/New folder/LanguaugeSelector_Down.svg";
-import LanguageArrowUp from "../../../assets/images/New folder/LanguaugeSelector_Up.svg";
-import LanguageArrowDownBlack from "../../../assets/images/New folder/Language_ArrowDown.svg";
-import LanguageArrowUpBlack from "../../../assets/images/New folder/Language_ArrowUp.svg";
-import LanguageBlack from "../../../assets/images/Language_Black.svg";
-import styles from "./Language-selector.module.css";
+// import LanguageIcon from "../../../assets/images/Language.svg";
+// import LanguageArrowDown from "../../../assets/images/New folder/LanguaugeSelector_Down.svg";
+// import LanguageArrowUp from "../../../assets/images/New folder/LanguaugeSelector_Up.svg";
+// import LanguageArrowDownBlack from "../../../assets/images/New folder/Language_ArrowDown.svg";
+// import LanguageArrowUpBlack from "../../../assets/images/New folder/Language_ArrowUp.svg";
+// import LanguageBlack from "../../../assets/images/Language_Black.svg";
+// import styles from "./Language-selector.module.css";
 import { useTranslation } from "react-i18next";
 import { useLocation, useNavigate } from "react-router-dom";
-import {
-  getAllLanguages,
-  getSelectedLanguage,
-  changeNewLanguage,
-} from "../../../store/actions/Language_actions";
+// import {
+//   getAllLanguages,
+//   getSelectedLanguage,
+//   changeNewLanguage,
+// } from "../../../store/actions/Language_actions";
 import moment from "moment";
 
-const LanguageSelector = () => {
-//   const { LanguageReducer } = useSelector((state) => state);
+const LanguageSelector = ({ dropdownVisible }) => {
+  //   const { LanguageReducer } = useSelector((state) => state);
   const navigate = useNavigate();
   const dispatch = useDispatch();
   let currentUserID = Number(localStorage.getItem("userID"));
@@ -45,57 +45,57 @@ const LanguageSelector = () => {
       currentUserID !== 0
     ) {
       let data = { UserID: currentUserID };
-    //   dispatch(getSelectedLanguage(data, navigate, t));
+      //   dispatch(getSelectedLanguage(data, navigate, t));
     }
   }, []);
 
-//   useEffect(() => {
-//     if (
-//       LanguageReducer.AllLanguagesData !== null &&
-//       LanguageReducer.AllLanguagesData !== undefined &&
-//       LanguageReducer.AllLanguagesData.length !== 0
-//     ) {
-//       let newValues = [];
-//       LanguageReducer.AllLanguagesData.map((langValues, index) => {
-//         newValues.push({
-//           languageTitle:
-//             langValues.systemSupportedLanguageID === 1
-//               ? t("English")
-//               : langValues.systemSupportedLanguageID === 2
-//               ? t("Arabic")
-//               : langValues.systemSupportedLanguageID === 3
-//               ? t("French")
-//               : "",
-//           systemSupportedLanguageID: langValues.systemSupportedLanguageID,
-//         });
-//       });
+  //   useEffect(() => {
+  //     if (
+  //       LanguageReducer.AllLanguagesData !== null &&
+  //       LanguageReducer.AllLanguagesData !== undefined &&
+  //       LanguageReducer.AllLanguagesData.length !== 0
+  //     ) {
+  //       let newValues = [];
+  //       LanguageReducer.AllLanguagesData.map((langValues, index) => {
+  //         newValues.push({
+  //           languageTitle:
+  //             langValues.systemSupportedLanguageID === 1
+  //               ? t("English")
+  //               : langValues.systemSupportedLanguageID === 2
+  //               ? t("Arabic")
+  //               : langValues.systemSupportedLanguageID === 3
+  //               ? t("French")
+  //               : "",
+  //           systemSupportedLanguageID: langValues.systemSupportedLanguageID,
+  //         });
+  //       });
 
-//       setLanguages(newValues);
-//     }
-//   }, [LanguageReducer.AllLanguagesData]);
+  //       setLanguages(newValues);
+  //     }
+  //   }, [LanguageReducer.AllLanguagesData]);
 
-//   useEffect(() => {
-//     if (
-//       LanguageReducer.SetLanguageData !== null &&
-//       LanguageReducer.SetLanguageData !== undefined &&
-//       LanguageReducer.SetLanguageData.length !== 0
-//     ) {
-//       setSelectedLanguage({
-//         ...selectedLanguage,
-//         systemSupportedLanguageID:
-//           LanguageReducer.SetLanguageData.systemSupportedLanguageID,
-//         languageTitle: LanguageReducer.SetLanguageData.languageTitle,
-//         code:
-//           LanguageReducer.SetLanguageData.systemSupportedLanguageID === 1
-//             ? "en"
-//             : LanguageReducer.SetLanguageData.systemSupportedLanguageID === 2
-//             ? "ar"
-//             : LanguageReducer.SetLanguageData.systemSupportedLanguageID === 3
-//             ? "fr"
-//             : "",
-//       });
-//     }
-//   }, [LanguageReducer.SetLanguageData]);
+  //   useEffect(() => {
+  //     if (
+  //       LanguageReducer.SetLanguageData !== null &&
+  //       LanguageReducer.SetLanguageData !== undefined &&
+  //       LanguageReducer.SetLanguageData.length !== 0
+  //     ) {
+  //       setSelectedLanguage({
+  //         ...selectedLanguage,
+  //         systemSupportedLanguageID:
+  //           LanguageReducer.SetLanguageData.systemSupportedLanguageID,
+  //         languageTitle: LanguageReducer.SetLanguageData.languageTitle,
+  //         code:
+  //           LanguageReducer.SetLanguageData.systemSupportedLanguageID === 1
+  //             ? "en"
+  //             : LanguageReducer.SetLanguageData.systemSupportedLanguageID === 2
+  //             ? "ar"
+  //             : LanguageReducer.SetLanguageData.systemSupportedLanguageID === 3
+  //             ? "fr"
+  //             : "",
+  //       });
+  //     }
+  //   }, [LanguageReducer.SetLanguageData]);
 
   const handleChangeLocale = (lang) => {
     setLanguageDropdown(false);
@@ -161,105 +161,44 @@ const LanguageSelector = () => {
     };
   }, [languageDropdown]);
 
-  useEffect(() => {
-    if (currentLanguage === "ar") {
-      document.body.dir = "rtl";
-      i18n.changeLanguage("ar");
-    } else if (currentLanguage === "fr") {
-      document.body.dir = "ltr";
-      i18n.changeLanguage("fr");
-    } else {
-      document.body.dir = "ltr";
-      i18n.changeLanguage("en");
-    }
-  }, [currentLanguage]);
+  // useEffect(() => {
+  //   if (currentLanguage === "ar") {
+  //     document.body.dir = "rtl";
+  //     i18n.changeLanguage("ar");
+  //   } else if (currentLanguage === "fr") {
+  //     document.body.dir = "ltr";
+  //     i18n.changeLanguage("fr");
+  //   } else {
+  //     document.body.dir = "ltr";
+  //     i18n.changeLanguage("en");
+  //   }
+  // }, [currentLanguage]);
 
   return (
-    <section
-      className="position-relative"
-      ref={languageref}
-      onClick={() => setLanguageDropdown(!languageDropdown)}
-    >
+    <section>
       <span
-        className={
-          location.pathname.includes("/DisKus/") ||
-          location.pathname.includes("/Diskus/") ||
-          location.pathname.includes("/paymentForm") ||
-          location.pathname.includes("/signuporganization") ||
-          location.pathname.includes("/Diskus/Admin")
-            ? "text-white d-flex gap-2 align-items-center position-relative cursor-pointer"
-            : "text-black d-flex gap-2 align-items-center position-relative cursor-pointer"
-        }
+        className={`custom-dropdown-title ${
+          selectedLanguage === "En" ? "english" : "arabic"
+        }`}
       >
-        <img
-          src={
-            location.pathname.includes("/DisKus/") ||
-            location.pathname.includes("/Diskus/") ||
-            location.pathname.includes("/paymentForm") ||
-            location.pathname.includes("/signuporganization") ||
-            location.pathname.includes("/Diskus/Admin")
-              ? LanguageIcon
-              : LanguageBlack
-          }
-          alt=""
-          draggable="false"
-        />
-        {/* {selectedLanguage.languageTitle} */}
-        {currentLanguage === "en"
-          ? t("English")
-          : currentLanguage === "ar"
-          ? t("Arabic")
-          : currentLanguage === "fr"
-          ? t("French")
-          : t("English")}
-        {languageDropdown ? (
-          <img
-            src={
-              location.pathname.includes("/DisKus") ||
-              location.pathname.includes("/Diskus")
-                ? LanguageArrowUp
-                : LanguageArrowUpBlack
-            }
-            onClick={() => setLanguageDropdown(!languageDropdown)}
-            alt=""
-            draggable="false"
-          />
-        ) : (
-          <img
-            src={
-              location.pathname.includes("/DisKus") ||
-              location.pathname.includes("/Diskus")
-                ? LanguageArrowDown
-                : LanguageArrowDownBlack
-            }
-            onClick={() => setLanguageDropdown(!languageDropdown)}
-            alt=""
-            draggable="false"
-          />
-        )}
+        {selectedLanguage === "En" ? "English" : "عربى"}
       </span>
-      <div
-        className={
-          !languageDropdown
-            ? styles["language_options"]
-            : styles["language_options_active"]
-        }
-      >
-        {languages.length > 0 &&
-          languages.map((data, index) => {
-            return (
-              <span
-                className="cursor-pointer"
-                onClick={() =>
-                  handleChangeLocale(data.systemSupportedLanguageID)
-                }
-                key={index}
-              >
-                {data.languageTitle}
-              </span>
-            );
-          })}
-      </div>
+      {dropdownVisible && (
+        <div className="custom-dropdown-content">
+          <span
+            className={selectedLanguage === "En" ? "english" : "arabic"}
+            onClick={() => handleChangeLocale(2)}
+          >
+            English
+          </span>
+          <span
+            className={selectedLanguage === "Ar" ? "english" : "arabic"}
+            onClick={() => handleChangeLocale(1)}
+          >
+            عربى
+          </span>
+        </div>
+      )}
     </section>
   );
 };
