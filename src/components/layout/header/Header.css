@@ -1,0 +1,262 @@
+/* styles.css or your preferred stylesheet file */
+
+/* styles.css */
+
+.header-inner {
+  display: flex;
+  align-items: center;
+}
+
+.site-logo a {
+  text-decoration: none;
+}
+
+.site-logo img {
+  width: 110px;
+  height: auto;
+}
+
+.ms-auto {
+  margin-left: auto;
+}
+
+.d-flex {
+  display: flex;
+}
+
+.align-items-center {
+  align-items: center;
+}
+
+.custom-width {
+  min-width: 80px;
+  max-width: 200px;
+}
+
+.me-3 {
+  margin-right: 1rem;
+}
+
+.user-dd {
+  display: flex;
+  align-items: center;
+  background: #ffffff;
+  border-radius: 4px;
+  height: 48px;
+  padding: 1px 0px;
+  border-radius: 25px;
+  box-shadow: 10px 10px 40px rgb(0 0 0 / 5%);
+}
+
+.user-name {
+  max-width: 100px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.user-thumb img {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+}
+
+.dropdown-menu {
+  position: absolute;
+  inset: 0px 0px auto auto;
+  margin: 0px;
+  transform: translate(0px, 46px);
+}
+
+.dropdown-menu.show {
+  display: block;
+}
+
+.dropdown-item {
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.user-dd .dropdown-menu {
+  /* Add any styles specific to the dropdown menu here */
+}
+
+/* Add any other styles as needed */
+
+/* this is the header css  */
+.site-header {
+  padding: 15px 0px;
+}
+
+.page-gutter {
+  padding: 0 15px;
+}
+
+.lang-dd {
+  position: relative;
+}
+
+.lang-dd:after {
+  font-family: "custom-icon" !important;
+  font-style: normal;
+  font-weight: normal;
+  font-variant: normal;
+  text-transform: none;
+  line-height: 1;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  position: absolute;
+  top: 50%;
+  transform: translate(0, -50%);
+  content: "\e98e";
+  display: block;
+  right: 0;
+}
+
+.lang-dd select {
+  background: transparent !important;
+  border: 0px;
+}
+
+.lang-dd .select2-selection__arrow {
+  display: none;
+}
+
+.lang-dd .select2-selection {
+  background: transparent !important;
+  text-align: right;
+}
+
+.lang-dd .select2-selection .select2-selection__rendered {
+  font-size: 14px !important;
+  font-weight: bold !important;
+}
+
+.user-ddd {
+  background: #ffffff;
+  border-radius: 4px;
+  height: 48px;
+  padding: 1px 0px;
+  border-radius: 25px;
+  box-shadow: 10px 10px 40px rgb(0 0 0 / 5%);
+  padding-left: 8px;
+}
+
+.user-dd .user-name {
+  display: inline-block;
+  background: transparent !important;
+}
+
+.user-dd .user-thumb {
+  width: 40px;
+  display: inline-block;
+  transform: translate(0px, 0px);
+}
+
+.user-dd .dropdown-menu {
+  margin-top: 0; /* Adjust the margin-top as needed */
+}
+
+.user-dd .dropdown-item {
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
+}
+
+.dropdown-menu[data-bs-popper] {
+  top: 10px !important;
+  left: 0;
+  margin-top: var(--bs-dropdown-spacer);
+}
+
+.button-background {
+  background: transparent;
+  border: none;
+}
+
+.navbar-nav .nav-link .nav-link-caret {
+  display: none;
+}
+
+.dropdown-toggle::after {
+  display: none !important;
+}
+
+.rounded-circle {
+  border-radius: 50% !important;
+}
+
+.img-fluid {
+  max-width: 100%;
+  height: auto;
+}
+
+/* For header language drop down start */
+.custom-dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+.custom-dropdown-title {
+  cursor: pointer;
+  padding: 15px;
+}
+
+.custom-dropdown-content {
+  display: none;
+  position: absolute;
+  border-top: none;
+}
+
+.custom-dropdown-content span {
+  display: block;
+  padding: 10px;
+  color: white; /* Text color for options */
+  text-align: center;
+  text-decoration: none;
+}
+
+.custom-dropdown-content span:hover {
+  background-color: #004990; /* Hover background color for options */
+  color: #ffffff;
+}
+
+.custom-dropdown.open .custom-dropdown-content {
+  display: block;
+}
+
+/* Styles for English */
+.custom-dropdown-title .english {
+  background-color: #004990; /* Selected background color */
+  color: #ffffff; /* Text color for selected */
+}
+
+.custom-dropdown-content .english {
+  padding: 8px 15px;
+  background-color: #dddddd; /* Non-selected background color */
+  color: #45494d; /* Text color for non-selected */
+}
+
+.custom-dropdown-content .english:hover {
+  background-color: #004990; /* Hover background color for non-selected */
+  color: #ffffff; /* Text color on hover for non-selected */
+}
+
+/* Styles for Arabic */
+.custom-dropdown-title .arabic {
+  background-color: #cfd6f7; /* Selected background color */
+  color: #ffffff; /* Text color for selected */
+}
+
+.custom-dropdown-content .arabic {
+  padding: 8px 15px;
+  background-color: #cfd6f7; /* Non-selected background color */
+  color: #ffffff; /* Text color for non-selected */
+}
+
+.custom-dropdown-content .arabic:hover {
+  background-color: #004990; /* Hover background color for non-selected */
+  color: #ffffff; /* Text color on hover for non-selected */
+}
+
+/* For header language drop down end */
