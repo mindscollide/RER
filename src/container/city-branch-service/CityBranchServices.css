@@ -1,26 +1,3 @@
-.CityBranchWise-Admin {
-  width: 100%;
-  margin: 0 50px 0 0 !important;
-}
-
-.shift-heading {
-  font-size: 18px;
-  color: #004990;
-  font-weight: 600;
-}
-
-.shift-sub-heading {
-  font-size: 18px;
-  color: #1ab4d0 !important;
-  font-weight: 600;
-}
-
-.shift-sub-heading-right {
-  font-size: 18px;
-  color: #87b939 !important;
-  font-weight: 600;
-}
-
 .CityBranchWise-Admin-paper {
   border-radius: 4px;
   padding: 1.5rem 1rem !important;
@@ -38,7 +15,8 @@
 .save-btn-CityBranchWise {
   font-size: 14px;
   font-weight: 500;
-  padding: 6px 18px !important;
+  padding: 6px 12px !important;
+  font-family: "Montserrat", sans-serif !important;
   border-top-right-radius: 0px;
   border-bottom-left-radius: 0px;
   border-top-left-radius: 8px;
@@ -55,7 +33,8 @@
 .revert-btn-CityBranchWise {
   font-size: 14px;
   font-weight: 500;
-  padding: 6px 18px !important;
+  font-family: "Montserrat", sans-serif !important;
+  padding: 6px 12px !important;
   border-top-right-radius: 0px;
   border-bottom-left-radius: 0px;
   border-top-left-radius: 8px;

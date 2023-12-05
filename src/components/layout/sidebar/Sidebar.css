@@ -3,13 +3,14 @@
 .site-layout-background {
   border-top-right-radius: 10px !important;
   /*  margin-top: 0px !important; */
-  background: "#fff"
+  background: "#fff";
 }
 
 .menu-item {
   color: #4b5576 !important;
   font-weight: 600 !important;
-  font-size: 15px !important;
+  font-family: "Montserrat", sans-serif;
+  font-size: 15px;
 }
 
 .menu-item-two {
@@ -24,7 +25,8 @@
 .menu-item-sub {
   color: #536395 !important;
   font-size: 14px !important;
-  font-weight: 400 !important;
+  font-weight: 500 !important;
+  font-family: "Montserrat", sans-serif;
   border-radius: 0px !important;
   margin: 0 !important;
 }
@@ -34,8 +36,11 @@
   border-radius: none !important;
 }
 
-:where(.css-dev-only-do-not-override-2q8sxy).ant-menu-light .ant-menu-item-selected,
-:where(.css-dev-only-do-not-override-2q8sxy).ant-menu-light>.ant-menu .ant-menu-item-selected {
+:where(.css-dev-only-do-not-override-2q8sxy).ant-menu-light
+  .ant-menu-item-selected,
+:where(.css-dev-only-do-not-override-2q8sxy).ant-menu-light
+  > .ant-menu
+  .ant-menu-item-selected {
   background-color: #55c5d1;
   color: #ffffff !important;
 }

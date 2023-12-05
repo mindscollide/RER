@@ -1,13 +1,157 @@
 /* this is for the whole body of project */
 body {
   background: #f4f4f4 !important;
-  color: #45494d;
-  font-family: "Montserrat", sans-serif;
-  font-size: 14px;
+  color: #45494d !important;
+  font-family: "Montserrat", sans-serif !important;
+  font-size: 14px !important;
   font-weight: 500;
   overflow-x: hidden;
   height: 100%;
 }
-.site-header{
-  background:none!important;
+
+/* for headings and Sub Heading Start */
+
+.shift-heading {
+  font-size: 18px;
+  color: #004990;
+  font-family: "Montserrat", sans-serif;
+  font-weight: 600;
 }
+
+.shift-sub-heading {
+  font-size: 18px;
+  color: #1ab4d0 !important;
+  font-family: "Montserrat", sans-serif;
+  font-weight: 600;
+}
+
+.shift-sub-heading-right {
+  font-size: 18px;
+  font-family: "Montserrat", sans-serif;
+  color: #87b939 !important;
+  font-weight: 600;
+}
+
+/* for headings and Sub Heading End */
+
+/* For text fields labels start*/
+
+.text-labels {
+  font-size: 11px;
+  font-weight: 700;
+  font-family: "Montserrat", sans-serif;
+  color: #45494d !important;
+}
+
+/* For text fields labels End*/
+
+/* For checkbox labels start */
+
+.checkbox-label {
+  margin-left: 10px;
+  color: #45494d !important;
+  font-family: "Montserrat", sans-serif;
+  font-weight: 500;
+}
+
+/* For checkbox labels End */
+
+/* For table Title Text and inside text Start*/
+
+.table-text {
+  font-family: "Montserrat", sans-serif !important;
+  font-size: 14px !important;
+}
+
+.table-inside-text {
+  color: #212529 !important;
+  font-family: "Montserrat", sans-serif;
+  font-size: 14px;
+  font-weight: 500;
+}
+
+/* For table Title Text and inside text End*/
+
+/* For start Time and End Time TimePicker Start */
+.containerClassTimePicker .rmdp-input {
+  display: flex !important;
+  justify-content: center !important;
+  align-items: center !important;
+  margin-top: 4px;
+  height: 38px !important;
+  width: 100% !important;
+  border: 1px solid #dee2e6 !important;
+}
+
+.containerClassTimePicker .rmdp-input {
+  max-width: 300px;
+}
+
+.containerClassTimePicker .rmdp-time-picker.bottom {
+  border: 1px solid #dee2e6 !important;
+  border-radius: 4px !important;
+  box-shadow: 0px 0px 5px #dee2e6;
+  width: 188px !important;
+  padding: 15px 7px;
+}
+
+.containerClassTimePicker i.rmdp-arrow {
+  border: solid #8a8a8a !important;
+  border-width: 0 2px 2px 0 !important;
+  display: inline-block !important;
+  height: 3px !important;
+  margin-top: 5px !important;
+  padding: 3px !important;
+  width: 3px !important;
+}
+
+.containerClassTimePicker .rmdp-time-picker div input {
+  border: 1px solid #dddddd;
+  color: #8a8a8a;
+  flex-grow: 1;
+  font-size: 14px;
+  padding: 3px 0px;
+  text-align: center;
+  width: 35px;
+  border-radius: 4px;
+}
+
+.containerClassTimePicker .rmdp-time-picker div .rmdp-am {
+  border: 1px solid #dddddd;
+  color: #8a8a8a;
+  border-radius: 4px;
+  width: 35px;
+  font-size: 14px;
+  line-height: 22px;
+  margin-top: 2px;
+}
+
+.containerClassTimePicker .rmdp-arrow-container {
+  background: transparent;
+  border: none;
+  border-radius: 50%;
+  cursor: pointer;
+  display: flex;
+  height: 30px;
+  justify-content: center;
+  margin: 0px 5px;
+  padding: 0px;
+  margin-top: 0px;
+  width: 33px;
+  align-items: center;
+}
+
+.containerClassTimePicker .rmdp-arrow-container:hover {
+  background-color: #eeeeee;
+  box-shadow: 0 0 3px #8798ad;
+  border-radius: 4px;
+}
+
+/* For start Time and End Time TimePicker End */
+/* 
+.css-b62m3t-container {
+  position: relative;
+  box-sizing: border-box;
+  width: 100% !important;
+  max-width: 450px !important;
+} */

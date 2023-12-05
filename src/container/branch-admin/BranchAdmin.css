@@ -1,29 +1,3 @@
-.SectionBranch-Admin {
-  width: 100%;
-  margin: 0 50px 0 0 !important;
-}
-
-.shift-heading {
-  font-size: 18px;
-  color: #004990;
-  font-family: "Montserrat", sans-serif;
-  font-weight: 600;
-}
-
-.shift-sub-heading {
-  font-size: 18px;
-  color: #1ab4d0 !important;
-  font-family: "Montserrat", sans-serif;
-  font-weight: 600;
-}
-
-.shift-sub-heading-right {
-  font-size: 18px;
-  font-family: "Montserrat", sans-serif;
-  color: #87b939 !important;
-  font-weight: 600;
-}
-
 .Branch-Admin-paper {
   border-radius: 4px;
   padding: 1.5rem 1rem !important;
@@ -37,20 +11,17 @@
   align-items: center !important;
 }
 
-.checkbox-label {
-  margin-left: 10px;
-}
-
 .btn-class-branch {
   display: flex;
   justify-content: end;
-  gap: 10px !important;
+  gap: 0px !important;
 }
 
 .Add-btn-Branch {
   font-size: 14px;
   font-weight: 500;
-  padding: 6px 18px !important;
+  font-family: "Montserrat", sans-serif !important;
+  padding: 6px 12px !important;
   border-top-right-radius: 0px;
   border-bottom-left-radius: 0px;
   border-top-left-radius: 8px;
@@ -67,7 +38,8 @@
 .Reset-btn-Branch {
   font-size: 14px;
   font-weight: 500;
-  padding: 6px 18px !important;
+  padding: 6px 12px !important;
+  font-family: "Montserrat", sans-serif !important;
   border-top-right-radius: 0px;
   border-bottom-left-radius: 0px;
   border-top-left-radius: 8px;
@@ -85,12 +57,6 @@
   margin-right: 5px !important;
   font-size: 15px;
   align-items: center !important;
-}
-
-.table-text {
-  color: #ffffff !important;
-  font-size: 14px !important;
-  z-index: 1 !important;
 }
 
 .icon-check-color {
@@ -114,9 +80,15 @@
   color: #77c0cb !important;
 }
 
-.text-labels {
-  font-size: 11px;
-  font-weight: 700;
+.text-fiels-Branch {
+  font-size: 13px;
   font-family: "Montserrat", sans-serif;
+  height: 37px;
   color: #45494d !important;
+  font-weight: 500;
+}
+
+.col-for-date-timepicker {
+  display: flex;
+  flex-direction: column;
 }

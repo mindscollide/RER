@@ -1,40 +1,32 @@
 import React, { useState } from "react";
 import { Row, Col } from "react-bootstrap";
 import "./CityBranchServices.css";
-import {
-  Paper,
-  TextField,
-  Checkbox,
-  Button,
-  Table,
-} from "../../components/elements";
+import { Paper, Button, Table } from "../../components/elements";
 import { Switch } from "antd";
 
 const CityBranchService = () => {
-  const [isCheckboxSelected, setIsCheckboxSelected] = useState(false);
-
-  const handleCheckboxChange = (e) => {
-    setIsCheckboxSelected(e.target.checked);
-  };
-
   const dataSource = [
     {
       id: 1,
-      shiftName: "First Registry",
+      shiftName: <span className="table-inside-text">First Registry</span>,
     },
     {
       id: 2,
-      shiftName: "Subsequence Transaction Service Before First Registry",
+      shiftName: (
+        <span className="table-inside-text">
+          Subsequence Transaction Service Before First Registry
+        </span>
+      ),
     },
     {
       id: 3,
-      shiftName: "Change Ownership",
+      shiftName: <span className="table-inside-text">Change Ownership</span>,
     },
   ];
 
   const columns = [
     {
-      title: "Services",
+      title: <span className="table-text">Services</span>,
       dataIndex: "shiftName",
       key: "shiftName",
       width: "400px",
@@ -42,7 +34,7 @@ const CityBranchService = () => {
     },
 
     {
-      title: "Branch Availability",
+      title: <span className="table-text">Branch Availability</span>,
       dataIndex: "active",
       key: "active",
       width: "200px",
@@ -57,7 +49,7 @@ const CityBranchService = () => {
 
   return (
     <>
-      <section className="CityBranchWise-Admin">
+      <section>
         <Row>
           <Col lg={6} md={6} sm={6} className="d-flex justify-content-start">
             <span className="shift-heading">
@@ -100,7 +92,6 @@ const CityBranchService = () => {
                     rows={dataSource}
                     column={columns}
                     pagination={false}
-                    // className="table-text"
                   />
                 </Col>
               </Row>

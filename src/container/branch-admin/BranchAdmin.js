@@ -8,6 +8,8 @@ import {
   Button,
   Table,
 } from "../../components/elements";
+import DatePicker from "react-multi-date-picker";
+import TimePicker from "react-multi-date-picker/plugins/time_picker";
 
 const BranchAdmin = () => {
   const [isCheckboxSelected, setIsCheckboxSelected] = useState(false);
@@ -18,48 +20,48 @@ const BranchAdmin = () => {
 
   const dataSource = [
     {
-      id: 1,
-      shiftName: "Morning Shift",
-      startTime: "08:00 AM",
-      endTime: "04:00 PM",
+      id: <span className="table-inside-text">1</span>,
+      shiftName: <span className="table-inside-text">Morning Shift</span>,
+      startTime: <span className="table-inside-text">08:00 AM</span>,
+      endTime: <span className="table-inside-text">04:00 PM</span>,
     },
     {
-      id: 2,
-      shiftName: "Night Shift",
-      startTime: "08:00 PM",
-      endTime: "04:00 AM",
+      id: <span className="table-inside-text">2</span>,
+      shiftName: <span className="table-inside-text">Morning Shift</span>,
+      startTime: <span className="table-inside-text">08:00 AM</span>,
+      endTime: <span className="table-inside-text">04:00 PM</span>,
     },
     {
-      id: 3,
-      shiftName: "Nothing",
-      startTime: "08:00 PM",
-      endTime: "04:00 AM",
+      id: <span className="table-inside-text">3</span>,
+      shiftName: <span className="table-inside-text">Morning Shift</span>,
+      startTime: <span className="table-inside-text">08:00 AM</span>,
+      endTime: <span className="table-inside-text">04:00 PM</span>,
     },
   ];
 
   const columns = [
     {
-      title: "#",
+      title: <span className="table-text">#</span>,
       dataIndex: "id",
       key: "id",
     },
     {
-      title: "Shift Name",
+      title: <span className="table-text">Shift Name</span>,
       dataIndex: "shiftName",
       key: "shiftName",
     },
     {
-      title: "Start Time",
+      title: <span className="table-text">Start Time</span>,
       dataIndex: "startTime",
       key: "startTime",
     },
     {
-      title: "End Time",
+      title: <span className="table-text">End Time</span>,
       dataIndex: "endTime",
       key: "endTime",
     },
     {
-      title: "Active",
+      title: <span className="table-text">Active</span>,
       dataIndex: "active",
       key: "active",
       render: (text, record) => (
@@ -87,7 +89,7 @@ const BranchAdmin = () => {
 
   return (
     <>
-      <section className="SectionBranch-Admin">
+      <section>
         <Row>
           <Col lg={6} md={6} sm={6} className="d-flex justify-content-start">
             <span className="shift-heading">
@@ -112,24 +114,29 @@ const BranchAdmin = () => {
                     name="Shift"
                     placeholder="Shift Name"
                     labelClass="d-none"
+                    className="text-fiels-Branch"
                   />
                 </Col>
 
-                <Col lg={3} md={3} sm={3}>
-                  <span className="text-labels">Shift Start Time</span>
-                  <TextField
-                    name="Shift"
-                    placeholder="Shift Start Time"
-                    labelClass="d-none"
+                <Col lg={3} md={3} sm={3} className="col-for-date-timepicker">
+                  <label className="text-labels">Shift Start Time</label>
+                  <DatePicker
+                    arrowClassName="arrowClass"
+                    containerClassName="containerClassTimePicker"
+                    disableDayPicker
+                    format="hh:mm A"
+                    plugins={[<TimePicker hideSeconds />]}
                   />
                 </Col>
 
-                <Col lg={3} md={3} sm={3}>
-                  <span className="text-labels">Shift End Time</span>
-                  <TextField
-                    name="Shift"
-                    placeholder="Shift End Time"
-                    labelClass="d-none"
+                <Col lg={3} md={3} sm={3} className="col-for-date-timepicker">
+                  <label className="text-labels">Shift End Time</label>
+                  <DatePicker
+                    arrowClassName="arrowClass"
+                    containerClassName="containerClassTimePicker"
+                    disableDayPicker
+                    format="hh:mm A"
+                    plugins={[<TimePicker hideSeconds />]}
                   />
                 </Col>
               </Row>
@@ -163,7 +170,6 @@ const BranchAdmin = () => {
                     rows={dataSource}
                     column={columns}
                     pagination={false}
-                    // className="table-text"
                   />
                 </Col>
               </Row>
