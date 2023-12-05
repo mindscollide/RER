@@ -17,7 +17,7 @@ const Dashboard = () => {
         direction={currentLanguage === "ar" ? ar_EG : en_US}
         locale={currentLanguage === "ar" ? ar_EG : en_US}
       >
-        <Layout>
+        <Layout style={{ minHeight: "100vh" }}>
           <Header />
 
           <Layout hasSider>
