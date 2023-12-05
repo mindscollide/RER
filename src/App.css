@@ -8,3 +8,6 @@ body {
   overflow-x: hidden;
   height: 100%;
 }
+.site-header{
+  background:none!important;
+}
