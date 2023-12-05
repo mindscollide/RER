@@ -1,40 +1,32 @@
 import React, { useState } from "react";
 import { Row, Col } from "react-bootstrap";
 import "./BranchService.css";
-import {
-  Paper,
-  TextField,
-  Checkbox,
-  Button,
-  Table,
-} from "../../components/elements";
+import { Paper, TextField, Button, Table } from "../../components/elements";
 import { Switch } from "antd";
 
 const BranchService = () => {
-  const [isCheckboxSelected, setIsCheckboxSelected] = useState(false);
-
-  const handleCheckboxChange = (e) => {
-    setIsCheckboxSelected(e.target.checked);
-  };
-
   const dataSource = [
     {
       id: 1,
-      shiftName: "First Registry",
+      shiftName: <span className="table-inside-text">First Registry</span>,
     },
     {
       id: 2,
-      shiftName: "Subsequence Transaction Service Before First Registry",
+      shiftName: (
+        <span className="table-inside-text">
+          Subsequence Transaction Service Before First Registry
+        </span>
+      ),
     },
     {
       id: 3,
-      shiftName: "Change Ownership",
+      shiftName: <span className="table-inside-text">Change Ownership</span>,
     },
   ];
 
   const columns = [
     {
-      title: "Services",
+      title: <span className="table-text">Service</span>,
       dataIndex: "shiftName",
       key: "shiftName",
       width: "400px",
@@ -42,7 +34,7 @@ const BranchService = () => {
     },
 
     {
-      title: "Branch Availability",
+      title: <span className="table-text">Branch Availability</span>,
       dataIndex: "active",
       key: "active",
       width: "200px",
@@ -54,7 +46,7 @@ const BranchService = () => {
       ),
     },
     {
-      title: "Service Slot (Minutes)",
+      title: <span className="table-text">Service Slot (Minutes)</span>,
       dataIndex: "column6",
       key: "column6",
       width: "200px",
@@ -109,7 +101,6 @@ const BranchService = () => {
                     rows={dataSource}
                     column={columns}
                     pagination={false}
-                    // className="table-text"
                   />
                 </Col>
               </Row>

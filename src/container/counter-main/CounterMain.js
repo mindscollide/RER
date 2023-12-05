@@ -18,39 +18,39 @@ const CounterMain = () => {
 
   const dataSource = [
     {
-      id: 1,
-      shiftName: "Morning Shift",
-      startTime: "08:00 AM",
-      endTime: "04:00 PM",
+      id: <span className="table-inside-text">1</span>,
+      shiftName: <span className="table-inside-text">Morning Shift</span>,
+      startTime: <span className="table-inside-text">08:00 AM</span>,
+      endTime: <span className="table-inside-text">04:00 PM</span>,
     },
     {
-      id: 2,
-      shiftName: "Night Shift",
-      startTime: "08:00 PM",
-      endTime: "04:00 AM",
+      id: <span className="table-inside-text">2</span>,
+      shiftName: <span className="table-inside-text">Morning Shift</span>,
+      startTime: <span className="table-inside-text">08:00 AM</span>,
+      endTime: <span className="table-inside-text">04:00 PM</span>,
     },
     {
-      id: 3,
-      shiftName: "Nothing",
-      startTime: "08:00 PM",
-      endTime: "04:00 AM",
+      id: <span className="table-inside-text">3</span>,
+      shiftName: <span className="table-inside-text">Morning Shift</span>,
+      startTime: <span className="table-inside-text">08:00 AM</span>,
+      endTime: <span className="table-inside-text">04:00 PM</span>,
     },
   ];
 
   const columns = [
     {
-      title: "#",
+      title: <span className="table-text">#</span>,
       dataIndex: "id",
       key: "id",
     },
     {
-      title: "Shift Name",
+      title: <span className="table-text">Shift Name</span>,
       dataIndex: "shiftName",
       key: "shiftName",
     },
 
     {
-      title: "Active",
+      title: <span className="table-text">Active</span>,
       dataIndex: "active",
       key: "active",
       render: (text, record) => (
@@ -78,7 +78,7 @@ const CounterMain = () => {
 
   return (
     <>
-      <section className="SectionCounter-Admin">
+      <section>
         <Row>
           <Col lg={6} md={6} sm={6} className="d-flex justify-content-start">
             <span className="shift-heading">
@@ -98,7 +98,7 @@ const CounterMain = () => {
             <Paper className="Counter-Admin-paper">
               <Row>
                 <Col lg={6} md={6} sm={6}>
-                  <span>Shift Name</span>
+                  <span className="text-labels">Shift Name</span>
                   <TextField
                     name="Shift"
                     placeholder="Shift Name"

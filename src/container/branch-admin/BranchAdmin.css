@@ -1,29 +1,3 @@
-.SectionBranch-Admin {
-  width: 100%;
-  margin: 0 50px 0 0 !important;
-}
-
-.shift-heading {
-  font-size: 18px;
-  color: #004990;
-  font-family: "Montserrat", sans-serif;
-  font-weight: 600;
-}
-
-.shift-sub-heading {
-  font-size: 18px;
-  color: #1ab4d0 !important;
-  font-family: "Montserrat", sans-serif;
-  font-weight: 600;
-}
-
-.shift-sub-heading-right {
-  font-size: 18px;
-  font-family: "Montserrat", sans-serif;
-  color: #87b939 !important;
-  font-weight: 600;
-}
-
 .Branch-Admin-paper {
   border-radius: 4px;
   padding: 1.5rem 1rem !important;
@@ -35,12 +9,6 @@
 .Branch-checkbox {
   display: flex;
   align-items: center !important;
-}
-
-.checkbox-label {
-  margin-left: 10px;
-  color: #45494d !important;
-  font-weight: 500;
 }
 
 .btn-class-branch {
@@ -91,18 +59,6 @@
   align-items: center !important;
 }
 
-.table-text {
-  font-family: "Montserrat", sans-serif !important;
-  font-size: 14px !important;
-}
-
-.table-inside-text {
-  color: #212529 !important;
-  font-family: "Montserrat", sans-serif;
-  font-size: 14px;
-  font-weight: 500;
-}
-
 .icon-check-color {
   color: #87b939 !important;
   font-size: 18px !important;
@@ -124,17 +80,15 @@
   color: #77c0cb !important;
 }
 
-.text-labels {
-  font-size: 11px;
-  font-weight: 700;
-  font-family: "Montserrat", sans-serif;
-  color: #45494d !important;
-}
-
 .text-fiels-Branch {
   font-size: 13px;
   font-family: "Montserrat", sans-serif;
   height: 37px;
   color: #45494d !important;
   font-weight: 500;
+}
+
+.col-for-date-timepicker {
+  display: flex;
+  flex-direction: column;
 }

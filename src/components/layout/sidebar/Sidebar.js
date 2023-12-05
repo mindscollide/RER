@@ -40,6 +40,10 @@ const Sidebar = () => {
     navigate("/CityBranchService");
   };
 
+  const onClickCityBranchShift = () => {
+    navigate("/CityBranchShift");
+  };
+
   return (
     <Sider
       width={250}
@@ -97,6 +101,13 @@ const Sidebar = () => {
           >
             City Wise Branch Services
           </Menu.Item>
+          <Menu.Item
+            key="7"
+            className="menu-item-sub"
+            onClick={onClickCityBranchShift}
+          >
+            City Branch Wise Shifts
+          </Menu.Item>
         </Menu.SubMenu>
         <Menu.SubMenu
           key="sub2"
@@ -104,19 +115,19 @@ const Sidebar = () => {
           title="Reports"
           className="menu-item-two"
         >
-          <Menu.Item key="7" className="menu-item-sub">
+          <Menu.Item key="10" className="menu-item-sub">
             Country Wise Reports
           </Menu.Item>
-          <Menu.Item key="8" className="menu-item-sub">
+          <Menu.Item key="11" className="menu-item-sub">
             City Wise Reports
           </Menu.Item>
-          <Menu.Item key="9" className="menu-item-sub">
+          <Menu.Item key="12" className="menu-item-sub">
             Branch Wise Reports
           </Menu.Item>
-          <Menu.Item key="10" className="menu-item-sub">
+          <Menu.Item key="13" className="menu-item-sub">
             Employee Wise Reports
           </Menu.Item>
-          <Menu.Item key="11" className="menu-item-sub">
+          <Menu.Item key="14" className="menu-item-sub">
             Service Wise Reports
           </Menu.Item>
         </Menu.SubMenu>

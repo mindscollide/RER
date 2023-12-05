@@ -1,0 +1,53 @@
+.CityBranchShift-paper {
+  border-radius: 4px;
+  padding: 1.5rem 1rem !important;
+  width: 100% !important;
+  height: 70vh;
+  overflow: hidden !important;
+  background-color: #ffffff !important;
+}
+
+.CityBranchShift-col {
+  display: flex;
+  justify-content: center;
+  gap: 5px;
+}
+
+.Search-Icon-Btn {
+  font-size: 14px;
+  font-weight: 500;
+  font-family: "Montserrat", sans-serif !important;
+  padding: 6px 12px !important;
+  border-top-right-radius: 0px;
+  border-bottom-left-radius: 0px;
+  border-top-left-radius: 8px;
+  border-bottom-right-radius: 8px;
+  background: linear-gradient(to bottom, #7484b7 0%, #536395 100%);
+  border-color: #7484b7 !important;
+}
+
+.Search-Icon-Btn:hover {
+  background: linear-gradient(to bottom, #77c0cb 0%, #2c9cc0 100%);
+  border-color: #77c0cb !important;
+}
+
+.citywisebranchwiseselector {
+  width: 100% !important;
+  max-width: 450px !important;
+}
+
+.city-icon-space {
+  margin-right: 5px !important;
+  font-size: 15px;
+  align-items: center !important;
+}
+
+.accordion-bg-color {
+  width: 100%;
+  color: #ffffff;
+  padding: 8px 15px;
+  font-size: 16px;
+  border-radius: 7 !important;
+  background-color: #76c641;
+  border: none !important;
+}

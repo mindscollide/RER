@@ -8,6 +8,8 @@ import {
   Button,
   Table,
 } from "../../components/elements";
+import DatePicker from "react-multi-date-picker";
+import TimePicker from "react-multi-date-picker/plugins/time_picker";
 
 const BranchAdmin = () => {
   const [isCheckboxSelected, setIsCheckboxSelected] = useState(false);
@@ -87,7 +89,7 @@ const BranchAdmin = () => {
 
   return (
     <>
-      <section className="SectionBranch-Admin">
+      <section>
         <Row>
           <Col lg={6} md={6} sm={6} className="d-flex justify-content-start">
             <span className="shift-heading">
@@ -116,23 +118,25 @@ const BranchAdmin = () => {
                   />
                 </Col>
 
-                <Col lg={3} md={3} sm={3}>
-                  <span className="text-labels">Shift Start Time</span>
-                  <TextField
-                    name="Shift"
-                    placeholder="Shift Start Time"
-                    labelClass="d-none"
-                    className="text-fiels-Branch"
+                <Col lg={3} md={3} sm={3} className="col-for-date-timepicker">
+                  <label className="text-labels">Shift Start Time</label>
+                  <DatePicker
+                    arrowClassName="arrowClass"
+                    containerClassName="containerClassTimePicker"
+                    disableDayPicker
+                    format="hh:mm A"
+                    plugins={[<TimePicker hideSeconds />]}
                   />
                 </Col>
 
-                <Col lg={3} md={3} sm={3}>
-                  <span className="text-labels">Shift End Time</span>
-                  <TextField
-                    name="Shift"
-                    placeholder="Shift End Time"
-                    labelClass="d-none"
-                    className="text-fiels-Branch"
+                <Col lg={3} md={3} sm={3} className="col-for-date-timepicker">
+                  <label className="text-labels">Shift End Time</label>
+                  <DatePicker
+                    arrowClassName="arrowClass"
+                    containerClassName="containerClassTimePicker"
+                    disableDayPicker
+                    format="hh:mm A"
+                    plugins={[<TimePicker hideSeconds />]}
                   />
                 </Col>
               </Row>
