@@ -77,7 +77,12 @@ const Header = () => {
               alt="REM Logo"
             />
           </Navbar.Brand>
-          <Nav className="align-items-center">
+          <Nav
+            className="align-items-center flex-row flex-sm-row flex-xs-column 
+          flex-md-row 
+          flex-lg-row flex-xl-row"
+          >
+            {/* Language Dropdown */}
             <NavDropdown
               title={
                 <div className="language-dd d-flex align-items-center ps-2">
@@ -93,6 +98,7 @@ const Header = () => {
               onSelect={handleChangeLocale}
               id="user-dropdown"
               menuVariant="light"
+              className="me-md-2" // Margin added to separate dropdowns on larger screens
             >
               <NavDropdown.Item
                 data-bs-toggle="modal"
@@ -103,6 +109,7 @@ const Header = () => {
               </NavDropdown.Item>
               <NavDropdown.Item eventKey={1}>عربى</NavDropdown.Item>
             </NavDropdown>
+
             {/* User Dropdown */}
             <NavDropdown
               title={
