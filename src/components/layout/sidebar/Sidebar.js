@@ -44,6 +44,14 @@ const Sidebar = () => {
     navigate("/CityBranchShift");
   };
 
+  const onClickCityWiseCounter = () => {
+    navigate("/CityWiseCounter");
+  };
+
+  const onClickEmployeeMain = () => {
+    navigate("/EmployeeMain");
+  };
+
   return (
     <Sider
       width={250}
@@ -107,6 +115,22 @@ const Sidebar = () => {
             onClick={onClickCityBranchShift}
           >
             City Branch Wise Shifts
+          </Menu.Item>
+
+          <Menu.Item
+            key="8"
+            className="menu-item-sub"
+            onClick={onClickCityWiseCounter}
+          >
+            City Branch Shifts Wise Counter
+          </Menu.Item>
+
+          <Menu.Item
+            key="9"
+            className="menu-item-sub"
+            onClick={onClickEmployeeMain}
+          >
+            Employee Main
           </Menu.Item>
         </Menu.SubMenu>
         <Menu.SubMenu

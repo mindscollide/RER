@@ -148,6 +148,23 @@ body {
 }
 
 /* For start Time and End Time TimePicker End */
+
+/* toggle title start*/
+
+.toggle-tiles {
+  font-size: 16px;
+  font-weight: 600;
+  font-family: "Montserrat", sans-serif !important;
+  color: #ffffff;
+}
+
+.toggle-insidetile-available {
+  font-size: 14px;
+  font-weight: 700;
+  font-family: "Montserrat", sans-serif !important;
+  color: #45494d;
+}
+
 /* 
 .css-b62m3t-container {
   position: relative;

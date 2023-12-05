@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Row, Col } from "react-bootstrap";
 import "./CityBranchShift.css";
 import { Paper, Button, Table } from "../../components/elements";
-import { Collapse, Divider } from "antd";
+import { Collapse, Divider, Switch } from "antd";
 import { CaretRightOutlined } from "@ant-design/icons";
 import Select from "react-select";
 const { Panel } = Collapse;
@@ -21,32 +21,46 @@ const CityBranchShift = () => {
     setIsPanelOpen(!isPanelOpen);
   };
 
-  const tableColumns = [
+  const dataSource = [
     {
-      title: "Attribute 1",
-      dataIndex: "attribute1",
-      key: "attribute1",
+      id: 1,
+      shiftName: <span className="table-inside-text">First Registry</span>,
     },
     {
-      title: "Attribute 2",
-      dataIndex: "attribute2",
-      key: "attribute2",
+      id: 2,
+      shiftName: (
+        <span className="table-inside-text">
+          Subsequence Transaction Service Before First Registry
+        </span>
+      ),
     },
     {
-      title: "Attribute 3",
-      dataIndex: "attribute3",
-      key: "attribute3",
+      id: 3,
+      shiftName: <span className="table-inside-text">Change Ownership</span>,
     },
   ];
 
-  const tableData = [
+  const columns = [
     {
-      key: "1",
-      attribute1: "Value 1",
-      attribute2: "Value 2",
-      attribute3: "Value 3",
+      title: <span className="table-text">Services</span>,
+      dataIndex: "shiftName",
+      key: "shiftName",
+      width: "400px",
+      align: "left",
     },
-    // Add more data as needed
+
+    {
+      title: <span className="table-text">Branch Availability</span>,
+      dataIndex: "active",
+      key: "active",
+      width: "200px",
+      align: "center",
+      render: (text, record) => (
+        <span>
+          <Switch />
+        </span>
+      ),
+    },
   ];
 
   return (
@@ -67,6 +81,17 @@ const CityBranchShift = () => {
           <Col lg={12} md={12} sm={12}>
             <Paper className="CityBranchShift-paper">
               <Row>
+                <Col
+                  lg={4}
+                  md={4}
+                  sm={4}
+                  className="d-flex justify-content-end"
+                >
+                  <label className="text-labels">Branch</label>
+                </Col>
+                <Col lg={8} md={8} sm={8} />
+              </Row>
+              <Row>
                 <Col lg={12} md={12} sm={12} className="CityBranchShift-col">
                   <Select
                     defaultValue={selectedOption}
@@ -83,12 +108,13 @@ const CityBranchShift = () => {
                 </Col>
               </Row>
 
-              <Row>
+              <Row className="mt-1">
                 <Col lg={12} md={12} sm={12}>
                   <Collapse
                     bordered={false}
                     defaultActiveKey={["1"]}
                     className="collapse-disable-bg"
+                    expandIcon={false}
                   >
                     <Panel
                       header={
@@ -98,17 +124,121 @@ const CityBranchShift = () => {
                           }`}
                           onClick={togglePanel}
                         >
-                          <span>
-                            Title
-                            <CaretRightOutlined rotate={isPanelOpen ? 90 : 0} />
-                          </span>
+                          <span className="toggle-tiles">Shift Morning</span>
                         </div>
                       }
                       key="1"
                     >
+                      <Row className="mb-3">
+                        <Col lg={6} md={6} sm={6}>
+                          <span className="toggle-insidetile-available">
+                            Available
+                          </span>
+                        </Col>
+                        <Col
+                          lg={6}
+                          md={6}
+                          sm={6}
+                          className="d-flex justify-content-end"
+                        >
+                          <Switch />
+                        </Col>
+                      </Row>
                       <Table
-                        column={tableColumns}
-                        rows={tableData}
+                        column={columns}
+                        rows={dataSource}
+                        pagination={false}
+                      />
+                    </Panel>
+                  </Collapse>
+                </Col>
+              </Row>
+
+              <Row>
+                <Col lg={12} md={12} sm={12}>
+                  <Collapse
+                    bordered={false}
+                    defaultActiveKey={["2"]}
+                    className="collapse-disable-bg"
+                    expandIcon={false}
+                  >
+                    <Panel
+                      header={
+                        <div
+                          className={`collapse-bg-color ${
+                            isPanelOpen ? "open" : ""
+                          }`}
+                          onClick={togglePanel}
+                        >
+                          <span className="toggle-tiles">Shift Afternoon</span>
+                        </div>
+                      }
+                      key="1"
+                    >
+                      <Row className="mb-3">
+                        <Col lg={6} md={6} sm={6}>
+                          <span className="toggle-insidetile-available">
+                            Available
+                          </span>
+                        </Col>
+                        <Col
+                          lg={6}
+                          md={6}
+                          sm={6}
+                          className="d-flex justify-content-end"
+                        >
+                          <Switch />
+                        </Col>
+                      </Row>
+                      <Table
+                        column={columns}
+                        rows={dataSource}
+                        pagination={false}
+                      />
+                    </Panel>
+                  </Collapse>
+                </Col>
+              </Row>
+
+              <Row>
+                <Col lg={12} md={12} sm={12}>
+                  <Collapse
+                    bordered={false}
+                    defaultActiveKey={["3"]}
+                    className="collapse-disable-bg"
+                    expandIcon={false}
+                  >
+                    <Panel
+                      header={
+                        <div
+                          className={`collapse-bg-color ${
+                            isPanelOpen ? "open" : ""
+                          }`}
+                          onClick={togglePanel}
+                        >
+                          <span className="toggle-tiles">Shift Evening</span>
+                        </div>
+                      }
+                      key="1"
+                    >
+                      <Row className="mb-3">
+                        <Col lg={6} md={6} sm={6}>
+                          <span className="toggle-insidetile-available">
+                            Available
+                          </span>
+                        </Col>
+                        <Col
+                          lg={6}
+                          md={6}
+                          sm={6}
+                          className="d-flex justify-content-end"
+                        >
+                          <Switch />
+                        </Col>
+                      </Row>
+                      <Table
+                        column={columns}
+                        rows={dataSource}
                         pagination={false}
                       />
                     </Panel>
