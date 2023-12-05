@@ -1,19 +1,54 @@
 import React, { useState } from "react";
 import { Row, Col } from "react-bootstrap";
 import "./CityBranchShift.css";
-import { Paper, Button } from "../../components/elements";
+import { Paper, Button, Table } from "../../components/elements";
 import { Collapse, Divider } from "antd";
+import { CaretRightOutlined } from "@ant-design/icons";
 import Select from "react-select";
+const { Panel } = Collapse;
 
 const CityBranchShift = () => {
-  const { Panel } = Collapse;
   const [selectedOption, setSelectedOption] = useState(null);
+  const [isPanelOpen, setIsPanelOpen] = useState(false);
 
   const options = [
     { value: "chocolate", label: "Chocolate" },
     { value: "strawberry", label: "Strawberry" },
     { value: "vanilla", label: "Vanilla" },
   ];
+
+  const togglePanel = () => {
+    setIsPanelOpen(!isPanelOpen);
+  };
+
+  const tableColumns = [
+    {
+      title: "Attribute 1",
+      dataIndex: "attribute1",
+      key: "attribute1",
+    },
+    {
+      title: "Attribute 2",
+      dataIndex: "attribute2",
+      key: "attribute2",
+    },
+    {
+      title: "Attribute 3",
+      dataIndex: "attribute3",
+      key: "attribute3",
+    },
+  ];
+
+  const tableData = [
+    {
+      key: "1",
+      attribute1: "Value 1",
+      attribute2: "Value 2",
+      attribute3: "Value 3",
+    },
+    // Add more data as needed
+  ];
+
   return (
     <>
       <section>
@@ -37,6 +72,7 @@ const CityBranchShift = () => {
                     defaultValue={selectedOption}
                     onChange={setSelectedOption}
                     options={options}
+                    isSearchable={true}
                     className="citywisebranchwiseselector"
                   />
                   <Button
@@ -50,15 +86,32 @@ const CityBranchShift = () => {
               <Row>
                 <Col lg={12} md={12} sm={12}>
                   <Collapse
-                    size="small"
-                    expandIcon={false}
-                    className="accordion-bg-color"
+                    bordered={false}
+                    defaultActiveKey={["1"]}
+                    className="collapse-disable-bg"
                   >
                     <Panel
-                      showArrow={true}
-                      header={<label>TBill Calculator</label>}
+                      header={
+                        <div
+                          className={`collapse-bg-color ${
+                            isPanelOpen ? "open" : ""
+                          }`}
+                          onClick={togglePanel}
+                        >
+                          <span>
+                            Title
+                            <CaretRightOutlined rotate={isPanelOpen ? 90 : 0} />
+                          </span>
+                        </div>
+                      }
                       key="1"
-                    ></Panel>
+                    >
+                      <Table
+                        column={tableColumns}
+                        rows={tableData}
+                        pagination={false}
+                      />
+                    </Panel>
                   </Collapse>
                 </Col>
               </Row>
