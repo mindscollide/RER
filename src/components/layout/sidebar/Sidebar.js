@@ -44,7 +44,7 @@ const Sidebar = () => {
     <Sider
       width={250}
       className="site-layout-background"
-      style={{ position: "fixed", height: "86%", background: "#fff" }}
+      // style={{ position: "fixed", height: "86%", background: "#fff" }}
     >
       <Menu
         mode="inline"

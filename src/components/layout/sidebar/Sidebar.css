@@ -2,7 +2,8 @@
 
 .site-layout-background {
   border-top-right-radius: 10px !important;
-  margin-top: 0px !important;
+  /*  margin-top: 0px !important; */
+  background: "#fff"
 }
 
 .menu-item {
@@ -35,11 +36,8 @@
   border-radius: none !important;
 }
 
-:where(.css-dev-only-do-not-override-2q8sxy).ant-menu-light
-  .ant-menu-item-selected,
-:where(.css-dev-only-do-not-override-2q8sxy).ant-menu-light
-  > .ant-menu
-  .ant-menu-item-selected {
+:where(.css-dev-only-do-not-override-2q8sxy).ant-menu-light .ant-menu-item-selected,
+:where(.css-dev-only-do-not-override-2q8sxy).ant-menu-light>.ant-menu .ant-menu-item-selected {
   background-color: #55c5d1;
   color: #ffffff !important;
 }
