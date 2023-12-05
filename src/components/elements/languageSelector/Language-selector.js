@@ -24,10 +24,8 @@ const LanguageSelector = ({ dropdownVisible }) => {
   let currentUserID = Number(localStorage.getItem("userID"));
   const languageref = useRef();
   const location = useLocation();
-  let currentLanguage = localStorage.getItem("i18nextLng");
   const [languageDropdown, setLanguageDropdown] = useState(false);
   const { t, i18n } = useTranslation();
-  const [languages, setLanguages] = useState([]);
   const [selectedLanguage, setSelectedLanguage] = useState({
     systemSupportedLanguageID: 1,
     languageTitle: "English",
@@ -49,99 +47,30 @@ const LanguageSelector = ({ dropdownVisible }) => {
     }
   }, []);
 
-  //   useEffect(() => {
-  //     if (
-  //       LanguageReducer.AllLanguagesData !== null &&
-  //       LanguageReducer.AllLanguagesData !== undefined &&
-  //       LanguageReducer.AllLanguagesData.length !== 0
-  //     ) {
-  //       let newValues = [];
-  //       LanguageReducer.AllLanguagesData.map((langValues, index) => {
-  //         newValues.push({
-  //           languageTitle:
-  //             langValues.systemSupportedLanguageID === 1
-  //               ? t("English")
-  //               : langValues.systemSupportedLanguageID === 2
-  //               ? t("Arabic")
-  //               : langValues.systemSupportedLanguageID === 3
-  //               ? t("French")
-  //               : "",
-  //           systemSupportedLanguageID: langValues.systemSupportedLanguageID,
-  //         });
-  //       });
-
-  //       setLanguages(newValues);
-  //     }
-  //   }, [LanguageReducer.AllLanguagesData]);
-
-  //   useEffect(() => {
-  //     if (
-  //       LanguageReducer.SetLanguageData !== null &&
-  //       LanguageReducer.SetLanguageData !== undefined &&
-  //       LanguageReducer.SetLanguageData.length !== 0
-  //     ) {
-  //       setSelectedLanguage({
-  //         ...selectedLanguage,
-  //         systemSupportedLanguageID:
-  //           LanguageReducer.SetLanguageData.systemSupportedLanguageID,
-  //         languageTitle: LanguageReducer.SetLanguageData.languageTitle,
-  //         code:
-  //           LanguageReducer.SetLanguageData.systemSupportedLanguageID === 1
-  //             ? "en"
-  //             : LanguageReducer.SetLanguageData.systemSupportedLanguageID === 2
-  //             ? "ar"
-  //             : LanguageReducer.SetLanguageData.systemSupportedLanguageID === 3
-  //             ? "fr"
-  //             : "",
-  //       });
-  //     }
-  //   }, [LanguageReducer.SetLanguageData]);
-
   const handleChangeLocale = (lang) => {
     setLanguageDropdown(false);
-    // setLanguage(lang)
+
     let data = {
       UserID: currentUserID,
       SystemSupportedLanguageID: lang,
     };
+
+    // Dispatch your language change action here if needed
     // dispatch(changeNewLanguage(data, navigate, t));
-    if (lang === 1) {
-      setSelectedLanguage({
-        languageTitle: "English",
-        systemSupportedLanguageID: 1,
-        code: "en",
-      });
-      localStorage.setItem("i18nextLng", "en");
-      moment.locale("en");
-      setTimeout(() => {
-        // window.location.reload()
-        i18n.changeLanguage("en");
-      }, 100);
-    } else if (lang === 2) {
-      setSelectedLanguage({
-        languageTitle: "Arabic",
-        systemSupportedLanguageID: 2,
-        code: "ar",
-      });
-      localStorage.setItem("i18nextLng", "ar");
-      moment.locale("ar");
-      setTimeout(() => {
-        // window.location.reload()
-        i18n.changeLanguage("ar");
-      }, 100);
-    } else {
-      setSelectedLanguage({
-        languageTitle: "French",
-        systemSupportedLanguageID: 3,
-        code: "fr",
-      });
-      localStorage.setItem("i18nextLng", "fr");
-      moment.locale("fr");
-      setTimeout(() => {
-        // window.location.reload()
-        i18n.changeLanguage("fr");
-      }, 1000);
-    }
+
+    setSelectedLanguage({
+      languageTitle: lang === 1 ? "Arabic" : lang === 2 ? "English" : "French",
+      systemSupportedLanguageID: lang,
+      code: lang === 1 ? "ar" : lang === 2 ? "en" : "fr",
+    });
+    const newLanguage = lang === 1 ? "ar" : lang === 2 ? "en" : "fr";
+    // Change the language using i18next instance directly
+    i18n.language = newLanguage;
+    localStorage.setItem("i18nextLng", newLanguage);
+    moment.locale(newLanguage);
+
+    // Set document direction based on the selected language
+    document.documentElement.dir = lang === 1 ? "rtl" : "ltr";
   };
 
   const handleOutsideClick = (event) => {
@@ -161,38 +90,25 @@ const LanguageSelector = ({ dropdownVisible }) => {
     };
   }, [languageDropdown]);
 
-  // useEffect(() => {
-  //   if (currentLanguage === "ar") {
-  //     document.body.dir = "rtl";
-  //     i18n.changeLanguage("ar");
-  //   } else if (currentLanguage === "fr") {
-  //     document.body.dir = "ltr";
-  //     i18n.changeLanguage("fr");
-  //   } else {
-  //     document.body.dir = "ltr";
-  //     i18n.changeLanguage("en");
-  //   }
-  // }, [currentLanguage]);
-
   return (
     <section>
       <span
         className={`custom-dropdown-title ${
-          selectedLanguage === "En" ? "english" : "arabic"
+          selectedLanguage.code === "en" ? "english" : "arabic"
         }`}
       >
-        {selectedLanguage === "En" ? "English" : "عربى"}
+        {selectedLanguage.code === "en" ? "English" : "عربى"}
       </span>
       {dropdownVisible && (
         <div className="custom-dropdown-content">
           <span
-            className={selectedLanguage === "En" ? "english" : "arabic"}
+            className={selectedLanguage.code === "en" ? "english" : "arabic"}
             onClick={() => handleChangeLocale(2)}
           >
             English
           </span>
           <span
-            className={selectedLanguage === "Ar" ? "english" : "arabic"}
+            className={selectedLanguage.code === "ar" ? "arabic" : "french"}
             onClick={() => handleChangeLocale(1)}
           >
             عربى
