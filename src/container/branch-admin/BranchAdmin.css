@@ -6,17 +6,20 @@
 .shift-heading {
   font-size: 18px;
   color: #004990;
+  font-family: "Montserrat", sans-serif;
   font-weight: 600;
 }
 
 .shift-sub-heading {
   font-size: 18px;
   color: #1ab4d0 !important;
+  font-family: "Montserrat", sans-serif;
   font-weight: 600;
 }
 
 .shift-sub-heading-right {
   font-size: 18px;
+  font-family: "Montserrat", sans-serif;
   color: #87b939 !important;
   font-weight: 600;
 }
@@ -109,4 +112,11 @@
 
 .icon-EDT-DLT-color:hover {
   color: #77c0cb !important;
+}
+
+.text-labels {
+  font-size: 11px;
+  font-weight: 700;
+  font-family: "Montserrat", sans-serif;
+  color: #45494d !important;
 }

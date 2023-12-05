@@ -107,7 +107,7 @@ const BranchAdmin = () => {
             <Paper className="Branch-Admin-paper">
               <Row>
                 <Col lg={6} md={6} sm={6}>
-                  <span>Shift Name</span>
+                  <span className="text-labels">Shift Name</span>
                   <TextField
                     name="Shift"
                     placeholder="Shift Name"
@@ -116,7 +116,7 @@ const BranchAdmin = () => {
                 </Col>
 
                 <Col lg={3} md={3} sm={3}>
-                  <span>Shift Start Time</span>
+                  <span className="text-labels">Shift Start Time</span>
                   <TextField
                     name="Shift"
                     placeholder="Shift Start Time"
@@ -125,7 +125,7 @@ const BranchAdmin = () => {
                 </Col>
 
                 <Col lg={3} md={3} sm={3}>
-                  <span>Shift End Time</span>
+                  <span className="text-labels">Shift End Time</span>
                   <TextField
                     name="Shift"
                     placeholder="Shift End Time"
