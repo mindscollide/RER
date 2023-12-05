@@ -1,12 +1,15 @@
 // Import necessary components from Ant Design
 import React, { useState } from "react";
 import { Layout, Menu } from "antd";
+import { useNavigate } from "react-router-dom";
+
 import "./Sidebar.css";
 
 const { Sider } = Layout;
 
 const Sidebar = () => {
-  const [openKeys, setOpenKeys] = useState([]);
+  const navigate = useNavigate();
+  const [openKeys, setOpenKeys] = useState(["sub1"]);
 
   const handleOpenChange = (keys) => {
     // Ensure only one submenu is open at a time
@@ -16,15 +19,32 @@ const Sidebar = () => {
       setOpenKeys([]);
     }
   };
+
+  const onClickBranchAdmin = () => {
+    navigate("/");
+  };
+
+  const onClickCounterAdmin = () => {
+    navigate("/CounterMain");
+  };
+
+  const onClickBranchService = () => {
+    navigate("/BranchService");
+  };
+
+  const onClickCityAdmin = () => {
+    navigate("/CityAdmin");
+  };
+
+  const onClickCityBranchServices = () => {
+    navigate("/CityBranchService");
+  };
+
   return (
     <Sider
       width={250}
       className="site-layout-background"
-      style={{
-        position: "fixed",
-        height: "86%", // Set the total height to 86%
-        background: "#fff", // White background color
-      }}
+      style={{ position: "fixed", height: "86%", background: "#fff" }}
     >
       <Menu
         mode="inline"
@@ -42,26 +62,40 @@ const Sidebar = () => {
           title="Setups"
           className="menu-item"
         >
-          <Menu.Item key="2" className="menu-item-sub">
-            Services
+          <Menu.Item
+            key="2"
+            className="menu-item-sub"
+            onClick={onClickBranchAdmin}
+          >
+            Branch Admin
           </Menu.Item>
-          <Menu.Item key="3" className="menu-item-sub">
-            Country
+          <Menu.Item
+            key="3"
+            className="menu-item-sub"
+            onClick={onClickCounterAdmin}
+          >
+            Counter Admin{" "}
           </Menu.Item>
-          <Menu.Item key="4" className="menu-item-sub">
-            City
+          <Menu.Item
+            key="4"
+            className="menu-item-sub"
+            onClick={onClickBranchService}
+          >
+            Branch Service
           </Menu.Item>
-          <Menu.Item key="5" className="menu-item-sub">
-            Branch
+          <Menu.Item
+            key="5"
+            className="menu-item-sub"
+            onClick={onClickCityAdmin}
+          >
+            City Admin
           </Menu.Item>
-          <Menu.Item key="6" className="menu-item-sub">
-            Employee
-          </Menu.Item>
-          <Menu.Item key="7" className="menu-item-sub">
-            Shifts
-          </Menu.Item>
-          <Menu.Item key="8" className="menu-item-sub">
-            Counters
+          <Menu.Item
+            key="6"
+            className="menu-item-sub"
+            onClick={onClickCityBranchServices}
+          >
+            City Wise Branch Services
           </Menu.Item>
         </Menu.SubMenu>
         <Menu.SubMenu
@@ -70,19 +104,19 @@ const Sidebar = () => {
           title="Reports"
           className="menu-item-two"
         >
-          <Menu.Item key="9" className="menu-item-sub">
+          <Menu.Item key="7" className="menu-item-sub">
             Country Wise Reports
           </Menu.Item>
-          <Menu.Item key="10" className="menu-item-sub">
+          <Menu.Item key="8" className="menu-item-sub">
             City Wise Reports
           </Menu.Item>
-          <Menu.Item key="11" className="menu-item-sub">
+          <Menu.Item key="9" className="menu-item-sub">
             Branch Wise Reports
           </Menu.Item>
-          <Menu.Item key="12" className="menu-item-sub">
+          <Menu.Item key="10" className="menu-item-sub">
             Employee Wise Reports
           </Menu.Item>
-          <Menu.Item key="13" className="menu-item-sub">
+          <Menu.Item key="11" className="menu-item-sub">
             Service Wise Reports
           </Menu.Item>
         </Menu.SubMenu>

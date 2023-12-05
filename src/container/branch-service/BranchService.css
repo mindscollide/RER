@@ -1,4 +1,4 @@
-.SectionBranch-Admin {
+.SectionBranchService-Admin {
   width: 100%;
   margin: 0 50px 0 0 !important;
 }
@@ -6,39 +6,27 @@
 .shift-heading {
   font-size: 18px;
   color: #004990;
-  font-family: "Montserrat", sans-serif;
   font-weight: 600;
 }
 
 .shift-sub-heading {
   font-size: 18px;
   color: #1ab4d0 !important;
-  font-family: "Montserrat", sans-serif;
   font-weight: 600;
 }
 
 .shift-sub-heading-right {
   font-size: 18px;
-  font-family: "Montserrat", sans-serif;
   color: #87b939 !important;
   font-weight: 600;
 }
 
-.Branch-Admin-paper {
+.BranchService-Admin-paper {
   border-radius: 4px;
   padding: 1.5rem 1rem !important;
   width: 100% !important;
   overflow: hidden !important;
   background-color: #ffffff !important;
-}
-
-.Branch-checkbox {
-  display: flex;
-  align-items: center !important;
-}
-
-.checkbox-label {
-  margin-left: 10px;
 }
 
 .btn-class-branch {
@@ -47,7 +35,7 @@
   gap: 10px !important;
 }
 
-.Add-btn-Branch {
+.save-btn-BranchService {
   font-size: 14px;
   font-weight: 500;
   padding: 6px 18px !important;
@@ -59,12 +47,12 @@
   border-color: #7484b7 !important;
 }
 
-.Add-btn-Branch:hover {
+.save-btn-BranchService:hover {
   background: linear-gradient(to bottom, #77c0cb 0%, #2c9cc0 100%);
   border-color: #77c0cb !important;
 }
 
-.Reset-btn-Branch {
+.revert-btn-BranchService {
   font-size: 14px;
   font-weight: 500;
   padding: 6px 18px !important;
@@ -76,7 +64,7 @@
   border-color: #77c0cb !important;
 }
 
-.Reset-btn-Branch:hover {
+.revert-btn-BranchService:hover {
   background: linear-gradient(to bottom, #7484b7 0%, #536395 100%);
   border-color: #7484b7 !important;
 }
@@ -87,36 +75,9 @@
   align-items: center !important;
 }
 
-.table-text {
-  color: #ffffff !important;
-  font-size: 14px !important;
-  z-index: 1 !important;
-}
-
-.icon-check-color {
-  color: #87b939 !important;
-  font-size: 18px !important;
-}
-
-.icon-spaceing-dlt-edit {
+.btn-col-class {
   display: flex;
-  justify-content: center !important;
-  gap: 10px !important;
-}
-
-.icon-EDT-DLT-color {
-  color: #7a7e8b !important;
-  font-size: 18px !important;
-  cursor: pointer;
-}
-
-.icon-EDT-DLT-color:hover {
-  color: #77c0cb !important;
-}
-
-.text-labels {
-  font-size: 11px;
-  font-weight: 700;
-  font-family: "Montserrat", sans-serif;
-  color: #45494d !important;
+  justify-content: end;
+  align-items: center;
+  gap: 5px;
 }
