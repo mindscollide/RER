@@ -8,7 +8,8 @@
 .menu-item {
   color: #4b5576 !important;
   font-weight: 600 !important;
-  font-size: 15px !important;
+  font-family: "Montserrat", sans-serif;
+  font-size: 15px;
 }
 
 .menu-item-two {
@@ -24,6 +25,7 @@
   color: #536395 !important;
   font-size: 14px !important;
   font-weight: 400 !important;
+  font-family: "Montserrat", sans-serif;
   border-radius: 0px !important;
   margin: 0 !important;
 }

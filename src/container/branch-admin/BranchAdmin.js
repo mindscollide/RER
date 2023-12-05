@@ -18,48 +18,48 @@ const BranchAdmin = () => {
 
   const dataSource = [
     {
-      id: 1,
-      shiftName: "Morning Shift",
-      startTime: "08:00 AM",
-      endTime: "04:00 PM",
+      id: <span className="table-inside-text">1</span>,
+      shiftName: <span className="table-inside-text">Morning Shift</span>,
+      startTime: <span className="table-inside-text">08:00 AM</span>,
+      endTime: <span className="table-inside-text">04:00 PM</span>,
     },
     {
-      id: 2,
-      shiftName: "Night Shift",
-      startTime: "08:00 PM",
-      endTime: "04:00 AM",
+      id: <span className="table-inside-text">2</span>,
+      shiftName: <span className="table-inside-text">Morning Shift</span>,
+      startTime: <span className="table-inside-text">08:00 AM</span>,
+      endTime: <span className="table-inside-text">04:00 PM</span>,
     },
     {
-      id: 3,
-      shiftName: "Nothing",
-      startTime: "08:00 PM",
-      endTime: "04:00 AM",
+      id: <span className="table-inside-text">3</span>,
+      shiftName: <span className="table-inside-text">Morning Shift</span>,
+      startTime: <span className="table-inside-text">08:00 AM</span>,
+      endTime: <span className="table-inside-text">04:00 PM</span>,
     },
   ];
 
   const columns = [
     {
-      title: "#",
+      title: <span className="table-text">#</span>,
       dataIndex: "id",
       key: "id",
     },
     {
-      title: "Shift Name",
+      title: <span className="table-text">Shift Name</span>,
       dataIndex: "shiftName",
       key: "shiftName",
     },
     {
-      title: "Start Time",
+      title: <span className="table-text">Start Time</span>,
       dataIndex: "startTime",
       key: "startTime",
     },
     {
-      title: "End Time",
+      title: <span className="table-text">End Time</span>,
       dataIndex: "endTime",
       key: "endTime",
     },
     {
-      title: "Active",
+      title: <span className="table-text">Active</span>,
       dataIndex: "active",
       key: "active",
       render: (text, record) => (
@@ -112,6 +112,7 @@ const BranchAdmin = () => {
                     name="Shift"
                     placeholder="Shift Name"
                     labelClass="d-none"
+                    className="text-fiels-Branch"
                   />
                 </Col>
 
@@ -121,6 +122,7 @@ const BranchAdmin = () => {
                     name="Shift"
                     placeholder="Shift Start Time"
                     labelClass="d-none"
+                    className="text-fiels-Branch"
                   />
                 </Col>
 
@@ -130,6 +132,7 @@ const BranchAdmin = () => {
                     name="Shift"
                     placeholder="Shift End Time"
                     labelClass="d-none"
+                    className="text-fiels-Branch"
                   />
                 </Col>
               </Row>
@@ -163,7 +166,6 @@ const BranchAdmin = () => {
                     rows={dataSource}
                     column={columns}
                     pagination={false}
-                    // className="table-text"
                   />
                 </Col>
               </Row>

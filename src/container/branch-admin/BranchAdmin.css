@@ -39,18 +39,21 @@
 
 .checkbox-label {
   margin-left: 10px;
+  color: #45494d !important;
+  font-weight: 500;
 }
 
 .btn-class-branch {
   display: flex;
   justify-content: end;
-  gap: 10px !important;
+  gap: 0px !important;
 }
 
 .Add-btn-Branch {
   font-size: 14px;
   font-weight: 500;
-  padding: 6px 18px !important;
+  font-family: "Montserrat", sans-serif !important;
+  padding: 6px 12px !important;
   border-top-right-radius: 0px;
   border-bottom-left-radius: 0px;
   border-top-left-radius: 8px;
@@ -67,7 +70,8 @@
 .Reset-btn-Branch {
   font-size: 14px;
   font-weight: 500;
-  padding: 6px 18px !important;
+  padding: 6px 12px !important;
+  font-family: "Montserrat", sans-serif !important;
   border-top-right-radius: 0px;
   border-bottom-left-radius: 0px;
   border-top-left-radius: 8px;
@@ -88,9 +92,15 @@
 }
 
 .table-text {
-  color: #ffffff !important;
+  font-family: "Montserrat", sans-serif !important;
   font-size: 14px !important;
-  z-index: 1 !important;
+}
+
+.table-inside-text {
+  color: #212529 !important;
+  font-family: "Montserrat", sans-serif;
+  font-size: 14px;
+  font-weight: 500;
 }
 
 .icon-check-color {
@@ -119,4 +129,12 @@
   font-weight: 700;
   font-family: "Montserrat", sans-serif;
   color: #45494d !important;
+}
+
+.text-fiels-Branch {
+  font-size: 13px;
+  font-family: "Montserrat", sans-serif;
+  height: 37px;
+  color: #45494d !important;
+  font-weight: 500;
 }

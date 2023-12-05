@@ -1,9 +1,9 @@
 /* this is for the whole body of project */
 body {
   background: #f4f4f4 !important;
-  color: #45494d;
-  font-family: "Montserrat", sans-serif;
-  font-size: 14px;
+  color: #45494d !important;
+  font-family: "Montserrat", sans-serif !important;
+  font-size: 14px !important;
   font-weight: 500;
   overflow-x: hidden;
   height: 100%;
