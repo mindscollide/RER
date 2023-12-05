@@ -10,7 +10,6 @@ import Table from "./table/Table";
 import Paper from "./paper/Paper";
 import Loader from "./loader/Loader";
 import CustomUpload from "./upload/Upload";
-import LanguageSelector from "./languageSelector/Language-selector";
 
 export {
   Button,
@@ -25,5 +24,4 @@ export {
   Table,
   Paper,
   CustomUpload,
-  LanguageSelector,
 };
