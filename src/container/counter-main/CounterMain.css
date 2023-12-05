@@ -1,4 +1,4 @@
-.SectionBranch-Admin {
+.SectionCounter-Admin {
   width: 100%;
   margin: 0 50px 0 0 !important;
 }
@@ -6,25 +6,22 @@
 .shift-heading {
   font-size: 18px;
   color: #004990;
-  font-family: "Montserrat", sans-serif;
   font-weight: 600;
 }
 
 .shift-sub-heading {
   font-size: 18px;
   color: #1ab4d0 !important;
-  font-family: "Montserrat", sans-serif;
   font-weight: 600;
 }
 
 .shift-sub-heading-right {
   font-size: 18px;
-  font-family: "Montserrat", sans-serif;
   color: #87b939 !important;
   font-weight: 600;
 }
 
-.Branch-Admin-paper {
+.Counter-Admin-paper {
   border-radius: 4px;
   padding: 1.5rem 1rem !important;
   width: 100% !important;
@@ -32,7 +29,7 @@
   background-color: #ffffff !important;
 }
 
-.Branch-checkbox {
+.Counter-checkbox {
   display: flex;
   align-items: center !important;
 }
@@ -47,7 +44,7 @@
   gap: 10px !important;
 }
 
-.Add-btn-Branch {
+.Add-btn-Counter {
   font-size: 14px;
   font-weight: 500;
   padding: 6px 18px !important;
@@ -59,12 +56,12 @@
   border-color: #7484b7 !important;
 }
 
-.Add-btn-Branch:hover {
+.Add-btn-Counter:hover {
   background: linear-gradient(to bottom, #77c0cb 0%, #2c9cc0 100%);
   border-color: #77c0cb !important;
 }
 
-.Reset-btn-Branch {
+.Reset-btn-Counter {
   font-size: 14px;
   font-weight: 500;
   padding: 6px 18px !important;
@@ -76,7 +73,7 @@
   border-color: #77c0cb !important;
 }
 
-.Reset-btn-Branch:hover {
+.Reset-btn-Counter:hover {
   background: linear-gradient(to bottom, #7484b7 0%, #536395 100%);
   border-color: #7484b7 !important;
 }
@@ -100,7 +97,7 @@
 
 .icon-spaceing-dlt-edit {
   display: flex;
-  justify-content: center !important;
+  justify-content: end !important;
   gap: 10px !important;
 }
 
@@ -114,9 +111,9 @@
   color: #77c0cb !important;
 }
 
-.text-labels {
-  font-size: 11px;
-  font-weight: 700;
-  font-family: "Montserrat", sans-serif;
-  color: #45494d !important;
+.btn-col-class {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 5px;
 }

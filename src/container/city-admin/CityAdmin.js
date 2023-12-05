@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Row, Col } from "react-bootstrap";
-import "./BranchAdmin.css";
+import "./CityAdmin.css";
 import {
   Paper,
   TextField,
@@ -9,7 +9,7 @@ import {
   Table,
 } from "../../components/elements";
 
-const BranchAdmin = () => {
+const CityAdmin = () => {
   const [isCheckboxSelected, setIsCheckboxSelected] = useState(false);
 
   const handleCheckboxChange = (e) => {
@@ -47,21 +47,25 @@ const BranchAdmin = () => {
       title: "Shift Name",
       dataIndex: "shiftName",
       key: "shiftName",
+      align: "left",
     },
     {
       title: "Start Time",
       dataIndex: "startTime",
       key: "startTime",
+      align: "center",
     },
     {
       title: "End Time",
       dataIndex: "endTime",
       key: "endTime",
+      align: "center",
     },
     {
       title: "Active",
       dataIndex: "active",
       key: "active",
+      align: "center",
       render: (text, record) => (
         <>
           <span>
@@ -79,6 +83,9 @@ const BranchAdmin = () => {
           <span className="icon-spaceing-dlt-edit">
             <i className="icon-text-edit icon-EDT-DLT-color"></i>
             <i className="icon-close icon-EDT-DLT-color"></i>
+            <i className="icon-counter icon-EDT-DLT-color"></i>
+            <i className="icon-repeat icon-EDT-DLT-color"></i>
+            <i className="icon-user icon-EDT-DLT-color"></i>
           </span>
         </>
       ),
@@ -87,48 +94,45 @@ const BranchAdmin = () => {
 
   return (
     <>
-      <section className="SectionBranch-Admin">
+      <section className="SectionCityAdmin">
         <Row>
-          <Col lg={6} md={6} sm={6} className="d-flex justify-content-start">
+          <Col lg={12} md={12} sm={12} className="d-flex justify-content-start">
             <span className="shift-heading">
-              Shift
+              Branch
               <span className="shift-sub-heading">
                 {" "}
                 (Saudi Arabia - Riyadh)
               </span>
             </span>
           </Col>
-          <Col lg={6} md={6} sm={6} className="d-flex justify-content-end">
-            <span className="shift-sub-heading-right">Olaya Street Branch</span>
-          </Col>
         </Row>
         <Row className="mt-3">
           <Col lg={12} md={12} sm={12}>
-            <Paper className="Branch-Admin-paper">
+            <Paper className="CityAdmin-paper">
               <Row>
                 <Col lg={6} md={6} sm={6}>
-                  <span className="text-labels">Shift Name</span>
+                  <span>Branch Name</span>
                   <TextField
-                    name="Shift"
-                    placeholder="Shift Name"
+                    name="Branch Name"
+                    placeholder="Branch Name"
                     labelClass="d-none"
                   />
                 </Col>
 
                 <Col lg={3} md={3} sm={3}>
-                  <span className="text-labels">Shift Start Time</span>
+                  <span>Branch Start Time</span>
                   <TextField
-                    name="Shift"
-                    placeholder="Shift Start Time"
+                    name="Branch Start Time"
+                    placeholder="Branch Start Time"
                     labelClass="d-none"
                   />
                 </Col>
 
                 <Col lg={3} md={3} sm={3}>
-                  <span className="text-labels">Shift End Time</span>
+                  <span>Branch End Time</span>
                   <TextField
-                    name="Shift"
-                    placeholder="Shift End Time"
+                    name="Branch End Time"
+                    placeholder="Branch End Time"
                     labelClass="d-none"
                   />
                 </Col>
@@ -138,26 +142,28 @@ const BranchAdmin = () => {
                   <Checkbox
                     checked={isCheckboxSelected}
                     onChange={handleCheckboxChange}
-                    classNameDiv="Branch-checkbox"
-                    label={<span className="checkbox-label">Active</span>}
+                    classNameDiv="CityAdmin-checkbox"
+                    label={
+                      <span className="CityAdmin-checkbox-label">Active</span>
+                    }
                   />
                 </Col>
 
-                <Col lg={6} md={6} sm={6} className="btn-class-branch">
+                <Col lg={6} md={6} sm={6} className="btn-class-CityAdmin">
                   <Button
                     icon={<i className="icon-add-circle icon-space"></i>}
                     text="Add"
-                    className="Add-btn-Branch"
+                    className="Add-btn-CityAdmin"
                   />
                   <Button
                     icon={<i className="icon-refresh icon-space"></i>}
                     text="Reset"
-                    className="Reset-btn-Branch"
+                    className="Reset-btn-CityAdmin"
                   />
                 </Col>
               </Row>
 
-              <Row>
+              <Row className="mt-3">
                 <Col lg={12} md={12} sm={12}>
                   <Table
                     rows={dataSource}
@@ -175,4 +181,4 @@ const BranchAdmin = () => {
   );
 };
 
-export default BranchAdmin;
+export default CityAdmin;

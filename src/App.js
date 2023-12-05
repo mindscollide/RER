@@ -1,6 +1,7 @@
 import React, { useEffect } from "react";
 import "./App.css";
 import "./assets/custom-icons/custom-icon.css";
+import "./assets/english-fonts/montserrat.css";
 // import "./Fonts.css";
 // import "./fr.css";
 // import "./ar.css";

@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Row, Col } from "react-bootstrap";
-import "./BranchAdmin.css";
+import "./CounterMain.css";
 import {
   Paper,
   TextField,
@@ -9,7 +9,7 @@ import {
   Table,
 } from "../../components/elements";
 
-const BranchAdmin = () => {
+const CounterMain = () => {
   const [isCheckboxSelected, setIsCheckboxSelected] = useState(false);
 
   const handleCheckboxChange = (e) => {
@@ -48,16 +48,7 @@ const BranchAdmin = () => {
       dataIndex: "shiftName",
       key: "shiftName",
     },
-    {
-      title: "Start Time",
-      dataIndex: "startTime",
-      key: "startTime",
-    },
-    {
-      title: "End Time",
-      dataIndex: "endTime",
-      key: "endTime",
-    },
+
     {
       title: "Active",
       dataIndex: "active",
@@ -87,11 +78,11 @@ const BranchAdmin = () => {
 
   return (
     <>
-      <section className="SectionBranch-Admin">
+      <section className="SectionCounter-Admin">
         <Row>
           <Col lg={6} md={6} sm={6} className="d-flex justify-content-start">
             <span className="shift-heading">
-              Shift
+              Counters
               <span className="shift-sub-heading">
                 {" "}
                 (Saudi Arabia - Riyadh)
@@ -104,10 +95,10 @@ const BranchAdmin = () => {
         </Row>
         <Row className="mt-3">
           <Col lg={12} md={12} sm={12}>
-            <Paper className="Branch-Admin-paper">
+            <Paper className="Counter-Admin-paper">
               <Row>
                 <Col lg={6} md={6} sm={6}>
-                  <span className="text-labels">Shift Name</span>
+                  <span>Shift Name</span>
                   <TextField
                     name="Shift"
                     placeholder="Shift Name"
@@ -115,39 +106,20 @@ const BranchAdmin = () => {
                   />
                 </Col>
 
-                <Col lg={3} md={3} sm={3}>
-                  <span className="text-labels">Shift Start Time</span>
-                  <TextField
-                    name="Shift"
-                    placeholder="Shift Start Time"
-                    labelClass="d-none"
-                  />
-                </Col>
-
-                <Col lg={3} md={3} sm={3}>
-                  <span className="text-labels">Shift End Time</span>
-                  <TextField
-                    name="Shift"
-                    placeholder="Shift End Time"
-                    labelClass="d-none"
-                  />
-                </Col>
-              </Row>
-              <Row className="my-3">
-                <Col lg={6} md={6} sm={6}>
+                <Col lg={2} md={2} sm={2} className="mt-4">
                   <Checkbox
                     checked={isCheckboxSelected}
                     onChange={handleCheckboxChange}
-                    classNameDiv="Branch-checkbox"
+                    classNameDiv="Counter-checkbox"
                     label={<span className="checkbox-label">Active</span>}
                   />
                 </Col>
 
-                <Col lg={6} md={6} sm={6} className="btn-class-branch">
+                <Col lg={4} md={4} sm={4} className="btn-col-class">
                   <Button
                     icon={<i className="icon-add-circle icon-space"></i>}
                     text="Add"
-                    className="Add-btn-Branch"
+                    className="Add-btn-Counter"
                   />
                   <Button
                     icon={<i className="icon-refresh icon-space"></i>}
@@ -156,8 +128,7 @@ const BranchAdmin = () => {
                   />
                 </Col>
               </Row>
-
-              <Row>
+              <Row className="mt-2">
                 <Col lg={12} md={12} sm={12}>
                   <Table
                     rows={dataSource}
@@ -175,4 +146,4 @@ const BranchAdmin = () => {
   );
 };
 
-export default BranchAdmin;
+export default CounterMain;
