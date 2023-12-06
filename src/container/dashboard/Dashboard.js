@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Outlet } from "react-router-dom";
 import Header from "../../components/layout/header/Header";
 import Sidebar from "../../components/layout/sidebar/Sidebar";
@@ -10,7 +10,12 @@ import "./Dashboard.css";
 
 const Dashboard = () => {
   const [currentLanguage, setCurrentLanguage] = useState("en");
+  let i18nextLng = localStorage.getItem("i18nextLng");
 
+  useEffect(() => {
+    setCurrentLanguage(i18nextLng);
+    console.log("Current Language UseEffect", currentLanguage);
+  }, [i18nextLng]);
   return (
     <>
       <ConfigProvider
