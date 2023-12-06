@@ -9,9 +9,15 @@ import {
   Table,
 } from "../../components/elements";
 import Select from "react-select";
+import { Radio } from "antd";
 
 const EmployeeMain = () => {
   const [isCheckboxSelected, setIsCheckboxSelected] = useState(false);
+  const [branchEmployeeOption, setBranchEmployeeOption] = useState(null);
+
+  const handleBranchEmployeeChange = (e) => {
+    setBranchEmployeeOption(e.target.value);
+  };
 
   const handleCheckboxChange = (e) => {
     setIsCheckboxSelected(e.target.checked);
@@ -20,7 +26,7 @@ const EmployeeMain = () => {
   const dataSource = [
     {
       id: <span className="table-inside-text">1</span>,
-      shiftName: <span className="table-inside-text">Morning Shift</span>,
+      name: <span className="table-inside-text">Morning Shift</span>,
       capcity: <span className="table-inside-text">Olaya Branch</span>,
     },
   ];
@@ -33,15 +39,14 @@ const EmployeeMain = () => {
     },
     {
       title: <span className="table-text">Name</span>,
-      dataIndex: "shiftName",
-      key: "shiftName",
+      dataIndex: "name",
+      key: "name",
     },
     {
       title: <span className="table-text">Capcity</span>,
       dataIndex: "capcity",
       key: "capcity",
     },
-
     {
       title: <span className="table-text">Active</span>,
       dataIndex: "active",
@@ -80,10 +85,10 @@ const EmployeeMain = () => {
         </Row>
         <Row className="mt-3">
           <Col lg={12} md={12} sm={12}>
-            <Paper className="Counter-Admin-paper">
+            <Paper className="Employee-Main-paper">
               <Row>
-                <Col lg={4} md={4} sm={4}>
-                  <span className="text-labels">Shift Name</span>
+                <Col lg={4} md={4} sm={4} className="mt-3">
+                  {/* <span className="text-labels"></span> */}
                   <TextField
                     name="Shift"
                     placeholder="Shift Name"
@@ -105,14 +110,20 @@ const EmployeeMain = () => {
                   sm={2}
                   className="d-flex justify-content-start mt-2"
                 >
-                  <Checkbox
-                    checked={isCheckboxSelected}
-                    onChange={handleCheckboxChange}
+                  {/* <Checkbox
+                    checked={isCheckboxSelectedTwo}
+                    onChange={handleCheckboxChangeTwo}
                     classNameDiv="Counter-checkbox"
                     label={
                       <span className="checkbox-label">Branch Employee</span>
                     }
-                  />
+                  /> */}
+                  <Radio.Group
+                    onChange={handleBranchEmployeeChange}
+                    value={branchEmployeeOption}
+                  >
+                    <Radio value="option1">Branch Employee</Radio>
+                  </Radio.Group>
                 </Col>
                 <Col lg={2} md={2} sm={2} className="mt-3">
                   <Select />
