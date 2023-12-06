@@ -10,8 +10,10 @@ import {
 } from "../../components/elements";
 import DatePicker from "react-multi-date-picker";
 import TimePicker from "react-multi-date-picker/plugins/time_picker";
+import { useTranslation } from "react-i18next";
 
 const CityAdmin = () => {
+  const { t } = useTranslation();
   const [isCheckboxSelected, setIsCheckboxSelected] = useState(false);
 
   const handleCheckboxChange = (e) => {
@@ -46,25 +48,25 @@ const CityAdmin = () => {
       key: "id",
     },
     {
-      title: <span className="table-text">Shift Name</span>,
+      title: <span className="table-text">{t("Shift-name")}</span>,
       dataIndex: "shiftName",
       key: "shiftName",
       align: "left",
     },
     {
-      title: <span className="table-text">Start Time</span>,
+      title: <span className="table-text">{t("Start-time")}</span>,
       dataIndex: "startTime",
       key: "startTime",
       align: "center",
     },
     {
-      title: <span className="table-text">End Time</span>,
+      title: <span className="table-text">{t("End-time")}</span>,
       dataIndex: "endTime",
       key: "endTime",
       align: "center",
     },
     {
-      title: <span className="table-text">Active</span>,
+      title: <span className="table-text">{t("Active")}</span>,
       dataIndex: "active",
       key: "active",
       align: "center",
@@ -100,10 +102,10 @@ const CityAdmin = () => {
         <Row>
           <Col lg={12} md={12} sm={12} className="d-flex justify-content-start">
             <span className="shift-heading">
-              Branch
+              {t("Branch")}
               <span className="shift-sub-heading">
                 {" "}
-                (Saudi Arabia - Riyadh)
+                {t("Saudi-arabia-riyadh")}
               </span>
             </span>
           </Col>
@@ -113,7 +115,7 @@ const CityAdmin = () => {
             <Paper className="CityAdmin-paper">
               <Row>
                 <Col lg={6} md={6} sm={6}>
-                  <span className="text-labels">Branch Name</span>
+                  <span className="text-labels">{t("Branch-name")}</span>
                   <TextField
                     name="Branch Name"
                     placeholder="Branch Name"
@@ -127,7 +129,9 @@ const CityAdmin = () => {
                   sm={3}
                   className="col-for-date-timepicker-cityad"
                 >
-                  <label className="text-labels">Branch Start Time</label>
+                  <label className="text-labels">
+                    {t("Branch-start-time")}
+                  </label>
                   <DatePicker
                     arrowClassName="arrowClass"
                     containerClassName="containerClassTimePicker"
@@ -143,7 +147,7 @@ const CityAdmin = () => {
                   sm={3}
                   className="col-for-date-timepicker-cityad"
                 >
-                  <label className="text-labels">Branch End Time</label>
+                  <label className="text-labels">{t("Branch-end-time")}</label>
                   <DatePicker
                     arrowClassName="arrowClass"
                     containerClassName="containerClassTimePicker"
@@ -159,19 +163,21 @@ const CityAdmin = () => {
                     checked={isCheckboxSelected}
                     onChange={handleCheckboxChange}
                     classNameDiv="CityAdmin-checkbox"
-                    label={<span className="checkbox-label">Active</span>}
+                    label={
+                      <span className="checkbox-label">{t("Active")}</span>
+                    }
                   />
                 </Col>
 
                 <Col lg={6} md={6} sm={6} className="btn-class-CityAdmin">
                   <Button
                     icon={<i className="icon-add-circle icon-space"></i>}
-                    text="Add"
+                    text={t("Add")}
                     className="Add-btn-CityAdmin"
                   />
                   <Button
                     icon={<i className="icon-refresh icon-space"></i>}
-                    text="Reset"
+                    text={t("Reset")}
                     className="Reset-btn-CityAdmin"
                   />
                 </Col>

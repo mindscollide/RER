@@ -67,7 +67,7 @@ const Sidebar = () => {
       >
         <Menu.SubMenu
           key="sub1"
-          icon={<i className="icon-settings"></i>}
+          icon={<i className="icon-settings side-bar-icons"></i>}
           title={t("Setups")}
           className="menu-item"
         >
@@ -90,7 +90,7 @@ const Sidebar = () => {
             className="menu-item-sub"
             onClick={onClickBranchService}
           >
-            {t("Branch-Service")}
+            {t("Branch-service")}
           </Menu.Item>
           <Menu.Item
             key="5"
@@ -134,12 +134,12 @@ const Sidebar = () => {
             className="menu-item-sub"
             onClick={onClickCountryCityWise}
           >
-            {t("Country-City-Wise-Counter")}
+            {t("Country-city-wise-counter")}
           </Menu.Item>
         </Menu.SubMenu>
         <Menu.SubMenu
           key="sub2"
-          icon={<i className="icon-report"></i>}
+          icon={<i className="icon-file side-bar-icons"></i>}
           title="Reports"
           className="menu-item-two"
         >

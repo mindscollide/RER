@@ -12,8 +12,11 @@ import Select from "react-select";
 import { Radio } from "antd";
 import AddEditEmployee from "../modals/add-edit-modal/AddEditEmployee";
 import DeleteEmployeeModal from "../modals/delete-employee-modal/DeleteEmplyeeModal";
+import { useTranslation } from "react-i18next";
 
 const EmployeeMain = () => {
+  const { t } = useTranslation();
+
   const [isCheckboxSelected, setIsCheckboxSelected] = useState(false);
   const [branchEmployeeOption, setBranchEmployeeOption] = useState(null);
   const [branchEmployeeOptionTwo, setBranchEmployeeOptionTwo] = useState(null);
@@ -61,17 +64,17 @@ const EmployeeMain = () => {
       key: "id",
     },
     {
-      title: <span className="table-text">Name</span>,
+      title: <span className="table-text">{t("Name")}</span>,
       dataIndex: "name",
       key: "name",
     },
     {
-      title: <span className="table-text">Capcity</span>,
+      title: <span className="table-text">{t("Capcity")}</span>,
       dataIndex: "capcity",
       key: "capcity",
     },
     {
-      title: <span className="table-text">Active</span>,
+      title: <span className="table-text">{t("Active")}</span>,
       dataIndex: "active",
       key: "active",
       render: (text, record) => (
@@ -106,7 +109,7 @@ const EmployeeMain = () => {
       <section>
         <Row>
           <Col lg={12} md={12} sm={12} className="d-flex justify-content-start">
-            <span className="shift-heading">Employee</span>
+            <span className="shift-heading">{t("Employee")}</span>
           </Col>
         </Row>
         <Row className="mt-3">
@@ -127,7 +130,9 @@ const EmployeeMain = () => {
                     checked={isCheckboxSelected}
                     onChange={handleCheckboxChange}
                     classNameDiv="Counter-checkbox"
-                    label={<span className="checkbox-label">Active</span>}
+                    label={
+                      <span className="checkbox-label">{t("Active")}</span>
+                    }
                   />
                 </Col>
                 <Col
@@ -140,7 +145,7 @@ const EmployeeMain = () => {
                     onChange={handleBranchEmployeeChange}
                     value={branchEmployeeOption}
                   >
-                    <Radio value="option1">Branch Employee</Radio>
+                    <Radio value="option1">{t("Branch-employee")}</Radio>
                   </Radio.Group>
                 </Col>
                 <Col lg={2} md={2} sm={2} className="mt-3">
@@ -152,7 +157,7 @@ const EmployeeMain = () => {
                     onChange={handleBranchEmployeeChangesTwo}
                     value={branchEmployeeOptionTwo}
                   >
-                    <Radio value="option1">Home Visit</Radio>
+                    <Radio value="option1">{t("Home-visit")}</Radio>
                   </Radio.Group>
                 </Col>
                 <Col lg={1} md={1} sm={1} />
@@ -162,17 +167,17 @@ const EmployeeMain = () => {
                 <Col lg={12} md={12} sm={12} className="three-button-col mt-3">
                   <Button
                     icon={<i className="icon-search city-icon-space"></i>}
-                    text={"Search"}
+                    text={t("Search")}
                     className="Search-Icon-Btn"
                   />
                   <Button
                     icon={<i className="icon-repeat icon-space"></i>}
-                    text="Revert"
+                    text={t("Revert")}
                     className="revert-btn-CityBranchWise"
                   />
                   <Button
                     icon={<i className="icon-user-plus icon-space"></i>}
-                    text="Add Employee"
+                    text={t("Add Employee")}
                     onClick={openAddEditMoadal}
                     className="Employee-Add-Btn"
                   />

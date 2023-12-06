@@ -3,8 +3,11 @@ import { Row, Col } from "react-bootstrap";
 import "./CityWiseCounter.css";
 import { Paper, Button, Table } from "../../components/elements";
 import Select from "react-select";
+import { useTranslation } from "react-i18next";
 
 const CityWiseCounter = () => {
+  const { t } = useTranslation();
+
   const [selectedOption, setSelectedOption] = useState(null);
 
   const options = [
@@ -63,14 +66,14 @@ const CityWiseCounter = () => {
 
   const columns = [
     {
-      title: "Counter Name",
+      title: <span>{t("Counter-name")}</span>,
       dataIndex: "counterName",
       key: "counterName",
       width: "400px",
       align: "left",
     },
     {
-      title: "Service",
+      title: <span>{t("Service")}</span>,
       dataIndex: "service",
       key: "service",
       width: "200px",
@@ -84,10 +87,10 @@ const CityWiseCounter = () => {
         <Row>
           <Col lg={12} md={12} sm={12} className="d-flex justify-content-start">
             <span className="shift-heading">
-              City Branch Shift Wise Counters
+              {t("City-branch-shift-wise-counters")}
               <span className="shift-sub-heading">
                 {" "}
-                (Saudi Arabia - Riyadh)
+                {t("Saudi-arabia-riyadh")}
               </span>
             </span>
           </Col>
@@ -102,7 +105,7 @@ const CityWiseCounter = () => {
                   sm={4}
                   className="d-flex justify-content-end"
                 >
-                  <label className="text-labels">Branch</label>
+                  <label className="text-labels">{t("Branch")}</label>
                 </Col>
                 <Col lg={8} md={8} sm={8} />
               </Row>
@@ -117,7 +120,7 @@ const CityWiseCounter = () => {
                   />
                   <Button
                     icon={<i className="icon-search city-icon-space"></i>}
-                    text={"Search"}
+                    text={t("Search")}
                     className="Search-Icon-Btn"
                   />
                 </Col>

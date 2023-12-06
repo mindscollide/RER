@@ -1,4 +1,4 @@
-.CityBranchShift-paper {
+.CountryCityWise-paper {
   border-radius: 4px;
   padding: 1.5rem 1rem !important;
   width: 100% !important;
@@ -6,13 +6,13 @@
   background-color: #ffffff !important;
 }
 
-.CityBranchShift-col {
+.CountryCityWise-col {
   display: flex;
   justify-content: center;
   gap: 5px;
 }
 
-.Search-Icon-Btn {
+.Search-Country-Wise-Icon-Btn {
   font-size: 14px;
   font-weight: 500;
   font-family: "Montserrat", sans-serif !important;
@@ -25,12 +25,12 @@
   border-color: #7484b7 !important;
 }
 
-.Search-Icon-Btn:hover {
+.Search-Country-Wise-Icon-Btn:hover {
   background: linear-gradient(to bottom, #77c0cb 0%, #2c9cc0 100%);
   border-color: #77c0cb !important;
 }
 
-.citywisebranchwiseselector {
+.CountryCityWise {
   width: 100% !important;
   max-width: 450px !important;
 }
@@ -41,7 +41,7 @@
   align-items: center !important;
 }
 
-.collapse-bg-color {
+.Country-Wise-collapse-bg-color {
   align-items: center !important;
   background-color: #76c641 !important;
   color: #ffffff !important;
@@ -50,7 +50,7 @@
   justify-content: space-between;
 }
 
-.collapse-disable-bg {
+.collapse-Country-Wise-disable-bg {
   background-color: transparent !important;
 }
 
@@ -72,4 +72,39 @@
   > .ant-collapse-item
   > .ant-collapse-header {
   padding: 3px 16px;
+}
+
+.div-table-country-wise {
+  max-height: 32vh !important;
+  max-width: 77vw;
+  width: 100%;
+  box-sizing: border-box !important;
+  overflow-x: auto !important;
+  border-radius: 0px !important;
+}
+
+.div-table-country-wise th.ant-table-cell {
+  color: #002650 !important;
+  border-radius: 0% !important;
+  position: sticky !important;
+  font-family: "Montserrat", sans-serif;
+  white-space: nowrap !important;
+  overflow: hidden !important;
+  text-overflow: ellipsis !important;
+  top: 0 !important;
+  z-index: 1;
+  background: #ffffff !important;
+}
+
+.div-table-country-wise::-webkit-scrollbar {
+  width: 0.5rem;
+  height: 0.5rem;
+  border-radius: 20px;
+  background-color: #ffffff;
+}
+
+.div-table-country-wise::-webkit-scrollbar-thumb {
+  border-radius: 20px;
+  background: #ccc;
+  margin-left: -15px;
 }

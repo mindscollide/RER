@@ -9,8 +9,10 @@ import {
 import { Radio } from "antd";
 import Select from "react-select";
 import "./AddEditEmployee.css";
+import { useTranslation } from "react-i18next";
 
 const AddEditEmployee = ({ addEditModal, setAddEditModal }) => {
+  const { t } = useTranslation();
   const [homeVisit, setHomeVisit] = useState(null);
   const [branchEmployee, setBranchEmployee] = useState(null);
   const [isCheckbox, setIsCheckbox] = useState(false);
@@ -50,7 +52,7 @@ const AddEditEmployee = ({ addEditModal, setAddEditModal }) => {
             <Row>
               <Col>
                 <label className="add-edit-heading-modal">
-                  Add/Edit Employee
+                  {t("Add-edit-employee")}
                 </label>
               </Col>
             </Row>
@@ -63,7 +65,7 @@ const AddEditEmployee = ({ addEditModal, setAddEditModal }) => {
                     classNameDiv="chechbox-align-label"
                     label={
                       <span className="checkbox-label-Active-Employee-Modal">
-                        Active
+                        {t("Active")}
                       </span>
                     }
                   />
@@ -83,7 +85,7 @@ const AddEditEmployee = ({ addEditModal, setAddEditModal }) => {
                     onChange={branchEmployeeRadioChange}
                     value={branchEmployee}
                   >
-                    <Radio value="option1">Branch Employee</Radio>
+                    <Radio value="option1">{t("Branch-employee")}</Radio>
                   </Radio.Group>
                 </div>
               </Col>
@@ -94,7 +96,7 @@ const AddEditEmployee = ({ addEditModal, setAddEditModal }) => {
             <Row>
               <Col lg={12} md={12} sm={12} className="mt-3">
                 <Radio.Group onChange={homeVisitRadioChange} value={homeVisit}>
-                  <Radio value="option1">Home Visit</Radio>
+                  <Radio value="option1">{t("Home-visit")}</Radio>
                 </Radio.Group>
               </Col>
             </Row>
@@ -109,9 +111,12 @@ const AddEditEmployee = ({ addEditModal, setAddEditModal }) => {
                 sm={12}
                 className="add-edit-cancel-modal-btn-col"
               >
-                <Button text="Add/Update" className="AddEdit-btn-Employee" />
                 <Button
-                  text="Cancel"
+                  text={t("Add-update")}
+                  className="AddEdit-btn-Employee"
+                />
+                <Button
+                  text={t("Cancel")}
                   className="Cancel-btn-Employee"
                   onClick={onCancelModalHandler}
                 />

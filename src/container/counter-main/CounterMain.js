@@ -8,9 +8,11 @@ import {
   Button,
   Table,
 } from "../../components/elements";
+import { useTranslation } from "react-i18next";
 
 const CounterMain = () => {
   const [isCheckboxSelected, setIsCheckboxSelected] = useState(false);
+  const { t } = useTranslation();
 
   const handleCheckboxChange = (e) => {
     setIsCheckboxSelected(e.target.checked);
@@ -44,13 +46,13 @@ const CounterMain = () => {
       key: "id",
     },
     {
-      title: <span className="table-text">Shift Name</span>,
+      title: <span className="table-text">{t("Shift-name")}</span>,
       dataIndex: "shiftName",
       key: "shiftName",
     },
 
     {
-      title: <span className="table-text">Active</span>,
+      title: <span className="table-text">{t("Active")}</span>,
       dataIndex: "active",
       key: "active",
       render: (text, record) => (
@@ -82,15 +84,17 @@ const CounterMain = () => {
         <Row>
           <Col lg={6} md={6} sm={6} className="d-flex justify-content-start">
             <span className="shift-heading">
-              Counters
+              {t("Counters")}
               <span className="shift-sub-heading">
                 {" "}
-                (Saudi Arabia - Riyadh)
+                {t("Saudi-arabia-riyadh")}
               </span>
             </span>
           </Col>
           <Col lg={6} md={6} sm={6} className="d-flex justify-content-end">
-            <span className="shift-sub-heading-right">Olaya Street Branch</span>
+            <span className="shift-sub-heading-right">
+              {t("Olaya-street-branch")}
+            </span>
           </Col>
         </Row>
         <Row className="mt-3">
@@ -98,7 +102,7 @@ const CounterMain = () => {
             <Paper className="Counter-Admin-paper">
               <Row>
                 <Col lg={6} md={6} sm={6}>
-                  <span className="text-labels">Shift Name</span>
+                  <span className="text-labels">{t("Shift-name")}</span>
                   <TextField
                     name="Shift"
                     placeholder="Shift Name"
@@ -111,19 +115,21 @@ const CounterMain = () => {
                     checked={isCheckboxSelected}
                     onChange={handleCheckboxChange}
                     classNameDiv="Counter-checkbox"
-                    label={<span className="checkbox-label">Active</span>}
+                    label={
+                      <span className="checkbox-label">{t("Active")}</span>
+                    }
                   />
                 </Col>
 
                 <Col lg={4} md={4} sm={4} className="btn-col-class">
                   <Button
                     icon={<i className="icon-add-circle icon-space"></i>}
-                    text="Add"
+                    text={t("Add")}
                     className="Add-btn-Counter"
                   />
                   <Button
                     icon={<i className="icon-refresh icon-space"></i>}
-                    text="Reset"
+                    text={t("Reset")}
                     className="Reset-btn-Branch"
                   />
                 </Col>

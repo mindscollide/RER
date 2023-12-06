@@ -131,7 +131,7 @@ const Header = () => {
               title={
                 <div className="user-dd d-flex align-items-center ps-2">
                   <span
-                    className="user-name text-truncate"
+                    className="user-name-two text-truncate"
                     style={
                       selectedLanguage.code === "en"
                         ? { marginRight: "5px" }

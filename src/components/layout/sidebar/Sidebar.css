@@ -36,6 +36,7 @@ body[dir="rtl"] .site-layout {
 .menu-item-two {
   color: #4b5576 !important;
   font-weight: 600 !important;
+  font-family: "Montserrat", sans-serif;
   font-size: 15px !important;
   border-top: 1px solid #e2e6e9;
   border-bottom: 1px solid #e2e6e9;
@@ -56,13 +57,26 @@ body[dir="rtl"] .site-layout {
   border-radius: none !important;
 }
 
-:where(.css-dev-only-do-not-override-2q8sxy).ant-menu-light .ant-menu-item-selected,
-:where(.css-dev-only-do-not-override-2q8sxy).ant-menu-light>.ant-menu .ant-menu-item-selected {
+:where(.css-dev-only-do-not-override-2q8sxy).ant-menu-light
+  .ant-menu-item-selected,
+:where(.css-dev-only-do-not-override-2q8sxy).ant-menu-light
+  > .ant-menu
+  .ant-menu-item-selected {
   background-color: #55c5d1;
   color: #ffffff !important;
 }
-:where(.css-dev-only-do-not-override-2q8sxy).ant-menu-light .ant-menu-submenu-selected>.ant-menu-submenu-title,
-:where(.css-dev-only-do-not-override-2q8sxy).ant-menu-light>.ant-menu .ant-menu-submenu-selected>.ant-menu-submenu-title {
+:where(.css-dev-only-do-not-override-2q8sxy).ant-menu-light
+  .ant-menu-submenu-selected
+  > .ant-menu-submenu-title,
+:where(.css-dev-only-do-not-override-2q8sxy).ant-menu-light
+  > .ant-menu
+  .ant-menu-submenu-selected
+  > .ant-menu-submenu-title {
+  color: #4b5576 !important;
+}
+
+.side-bar-icons {
+  font-size: 17px !important;
   color: #4b5576 !important;
 }
 
