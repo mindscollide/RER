@@ -4,8 +4,8 @@ import { LanguageSelector } from "../../elements";
 import imageProfile from "../../../assets/images/profile3.png";
 import { Navbar, Container, Nav, NavDropdown } from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
-import { useTranslation } from "react-i18next";
 import moment from "moment";
+import { useTranslation } from "react-i18next";
 
 const Header = () => {
   const [selectedLanguage, setSelectedLanguage] = useState({
@@ -36,6 +36,12 @@ const Header = () => {
 
   useEffect(() => {
     document.addEventListener("click", handleClickOutside);
+    setTimeout(() => {
+      // window.location.reload()
+      i18n.changeLanguage("en");
+    }, 100);
+    localStorage.setItem("i18nextLng", "en");
+    moment.locale("en");
     return () => {
       document.removeEventListener("click", handleClickOutside);
     };
@@ -59,12 +65,16 @@ const Header = () => {
     });
     const newLanguage = lang === 1 ? "ar" : lang === 2 ? "en" : "fr";
     // Change the language using i18next instance directly
-    i18n.language = newLanguage;
+    setTimeout(() => {
+      // window.location.reload()
+      i18n.changeLanguage(newLanguage);
+    }, 100);
     localStorage.setItem("i18nextLng", newLanguage);
     moment.locale(newLanguage);
     // Set document direction based on the selected language
     document.body.dir = lang === 1 ? "rtl" : "ltr";
   };
+
   return (
     <>
       <Navbar expand="lg" className="site-header">

@@ -3,12 +3,14 @@ import React, { useState } from "react";
 import { Layout, Menu } from "antd";
 import { useNavigate } from "react-router-dom";
 import "./Sidebar.css";
+import { useTranslation } from "react-i18next";
 const { Sider } = Layout;
 
 const Sidebar = () => {
   const navigate = useNavigate();
   const [openKeys, setOpenKeys] = useState(["sub1"]);
-  
+  const { t } = useTranslation();
+
   const handleOpenChange = (keys) => {
     // Ensure only one submenu is open at a time
     if (keys.length > 0) {
@@ -62,7 +64,7 @@ const Sidebar = () => {
         <Menu.SubMenu
           key="sub1"
           icon={<i className="icon-settings"></i>}
-          title="Setups"
+          title={t("Setups")}
           className="menu-item"
         >
           <Menu.Item
@@ -70,42 +72,42 @@ const Sidebar = () => {
             className="menu-item-sub"
             onClick={onClickBranchAdmin}
           >
-            Branch Admin
+            {t("Branch-admin")}
           </Menu.Item>
           <Menu.Item
             key="3"
             className="menu-item-sub"
             onClick={onClickCounterAdmin}
           >
-            Counter Admin{" "}
+            {t("Counter-admin")}{" "}
           </Menu.Item>
           <Menu.Item
             key="4"
             className="menu-item-sub"
             onClick={onClickBranchService}
           >
-            Branch Service
+            {t("Branch-Service")}
           </Menu.Item>
           <Menu.Item
             key="5"
             className="menu-item-sub"
             onClick={onClickCityAdmin}
           >
-            City Admin
+            {t("City-admin")}
           </Menu.Item>
           <Menu.Item
             key="6"
             className="menu-item-sub"
             onClick={onClickCityBranchServices}
           >
-            City Wise Branch Services
+            {t("City-wise-branch-services")}
           </Menu.Item>
           <Menu.Item
             key="7"
             className="menu-item-sub"
             onClick={onClickCityBranchShift}
           >
-            City Branch Wise Shifts
+            {t("City-branch-wise-shifts")}
           </Menu.Item>
 
           <Menu.Item
@@ -113,7 +115,7 @@ const Sidebar = () => {
             className="menu-item-sub"
             onClick={onClickCityWiseCounter}
           >
-            City Branch Shifts Wise Counter
+            {t("City-branch-shifts-wise-counter")}
           </Menu.Item>
 
           <Menu.Item
@@ -121,7 +123,7 @@ const Sidebar = () => {
             className="menu-item-sub"
             onClick={onClickEmployeeMain}
           >
-            Employee Main
+            {t("Employee-main")}
           </Menu.Item>
         </Menu.SubMenu>
         <Menu.SubMenu
@@ -131,19 +133,19 @@ const Sidebar = () => {
           className="menu-item-two"
         >
           <Menu.Item key="10" className="menu-item-sub">
-            Country Wise Reports
+            {t("Country-wise-reports")}
           </Menu.Item>
           <Menu.Item key="11" className="menu-item-sub">
-            City Wise Reports
+            {t("City-wise-reports")}
           </Menu.Item>
           <Menu.Item key="12" className="menu-item-sub">
-            Branch Wise Reports
+            {t("Branch-wise-reports")}
           </Menu.Item>
           <Menu.Item key="13" className="menu-item-sub">
-            Employee Wise Reports
+            {t("Employee-wise-reports")}
           </Menu.Item>
           <Menu.Item key="14" className="menu-item-sub">
-            Service Wise Reports
+            {t("Service-wise-reports")}
           </Menu.Item>
         </Menu.SubMenu>
       </Menu>
