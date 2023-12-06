@@ -2,15 +2,13 @@
 import React, { useState } from "react";
 import { Layout, Menu } from "antd";
 import { useNavigate } from "react-router-dom";
-
 import "./Sidebar.css";
-
 const { Sider } = Layout;
 
 const Sidebar = () => {
   const navigate = useNavigate();
   const [openKeys, setOpenKeys] = useState(["sub1"]);
-
+  
   const handleOpenChange = (keys) => {
     // Ensure only one submenu is open at a time
     if (keys.length > 0) {
@@ -45,20 +43,13 @@ const Sidebar = () => {
   };
 
   return (
-    <Sider
-      width={250}
-      className="site-layout-background"
-      // style={{ position: "fixed", height: "86%", background: "#fff" }}
-    >
+    <Sider width={250} className="site-layout-background">
       <Menu
         mode="inline"
         defaultSelectedKeys={["1"]}
         openKeys={openKeys}
         onOpenChange={handleOpenChange}
-        style={{
-          height: "100%",
-          borderTopRightRadius: "10px",
-        }}
+        className="site-layout"
       >
         <Menu.SubMenu
           key="sub1"
