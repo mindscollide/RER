@@ -10,17 +10,40 @@ import {
 } from "../../components/elements";
 import Select from "react-select";
 import { Radio } from "antd";
+import AddEditEmployee from "../modals/add-edit-modal/AddEditEmployee";
+import DeleteEmployeeModal from "../modals/delete-employee-modal/DeleteEmplyeeModal";
 
 const EmployeeMain = () => {
   const [isCheckboxSelected, setIsCheckboxSelected] = useState(false);
   const [branchEmployeeOption, setBranchEmployeeOption] = useState(null);
+  const [branchEmployeeOptionTwo, setBranchEmployeeOptionTwo] = useState(null);
+
+  // add edit modal states
+  const [addEditModal, setAddEditModal] = useState(false);
+
+  //delete modal states
+  const [deleteModal, setDeleteModal] = useState(false);
 
   const handleBranchEmployeeChange = (e) => {
     setBranchEmployeeOption(e.target.value);
   };
 
+  const handleBranchEmployeeChangesTwo = (e) => {
+    setBranchEmployeeOptionTwo(e.target.value);
+  };
+
   const handleCheckboxChange = (e) => {
     setIsCheckboxSelected(e.target.checked);
+  };
+
+  // open add edit modal on Button Click
+  const openAddEditMoadal = () => {
+    setAddEditModal(true);
+  };
+
+  // open add delete modal on Button Click
+  const openDeleteModal = () => {
+    setDeleteModal(true);
   };
 
   const dataSource = [
@@ -68,7 +91,10 @@ const EmployeeMain = () => {
         <>
           <span className="icon-spaceing-dlt-edit">
             <i className="icon-text-edit icon-EDT-DLT-color"></i>
-            <i className="icon-close icon-EDT-DLT-color"></i>
+            <i
+              className="icon-close icon-EDT-DLT-color"
+              onClick={openDeleteModal}
+            ></i>
           </span>
         </>
       ),
@@ -108,16 +134,8 @@ const EmployeeMain = () => {
                   lg={2}
                   md={2}
                   sm={2}
-                  className="d-flex justify-content-start mt-2"
+                  className="d-flex justify-content-center mt-4"
                 >
-                  {/* <Checkbox
-                    checked={isCheckboxSelectedTwo}
-                    onChange={handleCheckboxChangeTwo}
-                    classNameDiv="Counter-checkbox"
-                    label={
-                      <span className="checkbox-label">Branch Employee</span>
-                    }
-                  /> */}
                   <Radio.Group
                     onChange={handleBranchEmployeeChange}
                     value={branchEmployeeOption}
@@ -130,12 +148,12 @@ const EmployeeMain = () => {
                 </Col>
 
                 <Col lg={2} md={2} sm={2} className="mt-4">
-                  <Checkbox
-                    checked={isCheckboxSelected}
-                    onChange={handleCheckboxChange}
-                    classNameDiv="Counter-checkbox"
-                    label={<span className="checkbox-label">Home Visit</span>}
-                  />
+                  <Radio.Group
+                    onChange={handleBranchEmployeeChangesTwo}
+                    value={branchEmployeeOptionTwo}
+                  >
+                    <Radio value="option1">Home Visit</Radio>
+                  </Radio.Group>
                 </Col>
                 <Col lg={1} md={1} sm={1} />
               </Row>
@@ -155,6 +173,7 @@ const EmployeeMain = () => {
                   <Button
                     icon={<i className="icon-user-plus icon-space"></i>}
                     text="Add Employee"
+                    onClick={openAddEditMoadal}
                     className="Employee-Add-Btn"
                   />
                 </Col>
@@ -172,6 +191,19 @@ const EmployeeMain = () => {
             </Paper>
           </Col>
         </Row>
+        {addEditModal ? (
+          <AddEditEmployee
+            addEditModal={addEditModal}
+            setAddEditModal={setAddEditModal}
+          />
+        ) : null}
+
+        {deleteModal ? (
+          <DeleteEmployeeModal
+            deleteModal={deleteModal}
+            setDeleteModal={setDeleteModal}
+          />
+        ) : null}
       </section>
     </>
   );

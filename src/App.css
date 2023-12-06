@@ -165,10 +165,22 @@ body {
   color: #45494d;
 }
 
-/* 
-.css-b62m3t-container {
-  position: relative;
-  box-sizing: border-box;
-  width: 100% !important;
-  max-width: 450px !important;
-} */
+/* toggle title End*/
+
+/* Labels For Modals Start */
+
+.add-edit-heading-modal {
+  font-size: 20px;
+  font-weight: 700;
+  font-family: "Montserrat", sans-serif !important;
+  color: #4b5576;
+}
+
+.confirm-delete-text {
+  font-size: 14px;
+  font-family: "Montserrat", sans-serif !important;
+  color: #45494d !important;
+  font-weight: 500;
+}
+
+/* Labels For Modals End */
