@@ -1,11 +1,29 @@
 /* Sidebar.css */
-
-.site-layout-background {
+.site-layout-background{
+  background: #ffffff   !important;
   border-top-right-radius: 10px !important;
-  /*  margin-top: 0px !important; */
-  background: "#fff";
+  border-top-left-radius: 0px !important;
 }
 
+body[dir="rtl"] .site-layout-background {
+  border-top-left-radius: 10px !important;
+  border-top-right-radius: 0px !important;
+  /*  margin-top: 0px !important; */
+  background: #ffffff ;
+}
+.site-layout {
+  border-top-right-radius: 10px !important;
+  height: "100%" !important;
+  /*  margin-top: 0px !important; */
+  background: #ffffff  !important;
+}
+
+body[dir="rtl"] .site-layout {
+  border-top-left-radius: 10px !important;
+  border-top-right-radius: 0px !important;
+  /*  margin-top: 0px !important; */
+  background: #ffffff ;
+}
 .menu-item {
   color: #4b5576 !important;
   font-weight: 600 !important;

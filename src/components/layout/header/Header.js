@@ -62,9 +62,8 @@ const Header = () => {
     i18n.language = newLanguage;
     localStorage.setItem("i18nextLng", newLanguage);
     moment.locale(newLanguage);
-
     // Set document direction based on the selected language
-    document.documentElement.dir = lang === 1 ? "rtl" : "ltr";
+    document.body.dir = lang === 1 ? "rtl" : "ltr";
   };
   return (
     <>
@@ -90,7 +89,14 @@ const Header = () => {
                     {" "}
                     {selectedLanguage.code === "en" ? "English" : "عربى"}
                   </span>
-                  <span className="user-thumb-globe">
+                  <span
+                    className="user-thumb-globe"
+                    style={
+                      selectedLanguage.code === "en"
+                        ? { marginRight: "5px" }
+                        : { marginLeft: "5px" }
+                    }
+                  >
                     <i className="icon-globe"></i>
                   </span>
                 </div>
@@ -114,7 +120,16 @@ const Header = () => {
             <NavDropdown
               title={
                 <div className="user-dd d-flex align-items-center ps-2">
-                  <span className="user-name text-truncate">Owais Wajid</span>
+                  <span
+                    className="user-name text-truncate"
+                    style={
+                      selectedLanguage.code === "en"
+                        ? { marginRight: "5px" }
+                        : { marginLeft: "5px" }
+                    }
+                  >
+                    Owais Wajid
+                  </span>
                   <span className="user-thumb">
                     <img
                       className="rounded-circle img-fluid"
