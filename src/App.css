@@ -54,6 +54,13 @@ body {
   font-weight: 500;
 }
 
+.checkbox-label-Active-Employee-Modal {
+  margin-left: 3px;
+  color: #21252d !important;
+  font-family: "Montserrat", sans-serif;
+  font-weight: 400;
+}
+
 /* For checkbox labels End */
 
 /* For table Title Text and inside text Start*/

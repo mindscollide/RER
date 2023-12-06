@@ -69,6 +69,7 @@
 .chechbox-align-label {
   display: flex;
   align-items: center !important;
+  margin-top: 2px;
 }
 
 .checkbox-div {
@@ -81,6 +82,18 @@
   height: 38px !important;
   width: 80px;
   padding: 4px 6px;
+}
+
+.Radio-Btn-div-For-Select {
+  background-color: #e9ecef;
+  border: 1px solid #ced4da;
+  border-top-right-radius: 0px !important;
+  border-bottom-right-radius: 0px !important;
+  border-radius: 4px;
+  margin-top: 4px;
+  height: 38px !important;
+  width: 158px;
+  padding: 5px 3px;
 }
 
 .textfield-with-checkbox {

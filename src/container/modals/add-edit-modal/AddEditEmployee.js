@@ -7,13 +7,20 @@ import {
   Checkbox,
 } from "../../../components/elements";
 import { Radio } from "antd";
+import Select from "react-select";
 import "./AddEditEmployee.css";
 
 const AddEditEmployee = ({ addEditModal, setAddEditModal }) => {
   const [homeVisit, setHomeVisit] = useState(null);
+  const [branchEmployee, setBranchEmployee] = useState(null);
+  const [isCheckbox, setIsCheckbox] = useState(false);
 
   const homeVisitRadioChange = (e) => {
     setHomeVisit(e.target.value);
+  };
+
+  const branchEmployeeRadioChange = (e) => {
+    setBranchEmployee(e.target.value);
   };
 
   const onCloseAddEditModal = () => {
@@ -22,6 +29,10 @@ const AddEditEmployee = ({ addEditModal, setAddEditModal }) => {
 
   const onCancelModalHandler = () => {
     setAddEditModal(false);
+  };
+
+  const handleCheckboxChange = (e) => {
+    setIsCheckbox(e.target.checked);
   };
 
   return (
@@ -47,8 +58,14 @@ const AddEditEmployee = ({ addEditModal, setAddEditModal }) => {
               <Col lg={2} md={2} sm={2} className="mt-3">
                 <div className="checkbox-div">
                   <Checkbox
+                    onChange={handleCheckboxChange}
+                    checked={isCheckbox}
                     classNameDiv="chechbox-align-label"
-                    label={<span className="checkbox-label">Active</span>}
+                    label={
+                      <span className="checkbox-label-Active-Employee-Modal">
+                        Active
+                      </span>
+                    }
                   />
                 </div>
               </Col>
@@ -59,9 +76,19 @@ const AddEditEmployee = ({ addEditModal, setAddEditModal }) => {
                 />
               </Col>
             </Row>
-            <Row>
-              <Col lg={12} md={12} sm={12}>
-                <TextField placeholder="Branch Employee" />
+            <Row className="mt-2">
+              <Col lg={4} md={4} sm={4}>
+                <div className="Radio-Btn-div-For-Select">
+                  <Radio.Group
+                    onChange={branchEmployeeRadioChange}
+                    value={branchEmployee}
+                  >
+                    <Radio value="option1">Branch Employee</Radio>
+                  </Radio.Group>
+                </div>
+              </Col>
+              <Col lg={8} md={8} sm={8} className="mt-1">
+                <Select placeholder="Branch Employee" />
               </Col>
             </Row>
             <Row>
