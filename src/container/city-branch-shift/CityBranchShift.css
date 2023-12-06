@@ -41,12 +41,35 @@
   align-items: center !important;
 }
 
-.accordion-bg-color {
-  width: 100%;
-  color: #ffffff;
-  padding: 8px 15px;
-  font-size: 16px;
-  border-radius: 7 !important;
-  background-color: #76c641;
-  border: none !important;
+.collapse-bg-color {
+  align-items: center !important;
+  background-color: #76c641 !important;
+  color: #ffffff !important;
+  padding: 10px !important;
+  display: flex !important;
+  justify-content: space-between;
+}
+
+.collapse-disable-bg {
+  background-color: transparent !important;
+}
+
+:where(.css-dev-only-do-not-override-2q8sxy).ant-collapse
+  .ant-collapse-content
+  > .ant-collapse-content-box {
+  padding: 16px 25px;
+}
+
+/* for not showing icon beside the header */
+:where(.css-dev-only-do-not-override-2q8sxy).ant-collapse
+  > .ant-collapse-item
+  > .ant-collapse-header
+  .ant-collapse-expand-icon {
+  display: none;
+}
+
+:where(.css-dev-only-do-not-override-2q8sxy).ant-collapse
+  > .ant-collapse-item
+  > .ant-collapse-header {
+  padding: 3px 16px;
 }

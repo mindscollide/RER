@@ -10,6 +10,8 @@ import BranchService from "../container/branch-service/BranchService";
 import CityAdmin from "../container/city-admin/CityAdmin";
 import CityBranchService from "../container/city-branch-service/CityBranchServices";
 import CityBranchShift from "../container/city-branch-shift/CityBranchShift";
+import CityWiseCounter from "../container/city-wise-counter/CityWiseCounter";
+import EmployeeMain from "../container/employee-main/EmployeeMain";
 import Dashboard from "../container/dashboard/Dashboard";
 export const router = createHashRouter(
   createRoutesFromElements(
@@ -22,6 +24,8 @@ export const router = createHashRouter(
           <Route path="CityAdmin" element={<CityAdmin />} />
           <Route path="CityBranchService" element={<CityBranchService />} />
           <Route path="CityBranchShift" element={<CityBranchShift />} />
+          <Route path="CityWiseCounter" element={<CityWiseCounter />} />
+          <Route path="EmployeeMain" element={<EmployeeMain />} />
         </Route>
       </Route>
     </>
