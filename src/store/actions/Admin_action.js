@@ -7,6 +7,7 @@ import {
   updateLastSelectedLanguage,
 } from "../../commen/apis/Api_config";
 import { adminURL } from "../../commen/apis/Api_ends_points";
+import moment from "moment";
 
 // this is for cleare states
 const AdminCleareState = () => {
@@ -32,12 +33,11 @@ const getSystemSupportedLanguageFail = (message) => {
 };
 
 // t, navigate, route these 3 props should always be pass from any where its called
-const getSystemSupportedLanguage = (t, navigate, route) => {
-  return (dispatch) => {
-    dispatch(loader_Actions(true));
+const getSystemSupportedLanguage = (t, i18n, navigate, route, data) => {
+  return async (dispatch) => {
     let form = new FormData();
     form.append("RequestMethod", systemSupportedLanguage.RequestMethod);
-    axios({
+    await axios({
       method: "post",
       url: adminURL,
       data: form,
@@ -56,10 +56,12 @@ const getSystemSupportedLanguage = (t, navigate, route) => {
               );
               //   this check is for which routes its comming from
               if (route === "login") {
-              } else if (route === "forgetPassword") {
+                await dispatch(loader_Actions(false));
               } else {
+                await dispatch(
+                  getLastSelectedLanguage(t, i18n, navigate, data)
+                );
               }
-              await dispatch(loader_Actions(false));
             } else if (
               response.data.responseResult.responseMessage ===
               "Admin_AdminServiceManager_GetSystemSupportedLanguage_02"
@@ -119,12 +121,13 @@ const getLastSelectedLanguageFail = (message) => {
   };
 };
 
-const getLastSelectedLanguage = (t, navigate) => {
-  return (dispatch) => {
+const getLastSelectedLanguage = (t, i18n, navigate, data) => {
+  return async (dispatch) => {
     dispatch(loader_Actions(true));
     let form = new FormData();
     form.append("RequestMethod", lastSelectedLanguage.RequestMethod);
-    axios({
+    form.append("RequestData", JSON.stringify(data));
+    await axios({
       method: "post",
       url: adminURL,
       data: form,
@@ -136,6 +139,33 @@ const getLastSelectedLanguage = (t, navigate) => {
               response.data.responseResult.responseMessage ===
               "Admin_AdminServiceManager_GetLastSelectedLanguage_01"
             ) {
+              setTimeout(() => {
+                // window.location.reload()
+                i18n.changeLanguage(
+                  response.data.responseResult.userSelectedLanguage
+                    .systemSupportedLanguageID === 1
+                    ? "en"
+                    : "ar"
+                );
+              }, 100);
+              document.body.dir =
+                response.data.responseResult.userSelectedLanguage
+                  .systemSupportedLanguageID === 1
+                  ? "en"
+                  : "ar";
+              moment.locale(
+                response.data.responseResult.userSelectedLanguage
+                  .systemSupportedLanguageID === 1
+                  ? "en"
+                  : "ar"
+              );
+              localStorage.setItem(
+                "i18nextLng",
+                response.data.responseResult.userSelectedLanguage
+                  .systemSupportedLanguageID === 1
+                  ? "en"
+                  : "ar"
+              );
               await dispatch(
                 getLastSelectedLanguageSuccess(
                   t("Admin_AdminServiceManager_GetLastSelectedLanguage_01")
@@ -198,14 +228,20 @@ const setLastSelectedLanguageFail = (message) => {
   };
 };
 
-const setLastSelectedLanguage = (t, navigate, data) => {
-  return (dispatch) => {
+const setLastSelectedLanguage = (
+  t,
+  i18n,
+  navigate,
+  data,
+  setSelectedLanguage
+) => {
+  return async (dispatch) => {
     dispatch(loader_Actions(true));
     let form = new FormData();
     form.append("RequestMethod", updateLastSelectedLanguage.RequestMethod);
     form.append("RequestData", JSON.stringify(data));
 
-    axios({
+    await axios({
       method: "post",
       url: adminURL,
       data: form,
@@ -222,6 +258,24 @@ const setLastSelectedLanguage = (t, navigate, data) => {
                   t("Admin_AdminServiceManager_SetLastSelectedLanguage_01")
                 )
               );
+              setSelectedLanguage({
+                languageTitle:
+                  data.SystemSupportedLanguageID === 2 ? "عربى" : "English",
+                systemSupportedLanguageID: data.SystemSupportedLanguageID,
+                code: data.SystemSupportedLanguageID === 2 ? "ar" : "en",
+              });
+              const newLanguage =
+                data.SystemSupportedLanguageID === 2 ? "ar" : "en";
+              // Change the language using i18next instance directly
+              setTimeout(() => {
+                // window.location.reload()
+                i18n.changeLanguage(newLanguage);
+              }, 100);
+              localStorage.setItem("i18nextLng", newLanguage);
+              moment.locale(newLanguage);
+              // Set document direction based on the selected language
+              document.body.dir =
+                data.SystemSupportedLanguageID === 2 ? "rtl" : "ltr";
               await dispatch(loader_Actions(false));
             } else if (
               response.data.responseResult.responseMessage ===
