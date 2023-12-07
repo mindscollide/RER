@@ -1,6 +1,6 @@
 import * as actions from "../action_types";
 import axios from "axios";
-import { loader_Actions } from "./Loader";
+import { loader_Actions } from "./Loader_action";
 import {
   lastSelectedLanguage,
   systemSupportedLanguage,

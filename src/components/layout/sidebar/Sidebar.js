@@ -21,39 +21,39 @@ const Sidebar = () => {
   };
 
   const onClickBranchAdmin = () => {
-    navigate("/");
+    navigate("BranchAdmin");
   };
 
   const onClickCounterAdmin = () => {
-    navigate("/CounterMain");
+    navigate("CounterMain");
   };
 
   const onClickBranchService = () => {
-    navigate("/BranchService");
+    navigate("BranchService");
   };
 
   const onClickCityAdmin = () => {
-    navigate("/CityAdmin");
+    navigate("CityAdmin");
   };
 
   const onClickCityBranchServices = () => {
-    navigate("/CityBranchService");
+    navigate("CityBranchService");
   };
 
   const onClickCityBranchShift = () => {
-    navigate("/CityBranchShift");
+    navigate("CityBranchShift");
   };
 
   const onClickCityWiseCounter = () => {
-    navigate("/CityWiseCounter");
+    navigate("CityWiseCounter");
   };
 
   const onClickEmployeeMain = () => {
-    navigate("/EmployeeMain");
+    navigate("EmployeeMain");
   };
 
   const onClickCountryCityWise = () => {
-    navigate("/CountryCityWise");
+    navigate("CountryCityWise");
   };
 
   return (
