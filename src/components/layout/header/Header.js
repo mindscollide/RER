@@ -12,6 +12,7 @@ import {
   setLastSelectedLanguage,
 } from "../../../store/actions/Admin_action";
 import { Loader } from "../../elements";
+import { signOut } from "../../../store/actions/Auth_action";
 
 const Header = ({ isLoginScreen }) => {
   const dispatch = useDispatch();
@@ -124,6 +125,15 @@ const Header = ({ isLoginScreen }) => {
     // Dispatch your language change action here if needed
     // dispatch(changeNewLanguage(data, navigate, t));
   };
+  const handleSelectFromHeaderMenu = async (eventKey, event) => {
+    let lang = Number(eventKey);
+    if (lang === 3) {
+      await dispatch(signOut(navigate));
+    }
+
+    // Dispatch your language change action here if needed
+    // dispatch(changeNewLanguage(data, navigate, t));
+  };
 
   return (
     <>
@@ -211,20 +221,22 @@ const Header = ({ isLoginScreen }) => {
                       </span>
                     </div>
                   }
+                  onSelect={handleSelectFromHeaderMenu}
                   id="user-dropdown"
                   menuVariant="light"
                 >
                   <NavDropdown.Item
                     data-bs-toggle="modal"
                     data-bs-target="#UserSettingModal"
+                    eventKey={1}
                   >
                     <i className="icon-settings me-1" />
                     Setting
                   </NavDropdown.Item>
-                  <NavDropdown.Item>
+                  <NavDropdown.Item eventKey={2}>
                     <i className="icon-lock me-1"></i>Lock Screen
                   </NavDropdown.Item>
-                  <NavDropdown.Item>
+                  <NavDropdown.Item eventKey={3}>
                     <i className="icon-logout me-1"></i>Logout
                   </NavDropdown.Item>
                 </NavDropdown>

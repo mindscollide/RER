@@ -87,7 +87,7 @@ const setLogIn = (t, navigate, data) => {
                   )
                 );
                 await navigate("/REM/");
-                await dispatch(loader_Actions(false));
+                // await dispatch(loader_Actions(false));
               } else if (response.data.responseResult.roleID === 4) {
                 await dispatch(
                   loginsuccess(
@@ -96,7 +96,7 @@ const setLogIn = (t, navigate, data) => {
                   )
                 );
                 await navigate("/AdminDashboard/");
-                await dispatch(loader_Actions(false));
+                // await dispatch(loader_Actions(false));
               } else {
                 await dispatch(
                   loginfail(t("ERM_AuthService_AuthManager_Login_04"))
