@@ -7,6 +7,7 @@ import {
   Checkbox,
   Button,
   Table,
+  Loader,
 } from "../../components/elements";
 import { useTranslation } from "react-i18next";
 

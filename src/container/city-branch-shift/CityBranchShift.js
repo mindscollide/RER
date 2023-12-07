@@ -5,6 +5,7 @@ import { Paper, Button, Table } from "../../components/elements";
 import { Collapse, Switch } from "antd";
 import Select from "react-select";
 import { useTranslation } from "react-i18next";
+import { DownOutlined } from "@ant-design/icons";
 
 const CityBranchShift = () => {
   const { Panel } = Collapse;
@@ -12,6 +13,8 @@ const CityBranchShift = () => {
 
   const [selectedOption, setSelectedOption] = useState(null);
   const [isPanelOpen, setIsPanelOpen] = useState(false);
+  const [isPanelOpenTwo, setIsPanelOpenTwo] = useState(false);
+  const [isPanelOpenThree, setIsPanelOpenThree] = useState(false);
 
   const options = [
     { value: "chocolate", label: "Chocolate" },
@@ -21,6 +24,14 @@ const CityBranchShift = () => {
 
   const togglePanel = () => {
     setIsPanelOpen(!isPanelOpen);
+  };
+
+  const togglePanelTwo = () => {
+    setIsPanelOpenTwo(!isPanelOpenTwo);
+  };
+
+  const togglePanelThree = () => {
+    setIsPanelOpenThree(!isPanelOpenThree);
   };
 
   const dataSource = [
@@ -82,26 +93,20 @@ const CityBranchShift = () => {
         <Row className="mt-3">
           <Col lg={12} md={12} sm={12}>
             <Paper className="CityBranchShift-paper">
-              <Row>
-                <Col
-                  lg={4}
-                  md={4}
-                  sm={4}
-                  className="d-flex justify-content-end"
-                >
-                  <label className="text-labels">{t("Branch")}</label>
+              <Row className="mx-auto d-flex align-items-center justify-content-center">
+                <Col lg={9} md={9} sm={12}>
+                  <span className="d-flex flex-column w-100">
+                    <label>Tag Name</label>
+                    <Select
+                      defaultValue={selectedOption}
+                      onChange={setSelectedOption}
+                      options={options}
+                      isSearchable={true}
+                      className="citywisebranchwiseselector"
+                    />
+                  </span>
                 </Col>
-                <Col lg={8} md={8} sm={8} />
-              </Row>
-              <Row>
-                <Col lg={12} md={12} sm={12} className="CityBranchShift-col">
-                  <Select
-                    defaultValue={selectedOption}
-                    onChange={setSelectedOption}
-                    options={options}
-                    isSearchable={true}
-                    className="citywisebranchwiseselector"
-                  />
+                <Col lg={3} md={3} sm={12}>
                   <Button
                     icon={<i className="icon-search city-icon-space"></i>}
                     text={"Search"}
@@ -110,11 +115,10 @@ const CityBranchShift = () => {
                 </Col>
               </Row>
 
-              <Row className="mt-1">
+              <Row className="mt-3">
                 <Col lg={12} md={12} sm={12}>
                   <Collapse
                     bordered={false}
-                    defaultActiveKey={["1"]}
                     className="collapse-disable-bg"
                     expandIcon={false}
                   >
@@ -129,6 +133,18 @@ const CityBranchShift = () => {
                           <span className="toggle-tiles">
                             {t("Shift-morning")}
                           </span>
+
+                          {isPanelOpen ? (
+                            <i
+                              className={"icon-arrow-up icon-size-of-collapse"}
+                            ></i>
+                          ) : (
+                            <i
+                              className={
+                                "icon-arrow-down icon-size-of-collapse"
+                              }
+                            ></i>
+                          )}
                         </div>
                       }
                       key="1"
@@ -170,13 +186,25 @@ const CityBranchShift = () => {
                       header={
                         <div
                           className={`collapse-bg-color ${
-                            isPanelOpen ? "open" : ""
+                            isPanelOpenTwo ? "open" : ""
                           }`}
-                          onClick={togglePanel}
+                          onClick={togglePanelTwo}
                         >
                           <span className="toggle-tiles">
                             {t("Shift-afternoon")}
                           </span>
+
+                          {isPanelOpenTwo ? (
+                            <i
+                              className={"icon-arrow-up icon-size-of-collapse"}
+                            ></i>
+                          ) : (
+                            <i
+                              className={
+                                "icon-arrow-down icon-size-of-collapse"
+                              }
+                            ></i>
+                          )}
                         </div>
                       }
                       key="1"
@@ -218,13 +246,25 @@ const CityBranchShift = () => {
                       header={
                         <div
                           className={`collapse-bg-color ${
-                            isPanelOpen ? "open" : ""
+                            isPanelOpenThree ? "open" : ""
                           }`}
-                          onClick={togglePanel}
+                          onClick={togglePanelThree}
                         >
                           <span className="toggle-tiles">
                             {t("Shift-evening")}
                           </span>
+
+                          {isPanelOpenThree ? (
+                            <i
+                              className={"icon-arrow-up icon-size-of-collapse"}
+                            ></i>
+                          ) : (
+                            <i
+                              className={
+                                "icon-arrow-down icon-size-of-collapse"
+                              }
+                            ></i>
+                          )}
                         </div>
                       }
                       key="1"

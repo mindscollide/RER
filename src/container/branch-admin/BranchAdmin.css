@@ -14,7 +14,7 @@
 .btn-class-branch {
   display: flex;
   justify-content: end;
-  gap: 0px !important;
+  gap: 5px !important;
 }
 
 .Add-btn-Branch {
