@@ -14,7 +14,6 @@ const Dashboard = () => {
 
   useEffect(() => {
     setCurrentLanguage(i18nextLng);
-    console.log("Current Language UseEffect", currentLanguage);
   }, [i18nextLng]);
   return (
     <>
