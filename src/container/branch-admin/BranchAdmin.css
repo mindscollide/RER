@@ -18,14 +18,14 @@
 }
 
 .Add-btn-Branch {
-  font-size: 14px;
-  font-weight: 500;
+  font-size: 14px !important;
+  font-weight: 500 !important;
   font-family: "Montserrat", sans-serif !important;
   padding: 6px 12px !important;
-  border-top-right-radius: 0px;
-  border-bottom-left-radius: 0px;
-  border-top-left-radius: 8px;
-  border-bottom-right-radius: 8px;
+  border-top-right-radius: 0px !important;
+  border-bottom-left-radius: 0px !important;
+  border-top-left-radius: 8px !important;
+  border-bottom-right-radius: 8px !important;
   background: linear-gradient(to bottom, #7484b7 0%, #536395 100%);
   border-color: #7484b7 !important;
 }
@@ -36,14 +36,14 @@
 }
 
 .Reset-btn-Branch {
-  font-size: 14px;
-  font-weight: 500;
+  font-size: 14px !important;
+  font-weight: 500 !important;
   padding: 6px 12px !important;
   font-family: "Montserrat", sans-serif !important;
-  border-top-right-radius: 0px;
-  border-bottom-left-radius: 0px;
-  border-top-left-radius: 8px;
-  border-bottom-right-radius: 8px;
+  border-top-right-radius: 0px !important;
+  border-bottom-left-radius: 0px !important;
+  border-top-left-radius: 8px !important;
+  border-bottom-right-radius: 8px !important;
   background: linear-gradient(to bottom, #77c0cb 0%, #2c9cc0 100%);
   border-color: #77c0cb !important;
 }
@@ -81,11 +81,11 @@
 }
 
 .text-fiels-Branch {
-  font-size: 13px;
-  font-family: "Montserrat", sans-serif;
+  font-size: 13px !important;
+  font-family: "Montserrat", sans-serif !important;
   height: 37px;
-  color: #45494d !important;
-  font-weight: 500;
+  color: #212529 !important;
+  font-weight: 500 !important;
 }
 
 .col-for-date-timepicker {

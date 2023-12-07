@@ -107,6 +107,7 @@ const CounterMain = () => {
                     name="Shift"
                     placeholder="Shift Name"
                     labelClass="d-none"
+                    className="text-fiels-counterMain"
                   />
                 </Col>
 

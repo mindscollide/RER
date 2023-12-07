@@ -85,10 +85,10 @@ const CityAdmin = () => {
       render: (text, record) => (
         <>
           <span className="icon-spaceing-dlt-edit">
-            <i className="icon-text-edit icon-EDT-DLT-color"></i>
             <i className="icon-close icon-EDT-DLT-color"></i>
-            <i className="icon-counter icon-EDT-DLT-color"></i>
+            <i className="icon-settings icon-EDT-DLT-color"></i>
             <i className="icon-repeat icon-EDT-DLT-color"></i>
+            <i className="icon-counter icon-EDT-DLT-color"></i>
             <i className="icon-user icon-EDT-DLT-color"></i>
           </span>
         </>
@@ -120,6 +120,7 @@ const CityAdmin = () => {
                     name="Branch Name"
                     placeholder="Branch Name"
                     labelClass="d-none"
+                    className="text-fiels-cityAdmin"
                   />
                 </Col>
 

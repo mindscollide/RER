@@ -80,4 +80,8 @@ body[dir="rtl"] .site-layout {
   color: #4b5576 !important;
 }
 
+.ant-menu-submenu-title {
+  padding-left: 14px !important;
+}
+
 /* Add more styles as needed */

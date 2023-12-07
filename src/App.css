@@ -54,6 +54,13 @@ body {
   font-weight: 500;
 }
 
+body[dir="rtl"] .checkbox-label {
+  margin-right: 10px;
+  color: #45494d !important;
+  font-family: "Montserrat", sans-serif;
+  font-weight: 500;
+}
+
 .checkbox-label-Active-Employee-Modal {
   margin-left: 3px;
   color: #21252d !important;

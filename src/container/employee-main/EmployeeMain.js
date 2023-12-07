@@ -120,8 +120,9 @@ const EmployeeMain = () => {
                   {/* <span className="text-labels"></span> */}
                   <TextField
                     name="Shift"
-                    placeholder="Shift Name"
+                    placeholder="Employee Name"
                     labelClass="d-none"
+                    className="text-fiels-employeeMain"
                   />
                 </Col>
 
@@ -145,7 +146,9 @@ const EmployeeMain = () => {
                     onChange={handleBranchEmployeeChange}
                     value={branchEmployeeOption}
                   >
-                    <Radio value="option1">{t("Branch-employee")}</Radio>
+                    <Radio value="option1" className="checkbox-label">
+                      {t("Branch-employee")}
+                    </Radio>
                   </Radio.Group>
                 </Col>
                 <Col lg={2} md={2} sm={2} className="mt-3">
@@ -157,7 +160,9 @@ const EmployeeMain = () => {
                     onChange={handleBranchEmployeeChangesTwo}
                     value={branchEmployeeOptionTwo}
                   >
-                    <Radio value="option1">{t("Home-visit")}</Radio>
+                    <Radio value="option1" className="checkbox-label">
+                      {t("Home-visit")}
+                    </Radio>
                   </Radio.Group>
                 </Col>
                 <Col lg={1} md={1} sm={1} />

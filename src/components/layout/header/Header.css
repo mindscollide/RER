@@ -293,3 +293,7 @@ span.user-thumb-globe {
   margin: 5px !important;
 }
 /* For header language drop down end */
+
+.icon-globe-color {
+  color: #45494d !important;
+}

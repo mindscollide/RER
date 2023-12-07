@@ -72,10 +72,7 @@ const AddEditEmployee = ({ addEditModal, setAddEditModal }) => {
                 </div>
               </Col>
               <Col lg={10} md={10} sm={10}>
-                <TextField
-                  placeholder="add employee"
-                  className="textfield-with-checkbox"
-                />
+                <TextField className="textfield-with-checkbox" />
               </Col>
             </Row>
             <Row className="mt-2">
