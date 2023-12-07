@@ -8,6 +8,7 @@ import "./Login.css";
 import { Button } from "../../components/elements";
 import { useTranslation } from "react-i18next";
 import Header from "../../components/layout/header/Header";
+import { setLogIn } from "../../store/actions/Auth_action";
 const Login = () => {
   const { auth } = useSelector((state) => state);
   const dispatch = useDispatch();
@@ -22,21 +23,21 @@ const Login = () => {
   const [auditCredentials, setAuditCredentials] = useState({
     UserName: "",
     Password: "",
-    fakePassword: "",
+    // fakePassword: "",
   });
 
   // credentials for email and password
   const setCredentialHandler = (e) => {
     if (e.target.name === "Password") {
       let numChars = e.target.value;
-      let showText = "";
-      for (let i = 0; i < numChars.length; i++) {
-        showText += "•";
-      }
+      // let showText = "";
+      // for (let i = 0; i < numChars.length; i++) {
+      //   showText += "•";
+      // }
       setAuditCredentials({
         ...auditCredentials,
         [e.target.name]: e.target.value,
-        ["fakePassword"]: showText,
+        // ["fakePassword"]: showText,
       });
     } else {
       setAuditCredentials({
@@ -50,8 +51,14 @@ const Login = () => {
   const loginValidateHandler = (e) => {
     e.preventDefault();
     if (auditCredentials.UserName !== "" && auditCredentials.Password !== "") {
-      navigate("/REM/");
-      // dispatch(logIn(auditCredentials, navigate));
+    
+      let data = {
+        UserEmail: auditCredentials.UserName,
+        UserPassword: auditCredentials.Password,
+        DeviceID: "1",
+        Device: "browser",
+      };
+      dispatch(setLogIn(t, navigate,data));
     } else {
       setOpen({
         ...open,
@@ -121,6 +128,7 @@ const Login = () => {
                           </InputGroup.Text>
                           <Form.Control
                             name="Password"
+                            type="Password"
                             className="form-comtrol-textfield"
                             placeholder={t("password")}
                             onChange={setCredentialHandler}

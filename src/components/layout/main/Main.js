@@ -2,6 +2,7 @@ import React from "react";
 import { Layout } from "antd";
 import "./Main.css";
 import Container from "@material-ui/core/Container";
+import './i18n';
 
 const Main = ({ routingData, role }) => {
   const { Content } = Layout;
