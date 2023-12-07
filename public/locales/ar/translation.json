@@ -63,5 +63,18 @@
   "Dammam": "Dammam",
   "Login": "Login",
   "Recover-password": "Recover Password",
-  "Recover": "Recover"
+  "Recover": "Recover",
+  "ERM_AuthService_AuthManager_Login_01": "Device does not exist",
+  "ERM_AuthService_AuthManager_Login_02": "Device ID does not exist",
+  "ERM_AuthService_AuthManager_Login_03": "Successfully Logged In",
+  "ERM_AuthService_AuthManager_Login_04": "Not a valid user. Please login with valid user",
+  "ERM_AuthService_AuthManager_Login_05": "Not a valid user. Please login with valid use",
+  "something_went_wrong": "something went wrong",
+  "Admin_AdminServiceManager_GetSystemSupportedLanguage_01": "Record Found",
+  "Admin_AdminServiceManager_GetSystemSupportedLanguage_02": "No Records Found",
+  "Admin_AdminServiceManager_GetLastSelectedLanguage_01": "Record Found",
+  "Admin_AdminServiceManager_GetLastSelectedLanguage_02": "No Records Found",
+  "Admin_AdminServiceManager_SetLastSelectedLanguage_01": "Record Updated",
+  "Admin_AdminServiceManager_SetLastSelectedLanguage_02": "Record Not Saved",
+  "Admin_AdminServiceManager_SetLastSelectedLanguage_03": "Record Saved"
 }
