@@ -52,6 +52,10 @@ const Sidebar = () => {
     navigate("/EmployeeMain");
   };
 
+  const onClickCountryCityWise = () => {
+    navigate("/CountryCityWise");
+  };
+
   return (
     <Sider width={250} className="site-layout-background">
       <Menu
@@ -63,7 +67,7 @@ const Sidebar = () => {
       >
         <Menu.SubMenu
           key="sub1"
-          icon={<i className="icon-settings"></i>}
+          icon={<i className="icon-settings side-bar-icons"></i>}
           title={t("Setups")}
           className="menu-item"
         >
@@ -86,7 +90,7 @@ const Sidebar = () => {
             className="menu-item-sub"
             onClick={onClickBranchService}
           >
-            {t("Branch-Service")}
+            {t("Branch-service")}
           </Menu.Item>
           <Menu.Item
             key="5"
@@ -125,26 +129,33 @@ const Sidebar = () => {
           >
             {t("Employee-main")}
           </Menu.Item>
+          <Menu.Item
+            key="10"
+            className="menu-item-sub"
+            onClick={onClickCountryCityWise}
+          >
+            {t("Country-city-wise-counter")}
+          </Menu.Item>
         </Menu.SubMenu>
         <Menu.SubMenu
           key="sub2"
-          icon={<i className="icon-report"></i>}
+          icon={<i className="icon-file side-bar-icons"></i>}
           title="Reports"
           className="menu-item-two"
         >
-          <Menu.Item key="10" className="menu-item-sub">
+          <Menu.Item key="11" className="menu-item-sub">
             {t("Country-wise-reports")}
           </Menu.Item>
-          <Menu.Item key="11" className="menu-item-sub">
+          <Menu.Item key="12" className="menu-item-sub">
             {t("City-wise-reports")}
           </Menu.Item>
-          <Menu.Item key="12" className="menu-item-sub">
+          <Menu.Item key="13" className="menu-item-sub">
             {t("Branch-wise-reports")}
           </Menu.Item>
-          <Menu.Item key="13" className="menu-item-sub">
+          <Menu.Item key="14" className="menu-item-sub">
             {t("Employee-wise-reports")}
           </Menu.Item>
-          <Menu.Item key="14" className="menu-item-sub">
+          <Menu.Item key="15" className="menu-item-sub">
             {t("Service-wise-reports")}
           </Menu.Item>
         </Menu.SubMenu>

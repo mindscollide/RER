@@ -3,8 +3,11 @@ import { Row, Col } from "react-bootstrap";
 import "./CityBranchServices.css";
 import { Paper, Button, Table } from "../../components/elements";
 import { Switch } from "antd";
+import { useTranslation } from "react-i18next";
 
 const CityBranchService = () => {
+  const { t } = useTranslation();
+
   const dataSource = [
     {
       id: 1,
@@ -26,7 +29,7 @@ const CityBranchService = () => {
 
   const columns = [
     {
-      title: <span className="table-text">Services</span>,
+      title: <span className="table-text">{t("Services")}</span>,
       dataIndex: "shiftName",
       key: "shiftName",
       width: "400px",
@@ -34,7 +37,7 @@ const CityBranchService = () => {
     },
 
     {
-      title: <span className="table-text">Branch Availability</span>,
+      title: <span className="table-text">{t("Branch-availability")}</span>,
       dataIndex: "active",
       key: "active",
       width: "200px",
@@ -53,15 +56,17 @@ const CityBranchService = () => {
         <Row>
           <Col lg={6} md={6} sm={6} className="d-flex justify-content-start">
             <span className="shift-heading">
-              City Branch Wise Service
+              {t("City-branch-wise-service")}
               <span className="shift-sub-heading">
                 {" "}
-                (Saudi Arabia - Riyadh)
+                {t("Saudi-arabia-riyadh")}
               </span>
             </span>
           </Col>
           <Col lg={6} md={6} sm={6} className="d-flex justify-content-end">
-            <span className="shift-sub-heading-right">Olaya Street Branch</span>
+            <span className="shift-sub-heading-right">
+              {t("Olaya-street-branch")}
+            </span>
           </Col>
         </Row>
         <Row className="mt-3">
@@ -76,12 +81,12 @@ const CityBranchService = () => {
                 >
                   <Button
                     icon={<i className="icon-save icon-space"></i>}
-                    text="Save"
+                    text={t("Save")}
                     className="save-btn-CityBranchWise"
                   />
                   <Button
                     icon={<i className="icon-repeat icon-space"></i>}
-                    text="Revert"
+                    text={t("Revert")}
                     className="revert-btn-CityBranchWise"
                   />
                 </Col>

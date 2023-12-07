@@ -106,14 +106,14 @@ const Header = () => {
                         : { marginLeft: "5px" }
                     }
                   >
-                    <i className="icon-globe"></i>
+                    <i className="icon-globe icon-globe-color"></i>
                   </span>
                 </div>
               }
               onSelect={handleChangeLocale}
               id="user-dropdown"
               menuVariant="light"
-              className="me-md-2" // Margin added to separate dropdowns on larger screens
+              className="ms-md-2" // Margin added to separate dropdowns on larger screens
             >
               <NavDropdown.Item
                 data-bs-toggle="modal"
@@ -130,7 +130,7 @@ const Header = () => {
               title={
                 <div className="user-dd d-flex align-items-center ps-2">
                   <span
-                    className="user-name text-truncate"
+                    className="user-name-two text-truncate"
                     style={
                       selectedLanguage.code === "en"
                         ? { marginRight: "5px" }

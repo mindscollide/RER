@@ -10,9 +10,11 @@ import {
 } from "../../components/elements";
 import DatePicker from "react-multi-date-picker";
 import TimePicker from "react-multi-date-picker/plugins/time_picker";
+import { useTranslation } from "react-i18next";
 
 const BranchAdmin = () => {
   const [isCheckboxSelected, setIsCheckboxSelected] = useState(false);
+  const { t } = useTranslation();
 
   const handleCheckboxChange = (e) => {
     setIsCheckboxSelected(e.target.checked);
@@ -46,22 +48,22 @@ const BranchAdmin = () => {
       key: "id",
     },
     {
-      title: <span className="table-text">Shift Name</span>,
+      title: <span className="table-text">{t("Shift-name")}</span>,
       dataIndex: "shiftName",
       key: "shiftName",
     },
     {
-      title: <span className="table-text">Start Time</span>,
+      title: <span className="table-text">{t("Start-time")}</span>,
       dataIndex: "startTime",
       key: "startTime",
     },
     {
-      title: <span className="table-text">End Time</span>,
+      title: <span className="table-text">{t("End-time")}</span>,
       dataIndex: "endTime",
       key: "endTime",
     },
     {
-      title: <span className="table-text">Active</span>,
+      title: <span className="table-text">{t("Active")}</span>,
       dataIndex: "active",
       key: "active",
       render: (text, record) => (
@@ -93,15 +95,17 @@ const BranchAdmin = () => {
         <Row>
           <Col lg={6} md={6} sm={6} className="d-flex justify-content-start">
             <span className="shift-heading">
-              Shift
+              {t("Shift")}
               <span className="shift-sub-heading">
                 {" "}
-                (Saudi Arabia - Riyadh)
+                {t("Saudi-arabia-riyadh")}
               </span>
             </span>
           </Col>
           <Col lg={6} md={6} sm={6} className="d-flex justify-content-end">
-            <span className="shift-sub-heading-right">Olaya Street Branch</span>
+            <span className="shift-sub-heading-right">
+              {t("Olaya-street-branch")}
+            </span>
           </Col>
         </Row>
         <Row className="mt-3">
@@ -109,7 +113,7 @@ const BranchAdmin = () => {
             <Paper className="Branch-Admin-paper">
               <Row>
                 <Col lg={6} md={6} sm={6}>
-                  <span className="text-labels">Shift Name</span>
+                  <span className="text-labels">{t("Shift-name")}</span>
                   <TextField
                     name="Shift"
                     placeholder="Shift Name"
@@ -119,7 +123,7 @@ const BranchAdmin = () => {
                 </Col>
 
                 <Col lg={3} md={3} sm={3} className="col-for-date-timepicker">
-                  <label className="text-labels">Shift Start Time</label>
+                  <label className="text-labels">{t("Shift-start-time")}</label>
                   <DatePicker
                     arrowClassName="arrowClass"
                     containerClassName="containerClassTimePicker"
@@ -130,7 +134,7 @@ const BranchAdmin = () => {
                 </Col>
 
                 <Col lg={3} md={3} sm={3} className="col-for-date-timepicker">
-                  <label className="text-labels">Shift End Time</label>
+                  <label className="text-labels">{t("Shift-end-time")}</label>
                   <DatePicker
                     arrowClassName="arrowClass"
                     containerClassName="containerClassTimePicker"
@@ -146,19 +150,21 @@ const BranchAdmin = () => {
                     checked={isCheckboxSelected}
                     onChange={handleCheckboxChange}
                     classNameDiv="Branch-checkbox"
-                    label={<span className="checkbox-label">Active</span>}
+                    label={
+                      <span className="checkbox-label">{t("Active")}</span>
+                    }
                   />
                 </Col>
 
                 <Col lg={6} md={6} sm={6} className="btn-class-branch">
                   <Button
                     icon={<i className="icon-add-circle icon-space"></i>}
-                    text="Add"
+                    text={t("Add")}
                     className="Add-btn-Branch"
                   />
                   <Button
                     icon={<i className="icon-refresh icon-space"></i>}
-                    text="Reset"
+                    text={t("Reset")}
                     className="Reset-btn-Branch"
                   />
                 </Col>

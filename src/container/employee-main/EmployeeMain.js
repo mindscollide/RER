@@ -10,17 +10,43 @@ import {
 } from "../../components/elements";
 import Select from "react-select";
 import { Radio } from "antd";
+import AddEditEmployee from "../modals/add-edit-modal/AddEditEmployee";
+import DeleteEmployeeModal from "../modals/delete-employee-modal/DeleteEmplyeeModal";
+import { useTranslation } from "react-i18next";
 
 const EmployeeMain = () => {
+  const { t } = useTranslation();
+
   const [isCheckboxSelected, setIsCheckboxSelected] = useState(false);
   const [branchEmployeeOption, setBranchEmployeeOption] = useState(null);
+  const [branchEmployeeOptionTwo, setBranchEmployeeOptionTwo] = useState(null);
+
+  // add edit modal states
+  const [addEditModal, setAddEditModal] = useState(false);
+
+  //delete modal states
+  const [deleteModal, setDeleteModal] = useState(false);
 
   const handleBranchEmployeeChange = (e) => {
     setBranchEmployeeOption(e.target.value);
   };
 
+  const handleBranchEmployeeChangesTwo = (e) => {
+    setBranchEmployeeOptionTwo(e.target.value);
+  };
+
   const handleCheckboxChange = (e) => {
     setIsCheckboxSelected(e.target.checked);
+  };
+
+  // open add edit modal on Button Click
+  const openAddEditMoadal = () => {
+    setAddEditModal(true);
+  };
+
+  // open add delete modal on Button Click
+  const openDeleteModal = () => {
+    setDeleteModal(true);
   };
 
   const dataSource = [
@@ -38,17 +64,17 @@ const EmployeeMain = () => {
       key: "id",
     },
     {
-      title: <span className="table-text">Name</span>,
+      title: <span className="table-text">{t("Name")}</span>,
       dataIndex: "name",
       key: "name",
     },
     {
-      title: <span className="table-text">Capcity</span>,
+      title: <span className="table-text">{t("Capcity")}</span>,
       dataIndex: "capcity",
       key: "capcity",
     },
     {
-      title: <span className="table-text">Active</span>,
+      title: <span className="table-text">{t("Active")}</span>,
       dataIndex: "active",
       key: "active",
       render: (text, record) => (
@@ -68,7 +94,10 @@ const EmployeeMain = () => {
         <>
           <span className="icon-spaceing-dlt-edit">
             <i className="icon-text-edit icon-EDT-DLT-color"></i>
-            <i className="icon-close icon-EDT-DLT-color"></i>
+            <i
+              className="icon-close icon-EDT-DLT-color"
+              onClick={openDeleteModal}
+            ></i>
           </span>
         </>
       ),
@@ -80,7 +109,7 @@ const EmployeeMain = () => {
       <section>
         <Row>
           <Col lg={12} md={12} sm={12} className="d-flex justify-content-start">
-            <span className="shift-heading">Employee</span>
+            <span className="shift-heading">{t("Employee")}</span>
           </Col>
         </Row>
         <Row className="mt-3">
@@ -91,8 +120,9 @@ const EmployeeMain = () => {
                   {/* <span className="text-labels"></span> */}
                   <TextField
                     name="Shift"
-                    placeholder="Shift Name"
+                    placeholder="Employee Name"
                     labelClass="d-none"
+                    className="text-fiels-employeeMain"
                   />
                 </Col>
 
@@ -101,28 +131,24 @@ const EmployeeMain = () => {
                     checked={isCheckboxSelected}
                     onChange={handleCheckboxChange}
                     classNameDiv="Counter-checkbox"
-                    label={<span className="checkbox-label">Active</span>}
+                    label={
+                      <span className="checkbox-label">{t("Active")}</span>
+                    }
                   />
                 </Col>
                 <Col
                   lg={2}
                   md={2}
                   sm={2}
-                  className="d-flex justify-content-start mt-2"
+                  className="d-flex justify-content-center mt-4"
                 >
-                  {/* <Checkbox
-                    checked={isCheckboxSelectedTwo}
-                    onChange={handleCheckboxChangeTwo}
-                    classNameDiv="Counter-checkbox"
-                    label={
-                      <span className="checkbox-label">Branch Employee</span>
-                    }
-                  /> */}
                   <Radio.Group
                     onChange={handleBranchEmployeeChange}
                     value={branchEmployeeOption}
                   >
-                    <Radio value="option1">Branch Employee</Radio>
+                    <Radio value="option1" className="checkbox-label">
+                      {t("Branch-employee")}
+                    </Radio>
                   </Radio.Group>
                 </Col>
                 <Col lg={2} md={2} sm={2} className="mt-3">
@@ -130,12 +156,14 @@ const EmployeeMain = () => {
                 </Col>
 
                 <Col lg={2} md={2} sm={2} className="mt-4">
-                  <Checkbox
-                    checked={isCheckboxSelected}
-                    onChange={handleCheckboxChange}
-                    classNameDiv="Counter-checkbox"
-                    label={<span className="checkbox-label">Home Visit</span>}
-                  />
+                  <Radio.Group
+                    onChange={handleBranchEmployeeChangesTwo}
+                    value={branchEmployeeOptionTwo}
+                  >
+                    <Radio value="option1" className="checkbox-label">
+                      {t("Home-visit")}
+                    </Radio>
+                  </Radio.Group>
                 </Col>
                 <Col lg={1} md={1} sm={1} />
               </Row>
@@ -144,17 +172,18 @@ const EmployeeMain = () => {
                 <Col lg={12} md={12} sm={12} className="three-button-col mt-3">
                   <Button
                     icon={<i className="icon-search city-icon-space"></i>}
-                    text={"Search"}
+                    text={t("Search")}
                     className="Search-Icon-Btn"
                   />
                   <Button
                     icon={<i className="icon-repeat icon-space"></i>}
-                    text="Revert"
+                    text={t("Revert")}
                     className="revert-btn-CityBranchWise"
                   />
                   <Button
                     icon={<i className="icon-user-plus icon-space"></i>}
-                    text="Add Employee"
+                    text={t("Add Employee")}
+                    onClick={openAddEditMoadal}
                     className="Employee-Add-Btn"
                   />
                 </Col>
@@ -172,6 +201,19 @@ const EmployeeMain = () => {
             </Paper>
           </Col>
         </Row>
+        {addEditModal ? (
+          <AddEditEmployee
+            addEditModal={addEditModal}
+            setAddEditModal={setAddEditModal}
+          />
+        ) : null}
+
+        {deleteModal ? (
+          <DeleteEmployeeModal
+            deleteModal={deleteModal}
+            setDeleteModal={setDeleteModal}
+          />
+        ) : null}
       </section>
     </>
   );

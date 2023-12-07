@@ -54,6 +54,20 @@ body {
   font-weight: 500;
 }
 
+body[dir="rtl"] .checkbox-label {
+  margin-right: 10px;
+  color: #45494d !important;
+  font-family: "Montserrat", sans-serif;
+  font-weight: 500;
+}
+
+.checkbox-label-Active-Employee-Modal {
+  margin-left: 3px;
+  color: #21252d !important;
+  font-family: "Montserrat", sans-serif;
+  font-weight: 400;
+}
+
 /* For checkbox labels End */
 
 /* For table Title Text and inside text Start*/
@@ -165,10 +179,22 @@ body {
   color: #45494d;
 }
 
-/* 
-.css-b62m3t-container {
-  position: relative;
-  box-sizing: border-box;
-  width: 100% !important;
-  max-width: 450px !important;
-} */
+/* toggle title End*/
+
+/* Labels For Modals Start */
+
+.add-edit-heading-modal {
+  font-size: 20px;
+  font-weight: 700;
+  font-family: "Montserrat", sans-serif !important;
+  color: #4b5576;
+}
+
+.confirm-delete-text {
+  font-size: 14px;
+  font-family: "Montserrat", sans-serif !important;
+  color: #45494d !important;
+  font-weight: 500;
+}
+
+/* Labels For Modals End */

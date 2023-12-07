@@ -2,12 +2,14 @@ import React, { useState } from "react";
 import { Row, Col } from "react-bootstrap";
 import "./CityBranchShift.css";
 import { Paper, Button, Table } from "../../components/elements";
-import { Collapse, Divider, Switch } from "antd";
-import { CaretRightOutlined } from "@ant-design/icons";
+import { Collapse, Switch } from "antd";
 import Select from "react-select";
-const { Panel } = Collapse;
+import { useTranslation } from "react-i18next";
 
 const CityBranchShift = () => {
+  const { Panel } = Collapse;
+  const { t } = useTranslation();
+
   const [selectedOption, setSelectedOption] = useState(null);
   const [isPanelOpen, setIsPanelOpen] = useState(false);
 
@@ -42,7 +44,7 @@ const CityBranchShift = () => {
 
   const columns = [
     {
-      title: <span className="table-text">Services</span>,
+      title: <span className="table-text">{t("Services")}</span>,
       dataIndex: "shiftName",
       key: "shiftName",
       width: "400px",
@@ -50,7 +52,7 @@ const CityBranchShift = () => {
     },
 
     {
-      title: <span className="table-text">Branch Availability</span>,
+      title: <span className="table-text">{t("Branch-availability")}</span>,
       dataIndex: "active",
       key: "active",
       width: "200px",
@@ -69,10 +71,10 @@ const CityBranchShift = () => {
         <Row>
           <Col lg={12} md={12} sm={12} className="d-flex justify-content-start">
             <span className="shift-heading">
-              City Branch Wise Shifts
+              {t("City-branch-wise-service")}
               <span className="shift-sub-heading">
                 {" "}
-                (Saudi Arabia - Riyadh)
+                {t("Saudi-arabia-riyadh")}
               </span>
             </span>
           </Col>
@@ -87,7 +89,7 @@ const CityBranchShift = () => {
                   sm={4}
                   className="d-flex justify-content-end"
                 >
-                  <label className="text-labels">Branch</label>
+                  <label className="text-labels">{t("Branch")}</label>
                 </Col>
                 <Col lg={8} md={8} sm={8} />
               </Row>
@@ -124,7 +126,9 @@ const CityBranchShift = () => {
                           }`}
                           onClick={togglePanel}
                         >
-                          <span className="toggle-tiles">Shift Morning</span>
+                          <span className="toggle-tiles">
+                            {t("Shift-morning")}
+                          </span>
                         </div>
                       }
                       key="1"
@@ -132,7 +136,7 @@ const CityBranchShift = () => {
                       <Row className="mb-3">
                         <Col lg={6} md={6} sm={6}>
                           <span className="toggle-insidetile-available">
-                            Available
+                            {t("Available")}
                           </span>
                         </Col>
                         <Col
@@ -170,7 +174,9 @@ const CityBranchShift = () => {
                           }`}
                           onClick={togglePanel}
                         >
-                          <span className="toggle-tiles">Shift Afternoon</span>
+                          <span className="toggle-tiles">
+                            {t("Shift-afternoon")}
+                          </span>
                         </div>
                       }
                       key="1"
@@ -178,7 +184,7 @@ const CityBranchShift = () => {
                       <Row className="mb-3">
                         <Col lg={6} md={6} sm={6}>
                           <span className="toggle-insidetile-available">
-                            Available
+                            {t("Available")}
                           </span>
                         </Col>
                         <Col
@@ -216,7 +222,9 @@ const CityBranchShift = () => {
                           }`}
                           onClick={togglePanel}
                         >
-                          <span className="toggle-tiles">Shift Evening</span>
+                          <span className="toggle-tiles">
+                            {t("Shift-evening")}
+                          </span>
                         </div>
                       }
                       key="1"
@@ -224,7 +232,7 @@ const CityBranchShift = () => {
                       <Row className="mb-3">
                         <Col lg={6} md={6} sm={6}>
                           <span className="toggle-insidetile-available">
-                            Available
+                            {t("Available")}
                           </span>
                         </Col>
                         <Col

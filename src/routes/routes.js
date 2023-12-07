@@ -14,6 +14,7 @@ import {
   Dashboard,
   EmployeeMain,
   Login,
+  CountryCityWise,
 } from "../container";
 export const router = createHashRouter(
   createRoutesFromElements(
@@ -30,6 +31,7 @@ export const router = createHashRouter(
           <Route path="CityBranchShift" element={<CityBranchShift />} />
           <Route path="CityWiseCounter" element={<CityWiseCounter />} />
           <Route path="EmployeeMain" element={<EmployeeMain />} />
+          <Route path="CountryCityWise" element={<CountryCityWise />} />
         </Route>
       </Route>
     </>

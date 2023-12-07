@@ -9,3 +9,4 @@ export { default as BranchService } from "./branch-service/BranchService";
 export { default as CounterMain } from "./counter-main/CounterMain";
 export { default as BranchAdmin } from "./branch-admin/BranchAdmin";
 export { default as NotFound } from "./404-Not-Found/404_not_found";
+export { default as CountryCityWise } from "./country-city-wise-counter/CountryCityWise";

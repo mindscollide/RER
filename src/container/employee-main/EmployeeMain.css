@@ -11,6 +11,14 @@
   align-items: center !important;
 }
 
+.text-fiels-employeeMain {
+  font-size: 13px !important;
+  font-family: "Montserrat", sans-serif !important;
+  height: 37px;
+  color: #212529 !important;
+  font-weight: 500 !important;
+}
+
 .checkbox-label {
   margin-left: 10px;
 }
