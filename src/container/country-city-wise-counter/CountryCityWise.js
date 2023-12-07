@@ -12,6 +12,7 @@ const CountryCityWise = () => {
   const { Panel } = Collapse;
   const [selectedOption, setSelectedOption] = useState(null);
   const [isPanelOpen, setIsPanelOpen] = useState(false);
+  const [isPanelOpenCountry, setIsPanelOpenCountry] = useState(false);
 
   const options = [
     { value: "chocolate", label: "Chocolate" },
@@ -21,6 +22,10 @@ const CountryCityWise = () => {
 
   const togglePanel = () => {
     setIsPanelOpen(!isPanelOpen);
+  };
+
+  const togglePanelCountry = () => {
+    setIsPanelOpenCountry(!isPanelOpenCountry);
   };
 
   const dataSource = [
@@ -103,41 +108,32 @@ const CountryCityWise = () => {
         <Row className="mt-3">
           <Col lg={12} md={12} sm={12}>
             <Paper className="CountryCityWise-paper">
-              <Row>
-                <Col
-                  lg={3}
-                  md={3}
-                  sm={3}
-                  className="d-flex justify-content-center"
-                >
-                  <label className="text-labels">{t("City")}</label>
+              <Row className="mx-auto d-flex align-items-center justify-content-center">
+                <Col lg={4} md={4} sm={12}>
+                  <span className="d-flex flex-column w-100">
+                    <label>Tag Name</label>
+                    <Select
+                      defaultValue={selectedOption}
+                      onChange={setSelectedOption}
+                      options={options}
+                      isSearchable={true}
+                      className="CountryCityWise"
+                    />
+                  </span>
                 </Col>
-                <Col lg={2} md={2} sm={2} />
-                <Col
-                  lg={7}
-                  md={7}
-                  sm={7}
-                  className="d-flex justify-content-start"
-                >
-                  <label className="text-labels">{t("Branch")}</label>
+                <Col lg={4} md={4} sm={12}>
+                  <span className="d-flex flex-column w-100">
+                    <label>Tag Name</label>
+                    <Select
+                      defaultValue={selectedOption}
+                      onChange={setSelectedOption}
+                      options={options}
+                      isSearchable={true}
+                      className="CountryCityWise"
+                    />
+                  </span>
                 </Col>
-              </Row>
-              <Row>
-                <Col lg={12} md={12} sm={12} className="CountryCityWise-col">
-                  <Select
-                    defaultValue={selectedOption}
-                    onChange={setSelectedOption}
-                    options={options}
-                    isSearchable={true}
-                    className="CountryCityWise"
-                  />
-                  <Select
-                    defaultValue={selectedOption}
-                    onChange={setSelectedOption}
-                    options={options}
-                    isSearchable={true}
-                    className="CountryCityWise"
-                  />
+                <Col lg={2} md={2} sm={12} className="mt-4">
                   <Button
                     icon={<i className="icon-search city-icon-space"></i>}
                     text={t("Search")}
@@ -150,7 +146,6 @@ const CountryCityWise = () => {
                 <Col lg={12} md={12} sm={12}>
                   <Collapse
                     bordered={false}
-                    defaultActiveKey={["1"]}
                     className="collapse-Country-Wise-disable-bg"
                     expandIcon={false}
                   >
@@ -163,6 +158,17 @@ const CountryCityWise = () => {
                           onClick={togglePanel}
                         >
                           <span className="toggle-tiles">{t("Riyadh")}</span>
+                          {isPanelOpen ? (
+                            <i
+                              className={"icon-arrow-up Country-wise-collapse"}
+                            ></i>
+                          ) : (
+                            <i
+                              className={
+                                "icon-arrow-down Country-wise-collapse"
+                              }
+                            ></i>
+                          )}
                         </div>
                       }
                       key="1"
@@ -189,11 +195,22 @@ const CountryCityWise = () => {
                       header={
                         <div
                           className={`Country-Wise-collapse-bg-color ${
-                            isPanelOpen ? "open" : ""
+                            isPanelOpenCountry ? "open" : ""
                           }`}
-                          onClick={togglePanel}
+                          onClick={togglePanelCountry}
                         >
                           <span className="toggle-tiles">{t("Dammam")}</span>
+                          {isPanelOpenCountry ? (
+                            <i
+                              className={"icon-arrow-up Country-wise-collapse"}
+                            ></i>
+                          ) : (
+                            <i
+                              className={
+                                "icon-arrow-down Country-wise-collapse"
+                              }
+                            ></i>
+                          )}
                         </div>
                       }
                       key="1"

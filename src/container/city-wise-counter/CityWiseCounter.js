@@ -99,17 +99,6 @@ const CityWiseCounter = () => {
           <Col lg={12} md={12} sm={12}>
             <Paper className="CityWiseCounter-paper">
               <Row>
-                <Col
-                  lg={4}
-                  md={4}
-                  sm={4}
-                  className="d-flex justify-content-end"
-                >
-                  <label className="text-labels">{t("Branch")}</label>
-                </Col>
-                <Col lg={8} md={8} sm={8} />
-              </Row>
-              <Row>
                 <Col lg={12} md={12} sm={12} className="CityWiseCounter-col">
                   <Select
                     defaultValue={selectedOption}

@@ -101,7 +101,7 @@ const Login = () => {
                           <Form.Control
                             name="UserName"
                             className="form-comtrol-textfield"
-                            placeholder="Email ID"
+                            placeholder={t("Email-id")}
                             value={auditCredentials.UserName}
                             onChange={setCredentialHandler}
                             aria-label="Username"
@@ -122,7 +122,7 @@ const Login = () => {
                           <Form.Control
                             name="Password"
                             className="form-comtrol-textfield"
-                            placeholder="password"
+                            placeholder={t("password")}
                             onChange={setCredentialHandler}
                             aria-label="Username"
                             aria-describedby="basic-addon1"
