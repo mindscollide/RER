@@ -77,5 +77,7 @@
   "Admin_AdminServiceManager_GetLastSelectedLanguage_02": "No Records Found",
   "Admin_AdminServiceManager_SetLastSelectedLanguage_01": "Record Updated",
   "Admin_AdminServiceManager_SetLastSelectedLanguage_02": "Record Not Saved",
-  "Admin_AdminServiceManager_SetLastSelectedLanguage_03": "Record Saved"
+  "Admin_AdminServiceManager_SetLastSelectedLanguage_03": "Record Saved",
+  "Email-id": "Email ID",
+  "password": "password"
 }

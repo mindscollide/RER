@@ -73,3 +73,9 @@
   > .ant-collapse-header {
   padding: 3px 16px;
 }
+
+.icon-size-of-collapse {
+  font-size: 24px !important;
+  font-weight: 500 !important;
+  color: #ffffff;
+}
