@@ -15,11 +15,14 @@ import {
   EmployeeMain,
   Login,
   CountryCityWise,
+  ForgotPassword,
 } from "../container";
 export const router = createHashRouter(
   createRoutesFromElements(
     <>
       <Route path="/" element={<Login />} />
+      <Route path="/Forgot" element={<ForgotPassword />} />
+
       <Route>
         <Route exact path="/REM/" element={<Dashboard />}>
           <Route path="" element={<BranchAdmin />} />
