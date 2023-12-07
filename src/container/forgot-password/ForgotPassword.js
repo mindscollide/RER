@@ -102,7 +102,7 @@ const ForgotPassword = () => {
                           <Form.Control
                             name="UserName"
                             className="form-comtrol-textfield"
-                            placeholder="Email ID"
+                            placeholder={t("Email-id")}
                             value={auditCredentials.UserName}
                             onChange={setCredentialHandler}
                             aria-label="Username"
