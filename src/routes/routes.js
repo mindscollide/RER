@@ -16,6 +16,7 @@ import {
   Login,
   CountryCityWise,
   ForgotPassword,
+  BranchServiceCounter,
 } from "../container";
 export const router = createHashRouter(
   createRoutesFromElements(
@@ -35,6 +36,10 @@ export const router = createHashRouter(
           <Route path="CityWiseCounter" element={<CityWiseCounter />} />
           <Route path="EmployeeMain" element={<EmployeeMain />} />
           <Route path="CountryCityWise" element={<CountryCityWise />} />
+          <Route
+            path="BranchServiceCounter"
+            element={<BranchServiceCounter />}
+          />
         </Route>
       </Route>
     </>

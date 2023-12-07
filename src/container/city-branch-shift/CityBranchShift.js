@@ -93,10 +93,13 @@ const CityBranchShift = () => {
         <Row className="mt-3">
           <Col lg={12} md={12} sm={12}>
             <Paper className="CityBranchShift-paper">
-              <Row className="mx-auto d-flex align-items-center justify-content-center">
-                <Col lg={9} md={9} sm={12}>
-                  <span className="d-flex flex-column w-100">
-                    <label>Tag Name</label>
+              <Row className="mx-auto ms-5 d-flex align-items-center justify-content-center">
+                <Col lg={3} md={3} sm={12} />
+                <Col lg={4} md={4} sm={12}>
+                  <span className="d-flex justify-content-center text-left flex-column ">
+                    <label className="text-labels text-left">
+                      {t("Branch")}
+                    </label>
                     <Select
                       defaultValue={selectedOption}
                       onChange={setSelectedOption}
@@ -106,13 +109,14 @@ const CityBranchShift = () => {
                     />
                   </span>
                 </Col>
-                <Col lg={3} md={3} sm={12}>
+                <Col lg={3} md={3} sm={12} className="mt-3">
                   <Button
                     icon={<i className="icon-search city-icon-space"></i>}
-                    text={"Search"}
+                    text={t("Search")}
                     className="Search-Icon-Btn"
                   />
                 </Col>
+                <Col lg={2} md={2} sm={12} />
               </Row>
 
               <Row className="mt-3">

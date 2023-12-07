@@ -111,7 +111,7 @@ const CountryCityWise = () => {
               <Row className="mx-auto d-flex align-items-center justify-content-center">
                 <Col lg={4} md={4} sm={12}>
                   <span className="d-flex flex-column w-100">
-                    <label>Tag Name</label>
+                    <label className="text-labels">{t("City")}</label>
                     <Select
                       defaultValue={selectedOption}
                       onChange={setSelectedOption}
@@ -123,7 +123,7 @@ const CountryCityWise = () => {
                 </Col>
                 <Col lg={4} md={4} sm={12}>
                   <span className="d-flex flex-column w-100">
-                    <label>Tag Name</label>
+                    <label className="text-labels">{t("Branch")}</label>
                     <Select
                       defaultValue={selectedOption}
                       onChange={setSelectedOption}
@@ -133,7 +133,7 @@ const CountryCityWise = () => {
                     />
                   </span>
                 </Col>
-                <Col lg={2} md={2} sm={12} className="mt-4">
+                <Col lg={2} md={2} sm={12} className="mt-3">
                   <Button
                     icon={<i className="icon-search city-icon-space"></i>}
                     text={t("Search")}

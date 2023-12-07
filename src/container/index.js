@@ -11,3 +11,4 @@ export { default as BranchAdmin } from "./branch-admin/BranchAdmin";
 export { default as NotFound } from "./404-Not-Found/404_not_found";
 export { default as CountryCityWise } from "./country-city-wise-counter/CountryCityWise";
 export { default as ForgotPassword } from "./forgot-password/ForgotPassword";
+export { default as BranchServiceCounter } from "./branch-service-wise-counter/BranchServiceCounter";

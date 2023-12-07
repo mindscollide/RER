@@ -56,6 +56,10 @@ const Sidebar = () => {
     navigate("CountryCityWise");
   };
 
+  const onClickBranchServiceCounter = () => {
+    navigate("BranchServiceCounter");
+  };
+
   return (
     <Sider width={250} className="site-layout-background">
       <Menu
@@ -136,6 +140,13 @@ const Sidebar = () => {
           >
             {t("Country-city-wise-counter")}
           </Menu.Item>
+          <Menu.Item
+            key="11"
+            className="menu-item-sub"
+            onClick={onClickBranchServiceCounter}
+          >
+            {t("Branch-service-wise-counter")}
+          </Menu.Item>
         </Menu.SubMenu>
         <Menu.SubMenu
           key="sub2"
@@ -143,19 +154,19 @@ const Sidebar = () => {
           title="Reports"
           className="menu-item-two"
         >
-          <Menu.Item key="11" className="menu-item-sub">
+          <Menu.Item key="" className="menu-item-sub">
             {t("Country-wise-reports")}
           </Menu.Item>
-          <Menu.Item key="12" className="menu-item-sub">
+          <Menu.Item key="" className="menu-item-sub">
             {t("City-wise-reports")}
           </Menu.Item>
-          <Menu.Item key="13" className="menu-item-sub">
+          <Menu.Item key="" className="menu-item-sub">
             {t("Branch-wise-reports")}
           </Menu.Item>
-          <Menu.Item key="14" className="menu-item-sub">
+          <Menu.Item key="" className="menu-item-sub">
             {t("Employee-wise-reports")}
           </Menu.Item>
-          <Menu.Item key="15" className="menu-item-sub">
+          <Menu.Item key="" className="menu-item-sub">
             {t("Service-wise-reports")}
           </Menu.Item>
         </Menu.SubMenu>

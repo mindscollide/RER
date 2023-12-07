@@ -79,5 +79,9 @@
   "Admin_AdminServiceManager_SetLastSelectedLanguage_02": "Record Not Saved",
   "Admin_AdminServiceManager_SetLastSelectedLanguage_03": "Record Saved",
   "Email-id": "Email ID",
-  "password": "password"
+  "password": "password",
+  "Branch-service-wise-counter": "Branch Service Wise Counter",
+  "Country": "Country",
+  "Saudia-arabia": "Saudia Arabia",
+  "Uae": "UAE"
 }
