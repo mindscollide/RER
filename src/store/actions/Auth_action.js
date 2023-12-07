@@ -1,6 +1,6 @@
 import * as actions from "../action_types";
 import axios from "axios";
-import { loader_Actions } from "./Loader";
+import { loader_Actions } from "./Loader_action";
 import { logIn } from "../../commen/apis/Api_config";
 import { authURL } from "../../commen/apis/Api_ends_points";
 
@@ -20,18 +20,12 @@ const loginfail = (message) => {
   };
 };
 
-const setLogIn = (t, navigate, UserData) => {
-  let Data = {
-    UserName: UserData.UserName,
-    Password: UserData.Password,
-    DeviceID: "1",
-    Device: "browser",
-  };
+const setLogIn = (t, navigate, data) => {
   return (dispatch) => {
     dispatch(loader_Actions(true));
     let form = new FormData();
     form.append("RequestMethod", logIn.RequestMethod);
-    form.append("RequestData", JSON.stringify(Data));
+    form.append("RequestData", JSON.stringify(data));
     axios({
       method: "post",
       url: authURL,
@@ -65,16 +59,12 @@ const setLogIn = (t, navigate, UserData) => {
                 response.data.responseResult.userID
               );
               await localStorage.setItem(
-                "firstName",
-                response.data.responseResult.firstName
+                "name",
+                response.data.responseResult.name
               );
               await localStorage.setItem(
-                "lastName",
-                response.data.responseResult.lastName
-              );
-              await localStorage.setItem(
-                "userName",
-                response.data.responseResult.userName
+                "loginID",
+                response.data.responseResult.loginID
               );
               await localStorage.setItem(
                 "roleID",
@@ -82,14 +72,14 @@ const setLogIn = (t, navigate, UserData) => {
               );
               await localStorage.setItem(
                 "token",
-                response.data.responseResult.token
+                JSON.stringify(response.data.responseResult.token)
               );
 
               await localStorage.setItem(
                 "refreshToken",
-                response.data.responseResult.refreshToken
+                JSON.stringify(response.data.responseResult.refreshToken)
               );
-              if (response.data.responseResult.roleID === 2) {
+              if (response.data.responseResult.roleID === 4) {
                 await dispatch(
                   loginsuccess(
                     response.data.responseResult,

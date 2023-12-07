@@ -17,13 +17,14 @@ import {
   CountryCityWise,
   ForgotPassword,
 } from "../container";
+import PrivateRoutes from "./Private_routes";
 export const router = createHashRouter(
   createRoutesFromElements(
     <>
       <Route path="/" element={<Login />} />
       <Route path="/Forgot" element={<ForgotPassword />} />
 
-      <Route>
+      <Route element={<PrivateRoutes />}>
         <Route exact path="/REM/" element={<Dashboard />}>
           <Route path="" element={<BranchAdmin />} />
           <Route path="BranchAdmin" element={<BranchAdmin />} />

@@ -51,6 +51,7 @@ const getSystemSupportedLanguage = (t, i18n, navigate, route, data) => {
             ) {
               await dispatch(
                 getSystemSupportedLanguageSuccess(
+                  response.data.responseResult.systemSupportedLanguages,
                   t("Admin_AdminServiceManager_GetSystemSupportedLanguage_01")
                 )
               );

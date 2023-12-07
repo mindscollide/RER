@@ -11,14 +11,17 @@ import {
   getSystemSupportedLanguage,
   setLastSelectedLanguage,
 } from "../../../store/actions/Admin_action";
+import { Loader } from "../../elements";
 
 const Header = ({ isLoginScreen }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const location = useLocation();
   const { t, i18n } = useTranslation();
-  const loading = useSelector((state) => state.Loading);
-  const supportedLanguage = useSelector((state) => state.supportedLanguage);
+  const loading = useSelector((state) => state.Loader.Loading);
+  const supportedLanguage = useSelector(
+    (state) => state.admin.supportedLanguage
+  );
   const dropdownRef = useRef(null);
   let currentUserID = Number(localStorage.getItem("userID"));
   const [dropdownVisible, setDropdownVisible] = useState(false);
@@ -42,7 +45,7 @@ const Header = ({ isLoginScreen }) => {
   }); // Assuming "en" is the default language
   const callAPIOnPageLoad = async () => {
     if (location.pathname === "/" || location.pathname === "/Forgot") {
-    await dispatch(getSystemSupportedLanguage(t,i18n, navigate, "login"));
+      await dispatch(getSystemSupportedLanguage(t, i18n, navigate, "login"));
       setTimeout(() => {
         // window.location.reload()
         i18n.changeLanguage(localStorage.getItem("i18nextLng"));
@@ -50,16 +53,18 @@ const Header = ({ isLoginScreen }) => {
       document.body.dir = localStorage.getItem("i18nextLng");
       moment.locale(localStorage.getItem("i18nextLng"));
     } else {
-    let data = { UserID: Number(currentUserID) };
+      let data = { UserID: Number(currentUserID) };
       await dispatch(
         getSystemSupportedLanguage(t, i18n, navigate, "main", data)
       );
     }
   };
-console.log("loading",loading)
+  console.log("loading", loading);
+  console.log("supportedLanguage", supportedLanguage);
   useEffect(() => {
     document.addEventListener("click", handleClickOutside);
     if (localStorage.getItem("i18nextLng") === null) {
+      dispatch(getSystemSupportedLanguage(t, i18n, navigate, "login"));
       setTimeout(() => {
         // window.location.reload()
         i18n.changeLanguage("en");
@@ -75,6 +80,12 @@ console.log("loading",loading)
       document.removeEventListener("click", handleClickOutside);
     };
   }, []);
+
+  useEffect(() => {
+    document.addEventListener("click", handleClickOutside);
+    if (supportedLanguage !== null) {
+    }
+  }, [supportedLanguage]);
 
   const handleClickOutside = (event) => {
     if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
@@ -105,7 +116,9 @@ console.log("loading",loading)
         UserID: Number(currentUserID),
         SystemSupportedLanguageID: Number(lang),
       };
-      await dispatch(setLastSelectedLanguage(t, i18n, navigate, data,setSelectedLanguage));
+      await dispatch(
+        setLastSelectedLanguage(t, i18n, navigate, data, setSelectedLanguage)
+      );
     }
 
     // Dispatch your language change action here if needed
@@ -114,6 +127,7 @@ console.log("loading",loading)
 
   return (
     <>
+      {loading ? <Loader /> : null}
       <Navbar expand="lg" className="site-header">
         <Container fluid className="page-gutter">
           <Navbar.Brand href="#">
@@ -158,14 +172,18 @@ console.log("loading",loading)
               menuVariant="light"
               className="ms-md-2" // Margin added to separate dropdowns on larger screens
             >
-              <NavDropdown.Item
-                data-bs-toggle="modal"
-                data-bs-target="#UserSettingModal"
-                eventKey={1}
-              >
-                English
-              </NavDropdown.Item>
-              <NavDropdown.Item eventKey={2}>عربى</NavDropdown.Item>
+              {supportedLanguage != null &&
+                supportedLanguage.map((LangData, index) => {
+                  return (
+                    <NavDropdown.Item
+                      data-bs-toggle="modal"
+                      data-bs-target="#UserSettingModal"
+                      eventKey={Number(LangData.systemSupportedLanguageID)}
+                    >
+                      {LangData.languageTitle}
+                    </NavDropdown.Item>
+                  );
+                })}
             </NavDropdown>
 
             {/* User Dropdown */}
