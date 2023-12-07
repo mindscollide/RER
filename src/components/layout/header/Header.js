@@ -1,6 +1,5 @@
 import React, { useState, useRef, useEffect } from "react";
 import "./Header.css";
-import { LanguageSelector } from "../../elements";
 import imageProfile from "../../../assets/images/profile3.png";
 import { Navbar, Container, Nav, NavDropdown } from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
