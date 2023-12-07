@@ -61,5 +61,7 @@
   "City": "City",
   "Riyadh": "Riyadh",
   "Dammam": "Dammam",
-  "Login": "Login"
+  "Login": "Login",
+  "Recover-password": "Recover Password",
+  "Recover": "Recover"
 }
