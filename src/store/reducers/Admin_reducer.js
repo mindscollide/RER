@@ -8,6 +8,7 @@ const initialState = {
 
 const adminReducer = (state = initialState, action) => {
   switch (action.type) {
+    
     // For Admin Cleare State
     case actions.ADMIN_CLEARE_STATE:
       return {
