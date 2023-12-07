@@ -5,19 +5,88 @@ import { Navbar, Container, Nav, NavDropdown } from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
 import moment from "moment";
 import { useTranslation } from "react-i18next";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  getSystemSupportedLanguage,
+  setLastSelectedLanguage,
+} from "../../../store/actions/Admin_action";
+import { Loader } from "../../elements";
+import { signOut } from "../../../store/actions/Auth_action";
 
 const Header = ({ isLoginScreen }) => {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
   const location = useLocation();
-  const [selectedLanguage, setSelectedLanguage] = useState({
-    systemSupportedLanguageID: 1,
-    languageTitle: "English",
-    code: "en",
-  }); // Assuming "en" is the default language
-  const [dropdownVisible, setDropdownVisible] = useState(false);
-  const dropdownRef = useRef(null);
   const { t, i18n } = useTranslation();
+  const loading = useSelector((state) => state.Loader.Loading);
+  const supportedLanguage = useSelector(
+    (state) => state.admin.supportedLanguage
+  );
+  const dropdownRef = useRef(null);
   let currentUserID = Number(localStorage.getItem("userID"));
+  const [dropdownVisible, setDropdownVisible] = useState(false);
+  const [selectedLanguage, setSelectedLanguage] = useState({
+    systemSupportedLanguageID:
+      localStorage.getItem("i18nextLng") === null
+        ? 1
+        : localStorage.getItem("i18nextLng") === "en"
+        ? 1
+        : 2,
+    languageTitle:
+      localStorage.getItem("i18nextLng") === null
+        ? "English"
+        : localStorage.getItem("i18nextLng") === "en"
+        ? "English"
+        : "عربى",
+    code:
+      localStorage.getItem("i18nextLng") === null
+        ? "en"
+        : localStorage.getItem("i18nextLng"),
+  }); // Assuming "en" is the default language
+  const callAPIOnPageLoad = async () => {
+    if (location.pathname === "/" || location.pathname === "/Forgot") {
+      await dispatch(getSystemSupportedLanguage(t, i18n, navigate, "login"));
+      setTimeout(() => {
+        // window.location.reload()
+        i18n.changeLanguage(localStorage.getItem("i18nextLng"));
+      }, 100);
+      document.body.dir = localStorage.getItem("i18nextLng");
+      moment.locale(localStorage.getItem("i18nextLng"));
+    } else {
+      let data = { UserID: Number(currentUserID) };
+      await dispatch(
+        getSystemSupportedLanguage(t, i18n, navigate, "main", data)
+      );
+    }
+  };
+  console.log("loading", loading);
+  console.log("supportedLanguage", supportedLanguage);
+  useEffect(() => {
+    document.addEventListener("click", handleClickOutside);
+    if (localStorage.getItem("i18nextLng") === null) {
+      dispatch(getSystemSupportedLanguage(t, i18n, navigate, "login"));
+      setTimeout(() => {
+        // window.location.reload()
+        i18n.changeLanguage("en");
+      }, 100);
+      localStorage.setItem("i18nextLng", "en");
+      document.body.dir = "en";
+      moment.locale("en");
+    } else {
+      callAPIOnPageLoad();
+    }
+
+    return () => {
+      document.removeEventListener("click", handleClickOutside);
+    };
+  }, []);
+
+  useEffect(() => {
+    document.addEventListener("click", handleClickOutside);
+    if (supportedLanguage !== null) {
+    }
+  }, [supportedLanguage]);
 
   const handleClickOutside = (event) => {
     if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
@@ -25,48 +94,50 @@ const Header = ({ isLoginScreen }) => {
     }
   };
 
-  useEffect(() => {
-    document.addEventListener("click", handleClickOutside);
-    setTimeout(() => {
-      // window.location.reload()
-      i18n.changeLanguage("en");
-    }, 100);
-    localStorage.setItem("i18nextLng", "en");
-    moment.locale("en");
-    return () => {
-      document.removeEventListener("click", handleClickOutside);
-    };
-  }, []);
-
-  const handleChangeLocale = (eventKey, event) => {
+  const handleChangeLocale = async (eventKey, event) => {
     let lang = Number(eventKey);
-    let data = {
-      UserID: currentUserID,
-      SystemSupportedLanguageID: lang,
-    };
+    if (location.pathname === "/" || location.pathname === "/Forgot") {
+      setSelectedLanguage({
+        languageTitle: lang === 2 ? "عربى" : "English",
+        systemSupportedLanguageID: lang,
+        code: lang === 2 ? "ar" : "en",
+      });
+      const newLanguage = lang === 2 ? "ar" : "en";
+      // Change the language using i18next instance directly
+      setTimeout(() => {
+        // window.location.reload()
+        i18n.changeLanguage(newLanguage);
+      }, 100);
+      localStorage.setItem("i18nextLng", newLanguage);
+      moment.locale(newLanguage);
+      // Set document direction based on the selected language
+      document.body.dir = lang === 2 ? "rtl" : "ltr";
+    } else {
+      let data = {
+        UserID: Number(currentUserID),
+        SystemSupportedLanguageID: Number(lang),
+      };
+      await dispatch(
+        setLastSelectedLanguage(t, i18n, navigate, data, setSelectedLanguage)
+      );
+    }
 
     // Dispatch your language change action here if needed
     // dispatch(changeNewLanguage(data, navigate, t));
+  };
+  const handleSelectFromHeaderMenu = async (eventKey, event) => {
+    let lang = Number(eventKey);
+    if (lang === 3) {
+      await dispatch(signOut(navigate));
+    }
 
-    setSelectedLanguage({
-      languageTitle: lang === 1 ? "Arabic" : lang === 2 ? "English" : "French",
-      systemSupportedLanguageID: lang,
-      code: lang === 1 ? "ar" : lang === 2 ? "en" : "fr",
-    });
-    const newLanguage = lang === 1 ? "ar" : lang === 2 ? "en" : "fr";
-    // Change the language using i18next instance directly
-    setTimeout(() => {
-      // window.location.reload()
-      i18n.changeLanguage(newLanguage);
-    }, 100);
-    localStorage.setItem("i18nextLng", newLanguage);
-    moment.locale(newLanguage);
-    // Set document direction based on the selected language
-    document.body.dir = lang === 1 ? "rtl" : "ltr";
+    // Dispatch your language change action here if needed
+    // dispatch(changeNewLanguage(data, navigate, t));
   };
 
   return (
     <>
+      {loading ? <Loader /> : null}
       <Navbar expand="lg" className="site-header">
         <Container fluid className="page-gutter">
           <Navbar.Brand href="#">
@@ -111,14 +182,18 @@ const Header = ({ isLoginScreen }) => {
               menuVariant="light"
               className="ms-md-2" // Margin added to separate dropdowns on larger screens
             >
-              <NavDropdown.Item
-                data-bs-toggle="modal"
-                data-bs-target="#UserSettingModal"
-                eventKey={2}
-              >
-                English
-              </NavDropdown.Item>
-              <NavDropdown.Item eventKey={1}>عربى</NavDropdown.Item>
+              {supportedLanguage != null &&
+                supportedLanguage.map((LangData, index) => {
+                  return (
+                    <NavDropdown.Item
+                      data-bs-toggle="modal"
+                      data-bs-target="#UserSettingModal"
+                      eventKey={Number(LangData.systemSupportedLanguageID)}
+                    >
+                      {LangData.languageTitle}
+                    </NavDropdown.Item>
+                  );
+                })}
             </NavDropdown>
 
             {/* User Dropdown */}
@@ -146,20 +221,22 @@ const Header = ({ isLoginScreen }) => {
                       </span>
                     </div>
                   }
+                  onSelect={handleSelectFromHeaderMenu}
                   id="user-dropdown"
                   menuVariant="light"
                 >
                   <NavDropdown.Item
                     data-bs-toggle="modal"
                     data-bs-target="#UserSettingModal"
+                    eventKey={1}
                   >
                     <i className="icon-settings me-1" />
                     Setting
                   </NavDropdown.Item>
-                  <NavDropdown.Item>
+                  <NavDropdown.Item eventKey={2}>
                     <i className="icon-lock me-1"></i>Lock Screen
                   </NavDropdown.Item>
-                  <NavDropdown.Item>
+                  <NavDropdown.Item eventKey={3}>
                     <i className="icon-logout me-1"></i>Logout
                   </NavDropdown.Item>
                 </NavDropdown>

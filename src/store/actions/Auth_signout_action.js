@@ -6,7 +6,9 @@ const logoutChannel = new BroadcastChannel("logout");
 const signOut = (navigate, message) => {
   logoutChannel.postMessage("Logout");
   window.location.href = window.location.origin + "/";
+  let i18nextLng = localStorage.getItem("i18nextLng");
   localStorage.clear();
+  localStorage.setItem("i18nextLng", i18nextLng);
 };
 
 const logoutAllTabs = () => {

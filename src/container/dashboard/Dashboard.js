@@ -9,8 +9,8 @@ import en_US from "antd/es/locale/en_US";
 import "./Dashboard.css";
 
 const Dashboard = () => {
-  const [currentLanguage, setCurrentLanguage] = useState("en");
   let i18nextLng = localStorage.getItem("i18nextLng");
+  const [currentLanguage, setCurrentLanguage] = useState(localStorage.getItem("i18nextLng") === null?"en":localStorage.getItem("i18nextLng"));
 
   useEffect(() => {
     setCurrentLanguage(i18nextLng);

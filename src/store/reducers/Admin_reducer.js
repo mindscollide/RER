@@ -8,7 +8,6 @@ const initialState = {
 
 const adminReducer = (state = initialState, action) => {
   switch (action.type) {
-    
     // For Admin Cleare State
     case actions.ADMIN_CLEARE_STATE:
       return {
@@ -20,7 +19,7 @@ const adminReducer = (state = initialState, action) => {
     case actions.GET_SYSTEM_SUPPORTED_LANGUAGE_SUCCESS:
       return {
         ...state,
-        supportedLanguage: action.responce,
+        supportedLanguage: action.response,
         admin_ResponseMessage: action.message,
       };
 
@@ -35,7 +34,7 @@ const adminReducer = (state = initialState, action) => {
     case actions.GET_LAST_SELECTED_LANGUAGE_SUCCESS:
       return {
         ...state,
-        supportedLanguageSelected: action.responce,
+        supportedLanguageSelected: action.response,
         admin_ResponseMessage: action.message,
       };
 
