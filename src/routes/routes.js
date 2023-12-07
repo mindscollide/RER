@@ -3,22 +3,26 @@ import {
   createRoutesFromElements,
   createHashRouter,
 } from "react-router-dom";
-import NotFound from "../container/404-Not-Found/404_not_found";
-import BranchAdmin from "../container/branch-admin/BranchAdmin";
-import CounterMain from "../container/counter-main/CounterMain";
-import BranchService from "../container/branch-service/BranchService";
-import CityAdmin from "../container/city-admin/CityAdmin";
-import CityBranchService from "../container/city-branch-service/CityBranchServices";
-import CityBranchShift from "../container/city-branch-shift/CityBranchShift";
-import CityWiseCounter from "../container/city-wise-counter/CityWiseCounter";
-import EmployeeMain from "../container/employee-main/EmployeeMain";
-import Dashboard from "../container/dashboard/Dashboard";
+import {
+  BranchAdmin,
+  BranchService,
+  CityAdmin,
+  CityBranchService,
+  CityBranchShift,
+  CityWiseCounter,
+  CounterMain,
+  Dashboard,
+  EmployeeMain,
+  Login,
+} from "../container";
 export const router = createHashRouter(
   createRoutesFromElements(
     <>
+      <Route path="/" element={<Login />} />
       <Route>
-        <Route exact path="/" element={<Dashboard />}>
+        <Route exact path="/REM/" element={<Dashboard />}>
           <Route path="" element={<BranchAdmin />} />
+          <Route path="BranchAdmin" element={<BranchAdmin />} />
           <Route path="CounterMain" element={<CounterMain />} />
           <Route path="BranchService" element={<BranchService />} />
           <Route path="CityAdmin" element={<CityAdmin />} />

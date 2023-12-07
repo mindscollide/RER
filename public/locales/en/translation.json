@@ -1,17 +1,17 @@
 {
-    "Setups": "Setups",
-    "Branch-admin": "Branch Admin",
-    "Counter-admin": "Counter Admin",
-    "Branch-service": "Branch Service",
-    "City-admin": "City Admin",
-    "City-wise-branch-services": "City Wise Branch Services",
-    "City-branch-wise-shifts": "City Branch Wise Shifts",
-    "City-branch-shifts-wise-counter": "City Branch Shifts Wise Counter",
-    "Employee-main": "Employee Main",
-    "Country-wise-reports": "Country Wise Reports",
-    "City-wise-reports": "City Wise Reports",
-    "Branch-wise-reports": "Branch Wise Reports",
-    "Employee-wise-reports": "Employee Wise Reports",
-    "Service-wise-reports": "Service Wise Reports"
-  }
-  
+  "Setups": "Setups",
+  "Branch-admin": "Branch Admin",
+  "Counter-admin": "Counter Admin",
+  "Branch-service": "Branch Service",
+  "City-admin": "City Admin",
+  "City-wise-branch-services": "City Wise Branch Services",
+  "City-branch-wise-shifts": "City Branch Wise Shifts",
+  "City-branch-shifts-wise-counter": "City Branch Shifts Wise Counter",
+  "Employee-main": "Employee Main",
+  "Country-wise-reports": "Country Wise Reports",
+  "City-wise-reports": "City Wise Reports",
+  "Branch-wise-reports": "Branch Wise Reports",
+  "Employee-wise-reports": "Employee Wise Reports",
+  "Service-wise-reports": "Service Wise Reports",
+  "Login": "Login"
+}
