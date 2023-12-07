@@ -82,5 +82,10 @@
   "Branch-service-wise-counter": "Branch Service Wise Counter",
   "Country": "Country",
   "Saudia-arabia": "Saudia Arabia",
-  "Uae": "UAE"
+  "Uae": "UAE",
+  "Setting": "Setting",
+  "Lock-screen": "Lock Screen",
+  "Logout": "Logout",
+  "Email-is-required": "Email is required",
+  "Password-is-required": "Password is required"
 }

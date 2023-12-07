@@ -9,6 +9,19 @@ body {
   height: 100%;
 }
 
+body::-webkit-scrollbar {
+  width: 0.5rem;
+  height: 0.5rem;
+  border-radius: 20px;
+  background-color: #ffffff;
+}
+
+body::-webkit-scrollbar-thumb {
+  border-radius: 20px;
+  background: #cecece;
+  margin-left: -15px;
+}
+
 /* for headings and Sub Heading Start */
 
 .shift-heading {

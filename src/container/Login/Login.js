@@ -15,6 +15,8 @@ const Login = () => {
   const navigate = useNavigate();
   const { t } = useTranslation();
 
+  const [errorBar, setErrorBar] = useState("");
+
   const [open, setOpen] = useState({
     open: false,
     message: "",
@@ -51,15 +53,16 @@ const Login = () => {
   const loginValidateHandler = (e) => {
     e.preventDefault();
     if (auditCredentials.UserName !== "" && auditCredentials.Password !== "") {
-    
       let data = {
         UserEmail: auditCredentials.UserName,
         UserPassword: auditCredentials.Password,
         DeviceID: "1",
         Device: "browser",
       };
-      dispatch(setLogIn(t, navigate,data));
+      setErrorBar(false);
+      dispatch(setLogIn(t, navigate, data));
     } else {
+      setErrorBar(true);
       setOpen({
         ...open,
         open: true,
@@ -115,9 +118,22 @@ const Login = () => {
                             aria-describedby="basic-addon1"
                           />
                         </InputGroup>
+                        <Row>
+                          <Col className="d-flex justify-content-start">
+                            <p
+                              className={
+                                errorBar && auditCredentials.UserName === ""
+                                  ? "errorMessageLogin"
+                                  : "errorMessageLogin_hidden"
+                              }
+                            >
+                              {t("Email-is-required")}
+                            </p>
+                          </Col>
+                        </Row>
                       </div>
                     </Col>
-                    <Col sm={12} md={12} lg={12} className="mb-3">
+                    <Col sm={12} md={12} lg={12} className="mb-1">
                       <div className="textfield-padding">
                         <InputGroup>
                           <InputGroup.Text
@@ -131,18 +147,32 @@ const Login = () => {
                             type="Password"
                             className="form-comtrol-textfield"
                             placeholder={t("password")}
+                            value={auditCredentials.Password}
                             onChange={setCredentialHandler}
                             aria-label="Username"
                             aria-describedby="basic-addon1"
                           />
                         </InputGroup>
+                        <Row>
+                          <Col className="d-flex justify-content-start">
+                            <p
+                              className={
+                                errorBar && auditCredentials.Password === ""
+                                  ? "errorPasswordSignInMessage"
+                                  : "errorPasswordSignInMessage_hidden"
+                              }
+                            >
+                              {t("Password-is-required")}
+                            </p>
+                          </Col>
+                        </Row>
                       </div>
                     </Col>
                     <Col
                       sm={12}
                       md={12}
                       lg={12}
-                      className="signIn-Signup-btn-col mb-3"
+                      className="signIn-Signup-btn-col mb-2"
                     >
                       <Button
                         text={t("Login")}

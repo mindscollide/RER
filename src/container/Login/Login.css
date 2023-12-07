@@ -137,3 +137,37 @@ body[dir="rtl"] .form-comtrol-textfield {
 .textfield-padding {
   padding: 0px 7px !important;
 }
+
+.errorMessageLogin {
+  height: 12px;
+  margin-top: -14px !important;
+  font-size: 13px !important;
+  font-weight: 500;
+  font-family: "Montserrat", sans-serif !important;
+  color: #f16b6b;
+  visibility: visible !important;
+}
+
+.errorMessageLogin_hidden {
+  visibility: hidden;
+  margin: 0;
+  height: 14px;
+  color: #f16b6b !important;
+}
+
+.errorPasswordSignInMessage {
+  height: 0px;
+  margin-top: 0px !important;
+  font-size: 13px !important;
+  font-weight: 500;
+  color: #f16b6b;
+  font-family: "Montserrat", sans-serif !important;
+  visibility: visible !important;
+}
+
+.errorPasswordSignInMessage_hidden {
+  visibility: hidden;
+  margin: 0;
+  height: 16px;
+  color: #f16b6b !important;
+}
