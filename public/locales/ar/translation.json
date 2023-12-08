@@ -87,5 +87,6 @@
   "Lock-screen": "Lock Screen",
   "Logout": "Logout",
   "Email-is-required": "Email is required",
-  "Password-is-required": "Password is required"
+  "Password-is-required": "Password is required",
+  "Employee-name": "Employee Name"
 }

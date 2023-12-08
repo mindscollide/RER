@@ -106,7 +106,7 @@ const CounterMain = () => {
                   <span className="text-labels">{t("Shift-name")}</span>
                   <TextField
                     name="Shift"
-                    placeholder="Shift Name"
+                    placeholder={t("Shift-name")}
                     labelClass="d-none"
                     className="text-fiels-counterMain"
                   />

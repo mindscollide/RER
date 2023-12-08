@@ -119,7 +119,7 @@ const CityAdmin = () => {
                   <span className="text-labels">{t("Branch-name")}</span>
                   <TextField
                     name="Branch Name"
-                    placeholder="Branch Name"
+                    placeholder={t("Branch-admin")}
                     labelClass="d-none"
                     className="text-fiels-cityAdmin"
                   />
