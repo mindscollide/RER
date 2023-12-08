@@ -112,7 +112,19 @@ const CounterMain = () => {
                   />
                 </Col>
 
-                <Col lg={2} md={2} sm={2} className="mt-4">
+                <Col lg={6} md={6} sm={6}>
+                  <span className="text-labels">{t("Shift-name")}</span>
+                  <TextField
+                    name="Shift"
+                    placeholder={t("Shift-name")}
+                    labelClass="d-none"
+                    className="text-fiels-counterMain"
+                  />
+                </Col>
+              </Row>
+
+              <Row className="mt-3">
+                <Col lg={6} md={6} sm={6} className="mt-2">
                   <Checkbox
                     checked={isCheckboxSelected}
                     onChange={handleCheckboxChange}
@@ -123,7 +135,7 @@ const CounterMain = () => {
                   />
                 </Col>
 
-                <Col lg={4} md={4} sm={4} className="btn-col-class">
+                <Col lg={6} md={6} sm={6} className="btn-col-class">
                   <Button
                     icon={<i className="icon-add-circle icon-space"></i>}
                     text={t("Add")}

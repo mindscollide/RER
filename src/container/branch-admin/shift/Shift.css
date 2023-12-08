@@ -13,7 +13,7 @@
 
 .btn-class-branch {
   display: flex;
-  justify-content: end;
+  justify-content: center !important;
   gap: 5px !important;
 }
 

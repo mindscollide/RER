@@ -124,7 +124,18 @@ const CityAdmin = () => {
                     className="text-fiels-cityAdmin"
                   />
                 </Col>
+                <Col lg={6} md={6} sm={6}>
+                  <span className="text-labels">{t("Branch-name")}</span>
+                  <TextField
+                    name="Branch Name"
+                    placeholder={t("Branch-admin")}
+                    labelClass="d-none"
+                    className="text-fiels-cityAdmin"
+                  />
+                </Col>
+              </Row>
 
+              <Row>
                 <Col
                   lg={3}
                   md={3}

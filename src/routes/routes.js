@@ -52,10 +52,11 @@ export const router = createHashRouter(
           /> */}
         </Route>
       </Route>
+
       <Route element={<CityAdminRoutes />}>
         <Route exact path="/CityAdmin/" element={<Dashboard />}>
-          <Route path="" element={<BranchAdmin />} />
-          <Route path="Shift" element={<BranchAdmin />} />
+          <Route path="" element={<Shift />} />
+          <Route path="Shift" element={<Shift />} />
           <Route path="CounterMain" element={<CounterMain />} />
           <Route path="BranchService" element={<BranchService />} />
           <Route path="CityAdmin" element={<CityAdmin />} />
@@ -64,16 +65,17 @@ export const router = createHashRouter(
           <Route path="CityWiseCounter" element={<CityWiseCounter />} />
           <Route path="EmployeeMain" element={<EmployeeMain />} />
           <Route path="CountryCityWise" element={<CountryCityWise />} />
-          <Route
+          {/* <Route
             path="BranchServiceCounter"
             element={<BranchServiceCounter />}
-          />
+          /> */}
         </Route>
       </Route>
+
       <Route element={<CountryAdminRoutes />}>
         <Route exact path="/CountryAdmin/" element={<Dashboard />}>
-          <Route path="" element={<BranchAdmin />} />
-          <Route path="Shift" element={<BranchAdmin />} />
+          <Route path="" element={<Shift />} />
+          <Route path="Shift" element={<Shift />} />
           <Route path="CounterMain" element={<CounterMain />} />
           <Route path="BranchService" element={<BranchService />} />
           <Route path="CityAdmin" element={<CityAdmin />} />
@@ -82,16 +84,17 @@ export const router = createHashRouter(
           <Route path="CityWiseCounter" element={<CityWiseCounter />} />
           <Route path="EmployeeMain" element={<EmployeeMain />} />
           <Route path="CountryCityWise" element={<CountryCityWise />} />
-          <Route
+          {/* <Route
             path="BranchServiceCounter"
             element={<BranchServiceCounter />}
-          />
+          /> */}
         </Route>
       </Route>
+
       <Route element={<GlobalAdminRoutes />}>
         <Route exact path="/GlobalAdmin/" element={<Dashboard />}>
-          <Route path="" element={<BranchAdmin />} />
-          <Route path="Shift" element={<BranchAdmin />} />
+          <Route path="" element={<Shift />} />
+          <Route path="Shift" element={<Shift />} />
           <Route path="CounterMain" element={<CounterMain />} />
           <Route path="BranchService" element={<BranchService />} />
           <Route path="CityAdmin" element={<CityAdmin />} />
@@ -100,10 +103,10 @@ export const router = createHashRouter(
           <Route path="CityWiseCounter" element={<CityWiseCounter />} />
           <Route path="EmployeeMain" element={<EmployeeMain />} />
           <Route path="CountryCityWise" element={<CountryCityWise />} />
-          <Route
+          {/* <Route
             path="BranchServiceCounter"
             element={<BranchServiceCounter />}
-          />
+          /> */}
         </Route>
       </Route>
     </>

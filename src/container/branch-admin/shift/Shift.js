@@ -122,7 +122,29 @@ const BranchAdmin = () => {
                   />
                 </Col>
 
-                <Col lg={3} md={3} sm={3} className="col-for-date-timepicker">
+                <Col lg={6} md={6} sm={6}>
+                  <span className="text-labels">{t("Shift-name")}</span>
+                  <TextField
+                    name="Shift"
+                    placeholder={t("Shift-name")}
+                    labelClass="d-none"
+                    className="text-fiels-Branch"
+                  />
+                </Col>
+              </Row>
+
+              <Row className="mt-3">
+                <Col lg={2} md={2} sm={2} className="mt-4">
+                  <Checkbox
+                    checked={isCheckboxSelected}
+                    onChange={handleCheckboxChange}
+                    classNameDiv="Branch-checkbox"
+                    label={
+                      <span className="checkbox-label">{t("Active")}</span>
+                    }
+                  />
+                </Col>
+                <Col lg={5} md={5} sm={5} className="col-for-date-timepicker">
                   <label className="text-labels">{t("Shift-start-time")}</label>
                   <DatePicker
                     arrowClassName="arrowClass"
@@ -133,7 +155,7 @@ const BranchAdmin = () => {
                   />
                 </Col>
 
-                <Col lg={3} md={3} sm={3} className="col-for-date-timepicker">
+                <Col lg={5} md={5} sm={5} className="col-for-date-timepicker">
                   <label className="text-labels">{t("Shift-end-time")}</label>
                   <DatePicker
                     arrowClassName="arrowClass"
@@ -144,19 +166,9 @@ const BranchAdmin = () => {
                   />
                 </Col>
               </Row>
-              <Row className="my-3">
-                <Col lg={6} md={6} sm={6}>
-                  <Checkbox
-                    checked={isCheckboxSelected}
-                    onChange={handleCheckboxChange}
-                    classNameDiv="Branch-checkbox"
-                    label={
-                      <span className="checkbox-label">{t("Active")}</span>
-                    }
-                  />
-                </Col>
 
-                <Col lg={6} md={6} sm={6} className="btn-class-branch">
+              <Row className="my-3">
+                <Col lg={12} md={12} sm={12} className="btn-class-branch">
                   <Button
                     icon={<i className="icon-add-circle icon-space"></i>}
                     text={t("Add")}
