@@ -4,19 +4,25 @@ import {
   createHashRouter,
 } from "react-router-dom";
 import {
-  BranchAdmin,
+  Shift,
   BranchService,
+  CounterMain,
+  // BranchServiceCounter,
+} from "../container/branch-admin";
+
+import {
   CityAdmin,
-  CityBranchService,
+  EmployeeMain,
   CityBranchShift,
   CityWiseCounter,
-  CounterMain,
-  Dashboard,
-  EmployeeMain,
-  Login,
   CountryCityWise,
+} from "../container/city-admin";
+
+import {
+  CityBranchService,
+  Dashboard,
+  Login,
   ForgotPassword,
-  BranchServiceCounter,
 } from "../container";
 import PrivateRoutes from "./Private_routes";
 export const router = createHashRouter(
@@ -27,8 +33,8 @@ export const router = createHashRouter(
 
       <Route element={<PrivateRoutes />}>
         <Route exact path="/BranchAdmin/" element={<Dashboard />}>
-          <Route path="" element={<BranchAdmin />} />
-          <Route path="Shift" element={<BranchAdmin />} />
+          <Route path="" element={<Shift />} />
+          <Route path="Shift" element={<Shift />} />
           <Route path="CounterMain" element={<CounterMain />} />
           <Route path="BranchService" element={<BranchService />} />
           <Route path="CityAdmin" element={<CityAdmin />} />
@@ -37,10 +43,10 @@ export const router = createHashRouter(
           <Route path="CityWiseCounter" element={<CityWiseCounter />} />
           <Route path="EmployeeMain" element={<EmployeeMain />} />
           <Route path="CountryCityWise" element={<CountryCityWise />} />
-          <Route
+          {/* <Route
             path="BranchServiceCounter"
             element={<BranchServiceCounter />}
-          />
+          /> */}
         </Route>
       </Route>
     </>

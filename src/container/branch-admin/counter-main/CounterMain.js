@@ -8,7 +8,7 @@ import {
   Button,
   Table,
   Loader,
-} from "../../components/elements";
+} from "../../../components/elements";
 import { useTranslation } from "react-i18next";
 
 const CounterMain = () => {

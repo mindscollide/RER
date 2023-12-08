@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Row, Col } from "react-bootstrap";
 import "./CityWiseCounter.css";
-import { Paper, Button, Table } from "../../components/elements";
+import { Paper, Button, Table } from "../../../components/elements";
 import Select from "react-select";
 import { useTranslation } from "react-i18next";
 

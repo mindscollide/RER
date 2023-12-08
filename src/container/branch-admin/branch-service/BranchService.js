@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Row, Col } from "react-bootstrap";
 import "./BranchService.css";
-import { Paper, TextField, Button, Table } from "../../components/elements";
+import { Paper, TextField, Button, Table } from "../../../components/elements";
 import { Switch } from "antd";
 import { useTranslation } from "react-i18next";
 

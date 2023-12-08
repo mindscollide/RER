@@ -7,11 +7,11 @@ import {
   Checkbox,
   Button,
   Table,
-} from "../../components/elements";
+} from "../../../components/elements";
 import Select from "react-select";
 import { Radio } from "antd";
-import AddEditEmployee from "../modals/add-edit-modal/AddEditEmployee";
-import DeleteEmployeeModal from "../modals/delete-employee-modal/DeleteEmplyeeModal";
+import AddEditEmployee from "../../modals/add-edit-modal/AddEditEmployee";
+import DeleteEmployeeModal from "../../modals/delete-employee-modal/DeleteEmplyeeModal";
 import { useTranslation } from "react-i18next";
 
 const EmployeeMain = () => {
