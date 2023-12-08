@@ -142,6 +142,11 @@ const getLastSelectedLanguage = (t, i18n, navigate, data) => {
             ) {
               setTimeout(() => {
                 // window.location.reload()
+                console.log(
+                  "i18nextLng",
+                  response.data.responseResult.userSelectedLanguage
+                    .systemSupportedLanguageID
+                );
                 i18n.changeLanguage(
                   response.data.responseResult.userSelectedLanguage
                     .systemSupportedLanguageID === 1
@@ -272,6 +277,7 @@ const setLastSelectedLanguage = (
                 // window.location.reload()
                 i18n.changeLanguage(newLanguage);
               }, 100);
+              console.log("i18nextLng", newLanguage);
               localStorage.setItem("i18nextLng", newLanguage);
               moment.locale(newLanguage);
               // Set document direction based on the selected language

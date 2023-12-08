@@ -4,13 +4,50 @@ import { Layout, Menu } from "antd";
 import { useNavigate } from "react-router-dom";
 import "./Sidebar.css";
 import { useTranslation } from "react-i18next";
+import { getItem } from "../../../commen/functions/utils.js";
 const { Sider } = Layout;
 
 const Sidebar = () => {
   const navigate = useNavigate();
-  const [openKeys, setOpenKeys] = useState(["sub1"]);
   const { t } = useTranslation();
-
+  const [openKeys, setOpenKeys] = useState(["sub1"]);
+  const [selectedKeys, setSelectedKeys] = useState(
+    localStorage.getItem("selectedKeys") === null
+      ? ["2"]
+      : [localStorage.getItem("selectedKeys")]
+  );
+  const items = [
+    getItem(
+      t("Setups"),
+      "sub1",
+      <i className="icon-settings side-bar-icons"></i>,
+      [
+        getItem(t("Branch-admin"), "2"),
+        getItem(t("Counter-admin"), "3"),
+        getItem(t("Branch-service"), "4"),
+        getItem(t("City-admin"), "5"),
+        getItem(t("City-wise-branch-services"), "6"),
+        getItem(t("City-branch-wise-shifts"), "7"),
+        getItem(t("City-branch-shifts-wise-counter"), "8"),
+        getItem(t("Employee-main"), "9"),
+        getItem(t("Country-city-wise-counter"), "10"),
+      ],
+      "menu-item-sub"
+    ),
+    getItem(
+      t("Reports"),
+      "sub2",
+      <i className="icon-file side-bar-icons"></i>,
+      [
+        getItem(t("Country-wise-reports"), "11"),
+        getItem(t("City-wise-reports"), "12"),
+        getItem(t("Branch-wise-reports"), "13"),
+        getItem(t("Employee-wise-reports"), "14"),
+        getItem(t("Service-wise-reports"), "15"),
+      ],
+      "menu-item-sub"
+    ),
+  ];
   const handleOpenChange = (keys) => {
     // Ensure only one submenu is open at a time
     if (keys.length > 0) {
@@ -20,146 +57,56 @@ const Sidebar = () => {
     }
   };
 
-  const onClickBranchAdmin = () => {
-    navigate("BranchAdmin");
+  const onClick = (e) => {
+    console.log("click ", e);
+    setSelectedKeys([e.key]);
+    localStorage.setItem("selectedKeys", e.key);
+    if (e.key === "2") {
+      navigate("BranchAdmin");
+    } else if (e.key === "3") {
+      navigate("CounterMain");
+    } else if (e.key === "4") {
+      navigate("BranchService");
+    } else if (e.key === "5") {
+      navigate("CityAdmin");
+    } else if (e.key === "6") {
+      navigate("CityBranchService");
+    } else if (e.key === "7") {
+      navigate("CityBranchShift");
+    } else if (e.key === "8") {
+      navigate("CityWiseCounter");
+    } else if (e.key === "9") {
+      navigate("EmployeeMain");
+    } else if (e.key === "10") {
+      navigate("CountryCityWise");
+    } else if (e.key === "11") {
+      // navigate("CityBranchService");
+    } else if (e.key === "12") {
+      // navigate("CityBranchShift");
+    } else if (e.key === "13") {
+      // navigate("CityWiseCounter");
+    } else if (e.key === "14") {
+      // navigate("EmployeeMain");
+    } else if (e.key === "15") {
+      // navigate("CountryCityWise");
+    } else {
+      // Handle other keys or add more conditions as needed
+    }
   };
-
-  const onClickCounterAdmin = () => {
-    navigate("CounterMain");
-  };
-
-  const onClickBranchService = () => {
-    navigate("BranchService");
-  };
-
-  const onClickCityAdmin = () => {
-    navigate("CityAdmin");
-  };
-
-  const onClickCityBranchServices = () => {
-    navigate("CityBranchService");
-  };
-
-  const onClickCityBranchShift = () => {
-    navigate("CityBranchShift");
-  };
-
-  const onClickCityWiseCounter = () => {
-    navigate("CityWiseCounter");
-  };
-
-  const onClickEmployeeMain = () => {
-    navigate("EmployeeMain");
-  };
-
-  const onClickCountryCityWise = () => {
-    navigate("CountryCityWise");
-  };
-
   return (
     <Sider width={250} className="site-layout-background">
       <Menu
-        mode="inline"
         defaultSelectedKeys={["1"]}
+        selectedKeys={selectedKeys}
+        defaultOpenKeys={["sub1"]}
         openKeys={openKeys}
         onOpenChange={handleOpenChange}
-        className="site-layout"
-      >
-        <Menu.SubMenu
-          key="sub1"
-          icon={<i className="icon-settings side-bar-icons"></i>}
-          title={t("Setups")}
-          className="menu-item"
-        >
-          <Menu.Item
-            key="2"
-            className="menu-item-sub"
-            onClick={onClickBranchAdmin}
-          >
-            {t("Branch-admin")}
-          </Menu.Item>
-          <Menu.Item
-            key="3"
-            className="menu-item-sub"
-            onClick={onClickCounterAdmin}
-          >
-            {t("Counter-admin")}{" "}
-          </Menu.Item>
-          <Menu.Item
-            key="4"
-            className="menu-item-sub"
-            onClick={onClickBranchService}
-          >
-            {t("Branch-service")}
-          </Menu.Item>
-          <Menu.Item
-            key="5"
-            className="menu-item-sub"
-            onClick={onClickCityAdmin}
-          >
-            {t("City-admin")}
-          </Menu.Item>
-          <Menu.Item
-            key="6"
-            className="menu-item-sub"
-            onClick={onClickCityBranchServices}
-          >
-            {t("City-wise-branch-services")}
-          </Menu.Item>
-          <Menu.Item
-            key="7"
-            className="menu-item-sub"
-            onClick={onClickCityBranchShift}
-          >
-            {t("City-branch-wise-shifts")}
-          </Menu.Item>
-
-          <Menu.Item
-            key="8"
-            className="menu-item-sub"
-            onClick={onClickCityWiseCounter}
-          >
-            {t("City-branch-shifts-wise-counter")}
-          </Menu.Item>
-
-          <Menu.Item
-            key="9"
-            className="menu-item-sub"
-            onClick={onClickEmployeeMain}
-          >
-            {t("Employee-main")}
-          </Menu.Item>
-          <Menu.Item
-            key="10"
-            className="menu-item-sub"
-            onClick={onClickCountryCityWise}
-          >
-            {t("Country-city-wise-counter")}
-          </Menu.Item>
-        </Menu.SubMenu>
-        <Menu.SubMenu
-          key="sub2"
-          icon={<i className="icon-file side-bar-icons"></i>}
-          title="Reports"
-          className="menu-item-two"
-        >
-          <Menu.Item key="11" className="menu-item-sub">
-            {t("Country-wise-reports")}
-          </Menu.Item>
-          <Menu.Item key="12" className="menu-item-sub">
-            {t("City-wise-reports")}
-          </Menu.Item>
-          <Menu.Item key="13" className="menu-item-sub">
-            {t("Branch-wise-reports")}
-          </Menu.Item>
-          <Menu.Item key="14" className="menu-item-sub">
-            {t("Employee-wise-reports")}
-          </Menu.Item>
-          <Menu.Item key="15" className="menu-item-sub">
-            {t("Service-wise-reports")}
-          </Menu.Item>
-        </Menu.SubMenu>
-      </Menu>
+        onClick={onClick}
+        mode="inline"
+        theme="light"
+        // inlineCollapsed={openKeys}
+        items={items}
+      />
     </Sider>
   );
 };
