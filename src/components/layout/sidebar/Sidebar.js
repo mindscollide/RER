@@ -18,7 +18,7 @@ const Sidebar = () => {
   );
   const items = [
     getItem(
-      t("Setups"),
+      <div className="setup-text-style">{t("Setups")}</div>,
       "sub1",
       <i className="icon-settings side-bar-icons"></i>,
       [
@@ -35,7 +35,7 @@ const Sidebar = () => {
       "menu-item-sub"
     ),
     getItem(
-      t("Reports"),
+      <div className="setup-text-style">{t("Reports")}</div>,
       "sub2",
       <i className="icon-file side-bar-icons"></i>,
       [
