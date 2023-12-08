@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Row, Col } from "react-bootstrap";
-import "./City.css";
+import "./CountryAdminMain.css";
 import {
   Paper,
   TextField,
@@ -12,7 +12,7 @@ import DatePicker from "react-multi-date-picker";
 import TimePicker from "react-multi-date-picker/plugins/time_picker";
 import { useTranslation } from "react-i18next";
 
-const CityAdmin = () => {
+const CountryAdminMain = () => {
   const { t } = useTranslation();
   const [isCheckboxSelected, setIsCheckboxSelected] = useState(false);
 
@@ -113,86 +113,50 @@ const CityAdmin = () => {
         </Row>
         <Row className="mt-3">
           <Col lg={12} md={12} sm={12}>
-            <Paper className="CityAdmin-paper">
+            <Paper className="CountryAdmin-paper">
               <Row>
                 <Col lg={6} md={6} sm={6}>
-                  <span className="text-labels">{t("Branch-name")}</span>
+                  <span className="text-labels">{t("City-name")}</span>
                   <TextField
                     name="Branch Name"
                     placeholder={t("Branch-admin")}
                     labelClass="d-none"
-                    className="text-fiels-cityAdmin"
+                    className="text-fiels-CountryAdmin"
                   />
                 </Col>
                 <Col lg={6} md={6} sm={6}>
-                  <span className="text-labels">{t("Branch-name")}</span>
+                  <span className="text-labels">{t("City-name")}</span>
                   <TextField
                     name="Branch Name"
                     placeholder={t("Branch-admin")}
                     labelClass="d-none"
-                    className="text-fiels-cityAdmin"
+                    className="text-fiels-CountryAdmin"
                   />
                 </Col>
               </Row>
 
               <Row className="mt-3">
-                <Col lg={2} md={2} sm={2} className="mt-4">
+                <Col lg={6} md={6} sm={6} className="mt-1">
                   <Checkbox
                     checked={isCheckboxSelected}
                     onChange={handleCheckboxChange}
-                    classNameDiv="CityAdmin-checkbox"
+                    classNameDiv="CountryAdmin-checkbox"
                     label={
                       <span className="checkbox-label">{t("Active")}</span>
                     }
                   />
                 </Col>
 
-                <Col
-                  lg={5}
-                  md={5}
-                  sm={5}
-                  className="col-for-date-timepicker-cityad"
-                >
-                  <label className="text-labels">
-                    {t("Branch-start-time")}
-                  </label>
-                  <DatePicker
-                    arrowClassName="arrowClass"
-                    containerClassName="containerClassTimePicker"
-                    disableDayPicker
-                    format="hh:mm A"
-                    plugins={[<TimePicker hideSeconds />]}
-                  />
-                </Col>
-
-                <Col
-                  lg={5}
-                  md={5}
-                  sm={5}
-                  className="col-for-date-timepicker-cityad"
-                >
-                  <label className="text-labels">{t("Branch-end-time")}</label>
-                  <DatePicker
-                    arrowClassName="arrowClass"
-                    containerClassName="containerClassTimePicker"
-                    disableDayPicker
-                    format="hh:mm A"
-                    plugins={[<TimePicker hideSeconds />]}
-                  />
-                </Col>
-              </Row>
-
-              <Row className="my-3">
-                <Col lg={12} md={12} sm={12} className="btn-class-CityAdmin">
+                <Col lg={6} md={6} sm={6} className="btn-class-CountryAdmin">
                   <Button
                     icon={<i className="icon-add-circle icon-space"></i>}
                     text={t("Add")}
-                    className="Add-btn-CityAdmin"
+                    className="Add-btn-CountryAdmin"
                   />
                   <Button
                     icon={<i className="icon-refresh icon-space"></i>}
                     text={t("Reset")}
-                    className="Reset-btn-CityAdmin"
+                    className="Reset-btn-CountryAdmin"
                   />
                 </Col>
               </Row>
@@ -203,7 +167,6 @@ const CityAdmin = () => {
                     rows={dataSource}
                     column={columns}
                     pagination={false}
-                    // className="table-text"
                   />
                 </Col>
               </Row>
@@ -215,4 +178,4 @@ const CityAdmin = () => {
   );
 };
 
-export default CityAdmin;
+export default CountryAdminMain;
