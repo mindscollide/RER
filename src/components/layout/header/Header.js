@@ -43,7 +43,9 @@ const Header = ({ isLoginScreen }) => {
       localStorage.getItem("i18nextLng") === null
         ? "en"
         : localStorage.getItem("i18nextLng"),
-  }); // Assuming "en" is the default language
+  });
+
+  // Assuming "en" is the default language
   const callAPIOnPageLoad = async () => {
     if (location.pathname === "/" || location.pathname === "/Forgot") {
       await dispatch(getSystemSupportedLanguage(t, i18n, navigate, "login"));
@@ -60,14 +62,13 @@ const Header = ({ isLoginScreen }) => {
       );
     }
   };
-  console.log("loading", loading);
-  console.log("supportedLanguage", supportedLanguage);
+
   useEffect(() => {
     document.addEventListener("click", handleClickOutside);
     if (localStorage.getItem("i18nextLng") === null) {
+      console.log("i18nextLng", localStorage.getItem("i18nextLng"));
       dispatch(getSystemSupportedLanguage(t, i18n, navigate, "login"));
       setTimeout(() => {
-        // window.location.reload()
         i18n.changeLanguage("en");
       }, 100);
       localStorage.setItem("i18nextLng", "en");
@@ -108,6 +109,8 @@ const Header = ({ isLoginScreen }) => {
         // window.location.reload()
         i18n.changeLanguage(newLanguage);
       }, 100);
+      console.log("i18nextLng", newLanguage);
+
       localStorage.setItem("i18nextLng", newLanguage);
       moment.locale(newLanguage);
       // Set document direction based on the selected language
@@ -186,6 +189,7 @@ const Header = ({ isLoginScreen }) => {
                 supportedLanguage.map((LangData, index) => {
                   return (
                     <NavDropdown.Item
+                      key={Number(LangData.systemSupportedLanguageID)}
                       data-bs-toggle="modal"
                       data-bs-target="#UserSettingModal"
                       eventKey={Number(LangData.systemSupportedLanguageID)}
