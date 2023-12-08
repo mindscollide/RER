@@ -26,9 +26,9 @@ export const router = createHashRouter(
       <Route path="/Forgot" element={<ForgotPassword />} />
 
       <Route element={<PrivateRoutes />}>
-        <Route exact path="/REM/" element={<Dashboard />}>
+        <Route exact path="/BranchAdmin/" element={<Dashboard />}>
           <Route path="" element={<BranchAdmin />} />
-          <Route path="BranchAdmin" element={<BranchAdmin />} />
+          <Route path="Shift" element={<BranchAdmin />} />
           <Route path="CounterMain" element={<CounterMain />} />
           <Route path="BranchService" element={<BranchService />} />
           <Route path="CityAdmin" element={<CityAdmin />} />

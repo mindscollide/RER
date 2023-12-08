@@ -86,7 +86,7 @@ const setLogIn = (t, navigate, data) => {
                     t("ERM_AuthService_AuthManager_Login_03")
                   )
                 );
-                await navigate("/REM/");
+                await navigate("/BranchAdmin/");
                 // await dispatch(loader_Actions(false));
               } else if (response.data.responseResult.roleID === 4) {
                 await dispatch(
