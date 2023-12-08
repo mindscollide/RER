@@ -23,9 +23,9 @@ const Header = ({ isLoginScreen }) => {
   const supportedLanguage = useSelector(
     (state) => state.admin.supportedLanguage
   );
-  const dropdownRef = useRef(null);
+  // const dropdownRef = useRef(null);
   let currentUserID = Number(localStorage.getItem("userID"));
-  const [dropdownVisible, setDropdownVisible] = useState(false);
+  // const [dropdownVisible, setDropdownVisible] = useState(false);
   const [selectedLanguage, setSelectedLanguage] = useState({
     systemSupportedLanguageID:
       localStorage.getItem("i18nextLng") === null
@@ -64,9 +64,8 @@ const Header = ({ isLoginScreen }) => {
   };
 
   useEffect(() => {
-    document.addEventListener("click", handleClickOutside);
     if (localStorage.getItem("i18nextLng") === null) {
-      console.log("i18nextLng", localStorage.getItem("i18nextLng"));
+      console.log("i18nextLng head", localStorage.getItem("i18nextLng"));
       dispatch(getSystemSupportedLanguage(t, i18n, navigate, "login"));
       setTimeout(() => {
         i18n.changeLanguage("en");
@@ -77,23 +76,7 @@ const Header = ({ isLoginScreen }) => {
     } else {
       callAPIOnPageLoad();
     }
-
-    return () => {
-      document.removeEventListener("click", handleClickOutside);
-    };
   }, []);
-
-  useEffect(() => {
-    document.addEventListener("click", handleClickOutside);
-    if (supportedLanguage !== null) {
-    }
-  }, [supportedLanguage]);
-
-  const handleClickOutside = (event) => {
-    if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
-      setDropdownVisible(false);
-    }
-  };
 
   const handleChangeLocale = async (eventKey, event) => {
     let lang = Number(eventKey);
@@ -124,18 +107,13 @@ const Header = ({ isLoginScreen }) => {
         setLastSelectedLanguage(t, i18n, navigate, data, setSelectedLanguage)
       );
     }
-
-    // Dispatch your language change action here if needed
-    // dispatch(changeNewLanguage(data, navigate, t));
   };
+
   const handleSelectFromHeaderMenu = async (eventKey, event) => {
     let lang = Number(eventKey);
     if (lang === 3) {
       await dispatch(signOut(navigate));
     }
-
-    // Dispatch your language change action here if needed
-    // dispatch(changeNewLanguage(data, navigate, t));
   };
 
   return (
