@@ -79,14 +79,32 @@ const setLogIn = (t, navigate, data) => {
                 "refreshToken",
                 JSON.stringify(response.data.responseResult.refreshToken)
               );
-              if (response.data.responseResult.roleID === 4) {
+              if (response.data.responseResult.roleID === 1) {
                 await dispatch(
                   loginsuccess(
                     response.data.responseResult,
                     t("ERM_AuthService_AuthManager_Login_03")
                   )
                 );
-                await navigate("/BranchAdmin/");
+                await navigate("/GlobalAdmin/");
+                // await dispatch(loader_Actions(false));
+              } else if (response.data.responseResult.roleID === 2) {
+                await dispatch(
+                  loginsuccess(
+                    response.data.responseResult,
+                    t("ERM_AuthService_AuthManager_Login_03")
+                  )
+                );
+                await navigate("/CountryAdmin/");
+                // await dispatch(loader_Actions(false));
+              } else if (response.data.responseResult.roleID === 3) {
+                await dispatch(
+                  loginsuccess(
+                    response.data.responseResult,
+                    t("ERM_AuthService_AuthManager_Login_03")
+                  )
+                );
+                await navigate("/CityAdmin/");
                 // await dispatch(loader_Actions(false));
               } else if (response.data.responseResult.roleID === 4) {
                 await dispatch(
@@ -95,7 +113,16 @@ const setLogIn = (t, navigate, data) => {
                     t("ERM_AuthService_AuthManager_Login_03")
                   )
                 );
-                await navigate("/AdminDashboard/");
+                await navigate("/BranchAdmin/");
+                // await dispatch(loader_Actions(false));
+              } else if (response.data.responseResult.roleID === 5) {
+                await dispatch(
+                  loginsuccess(
+                    response.data.responseResult,
+                    t("ERM_AuthService_AuthManager_Login_03")
+                  )
+                );
+                // await navigate("/BranchAdmin/");
                 // await dispatch(loader_Actions(false));
               } else {
                 await dispatch(
