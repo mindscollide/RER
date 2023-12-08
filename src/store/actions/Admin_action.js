@@ -140,31 +140,6 @@ const getLastSelectedLanguage = (t, i18n, navigate, data) => {
               response.data.responseResult.responseMessage ===
               "Admin_AdminServiceManager_GetLastSelectedLanguage_01"
             ) {
-              setTimeout(() => {
-                // window.location.reload()
-                console.log(
-                  "i18nextLng",
-                  response.data.responseResult.userSelectedLanguage
-                    .systemSupportedLanguageID
-                );
-                i18n.changeLanguage(
-                  response.data.responseResult.userSelectedLanguage
-                    .systemSupportedLanguageID === 1
-                    ? "en"
-                    : "ar"
-                );
-              }, 100);
-              document.body.dir =
-                response.data.responseResult.userSelectedLanguage
-                  .systemSupportedLanguageID === 1
-                  ? "en"
-                  : "ar";
-              moment.locale(
-                response.data.responseResult.userSelectedLanguage
-                  .systemSupportedLanguageID === 1
-                  ? "en"
-                  : "ar"
-              );
               localStorage.setItem(
                 "i18nextLng",
                 response.data.responseResult.userSelectedLanguage
@@ -172,6 +147,29 @@ const getLastSelectedLanguage = (t, i18n, navigate, data) => {
                   ? "en"
                   : "ar"
               );
+
+              setTimeout(() => {
+                i18n.changeLanguage(
+                  response.data.responseResult.userSelectedLanguage
+                    .systemSupportedLanguageID === 1
+                    ? "en"
+                    : "ar"
+                );
+              }, 100);
+
+              document.body.dir =
+                response.data.responseResult.userSelectedLanguage
+                  .systemSupportedLanguageID === 1
+                  ? "ltr"
+                  : "rtl";
+
+              moment.locale(
+                response.data.responseResult.userSelectedLanguage
+                  .systemSupportedLanguageID === 1
+                  ? "en"
+                  : "ar"
+              );
+
               await dispatch(
                 getLastSelectedLanguageSuccess(
                   t("Admin_AdminServiceManager_GetLastSelectedLanguage_01")
@@ -264,6 +262,8 @@ const setLastSelectedLanguage = (
                   t("Admin_AdminServiceManager_SetLastSelectedLanguage_01")
                 )
               );
+              console.log("i18nextLng", data.SystemSupportedLanguageID === 2);
+              console.log("i18nextLng", data.SystemSupportedLanguageID);
               setSelectedLanguage({
                 languageTitle:
                   data.SystemSupportedLanguageID === 2 ? "عربى" : "English",

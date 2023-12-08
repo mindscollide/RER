@@ -33,7 +33,6 @@ export const router = createHashRouter(
     <>
       <Route path="/" element={<Login />} />
       <Route path="/Forgot" element={<ForgotPassword />} />
-
       <Route element={<BranchAdminRoutes />}>
         <Route exact path="/BranchAdmin/" element={<Dashboard />}>
           <Route path="" element={<Shift />} />
