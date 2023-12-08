@@ -8,6 +8,7 @@ const signOut = (navigate, message) => {
   window.location.href = window.location.origin + "/";
   let i18nextLng = localStorage.getItem("i18nextLng");
   localStorage.clear();
+  console.log("i18nextLng", i18nextLng);
   localStorage.setItem("i18nextLng", i18nextLng);
 };
 
