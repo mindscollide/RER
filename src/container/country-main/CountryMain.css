@@ -1,0 +1,101 @@
+.Country-paper {
+  border-radius: 4px;
+  padding: 1.5rem 1rem !important;
+  width: 100% !important;
+  overflow: hidden !important;
+  background-color: #ffffff !important;
+}
+
+.Country-checkbox {
+  display: flex;
+  align-items: center !important;
+}
+
+.btn-class-Country {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 5px;
+}
+
+.Add-btn-Country {
+  font-size: 14px;
+  font-weight: 500;
+  font-family: "Montserrat", sans-serif !important;
+  padding: 6px 12px !important;
+  border-top-right-radius: 0px;
+  border-bottom-left-radius: 0px;
+  border-top-left-radius: 8px;
+  border-bottom-right-radius: 8px;
+  background: linear-gradient(to bottom, #7484b7 0%, #536395 100%);
+  border-color: #7484b7 !important;
+}
+
+.Add-btn-Country:hover {
+  background: linear-gradient(to bottom, #77c0cb 0%, #2c9cc0 100%);
+  border-color: #77c0cb !important;
+}
+
+.Reset-btn-Country {
+  font-size: 14px;
+  font-weight: 500;
+  font-family: "Montserrat", sans-serif !important;
+  padding: 6px 12px !important;
+  border-top-right-radius: 0px;
+  border-bottom-left-radius: 0px;
+  border-top-left-radius: 8px;
+  border-bottom-right-radius: 8px;
+  background: linear-gradient(to bottom, #77c0cb 0%, #2c9cc0 100%);
+  border-color: #77c0cb !important;
+}
+
+.Reset-btn-Country:hover {
+  background: linear-gradient(to bottom, #7484b7 0%, #536395 100%);
+  border-color: #7484b7 !important;
+}
+
+.icon-space {
+  margin-right: 5px !important;
+  font-size: 15px;
+  align-items: center !important;
+}
+
+.table-text {
+  color: #ffffff !important;
+  font-size: 14px !important;
+  z-index: 1 !important;
+}
+
+.icon-check-color {
+  color: #87b939 !important;
+  font-size: 18px !important;
+}
+
+.icon-spaceing-dlt-edit {
+  display: flex;
+  justify-content: end !important;
+  gap: 15px !important;
+}
+
+.icon-EDT-DLT-color {
+  color: #7a7e8b !important;
+  font-size: 18px !important;
+  cursor: pointer;
+}
+
+.icon-EDT-DLT-color:hover {
+  color: #77c0cb !important;
+}
+
+.col-for-date-timepicker-Country {
+  display: flex;
+  flex-direction: column;
+}
+
+.text-fiels-Country {
+  font-size: 13px !important;
+  font-family: "Montserrat", sans-serif !important;
+  height: 37px;
+  color: #212529 !important;
+  font-weight: 500 !important;
+}

@@ -19,6 +19,8 @@ import {
   CountryCityWise,
 } from "../container/city-admin";
 
+import CountryMain from "../container/country-main/CountryMain";
+
 import {
   CityBranchService,
   Dashboard,
@@ -46,6 +48,8 @@ export const router = createHashRouter(
           <Route path="CityWiseCounter" element={<CityWiseCounter />} />
           <Route path="EmployeeMain" element={<EmployeeMain />} />
           <Route path="CountryCityWise" element={<CountryCityWise />} />
+          <Route path="CountryMain" element={<CountryMain />} />
+
           {/* <Route
             path="BranchServiceCounter"
             element={<BranchServiceCounter />}
