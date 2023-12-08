@@ -137,7 +137,7 @@ const CountryCityWise = () => {
                   <Button
                     icon={<i className="icon-search city-icon-space"></i>}
                     text={t("Search")}
-                    className="Search-Country-Wise-Icon-Btn"
+                    className="Search-Icon-Btn"
                   />
                 </Col>
               </Row>

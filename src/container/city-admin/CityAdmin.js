@@ -82,6 +82,7 @@ const CityAdmin = () => {
       title: "",
       dataIndex: "column6",
       key: "column6",
+      align: "center",
       render: (text, record) => (
         <>
           <span className="icon-spaceing-dlt-edit">
