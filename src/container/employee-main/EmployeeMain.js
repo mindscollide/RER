@@ -120,7 +120,7 @@ const EmployeeMain = () => {
                   {/* <span className="text-labels"></span> */}
                   <TextField
                     name="Shift"
-                    placeholder="Employee Name"
+                    placeholder={t("Employee-name")}
                     labelClass="d-none"
                     className="text-fiels-employeeMain"
                   />

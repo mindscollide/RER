@@ -14,6 +14,8 @@ const ForgotPassword = () => {
   const navigate = useNavigate();
   const { t } = useTranslation();
 
+  const [errorBar, setErrorBar] = useState("");
+
   const [open, setOpen] = useState({
     open: false,
     message: "",
@@ -50,9 +52,11 @@ const ForgotPassword = () => {
   const loginValidateHandler = (e) => {
     e.preventDefault();
     if (auditCredentials.UserName !== "" && auditCredentials.Password !== "") {
+      setErrorBar(false);
       navigate("/REM/");
       // dispatch(logIn(auditCredentials, navigate));
     } else {
+      setErrorBar(true);
       setOpen({
         ...open,
         open: true,
@@ -109,6 +113,19 @@ const ForgotPassword = () => {
                             aria-describedby="basic-addon1"
                           />
                         </InputGroup>
+                        <Row>
+                          <Col className="d-flex justify-content-start">
+                            <p
+                              className={
+                                errorBar && auditCredentials.UserName === ""
+                                  ? "errorMessageLogin"
+                                  : "errorMessageLogin_hidden"
+                              }
+                            >
+                              {t("Email-is-required")}
+                            </p>
+                          </Col>
+                        </Row>
                       </div>
                     </Col>
                     <Col

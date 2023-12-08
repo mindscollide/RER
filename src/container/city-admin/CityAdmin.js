@@ -82,6 +82,7 @@ const CityAdmin = () => {
       title: "",
       dataIndex: "column6",
       key: "column6",
+      align: "center",
       render: (text, record) => (
         <>
           <span className="icon-spaceing-dlt-edit">
@@ -118,7 +119,7 @@ const CityAdmin = () => {
                   <span className="text-labels">{t("Branch-name")}</span>
                   <TextField
                     name="Branch Name"
-                    placeholder="Branch Name"
+                    placeholder={t("Branch-admin")}
                     labelClass="d-none"
                     className="text-fiels-cityAdmin"
                   />

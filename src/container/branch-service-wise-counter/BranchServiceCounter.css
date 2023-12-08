@@ -1,0 +1,126 @@
+.BranchServiceCounter-paper {
+  border-radius: 4px;
+  padding: 1.5rem 0.2rem !important;
+  width: 100% !important;
+  overflow: hidden !important;
+  background-color: #ffffff !important;
+}
+
+.BranchServiceCounter-col {
+  display: flex;
+  justify-content: center;
+  gap: 5px;
+}
+
+.Search-BranchServiceCounter-Btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+  font-weight: 500;
+  font-family: "Montserrat", sans-serif !important;
+  padding: 6px 12px !important;
+  border-top-right-radius: 0px;
+  border-bottom-left-radius: 0px;
+  border-top-left-radius: 8px;
+  border-bottom-right-radius: 8px;
+  background: linear-gradient(to bottom, #7484b7 0%, #536395 100%);
+  border-color: #7484b7 !important;
+}
+
+.Search-BranchServiceCounter-Btn:hover {
+  background: linear-gradient(to bottom, #77c0cb 0%, #2c9cc0 100%);
+  border-color: #77c0cb !important;
+}
+
+.BranchServiceCounter {
+  width: 100% !important;
+  max-width: 450px !important;
+}
+
+.city-icon-space {
+  margin-right: 5px !important;
+  font-size: 15px;
+  align-items: center !important;
+}
+
+.BranchServiceCounter-bg-color {
+  align-items: center !important;
+  background-color: #76c641 !important;
+  color: #ffffff !important;
+  padding: 10px !important;
+  display: flex !important;
+  justify-content: space-between;
+}
+
+.BranchServiceCounter-disable-bg {
+  background-color: transparent !important;
+}
+
+:where(.css-dev-only-do-not-override-2q8sxy).ant-collapse
+  .ant-collapse-content
+  > .ant-collapse-content-box {
+  padding: 16px 25px;
+}
+
+/* for not showing icon beside the header */
+:where(.css-dev-only-do-not-override-2q8sxy).ant-collapse
+  > .ant-collapse-item
+  > .ant-collapse-header
+  .ant-collapse-expand-icon {
+  display: none;
+}
+
+:where(.css-dev-only-do-not-override-2q8sxy).ant-collapse
+  > .ant-collapse-item
+  > .ant-collapse-header {
+  padding: 3px 16px;
+}
+
+.div-table-BranchServiceCounter {
+  max-height: 32vh !important;
+  max-width: 77vw;
+  width: 100%;
+  box-sizing: border-box !important;
+  overflow-x: auto !important;
+  border-radius: 0px !important;
+}
+
+.div-table-BranchServiceCounter th.ant-table-cell {
+  color: #002650 !important;
+  border-radius: 0% !important;
+  position: sticky !important;
+  font-family: "Montserrat", sans-serif;
+  white-space: nowrap !important;
+  overflow: hidden !important;
+  text-overflow: ellipsis !important;
+  top: 0 !important;
+  z-index: 1;
+  background: #ffffff !important;
+}
+
+.div-table-BranchServiceCounter::-webkit-scrollbar {
+  width: 0.5rem;
+  height: 0.5rem;
+  border-radius: 20px;
+  background-color: #ffffff;
+}
+
+.div-table-BranchServiceCounter::-webkit-scrollbar-thumb {
+  border-radius: 20px;
+  background: #ccc;
+  margin-left: -15px;
+}
+
+.BranchServiceCounter-collapse {
+  font-size: 24px !important;
+  font-weight: 500 !important;
+  color: #ffffff;
+}
+
+.collapse-top-heading {
+  color: #000000 !important;
+  font-weight: 600 !important;
+  font-size: 18px !important;
+  font-family: "Montserrat", sans-serif;
+}
