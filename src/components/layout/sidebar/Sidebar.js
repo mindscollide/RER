@@ -22,7 +22,7 @@ const Sidebar = () => {
       "sub1",
       <i className="icon-settings side-bar-icons"></i>,
       [
-        getItem(t("Branch-admin"), "2"),
+        getItem(t("Shift"), "2"),
         getItem(t("Counter-admin"), "3"),
         getItem(t("Branch-service"), "4"),
         getItem(t("City-admin"), "5"),
@@ -62,7 +62,7 @@ const Sidebar = () => {
     setSelectedKeys([e.key]);
     localStorage.setItem("selectedKeys", e.key);
     if (e.key === "2") {
-      navigate("BranchAdmin");
+      navigate("Shift");
     } else if (e.key === "3") {
       navigate("CounterMain");
     } else if (e.key === "4") {

@@ -53,7 +53,7 @@ const ForgotPassword = () => {
     e.preventDefault();
     if (auditCredentials.UserName !== "" && auditCredentials.Password !== "") {
       setErrorBar(false);
-      navigate("/REM/");
+      navigate("/BranchAdmin/");
       // dispatch(logIn(auditCredentials, navigate));
     } else {
       setErrorBar(true);
