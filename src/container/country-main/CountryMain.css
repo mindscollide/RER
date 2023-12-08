@@ -1,4 +1,4 @@
-.CityAdmin-paper {
+.Country-paper {
   border-radius: 4px;
   padding: 1.5rem 1rem !important;
   width: 100% !important;
@@ -6,18 +6,19 @@
   background-color: #ffffff !important;
 }
 
-.CityAdmin-checkbox {
+.Country-checkbox {
   display: flex;
   align-items: center !important;
 }
 
-.btn-class-CityAdmin {
+.btn-class-Country {
   display: flex;
-  justify-content: end;
-  gap: 10px !important;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 5px;
 }
 
-.Add-btn-CityAdmin {
+.Add-btn-Country {
   font-size: 14px;
   font-weight: 500;
   font-family: "Montserrat", sans-serif !important;
@@ -30,12 +31,12 @@
   border-color: #7484b7 !important;
 }
 
-.Add-btn-CityAdmin:hover {
+.Add-btn-Country:hover {
   background: linear-gradient(to bottom, #77c0cb 0%, #2c9cc0 100%);
   border-color: #77c0cb !important;
 }
 
-.Reset-btn-CityAdmin {
+.Reset-btn-Country {
   font-size: 14px;
   font-weight: 500;
   font-family: "Montserrat", sans-serif !important;
@@ -48,7 +49,7 @@
   border-color: #77c0cb !important;
 }
 
-.Reset-btn-CityAdmin:hover {
+.Reset-btn-Country:hover {
   background: linear-gradient(to bottom, #7484b7 0%, #536395 100%);
   border-color: #7484b7 !important;
 }
@@ -86,12 +87,12 @@
   color: #77c0cb !important;
 }
 
-.col-for-date-timepicker-cityad {
+.col-for-date-timepicker-Country {
   display: flex;
   flex-direction: column;
 }
 
-.text-fiels-cityAdmin {
+.text-fiels-Country {
   font-size: 13px !important;
   font-family: "Montserrat", sans-serif !important;
   height: 37px;

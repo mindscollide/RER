@@ -1,0 +1,94 @@
+.Branch-Admin-paper {
+  border-radius: 4px;
+  padding: 1.5rem 1rem !important;
+  width: 100% !important;
+  overflow: hidden !important;
+  background-color: #ffffff !important;
+}
+
+.Branch-checkbox {
+  display: flex;
+  align-items: center !important;
+}
+
+.btn-class-branch {
+  display: flex;
+  justify-content: center !important;
+  gap: 5px !important;
+}
+
+.Add-btn-Branch {
+  font-size: 14px !important;
+  font-weight: 500 !important;
+  font-family: "Montserrat", sans-serif !important;
+  padding: 6px 12px !important;
+  border-top-right-radius: 0px !important;
+  border-bottom-left-radius: 0px !important;
+  border-top-left-radius: 8px !important;
+  border-bottom-right-radius: 8px !important;
+  background: linear-gradient(to bottom, #7484b7 0%, #536395 100%);
+  border-color: #7484b7 !important;
+}
+
+.Add-btn-Branch:hover {
+  background: linear-gradient(to bottom, #77c0cb 0%, #2c9cc0 100%);
+  border-color: #77c0cb !important;
+}
+
+.Reset-btn-Branch {
+  font-size: 14px !important;
+  font-weight: 500 !important;
+  padding: 6px 12px !important;
+  font-family: "Montserrat", sans-serif !important;
+  border-top-right-radius: 0px !important;
+  border-bottom-left-radius: 0px !important;
+  border-top-left-radius: 8px !important;
+  border-bottom-right-radius: 8px !important;
+  background: linear-gradient(to bottom, #77c0cb 0%, #2c9cc0 100%);
+  border-color: #77c0cb !important;
+}
+
+.Reset-btn-Branch:hover {
+  background: linear-gradient(to bottom, #7484b7 0%, #536395 100%);
+  border-color: #7484b7 !important;
+}
+
+.icon-space {
+  margin-right: 5px !important;
+  font-size: 15px;
+  align-items: center !important;
+}
+
+.icon-check-color {
+  color: #87b939 !important;
+  font-size: 18px !important;
+}
+
+.icon-spaceing-dlt-edit {
+  display: flex;
+  justify-content: center !important;
+  gap: 10px !important;
+}
+
+.icon-EDT-DLT-color {
+  color: #7a7e8b !important;
+  font-size: 18px !important;
+  cursor: pointer;
+}
+
+.icon-EDT-DLT-color:hover {
+  color: #77c0cb !important;
+}
+
+.text-fiels-Branch {
+  font-size: 13px !important;
+  font-family: "Montserrat", sans-serif !important;
+  height: 37px;
+  color: #212529 !important;
+  font-weight: 500 !important;
+}
+
+.col-for-date-timepicker {
+  display: flex;
+  flex-direction: column;
+}

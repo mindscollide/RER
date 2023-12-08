@@ -31,6 +31,7 @@ const Sidebar = () => {
         getItem(t("City-branch-shifts-wise-counter"), "8"),
         getItem(t("Employee-main"), "9"),
         getItem(t("Country-city-wise-counter"), "10"),
+        getItem(t("Country-main"), "11"),
       ],
       "menu-item-sub"
     ),
@@ -39,11 +40,11 @@ const Sidebar = () => {
       "sub2",
       <i className="icon-file side-bar-icons"></i>,
       [
-        getItem(t("Country-wise-reports"), "11"),
-        getItem(t("City-wise-reports"), "12"),
-        getItem(t("Branch-wise-reports"), "13"),
-        getItem(t("Employee-wise-reports"), "14"),
-        getItem(t("Service-wise-reports"), "15"),
+        getItem(t("Country-wise-reports"), "12"),
+        getItem(t("City-wise-reports"), "13"),
+        getItem(t("Branch-wise-reports"), "14"),
+        getItem(t("Employee-wise-reports"), "15"),
+        getItem(t("Service-wise-reports"), "16"),
       ],
       "menu-item-sub"
     ),
@@ -80,7 +81,7 @@ const Sidebar = () => {
     } else if (e.key === "10") {
       navigate("CountryCityWise");
     } else if (e.key === "11") {
-      // navigate("CityBranchService");
+      navigate("CountryMain");
     } else if (e.key === "12") {
       // navigate("CityBranchShift");
     } else if (e.key === "13") {
