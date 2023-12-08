@@ -42,18 +42,6 @@ export const router = createHashRouter(
           <Route path="Shift" element={<Shift />} />
           <Route path="CounterMain" element={<CounterMain />} />
           <Route path="BranchService" element={<BranchService />} />
-          <Route path="CityAdmin" element={<CityAdmin />} />
-          <Route path="CityBranchService" element={<CityBranchService />} />
-          <Route path="CityBranchShift" element={<CityBranchShift />} />
-          <Route path="CityWiseCounter" element={<CityWiseCounter />} />
-          <Route path="EmployeeMain" element={<EmployeeMain />} />
-          <Route path="CountryCityWise" element={<CountryCityWise />} />
-          <Route path="CountryMain" element={<CountryMain />} />
-
-          {/* <Route
-            path="BranchServiceCounter"
-            element={<BranchServiceCounter />}
-          /> */}
         </Route>
       </Route>
 
