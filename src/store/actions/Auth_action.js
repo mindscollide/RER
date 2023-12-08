@@ -167,18 +167,14 @@ const setLogIn = (t, navigate, data) => {
 
 // for sign out
 const signOut = (navigate, message) => {
+  let i18nextLng = localStorage.getItem("i18nextLng");
   localStorage.clear();
+  localStorage.setItem("i18nextLng", i18nextLng);
   navigate("/");
-  if (message !== "") {
-    return {
-      type: actions.SIGN_OUT,
-      message: message,
-    };
-  } else {
-    return {
-      type: actions.SIGN_OUT,
-    };
-  }
+  return {
+    type: actions.SIGN_OUT,
+    message: message,
+  };
 };
 
 // For Auth State Cleare
