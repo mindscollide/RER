@@ -63,10 +63,25 @@ const BranchAdmin = () => {
       title: <span className="table-text">{t("Active")}</span>,
       dataIndex: "isShiftActive",
       key: "isShiftActive",
+      align: "center",
       render: (text, record) => (
         <>
           <span>
             <i className="icon-check icon-check-color"></i>
+          </span>
+        </>
+      ),
+    },
+    {
+      title: <span className="table-text">{t("Close")}</span>,
+      dataIndex: "Close",
+      key: "Close",
+      align: "center",
+
+      render: (text, record) => (
+        <>
+          <span>
+            <i className="icon-close icon-check-close-color"></i>
           </span>
         </>
       ),
