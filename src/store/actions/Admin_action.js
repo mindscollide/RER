@@ -2,6 +2,8 @@ import * as actions from "../action_types";
 import axios from "axios";
 import { loader_Actions } from "./Loader_action";
 import {
+  addBranchShift,
+  allCountersOfBranch,
   allShiftsOfBranch,
   lastSelectedLanguage,
   systemSupportedLanguage,
@@ -354,10 +356,12 @@ const getAllShiftsOfBranchFail = (message) => {
   };
 };
 
-const getAllShiftsOfBranch = (t, navigate) => {
+const getAllShiftsOfBranch = (t, navigate, loadingFlag) => {
   let data = { BranchID: 1 };
   return async (dispatch) => {
-    dispatch(loader_Actions(true));
+    if (!loadingFlag) {
+      dispatch(loader_Actions(true));
+    }
     let form = new FormData();
     form.append("RequestMethod", allShiftsOfBranch.RequestMethod);
     form.append("RequestData", JSON.stringify(data));
@@ -373,7 +377,7 @@ const getAllShiftsOfBranch = (t, navigate) => {
         if (response.data.responseCode === 200) {
           if (response.data.responseCode === 417) {
             // await dispatch(RefreshToken(navigate, t))
-            dispatch(getAllShiftsOfBranch(t, navigate));
+            dispatch(getAllShiftsOfBranch(t, navigate, loadingFlag));
           } else if (response.data.responseResult.isExecuted === true) {
             if (
               response.data.responseResult.responseMessage ===
@@ -388,7 +392,7 @@ const getAllShiftsOfBranch = (t, navigate) => {
               await dispatch(loader_Actions(false));
             } else if (
               response.data.responseResult.responseMessage ===
-              "Admin_AdminServiceManager_GetLastSelectedLanguage_02"
+              "Admin_AdminServiceManager_GetAllShiftsOfBranch_02"
             ) {
               await dispatch(
                 getAllShiftsOfBranchFail(
@@ -398,7 +402,7 @@ const getAllShiftsOfBranch = (t, navigate) => {
               await dispatch(loader_Actions(false));
             } else if (
               response.data.responseResult.responseMessage ===
-              "Admin_AdminServiceManager_GetLastSelectedLanguage_03"
+              "Admin_AdminServiceManager_GetAllShiftsOfBranch_03"
             ) {
               await dispatch(
                 getAllShiftsOfBranchFail(t("something_went_wrong"))
@@ -423,10 +427,191 @@ const getAllShiftsOfBranch = (t, navigate) => {
   };
 };
 
+//Get All Shifts Of Branch Api fot(Branch Admin for listing of all branches && Branch Roaster for Shifts drop down)
+const allCountersOfBranchSuccess = (response, message) => {
+  return {
+    type: actions.ALL_COUNTERS_OF_BRANCH_SUCCESS,
+    response: response,
+    message: message,
+  };
+};
+
+const allCountersOfBranchFail = (message) => {
+  return {
+    type: actions.ALL_COUNTERS_OF_BRANCH_FAIL,
+    message: message,
+  };
+};
+
+const getAllCountersOfBranch = (t, navigate, loadingFlag) => {
+  let data = { BranchID: 1 };
+  return async (dispatch) => {
+    if (!loadingFlag) {
+      dispatch(loader_Actions(true));
+    }
+    let form = new FormData();
+    form.append("RequestMethod", allCountersOfBranch.RequestMethod);
+    form.append("RequestData", JSON.stringify(data));
+    await axios({
+      method: "post",
+      url: adminURL,
+      data: form,
+      headers: {
+        _token: token,
+      },
+    })
+      .then(async (response) => {
+        if (response.data.responseCode === 200) {
+          if (response.data.responseCode === 417) {
+            // await dispatch(RefreshToken(navigate, t))
+            dispatch(getAllCountersOfBranch(t, navigate, loadingFlag));
+          } else if (response.data.responseResult.isExecuted === true) {
+            if (
+              response.data.responseResult.responseMessage ===
+              "Admin_AdminServiceManager_GetAllCountersOfBranch_01"
+            ) {
+              await dispatch(
+                allCountersOfBranchSuccess(
+                  response.data.responseResult.counterModelList,
+                  t("Admin_AdminServiceManager_GetLastSelectedLanguage_01")
+                )
+              );
+              await dispatch(loader_Actions(false));
+            } else if (
+              response.data.responseResult.responseMessage ===
+              "Admin_AdminServiceManager_GetAllCountersOfBranch_02"
+            ) {
+              await dispatch(
+                allCountersOfBranchFail(
+                  t("Admin_AdminServiceManager_GetLastSelectedLanguage_02")
+                )
+              );
+              await dispatch(loader_Actions(false));
+            } else if (
+              response.data.responseResult.responseMessage ===
+              "Admin_AdminServiceManager_GetAllCountersOfBranch_03"
+            ) {
+              await dispatch(
+                allCountersOfBranchFail(t("something_went_wrong"))
+              );
+              await dispatch(loader_Actions(false));
+            } else {
+              dispatch(allCountersOfBranchFail(t("something_went_wrong")));
+            }
+          } else {
+            await dispatch(allCountersOfBranchFail(t("something_went_wrong")));
+            await dispatch(loader_Actions(false));
+          }
+        } else {
+          await dispatch(allCountersOfBranchFail(t("something_went_wrong")));
+          await dispatch(loader_Actions(false));
+        }
+      })
+      .catch((response) => {
+        dispatch(allCountersOfBranchFail(t("something_went_wrong")));
+        dispatch(loader_Actions(false));
+      });
+  };
+};
+
+//Get All Shifts Of Branch Api fot(Branch Admin for listing of all branches && Branch Roaster for Shifts drop down)
+const addBranchShiftSuccess = (response, message) => {
+  return {
+    type: actions.ADD_BRANCH_SHIFT_SUCCESS,
+    response: response,
+    message: message,
+  };
+};
+
+const addBranchShiftFail = (message) => {
+  return {
+    type: actions.ADD_BRANCH_SHIFT_FAIL,
+    message: message,
+  };
+};
+
+const addBranchShiftApi = (t, navigate, loadingFlag, data, setState) => {
+  return async (dispatch) => {
+    if (!loadingFlag) {
+      dispatch(loader_Actions(true));
+    }
+    let form = new FormData();
+    form.append("RequestMethod", addBranchShift.RequestMethod);
+    form.append("RequestData", JSON.stringify(data));
+    await axios({
+      method: "post",
+      url: adminURL,
+      data: form,
+      headers: {
+        _token: token,
+      },
+    })
+      .then(async (response) => {
+        if (response.data.responseCode === 200) {
+          if (response.data.responseCode === 417) {
+            // await dispatch(RefreshToken(navigate, t))
+            dispatch(getAllCountersOfBranch(t, navigate, loadingFlag));
+          } else if (response.data.responseResult.isExecuted === true) {
+            if (
+              response.data.responseResult.responseMessage ===
+              "Admin_AdminServiceManager_AddBranchShift_01"
+            ) {
+              setState({
+                ShiftNameEnglish: "",
+                ShiftNameArabic: "",
+                IsShiftActive: false,
+                ShiftStartTime: "",
+                ShiftEndTime: "",
+                BranchID: 1,
+                shiftID: 0,
+              });
+              await dispatch(
+                addBranchShiftSuccess(
+                  response.data.responseResult.newShift,
+                  t("Admin_AdminServiceManager_AddBranchShift_01")
+                )
+              );
+            } else if (
+              response.data.responseResult.responseMessage ===
+              "Admin_AdminServiceManager_AddBranchShift_02"
+            ) {
+              await dispatch(
+                addBranchShiftFail(
+                  t("Admin_AdminServiceManager_AddBranchShift_02")
+                )
+              );
+              await dispatch(loader_Actions(false));
+            } else if (
+              response.data.responseResult.responseMessage ===
+              "Admin_AdminServiceManager_AddBranchShift_03"
+            ) {
+              await dispatch(addBranchShiftFail(t("something_went_wrong")));
+              await dispatch(loader_Actions(false));
+            } else {
+              dispatch(addBranchShiftFail(t("something_went_wrong")));
+            }
+          } else {
+            await dispatch(addBranchShiftFail(t("something_went_wrong")));
+            await dispatch(loader_Actions(false));
+          }
+        } else {
+          await dispatch(addBranchShiftFail(t("something_went_wrong")));
+          await dispatch(loader_Actions(false));
+        }
+      })
+      .catch((response) => {
+        dispatch(addBranchShiftFail(t("something_went_wrong")));
+        dispatch(loader_Actions(false));
+      });
+  };
+};
 export {
   AdminCleareState,
   getSystemSupportedLanguage,
   getLastSelectedLanguage,
   setLastSelectedLanguage,
   getAllShiftsOfBranch,
+  getAllCountersOfBranch,
+  addBranchShiftApi,
+  addBranchShiftFail,
 };

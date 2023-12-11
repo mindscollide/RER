@@ -25,9 +25,19 @@ const updateLastSelectedLanguage = {
   RequestMethod: "ServiceManager.SetLastSelectedLanguage",
 };
 
-// for Set Last Selected Language from Dropedown
+// for all Shifts Of Branch list and drope down
 const allShiftsOfBranch = {
   RequestMethod: "ServiceManager.GetAllShiftsOfBranch",
+};
+
+// for all Counters Of Branch list and Dropedown
+const allCountersOfBranch = {
+  RequestMethod: "ServiceManager.GetAllCountersOfBranch",
+};
+
+// for Add Branch Shift
+const addBranchShift = {
+  RequestMethod: "ServiceManager.AddBranchShift",
 };
 
 export {
@@ -38,4 +48,6 @@ export {
   lastSelectedLanguage,
   updateLastSelectedLanguage,
   allShiftsOfBranch,
+  allCountersOfBranch,
+  addBranchShift
 };

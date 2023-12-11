@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Row, Col } from "react-bootstrap";
 import "./CounterMain.css";
 import {
@@ -10,57 +10,67 @@ import {
   Loader,
 } from "../../../components/elements";
 import { useTranslation } from "react-i18next";
+import { getAllCountersOfBranch } from "../../../store/actions/Admin_action";
+import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router";
 
 const CounterMain = () => {
   const [isCheckboxSelected, setIsCheckboxSelected] = useState(false);
   const { t } = useTranslation();
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const lang = localStorage.getItem("i18nextLng");
+  const local = lang === "en" ? "en-US" : "ar-SA";
+  const allCountersOfBranchList = useSelector(
+    (state) => state.admin.allCountersOfBranchList
+  );
+  const Loading = useSelector((state) => state.Loader.Loading);
+  const [rows, setRows] = useState([]);
+
+  useEffect(() => {
+    dispatch(getAllCountersOfBranch(t, navigate, Loading));
+  }, []);
+
+  useEffect(() => {
+    if (allCountersOfBranchList !== null) {
+      setRows(allCountersOfBranchList);
+    }
+  }, [allCountersOfBranchList]);
 
   const handleCheckboxChange = (e) => {
     setIsCheckboxSelected(e.target.checked);
   };
 
-  const dataSource = [
-    {
-      id: <span className="table-inside-text">1</span>,
-      shiftName: <span className="table-inside-text">Morning Shift</span>,
-      startTime: <span className="table-inside-text">08:00 AM</span>,
-      endTime: <span className="table-inside-text">04:00 PM</span>,
-    },
-    {
-      id: <span className="table-inside-text">2</span>,
-      shiftName: <span className="table-inside-text">Morning Shift</span>,
-      startTime: <span className="table-inside-text">08:00 AM</span>,
-      endTime: <span className="table-inside-text">04:00 PM</span>,
-    },
-    {
-      id: <span className="table-inside-text">3</span>,
-      shiftName: <span className="table-inside-text">Morning Shift</span>,
-      startTime: <span className="table-inside-text">08:00 AM</span>,
-      endTime: <span className="table-inside-text">04:00 PM</span>,
-    },
-  ];
+
 
   const columns = [
     {
       title: <span className="table-text">#</span>,
-      dataIndex: "id",
-      key: "id",
+      dataIndex: "counterID",
+      key: "counterID",
     },
     {
       title: <span className="table-text">{t("Shift-name")}</span>,
-      dataIndex: "shiftName",
-      key: "shiftName",
+      dataIndex: lang === "en" ? "counterNameEnglish" : "counterNameArabic",
+      key: lang === "en" ? "counterNameEnglish" : "counterNameArabic",
     },
 
     {
       title: <span className="table-text">{t("Active")}</span>,
-      dataIndex: "active",
-      key: "active",
+      dataIndex: "isCounterActive",
+      key: "isCounterActive",
+      align: "center",
       render: (text, record) => (
         <>
-          <span>
-            <i className="icon-check icon-check-color"></i>
-          </span>
+          {text ? (
+            <span>
+              <i className="icon-check icon-check-color"></i>
+            </span>
+          ) : (
+            <span>
+              <i className="icon-close icon-check-close-color"></i>
+            </span>
+          )}
         </>
       ),
     },
@@ -151,7 +161,7 @@ const CounterMain = () => {
               <Row className="mt-2">
                 <Col lg={12} md={12} sm={12}>
                   <Table
-                    rows={dataSource}
+                    rows={rows}
                     column={columns}
                     pagination={false}
                     // className="table-text"

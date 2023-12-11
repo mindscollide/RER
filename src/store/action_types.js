@@ -37,3 +37,11 @@ export const SET_LAST_SELECTED_LANGUAGE_FAIL =
 export const GET_ALL_SHIFTS_OF_BRANCH_SUCCESS =
   "GET_ALL_SHIFTS_OF_BRANCH_SUCCESS";
 export const GET_ALL_SHIFTS_OF_BRANCH_FAIL = "GET_ALL_SHIFTS_OF_BRANCH_FAIL";
+
+//for ALL COUNTERS OF BRANCH Api fot(CounterMain for listing of all branches && Branch Roaster for Counter drop down)
+export const ALL_COUNTERS_OF_BRANCH_SUCCESS = "ALL_COUNTERS_OF_BRANCH_SUCCESS";
+export const ALL_COUNTERS_OF_BRANCH_FAIL = "ALL_COUNTERS_OF_BRANCH_FAIL";
+
+//for Branch Admin for adding new shift
+export const ADD_BRANCH_SHIFT_SUCCESS = "ADD_BRANCH_SHIFT_SUCCESS";
+export const ADD_BRANCH_SHIFT_FAIL = "ADD_BRANCH_SHIFT_FAIL";
