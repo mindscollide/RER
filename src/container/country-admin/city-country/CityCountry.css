@@ -1,4 +1,4 @@
-.Branch-Admin-paper {
+.CityCountry-Admin-paper {
   border-radius: 4px;
   padding: 1.5rem 1rem !important;
   width: 100% !important;
@@ -6,49 +6,61 @@
   background-color: #ffffff !important;
 }
 
-.Branch-checkbox {
+.CityCountry-checkbox {
   display: flex;
   align-items: center !important;
 }
 
-.btn-class-branch {
-  display: flex;
-  justify-content: center !important;
-  gap: 5px !important;
+.text-fiels-CityCountry {
+  font-size: 13px !important;
+  font-family: "Montserrat", sans-serif !important;
+  height: 37px;
+  color: #212529 !important;
+  font-weight: 500 !important;
 }
 
-.Add-btn-Branch {
-  font-size: 14px !important;
-  font-weight: 500 !important;
+.checkbox-label {
+  margin-left: 10px;
+}
+
+.btn-class-branch {
+  display: flex;
+  justify-content: end;
+  gap: 10px !important;
+}
+
+.Add-btn-CityCountry {
+  font-size: 14px;
   font-family: "Montserrat", sans-serif !important;
+  font-weight: 500;
   padding: 6px 12px !important;
-  border-top-right-radius: 0px !important;
-  border-bottom-left-radius: 0px !important;
-  border-top-left-radius: 8px !important;
-  border-bottom-right-radius: 8px !important;
+  border-top-right-radius: 0px;
+  border-bottom-left-radius: 0px;
+  border-top-left-radius: 8px;
+  border-bottom-right-radius: 8px;
   background: linear-gradient(to bottom, #7484b7 0%, #536395 100%);
   border-color: #7484b7 !important;
 }
 
-.Add-btn-Branch:hover {
+.Add-btn-CityCountry:hover {
   background: linear-gradient(to bottom, #77c0cb 0%, #2c9cc0 100%);
   border-color: #77c0cb !important;
 }
 
-.Reset-btn-Branch {
-  font-size: 14px !important;
-  font-weight: 500 !important;
-  padding: 6px 12px !important;
+.Reset-btn-CityCountry {
+  font-size: 14px;
   font-family: "Montserrat", sans-serif !important;
-  border-top-right-radius: 0px !important;
-  border-bottom-left-radius: 0px !important;
-  border-top-left-radius: 8px !important;
-  border-bottom-right-radius: 8px !important;
+  font-weight: 500;
+  padding: 6px 12px !important;
+  border-top-right-radius: 0px;
+  border-bottom-left-radius: 0px;
+  border-top-left-radius: 8px;
+  border-bottom-right-radius: 8px;
   background: linear-gradient(to bottom, #77c0cb 0%, #2c9cc0 100%);
   border-color: #77c0cb !important;
 }
 
-.Reset-btn-Branch:hover {
+.Reset-btn-CityCountry:hover {
   background: linear-gradient(to bottom, #7484b7 0%, #536395 100%);
   border-color: #7484b7 !important;
 }
@@ -59,19 +71,20 @@
   align-items: center !important;
 }
 
+.table-text {
+  color: #ffffff !important;
+  font-size: 14px !important;
+  z-index: 1 !important;
+}
+
 .icon-check-color {
   color: #87b939 !important;
   font-size: 18px !important;
 }
 
-.icon-check-close-color {
-  color: #db0000 !important;
-  font-size: 18px !important;
-}
-
 .icon-spaceing-dlt-edit {
   display: flex;
-  justify-content: center !important;
+  justify-content: end !important;
   gap: 10px !important;
 }
 
@@ -85,15 +98,9 @@
   color: #77c0cb !important;
 }
 
-.text-fiels-Branch {
-  font-size: 13px !important;
-  font-family: "Montserrat", sans-serif !important;
-  height: 37px;
-  color: #212529 !important;
-  font-weight: 500 !important;
-}
-
-.col-for-date-timepicker {
+.btn-col-class {
   display: flex;
-  flex-direction: column;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 5px;
 }
