@@ -6,7 +6,10 @@ const initialState = {
   admin_ResponseMessage: null,
   branchesList: null,
   allCountersOfBranchList: null,
-  addBranchShiftData:null
+  addBranchShiftData: null,
+  roasterList: [],
+  singleDayRoaster: [],
+  removeRoasterEntryBranch: [],
 };
 
 const adminReducer = (state = initialState, action) => {
@@ -100,7 +103,49 @@ const adminReducer = (state = initialState, action) => {
     case actions.ADD_BRANCH_SHIFT_FAIL:
       return {
         ...state,
-        addBranchShiftData:null,
+        addBranchShiftData: null,
+        admin_ResponseMessage: action.message,
+      };
+
+    case actions.ADD_BRANCH_ROASTER_ENTRY_SUCCESS:
+      return {
+        ...state,
+        roasterList: action.response,
+        admin_ResponseMessage: action.message,
+      };
+
+    case actions.ADD_BRANCH_ROASTER_ENTRY_FAILED:
+      return {
+        ...state,
+        roasterList: [],
+        admin_ResponseMessage: action.message,
+      };
+
+    case actions.GET_SINGLE_DAY_BRANCH_ROASTER_SUCCESS:
+      return {
+        ...state,
+        singleDayRoaster: action.response,
+        admin_ResponseMessage: action.message,
+      };
+
+    case actions.GET_SINGLE_DAY_BRANCH_ROASTER_FAILED:
+      return {
+        ...state,
+        singleDayRoaster: [],
+        admin_ResponseMessage: action.message,
+      };
+
+    case actions.REMOVE_BRANCH_ROASTER_ENTRY_SUCCESS:
+      return {
+        ...state,
+        removeRoasterEntryBranch: action.response,
+        admin_ResponseMessage: action.message,
+      };
+
+    case actions.REMOVE_BRANCH_ROASTER_ENTRY_FAILED:
+      return {
+        ...state,
+        removeRoasterEntryBranch: [],
         admin_ResponseMessage: action.message,
       };
 

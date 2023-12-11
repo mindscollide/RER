@@ -40,6 +40,21 @@ const addBranchShift = {
   RequestMethod: "ServiceManager.AddBranchShift",
 };
 
+// for Add Branch Roaster Entry
+const addBranchRoasterEntry = {
+  RequestMethod: "ServiceManager.AddBranchRoasterEntry",
+};
+
+//for getting Single Day  Branch Entry
+
+const getSingleDayBranchRoaster = {
+  RequestMethod: "ServiceManager.GetSingleDayBranchRoaster",
+};
+
+const removeBranchRoasterEntry = {
+  RequestMethod: "ServiceManager.RemoveBranchRoasterEntry",
+};
+
 export {
   token,
   logIn,
@@ -49,5 +64,8 @@ export {
   updateLastSelectedLanguage,
   allShiftsOfBranch,
   allCountersOfBranch,
-  addBranchShift
+  addBranchShift,
+  addBranchRoasterEntry,
+  getSingleDayBranchRoaster,
+  removeBranchRoasterEntry,
 };
