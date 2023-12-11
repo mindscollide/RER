@@ -80,11 +80,11 @@
   box-shadow: none !important;
 }
 
-.calendar-background-style .rmdp-day.rmdp-today span {
+/* .calendar-background-style .rmdp-day.rmdp-today span {
   background-color: #2e3cb2 !important;
   color: #fff;
   border-radius: 4px !important;
-}
+} */
 .calendar-background-style .rmdp-day span {
   border-radius: 0%;
   bottom: 3px;

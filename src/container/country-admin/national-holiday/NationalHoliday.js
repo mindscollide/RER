@@ -57,18 +57,13 @@ const NationalHoliday = () => {
     <>
       <section>
         <Row>
-          <Col lg={6} md={6} sm={6} className="d-flex justify-content-start">
+          <Col lg={12} md={12} sm={12} className="d-flex justify-content-start">
             <span className="shift-heading">
               {t("National-holidays-list")}
               <span className="shift-sub-heading">
                 {" "}
                 {t("Saudi-arabia-riyadh")}
               </span>
-            </span>
-          </Col>
-          <Col lg={6} md={6} sm={6} className="d-flex justify-content-end">
-            <span className="shift-sub-heading-right">
-              {t("Olaya-street-branch")}
             </span>
           </Col>
         </Row>

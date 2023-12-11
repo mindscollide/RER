@@ -129,12 +129,18 @@ const BranchAdmin = () => {
       title: <span className="table-text">#</span>,
       dataIndex: "shiftID",
       key: "shiftID",
+      render: (text, record) => (
+        <span className="table-inside-text">{text}</span>
+      ),
     },
     {
       title: <span className="table-text">{t("Shift-name")}</span>,
       dataIndex:
         currentLanguage === "en" ? "shiftNameEnglish" : "shiftNameArabic",
       key: currentLanguage === "en" ? "shiftNameEnglish" : "shiftNameArabic",
+      render: (text, record) => (
+        <span className="table-inside-text">{text}</span>
+      ),
     },
     {
       title: <span className="table-text">{t("Start-time")}</span>,

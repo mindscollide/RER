@@ -1,0 +1,19 @@
+.Branch-Screen-paper {
+  border-radius: 4px;
+  padding: 1.5rem 1rem !important;
+  width: 100% !important;
+  overflow: hidden !important;
+  background-color: #ffffff !important;
+}
+
+.btn-col-class {
+  display: flex;
+  justify-content: start;
+  align-items: center;
+  gap: 5px;
+}
+
+.Branch-Screen-Select {
+  width: 100% !important;
+  max-width: 450px !important;
+}

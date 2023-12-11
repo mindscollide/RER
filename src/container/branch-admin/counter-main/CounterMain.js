@@ -66,11 +66,17 @@ const CounterMain = () => {
       title: <span className="table-text">#</span>,
       dataIndex: "counterID",
       key: "counterID",
+      render: (text, record) => (
+        <span className="table-inside-text">{text}</span>
+      ),
     },
     {
       title: <span className="table-text">{t("Shift-name")}</span>,
       dataIndex: lang === "en" ? "counterNameEnglish" : "counterNameArabic",
       key: lang === "en" ? "counterNameEnglish" : "counterNameArabic",
+      render: (text, record) => (
+        <span className="table-inside-text">{text}</span>
+      ),
     },
 
     {
@@ -134,7 +140,7 @@ const CounterMain = () => {
       } else {
         if (
           newCounter.CounterNameEnglish !== "" &&
-          newCounter.CounterNameArabic !== "" 
+          newCounter.CounterNameArabic !== ""
         ) {
           let Data = {
             CounterNameEnglish: newCounter.CounterNameEnglish,
@@ -142,7 +148,9 @@ const CounterMain = () => {
             IsCounterActive: newCounter.IsCounterActive,
             BranchID: 1,
           };
-          dispatch(addBranchCounterApi(t, navigate, Loading, Data, setNewCounter));
+          dispatch(
+            addBranchCounterApi(t, navigate, Loading, Data, setNewCounter)
+          );
         }
       }
     } catch {}
@@ -239,11 +247,7 @@ const CounterMain = () => {
               </Row>
               <Row className="mt-2">
                 <Col lg={12} md={12} sm={12}>
-                  <Table
-                    rows={rows}
-                    column={columns}
-                    pagination={false}
-                  />
+                  <Table rows={rows} column={columns} pagination={false} />
                 </Col>
               </Row>
             </Paper>
