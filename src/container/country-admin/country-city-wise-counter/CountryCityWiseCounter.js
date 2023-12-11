@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Row, Col } from "react-bootstrap";
-import "./CountryCityWise.css";
+import "./CountryCityWiseCounter.css";
 import { Paper, Button, Table } from "../../../components/elements";
 import { Collapse } from "antd";
 import Select from "react-select";

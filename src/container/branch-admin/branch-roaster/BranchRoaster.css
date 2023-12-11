@@ -1,0 +1,145 @@
+.BranchRoaster-Admin-paper {
+  border-radius: 4px;
+  padding: 1.5rem 1rem !important;
+  width: 100% !important;
+  overflow: hidden !important;
+  background-color: #ffffff !important;
+}
+
+.btn-class-branch {
+  display: flex;
+  justify-content: end;
+  gap: 10px !important;
+}
+
+.save-btn-BranchRoaster {
+  font-size: 14px;
+  font-weight: 500;
+  font-family: "Montserrat", sans-serif !important;
+  padding: 6px 12px !important;
+  border-top-right-radius: 0px;
+  border-bottom-left-radius: 0px;
+  border-top-left-radius: 8px;
+  border-bottom-right-radius: 8px;
+  background: linear-gradient(to bottom, #7484b7 0%, #536395 100%);
+  border-color: #7484b7 !important;
+}
+
+.save-btn-BranchRoaster:hover {
+  background: linear-gradient(to bottom, #77c0cb 0%, #2c9cc0 100%);
+  border-color: #77c0cb !important;
+}
+
+.revert-btn-BranchRoaster {
+  font-size: 14px;
+  font-weight: 500;
+  font-family: "Montserrat", sans-serif !important;
+  padding: 6px 18px !important;
+  border-top-right-radius: 0px;
+  border-bottom-left-radius: 0px;
+  border-top-left-radius: 8px;
+  border-bottom-right-radius: 8px;
+  background: linear-gradient(to bottom, #77c0cb 0%, #2c9cc0 100%);
+  border-color: #77c0cb !important;
+}
+
+.revert-btn-BranchRoaster:hover {
+  background: linear-gradient(to bottom, #7484b7 0%, #536395 100%);
+  border-color: #7484b7 !important;
+}
+
+.icon-space {
+  margin-right: 5px !important;
+  font-size: 15px;
+  align-items: center !important;
+}
+
+.btn-col-class-BranchRoaster {
+  display: flex;
+  justify-content: end !important;
+  align-items: center;
+  gap: 5px;
+}
+
+.icon-close-style {
+  font-size: 18px;
+  font-weight: 600;
+  cursor: pointer;
+  color: #cf5b5b !important;
+}
+
+.icon-close-style:hover {
+  color: #77c0cb !important;
+}
+
+.calendar-background-style {
+  background-color: #edfdfe !important;
+  max-width: 250px !important;
+  min-height: 33vh !important;
+  font-family: "Montserrat", sans-serif !important;
+  box-shadow: none !important;
+}
+
+.calendar-background-style .rmdp-day.rmdp-today span {
+  background-color: #2e3cb2 !important;
+  color: #fff;
+  border-radius: 4px !important;
+}
+.calendar-background-style .rmdp-day span {
+  border-radius: 0%;
+  bottom: 3px;
+  font-size: 14px;
+  font-weight: 500;
+  left: 3px;
+  position: absolute;
+  right: 3px;
+  top: 3px;
+}
+
+.calendar-background-style .rmdp-day span:hover {
+  background-color: #eee !important;
+  border-radius: 4px;
+  color: #000;
+}
+
+.calendar-background-style .rmdp-week-day {
+  color: #45494d;
+  cursor: default;
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.calendar-background-style .rmdp-header-values {
+  font-size: 14px !important;
+  font-weight: 700 !important;
+  color: #49454d;
+  margin: auto;
+}
+
+.calendar-background-style .rmdp-arrow {
+  border: solid #49454d;
+  border-width: 0 2px 2px 0;
+  display: inline-block;
+  height: 3px;
+  margin-top: 5px;
+  padding: 2px;
+  width: 3px;
+}
+
+.calendar-above-arrow {
+  background-color: transparent;
+  border: none;
+  font-weight: 600;
+}
+
+.calendar-background-style .rmdp-day,
+.rmdp-week-day {
+  cursor: pointer;
+  height: 28px !important;
+  position: relative;
+  width: 34px;
+}
+
+.calendar-background-style .rmdp-day-picker {
+  padding: 0px !important;
+}

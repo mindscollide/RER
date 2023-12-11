@@ -9,7 +9,6 @@ export function getItem(label, key, icon, children, type) {
 }
 // Your generateMenuItems function
 export function generateMenuItems(roleID, t) {
-
   const GlobalAdmin = [
     getItem(
       <div className="setup-text-style">{t("Setups")}</div>,
@@ -42,13 +41,13 @@ export function generateMenuItems(roleID, t) {
       "sub1",
       <i className="icon-settings side-bar-icons"></i>,
       [
-        getItem(t("City-admin"), "5"),
-        getItem(t("City-wise-branch-services"), "6"),
-        getItem(t("City-branch-wise-shifts"), "7"),
-        getItem(t("City-branch-shifts-wise-counter"), "8"),
-        getItem(t("Employee-main"), "9"),
-        getItem(t("Country-city-wise-counter"), "10"),
-        getItem(t("Country-main"), "11"),
+        getItem(t("Country-admin-main"), "12"),
+        getItem(t("Service-country-screen"), "13"),
+        getItem(t("Country-city-wise-branch"), "14"),
+        getItem(t("Country-city-branch-wise-shift"), "15"),
+        getItem(t("Country-city-wise-counter"), "16"),
+        getItem(t("Country-city-wise-employees"), "17"),
+        getItem(t("National-holiday"), "19"),
       ],
       "menu-item-sub"
     ),
@@ -105,6 +104,7 @@ export function generateMenuItems(roleID, t) {
         getItem(t("Shift"), "2"),
         getItem(t("Counter-admin"), "3"),
         getItem(t("Branch-service"), "4"),
+        getItem(t("Branch-roaster"), "18"),
       ],
       "menu-item-sub"
     ),
@@ -122,7 +122,7 @@ export function generateMenuItems(roleID, t) {
       "menu-item-sub"
     ),
   ];
-  
+
   const BranchEmployee = [
     getItem(
       <div className="setup-text-style">{t("Setups")}</div>,

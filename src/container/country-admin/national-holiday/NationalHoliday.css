@@ -1,4 +1,4 @@
-.BranchService-Admin-paper {
+.NationalHoliday-Admin-paper {
   border-radius: 4px;
   padding: 1.5rem 1rem !important;
   width: 100% !important;
@@ -12,7 +12,7 @@
   gap: 10px !important;
 }
 
-.save-btn-BranchService {
+.save-btn-NationalHoliday {
   font-size: 14px;
   font-weight: 500;
   font-family: "Montserrat", sans-serif !important;
@@ -21,16 +21,16 @@
   border-bottom-left-radius: 0px;
   border-top-left-radius: 8px;
   border-bottom-right-radius: 8px;
-  background: linear-gradient(to bottom, #7484b7 0%, #536395 100%);
-  border-color: #7484b7 !important;
-}
-
-.save-btn-BranchService:hover {
   background: linear-gradient(to bottom, #77c0cb 0%, #2c9cc0 100%);
   border-color: #77c0cb !important;
 }
 
-.revert-btn-BranchService {
+.save-btn-NationalHoliday:hover {
+  background: linear-gradient(to bottom, #7484b7 0%, #536395 100%);
+  border-color: #7484b7 !important;
+}
+
+.revert-btn-NationalHoliday {
   font-size: 14px;
   font-weight: 500;
   font-family: "Montserrat", sans-serif !important;
@@ -39,13 +39,13 @@
   border-bottom-left-radius: 0px;
   border-top-left-radius: 8px;
   border-bottom-right-radius: 8px;
-  background: linear-gradient(to bottom, #77c0cb 0%, #2c9cc0 100%);
-  border-color: #77c0cb !important;
-}
-
-.revert-btn-BranchService:hover {
   background: linear-gradient(to bottom, #7484b7 0%, #536395 100%);
   border-color: #7484b7 !important;
+}
+
+.revert-btn-NationalHoliday:hover {
+  background: linear-gradient(to bottom, #77c0cb 0%, #2c9cc0 100%);
+  border-color: #77c0cb !important;
 }
 
 .icon-space {
@@ -54,20 +54,20 @@
   align-items: center !important;
 }
 
-.btn-col-class {
+.btn-col-class-NationalHoliday {
   display: flex;
-  justify-content: end !important;
+  justify-content: center !important;
   align-items: center;
   gap: 5px;
 }
 
-.For-table-textfield {
-  display: flex !important;
-  justify-content: center !important;
-  align-items: center !important;
+.icon-close-style-delete {
+  font-size: 18px;
+  font-weight: 500;
+  cursor: pointer;
+  color: #cf5b5b !important;
 }
 
-.for-inside-table-textfiel {
-  width: 75px !important;
-  height: 35px !important;
+.icon-close-style:hover {
+  color: #77c0cb !important;
 }

@@ -1,66 +1,52 @@
 import React, { useState } from "react";
 import { Row, Col } from "react-bootstrap";
-import "./BranchService.css";
-import { Paper, TextField, Button, Table } from "../../../components/elements";
-import { Switch } from "antd";
+import "./NationalHoliday.css";
+import { Paper, Button, Table } from "../../../components/elements";
 import { useTranslation } from "react-i18next";
+import Select from "react-select";
 
-const BranchService = () => {
+const NationalHoliday = () => {
   const { t } = useTranslation();
 
   const dataSource = [
     {
       id: 1,
-      shiftName: <span className="table-inside-text">First Registry</span>,
+      shiftName: <span className="table-inside-text">10-Aug-23</span>,
+      Counter: <span className="table-inside-text">Counter 1</span>,
+      Service: <span className="table-inside-text">First Registry</span>,
     },
     {
       id: 2,
-      shiftName: (
-        <span className="table-inside-text">
-          Subsequence Transaction Service Before First Registry
-        </span>
-      ),
+      shiftName: <span className="table-inside-text">9-Aug-23</span>,
+      Counter: <span className="table-inside-text">Counter 1</span>,
+      Service: <span className="table-inside-text">First Registry</span>,
     },
     {
       id: 3,
-      shiftName: <span className="table-inside-text">Change Ownership</span>,
+      shiftName: <span className="table-inside-text">8-Aug-23</span>,
+      Counter: <span className="table-inside-text">Counter 1</span>,
+      Service: <span className="table-inside-text">First Registry</span>,
     },
   ];
 
   const columns = [
     {
-      title: <span className="table-text">{t("Service")}</span>,
+      title: <span className="table-text">{t("Date")}</span>,
       dataIndex: "shiftName",
       key: "shiftName",
       width: "400px",
     },
 
     {
-      title: <span className="table-text">{t("Branch-availability")}</span>,
-      dataIndex: "active",
-      key: "active",
-      width: "200px",
-      align: "center",
-      render: (text, record) => (
-        <span>
-          <Switch />
-        </span>
-      ),
-    },
-    {
-      title: <span className="table-text">{t("Service-slot-minutes")}</span>,
-      dataIndex: "column6",
-      key: "column6",
+      title: "",
+      dataIndex: "close",
+      key: "close",
       width: "200px",
       align: "center",
       render: (text, record) => (
         <>
-          <span className="For-table-textfield">
-            <TextField
-              type={"number"}
-              labelClass="d-none"
-              className="for-inside-table-textfiel"
-            />
+          <span>
+            <i className="icon-trash icon-close-style-delete"></i>
           </span>
         </>
       ),
@@ -69,11 +55,11 @@ const BranchService = () => {
 
   return (
     <>
-      <section className="SectionBranchService-Admin">
+      <section>
         <Row>
           <Col lg={6} md={6} sm={6} className="d-flex justify-content-start">
             <span className="shift-heading">
-              {t("Branch")}
+              {t("National-holidays-list")}
               <span className="shift-sub-heading">
                 {" "}
                 {t("Saudi-arabia-riyadh")}
@@ -88,18 +74,23 @@ const BranchService = () => {
         </Row>
         <Row className="mt-3">
           <Col lg={12} md={12} sm={12}>
-            <Paper className="BranchService-Admin-paper">
+            <Paper className="NationalHoliday-Admin-paper">
               <Row>
-                <Col lg={12} md={12} sm={12} className="btn-col-class">
-                  <Button
-                    icon={<i className="icon-save icon-space"></i>}
-                    text={t("Save")}
-                    className="save-btn-BranchService"
-                  />
+                <Col
+                  lg={12}
+                  md={12}
+                  sm={12}
+                  className="btn-col-class-NationalHoliday"
+                >
                   <Button
                     icon={<i className="icon-repeat icon-space"></i>}
                     text={t("Revert")}
-                    className="revert-btn-BranchService"
+                    className="revert-btn-NationalHoliday"
+                  />
+                  <Button
+                    icon={<i className="icon-save icon-space"></i>}
+                    text={t("Save")}
+                    className="save-btn-NationalHoliday"
                   />
                 </Col>
               </Row>
@@ -120,4 +111,4 @@ const BranchService = () => {
   );
 };
 
-export default BranchService;
+export default NationalHoliday;
