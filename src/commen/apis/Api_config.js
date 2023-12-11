@@ -74,6 +74,20 @@ const updateBranchCounter = {
 const deleteBranchCounter = {
   RequestMethod: "ServiceManager.DeleteBranchCounter",
 };
+// for Add Branch Shift
+const updateBranchShift = {
+  RequestMethod: "ServiceManager.UpdateBranchShift",
+};
+
+// for Add Branch Shift
+const deleteBranchShift = {
+  RequestMethod: "ServiceManager.DeleteBranchShift",
+};
+
+// for Add Branch Counter
+const addBranchCounter = {
+  RequestMethod: "ServiceManager.AddBranchCounter",
+};
 
 export {
   token,
@@ -92,4 +106,7 @@ export {
   updateBranchServices,
   updateBranchCounter,
   deleteBranchCounter,
+  updateBranchShift,
+  deleteBranchShift,
+  addBranchCounter,
 };

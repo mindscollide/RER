@@ -14,6 +14,9 @@ const initialState = {
   branchServicesUpdatedData: null,
   updateBranchCounterData: null,
   deleteBranchCounterData: null,
+  addBranchCounterData: null,
+  updateBranchShiftData: null,
+  deleteBranchShiftID: null,
 };
 
 const adminReducer = (state = initialState, action) => {
@@ -96,7 +99,7 @@ const adminReducer = (state = initialState, action) => {
         admin_ResponseMessage: action.message,
       };
 
-    //for ALL COUNTERS OF BRANCH Api fot(CounterMain for listing of all branches && Branch Roaster for Counter drop down)
+    //for Add BRANCH SHIFT OF BRANCH shift Api
     case actions.ADD_BRANCH_SHIFT_SUCCESS:
       return {
         ...state,
@@ -211,6 +214,51 @@ const adminReducer = (state = initialState, action) => {
       return {
         ...state,
         deleteBranchCounterData: null,
+        admin_ResponseMessage: action.message,
+      };
+
+    //for update BRANCH SHIFT OF BRANCH shift Api
+    case actions.UPDAT_EBRANCH_SHIFT_SUCCESS:
+      return {
+        ...state,
+        updateBranchShiftData: action.response,
+        admin_ResponseMessage: action.message,
+      };
+
+    case actions.UPDATE_BRANCH_SHIFT_FAIL:
+      return {
+        ...state,
+        updateBranchShiftData: null,
+        admin_ResponseMessage: action.message,
+      };
+
+    //for update BRANCH SHIFT OF BRANCH shift Api
+    case actions.DELETE_BRANCH_SHIFT_SUCCESS:
+      return {
+        ...state,
+        deleteBranchShiftID: action.response,
+        admin_ResponseMessage: action.message,
+      };
+
+    case actions.DELETE_BRANCH_SHIFT_FAIL:
+      return {
+        ...state,
+        deleteBranchShiftID: null,
+        admin_ResponseMessage: action.message,
+      };
+
+    //for ALL COUNTERS OF BRANCH counter Api
+    case actions.ADD_BRANCH_COUNTER_SUCCESS:
+      return {
+        ...state,
+        addBranchCounterData: action.response,
+        admin_ResponseMessage: action.message,
+      };
+
+    case actions.ADD_BRANCH_COUNTERT_FAIL:
+      return {
+        ...state,
+        addBranchCounterData: null,
         admin_ResponseMessage: action.message,
       };
 

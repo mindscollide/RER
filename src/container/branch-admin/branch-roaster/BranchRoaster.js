@@ -1,17 +1,59 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Row, Col } from "react-bootstrap";
 import "./BranchRoaster.css";
 import { Paper, Button, Table } from "../../../components/elements";
 import { useTranslation } from "react-i18next";
+import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router";
 import { Calendar } from "react-multi-date-picker";
 import Select from "react-select";
 import BranchRoasterModal from "../../modals/branch-roaster-close-modal/BranchRoasterModal";
+import {
+  getSingleBranchRoasterApiFunction,
+  getAllShiftsOfBranch,
+  getAllCountersOfBranch,
+  GetBranchServices,
+  addBranchRoasterEntryApiFunction,
+} from "../../../store/actions/Admin_action";
 
 const BranchRoaster = () => {
   const { t } = useTranslation();
 
+  const navigate = useNavigate();
+
+  const dispatch = useDispatch();
+
+  const Loading = useSelector((state) => state.Loader.Loading);
+
+  const getRoasterData = useSelector((state) => state.admin.singleDayRoaster);
+
+  const globalShiftOptions = useSelector((state) => state.admin.branchesList);
+
+  const globalCounterOptions = useSelector(
+    (state) => state.admin.allCountersOfBranchList
+  );
+
+  const globalBranchServicesOptions = useSelector(
+    (state) => state.admin.branchServicesData
+  );
+
+  const currentLanguage = localStorage.getItem("i18nextLng");
+
   // Branch Roaster close Modal State
   const [roasterModal, setRoasterModal] = useState(false);
+
+  const [singleRoasterRowData, setSingleRoasterRowData] = useState([]);
+
+  const [optionsShift, setOptionsShift] = useState([]);
+  const [selectedOptionShift, setSelectedOptionShift] = useState(null);
+
+  const [optionsCounter, setOptionsCounter] = useState([]);
+  const [selectedOptionCounter, setSelectedOptionCounter] = useState(null);
+
+  const [optionsServices, setOptionsServices] = useState([]);
+  const [selectedOptionServices, setSelectedOptionServices] = useState(null);
+
+  const [selectedDate, setSelectedDate] = useState(null);
 
   // open roaster modal on click
   const onClickOpenRoaster = () => {
@@ -42,24 +84,44 @@ const BranchRoaster = () => {
   const columns = [
     {
       title: <span className="table-text">{t("Service")}</span>,
-      dataIndex: "shiftName",
-      key: "shiftName",
+      dataIndex: "shiftService",
+      key: "shiftService",
       width: "400px",
+      render: (text, record) => (
+        <span className="table-inside-text">
+          {currentLanguage === "en"
+            ? record.shiftService.serviceNameEnglish
+            : record.shiftService.serviceNameArabic}
+        </span>
+      ),
     },
-
     {
       title: <span className="table-text">{t("Counter")}</span>,
-      dataIndex: "Counter",
-      key: "Counter",
+      dataIndex: "branchCounterModel",
+      key: "branchCounterModel",
       width: "200px",
       align: "center",
+      render: (text, record) => (
+        <span className="table-inside-text">
+          {currentLanguage === "en"
+            ? record.branchCounterModel.counterNameEnglish
+            : record.branchCounterModel.counterNameArabic}
+        </span>
+      ),
     },
     {
-      title: <span className="table-text">{t("Service")}</span>,
-      dataIndex: "Service",
-      key: "Service",
+      title: <span className="table-text">{t("Shift")}</span>,
+      dataIndex: "branchShift",
+      key: "branchShift",
       width: "200px",
       align: "center",
+      render: (text, record) => (
+        <span className="table-inside-text">
+          {currentLanguage === "en"
+            ? record.branchShift.shiftNameEnglish
+            : record.branchShift.shiftNameArabic}
+        </span>
+      ),
     },
     {
       title: "",
@@ -79,6 +141,156 @@ const BranchRoaster = () => {
       ),
     },
   ];
+
+  useEffect(() => {
+    dispatch(getAllShiftsOfBranch(t, navigate, Loading));
+    dispatch(getAllCountersOfBranch(t, navigate, Loading));
+    dispatch(GetBranchServices(t, navigate, Loading));
+    dispatch(getSingleBranchRoasterApiFunction(t, navigate, Loading));
+  }, []);
+
+  useEffect(() => {
+    if (
+      getRoasterData !== null &&
+      getRoasterData !== undefined &&
+      getRoasterData.length !== 0
+    ) {
+      setSingleRoasterRowData(getRoasterData);
+    }
+  }, [getRoasterData]);
+
+  useEffect(() => {
+    if (
+      globalShiftOptions !== null &&
+      globalShiftOptions !== undefined &&
+      globalShiftOptions.length !== 0
+    ) {
+      if (currentLanguage === "en") {
+        setOptionsShift(
+          globalShiftOptions.map((item) => ({
+            value: item.shiftID,
+            label: item.shiftNameEnglish,
+          }))
+        );
+      } else {
+        setOptionsShift(
+          globalShiftOptions.map((item) => ({
+            value: item.shiftID,
+            label: item.shiftNameArabic,
+          }))
+        );
+      }
+    }
+  }, [globalShiftOptions, currentLanguage]);
+
+  useEffect(() => {
+    if (
+      globalCounterOptions !== null &&
+      globalCounterOptions !== undefined &&
+      globalCounterOptions.length !== 0
+    ) {
+      if (currentLanguage === "en") {
+        setOptionsCounter(
+          globalCounterOptions.map((item) => ({
+            value: item.counterID,
+            label: item.counterNameEnglish,
+          }))
+        );
+      } else {
+        setOptionsCounter(
+          globalCounterOptions.map((item) => ({
+            value: item.counterID,
+            label: item.counterNameArabic,
+          }))
+        );
+      }
+    }
+  }, [globalCounterOptions, currentLanguage]);
+
+  useEffect(() => {
+    if (
+      globalBranchServicesOptions !== null &&
+      globalBranchServicesOptions !== undefined &&
+      globalBranchServicesOptions.length !== 0
+    ) {
+      if (currentLanguage === "en") {
+        setOptionsServices(
+          globalBranchServicesOptions.map((item) => ({
+            value: item.branchServiceID,
+            label: item.branchService.serviceNameEnglish,
+          }))
+        );
+      } else {
+        setOptionsServices(
+          globalBranchServicesOptions.map((item) => ({
+            value: item.branchServiceID,
+            label: item.branchService.serviceNameArabic,
+          }))
+        );
+      }
+    }
+  }, [globalBranchServicesOptions, currentLanguage]);
+
+  useEffect(() => {
+    // Set the current date if selectedDate is null on initial render
+    if (!selectedDate) {
+      const currentDate = new Date();
+      const formattedCurrentDate = currentDate
+        .toISOString()
+        .slice(0, 10)
+        .replace(/-/g, ""); // YYYYMMDD format
+      setSelectedDate(formattedCurrentDate);
+    }
+  }, [selectedDate]);
+
+  const handleDateChange = (date) => {
+    // 'date' here is the selected date object
+
+    // Format the date into YYYYMMDD format
+    if (date) {
+      const formattedDate = date.format("YYYYMMDD");
+      console.log("Selected date in YYYYMMDD format:", formattedDate);
+      setSelectedDate(formattedDate);
+      // Use 'formattedDate' as needed
+    }
+  };
+
+  console.log("selectedDateselectedDate", selectedDate);
+
+  const handleChangeShift = (selectedOptionShift) => {
+    setSelectedOptionShift(selectedOptionShift);
+  };
+
+  const handleChangeCounter = (selectedOptionCounter) => {
+    setSelectedOptionCounter(selectedOptionCounter);
+  };
+
+  const handleChangeServices = (selectedOptionServices) => {
+    setSelectedOptionServices(selectedOptionServices);
+  };
+
+  const saveSingleRoaster = () => {
+    let Data = {
+      RoasterDate: selectedDate,
+      BranchID: 1,
+      ServiceID: selectedOptionServices.value,
+      ShiftID: selectedOptionShift.value,
+      CounterID: selectedOptionCounter.value,
+    };
+    console.log(
+      "Request Data Values",
+      Data,
+      selectedOptionServices,
+      selectedOptionShift,
+      selectedOptionCounter
+    );
+    dispatch(addBranchRoasterEntryApiFunction(Data, t, navigate, Loading));
+    setSelectedOptionCounter(null);
+    setSelectedOptionShift(null);
+    setSelectedOptionServices(null);
+  };
+
+  console.log("Table Rows Roaster", singleRoasterRowData);
 
   return (
     <>
@@ -111,6 +323,7 @@ const BranchRoaster = () => {
                 >
                   <Calendar
                     showOtherDays={true}
+                    onChange={handleDateChange}
                     renderButton={(direction, handleClick) => (
                       <button
                         onClick={handleClick}
@@ -126,13 +339,21 @@ const BranchRoaster = () => {
                 <Col lg={5} md={12} sm={12}>
                   <span className="d-flex flex-column w-100">
                     <label className="text-labels">{t("Shift")}</label>
-                    <Select />
+                    <Select
+                      value={selectedOptionShift}
+                      onChange={handleChangeShift}
+                      options={optionsShift}
+                    />
                   </span>
                   <Row className="mt-4">
                     <Col lg={12} md={12} sm={12}>
                       <span className="d-flex flex-column w-100">
                         <label className="text-labels">{t("Service")}</label>
-                        <Select />
+                        <Select
+                          value={selectedOptionServices}
+                          onChange={handleChangeServices}
+                          options={optionsServices}
+                        />
                       </span>
                     </Col>
                   </Row>
@@ -148,6 +369,7 @@ const BranchRoaster = () => {
                         icon={<i className="icon-save icon-space"></i>}
                         text={t("Save")}
                         className="save-btn-BranchRoaster"
+                        onClick={saveSingleRoaster}
                       />
                       <Button
                         icon={<i className="icon-repeat icon-space"></i>}
@@ -160,7 +382,11 @@ const BranchRoaster = () => {
                 <Col lg={4} md={12} sm={12}>
                   <span className="d-flex flex-column w-100">
                     <label className="text-labels">{t("Counter")}</label>
-                    <Select />
+                    <Select
+                      value={selectedOptionCounter}
+                      onChange={handleChangeCounter}
+                      options={optionsCounter}
+                    />
                   </span>
                 </Col>
               </Row>
@@ -168,7 +394,7 @@ const BranchRoaster = () => {
               <Row className="mt-2">
                 <Col lg={12} md={12} sm={12}>
                   <Table
-                    rows={dataSource}
+                    rows={singleRoasterRowData}
                     column={columns}
                     pagination={false}
                   />

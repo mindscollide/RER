@@ -3,23 +3,39 @@ import { Col, Row } from "react-bootstrap";
 import { Button, Modal } from "../../../components/elements";
 import "./DeleteEmployeeModal.css";
 import { useTranslation } from "react-i18next";
+import { deleteBranchShiftApi } from "../../../store/actions/Admin_action";
+import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router";
 
-const DeleteEmployeeModal = ({ deleteModal, setDeleteModal }) => {
+const DeleteEmployeeModal = ({
+  deleteModal,
+  setDeleteModal,
+  deleteID,
+  route,
+}) => {
   const { t } = useTranslation();
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const Loading = useSelector((state) => state.Loader.Loading);
 
   const onCloseModal = () => {
     setDeleteModal(false);
   };
 
-  const onNoModalHandler = () => {
-    setDeleteModal(false);
+  const yesHandler = async () => {
+    if (route === "BranchAdminShift") {
+      let data = { ShiftID: deleteID, BranchID: 1 };
+      await dispatch(
+        deleteBranchShiftApi(t, navigate, Loading, data, setDeleteModal)
+      );
+    }
   };
 
   return (
     <>
       <Modal
         show={deleteModal}
-        setShow={deleteModal}
+        setShow={setDeleteModal}
         className="modaldialog delete-modal"
         modalHeaderClassName="d-none"
         modalFooterClassName="modal-bank-footer"
@@ -44,11 +60,15 @@ const DeleteEmployeeModal = ({ deleteModal, setDeleteModal }) => {
           <>
             <Row>
               <Col lg={12} md={12} sm={12} className="Yes-No-modal-btn-col">
-                <Button text={t("Yes")} className="Yes-btn-Employee" />
+                <Button
+                  text={t("Yes")}
+                  className="Yes-btn-Employee"
+                  onClick={yesHandler}
+                />
                 <Button
                   text={t("No")}
                   className="No-btn-Employee"
-                  onClick={onNoModalHandler}
+                  onClick={onCloseModal}
                 />
               </Col>
             </Row>
