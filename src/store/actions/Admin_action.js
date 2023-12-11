@@ -2,8 +2,10 @@ import * as actions from "../action_types";
 import axios from "axios";
 import { loader_Actions } from "./Loader_action";
 import {
+  allShiftsOfBranch,
   lastSelectedLanguage,
   systemSupportedLanguage,
+  token,
   updateLastSelectedLanguage,
 } from "../../commen/apis/Api_config";
 import { adminURL } from "../../commen/apis/Api_ends_points";
@@ -175,7 +177,7 @@ const getLastSelectedLanguage = (t, i18n, navigate, data) => {
                   t("Admin_AdminServiceManager_GetLastSelectedLanguage_01")
                 )
               );
-              await dispatch(loader_Actions(false));
+              // await dispatch(loader_Actions(false));
             } else if (
               response.data.responseResult.responseMessage ===
               "Admin_AdminServiceManager_GetLastSelectedLanguage_02"
@@ -336,9 +338,95 @@ const setLastSelectedLanguage = (
   };
 };
 
+//Get All Shifts Of Branch Api fot(Branch Admin for listing of all branches && Branch Roaster for Shifts drop down)
+const getAllShiftsOfBranchSuccess = (response, message) => {
+  return {
+    type: actions.GET_ALL_SHIFTS_OF_BRANCH_SUCCESS,
+    response: response,
+    message: message,
+  };
+};
+
+const getAllShiftsOfBranchFail = (message) => {
+  return {
+    type: actions.GET_ALL_SHIFTS_OF_BRANCH_FAIL,
+    message: message,
+  };
+};
+
+const getAllShiftsOfBranch = (t, navigate) => {
+  let data = { BranchID: 1 };
+  return async (dispatch) => {
+    dispatch(loader_Actions(true));
+    let form = new FormData();
+    form.append("RequestMethod", allShiftsOfBranch.RequestMethod);
+    form.append("RequestData", JSON.stringify(data));
+    await axios({
+      method: "post",
+      url: adminURL,
+      data: form,
+      headers: {
+        _token: token,
+      },
+    })
+      .then(async (response) => {
+        if (response.data.responseCode === 200) {
+          if (response.data.responseCode === 417) {
+            // await dispatch(RefreshToken(navigate, t))
+            dispatch(getAllShiftsOfBranch(t, navigate));
+          } else if (response.data.responseResult.isExecuted === true) {
+            if (
+              response.data.responseResult.responseMessage ===
+              "Admin_AdminServiceManager_GetAllShiftsOfBranch_01"
+            ) {
+              await dispatch(
+                getAllShiftsOfBranchSuccess(
+                  response.data.responseResult.shiftModelList,
+                  t("Admin_AdminServiceManager_GetLastSelectedLanguage_01")
+                )
+              );
+              await dispatch(loader_Actions(false));
+            } else if (
+              response.data.responseResult.responseMessage ===
+              "Admin_AdminServiceManager_GetLastSelectedLanguage_02"
+            ) {
+              await dispatch(
+                getAllShiftsOfBranchFail(
+                  t("Admin_AdminServiceManager_GetLastSelectedLanguage_02")
+                )
+              );
+              await dispatch(loader_Actions(false));
+            } else if (
+              response.data.responseResult.responseMessage ===
+              "Admin_AdminServiceManager_GetLastSelectedLanguage_03"
+            ) {
+              await dispatch(
+                getAllShiftsOfBranchFail(t("something_went_wrong"))
+              );
+              await dispatch(loader_Actions(false));
+            } else {
+              dispatch(getLastSelectedLanguageFail(t("something_went_wrong")));
+            }
+          } else {
+            await dispatch(getAllShiftsOfBranchFail(t("something_went_wrong")));
+            await dispatch(loader_Actions(false));
+          }
+        } else {
+          await dispatch(getAllShiftsOfBranchFail(t("something_went_wrong")));
+          await dispatch(loader_Actions(false));
+        }
+      })
+      .catch((response) => {
+        dispatch(getLastSelectedLanguageFail(t("something_went_wrong")));
+        dispatch(loader_Actions(false));
+      });
+  };
+};
+
 export {
   AdminCleareState,
   getSystemSupportedLanguage,
   getLastSelectedLanguage,
   setLastSelectedLanguage,
+  getAllShiftsOfBranch,
 };

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Row, Col } from "react-bootstrap";
 import "./Shift.css";
 import {
@@ -11,61 +11,58 @@ import {
 import DatePicker from "react-multi-date-picker";
 import TimePicker from "react-multi-date-picker/plugins/time_picker";
 import { useTranslation } from "react-i18next";
+import { getAllShiftsOfBranch } from "../../../store/actions/Admin_action";
+import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router";
 
 const BranchAdmin = () => {
   const [isCheckboxSelected, setIsCheckboxSelected] = useState(false);
   const { t } = useTranslation();
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const lang = localStorage.getItem("i18nextLng");
+  const branchesList = useSelector((state) => state.admin.branchesList);
+  const [rows, setRows] = useState([]);
 
   const handleCheckboxChange = (e) => {
     setIsCheckboxSelected(e.target.checked);
   };
 
-  const dataSource = [
-    {
-      id: <span className="table-inside-text">1</span>,
-      shiftName: <span className="table-inside-text">Morning Shift</span>,
-      startTime: <span className="table-inside-text">08:00 AM</span>,
-      endTime: <span className="table-inside-text">04:00 PM</span>,
-    },
-    {
-      id: <span className="table-inside-text">2</span>,
-      shiftName: <span className="table-inside-text">Morning Shift</span>,
-      startTime: <span className="table-inside-text">08:00 AM</span>,
-      endTime: <span className="table-inside-text">04:00 PM</span>,
-    },
-    {
-      id: <span className="table-inside-text">3</span>,
-      shiftName: <span className="table-inside-text">Morning Shift</span>,
-      startTime: <span className="table-inside-text">08:00 AM</span>,
-      endTime: <span className="table-inside-text">04:00 PM</span>,
-    },
-  ];
+  useEffect(() => {
+    dispatch(getAllShiftsOfBranch(t, navigate));
+  }, []);
+
+  useEffect(() => {
+    if (branchesList !== null) {
+      setRows(branchesList);
+    }
+  }, [branchesList]);
 
   const columns = [
     {
       title: <span className="table-text">#</span>,
-      dataIndex: "id",
-      key: "id",
+      dataIndex: "shiftID",
+      key: "shiftID",
     },
     {
       title: <span className="table-text">{t("Shift-name")}</span>,
-      dataIndex: "shiftName",
-      key: "shiftName",
+      dataIndex: lang === "en" ? "shiftNameEnglish" : "shiftNameArabic",
+      key: lang === "en" ? "shiftNameEnglish" : "shiftNameArabic",
     },
     {
       title: <span className="table-text">{t("Start-time")}</span>,
-      dataIndex: "startTime",
-      key: "startTime",
+      dataIndex: "shiftStartTime",
+      key: "shiftStartTime",
     },
     {
       title: <span className="table-text">{t("End-time")}</span>,
-      dataIndex: "endTime",
-      key: "endTime",
+      dataIndex: "shiftEndTime",
+      key: "shiftEndTime",
     },
     {
       title: <span className="table-text">{t("Active")}</span>,
-      dataIndex: "active",
-      key: "active",
+      dataIndex: "isShiftActive",
+      key: "isShiftActive",
       render: (text, record) => (
         <>
           <span>
@@ -184,11 +181,7 @@ const BranchAdmin = () => {
 
               <Row>
                 <Col lg={12} md={12} sm={12}>
-                  <Table
-                    rows={dataSource}
-                    column={columns}
-                    pagination={false}
-                  />
+                  <Table rows={rows} column={columns} pagination={false} />
                 </Col>
               </Row>
             </Paper>

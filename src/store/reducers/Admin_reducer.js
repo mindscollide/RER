@@ -4,6 +4,7 @@ const initialState = {
   supportedLanguage: null,
   supportedLanguageSelected: null,
   admin_ResponseMessage: null,
+  branchesList: null,
 };
 
 const adminReducer = (state = initialState, action) => {
@@ -53,6 +54,20 @@ const adminReducer = (state = initialState, action) => {
       };
 
     case actions.SET_LAST_SELECTED_LANGUAGE_FAIL:
+      return {
+        ...state,
+        admin_ResponseMessage: action.message,
+      };
+
+    //Get All Shifts Of Branch Api fot(Branch Admin for listing of all branches && Branch Roaster for Shifts drop down)
+    case actions.GET_ALL_SHIFTS_OF_BRANCH_SUCCESS:
+      return {
+        ...state,
+        branchesList: action.response,
+        admin_ResponseMessage: action.message,
+      };
+
+    case actions.GET_ALL_SHIFTS_OF_BRANCH_FAIL:
       return {
         ...state,
         admin_ResponseMessage: action.message,
