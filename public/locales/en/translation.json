@@ -92,5 +92,10 @@
   "Employee-name": "Employee Name",
   "City-name": "City Name",
   "Country-admin-main": "Country Admin Main",
-  "Country-main": "Country Main"
+  "Country-main": "Country Main",
+  "Saudi-arabia": "Saudi Arabia",
+  "Service-wise-country-availability": "Service Wise Country Availability",
+  "Home-availability": "Home Availability",
+  "City-wise-service-availability": "City Wise Service Availability",
+  "Close": "Close"
 }

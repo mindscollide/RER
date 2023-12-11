@@ -1,0 +1,81 @@
+.CountryCityBranch-paper {
+  border-radius: 4px;
+  padding: 1.5rem 1rem !important;
+  width: 100% !important;
+  overflow: hidden !important;
+  background-color: #ffffff !important;
+}
+
+.CityBranchShift-col {
+  display: flex;
+  justify-content: center;
+  gap: 5px;
+}
+
+.Search-Icon-Btn {
+  font-size: 14px;
+  font-weight: 500;
+  font-family: "Montserrat", sans-serif !important;
+  padding: 6px 12px !important;
+  border-top-right-radius: 0px;
+  border-bottom-left-radius: 0px;
+  border-top-left-radius: 8px;
+  border-bottom-right-radius: 8px;
+  background: linear-gradient(to bottom, #7484b7 0%, #536395 100%);
+  border-color: #7484b7 !important;
+}
+
+.Search-Icon-Btn:hover {
+  background: linear-gradient(to bottom, #77c0cb 0%, #2c9cc0 100%);
+  border-color: #77c0cb !important;
+}
+
+.countrycitywisebranchwiseselector {
+  width: 100% !important;
+  max-width: 450px !important;
+}
+
+.city-icon-space {
+  margin-right: 5px !important;
+  font-size: 15px;
+  align-items: center !important;
+}
+
+.collapse-bg-color {
+  align-items: center !important;
+  background-color: #76c641 !important;
+  color: #ffffff !important;
+  padding: 10px !important;
+  display: flex !important;
+  justify-content: space-between;
+}
+
+.collapse-disable-bg {
+  background-color: transparent !important;
+}
+
+:where(.css-dev-only-do-not-override-2q8sxy).ant-collapse
+  .ant-collapse-content
+  > .ant-collapse-content-box {
+  padding: 16px 25px;
+}
+
+/* for not showing icon beside the header */
+:where(.css-dev-only-do-not-override-2q8sxy).ant-collapse
+  > .ant-collapse-item
+  > .ant-collapse-header
+  .ant-collapse-expand-icon {
+  display: none;
+}
+
+:where(.css-dev-only-do-not-override-2q8sxy).ant-collapse
+  > .ant-collapse-item
+  > .ant-collapse-header {
+  padding: 3px 16px;
+}
+
+.icon-size-of-collapse {
+  font-size: 24px !important;
+  font-weight: 500 !important;
+  color: #ffffff;
+}
