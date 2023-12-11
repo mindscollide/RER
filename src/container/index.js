@@ -4,6 +4,3 @@ export { default as CityBranchService } from "./city-branch-service/CityBranchSe
 export { default as NotFound } from "./404-Not-Found/404_not_found";
 export { default as ForgotPassword } from "./forgot-password/ForgotPassword";
 export { default as CountryMain } from "./country-main/CountryMain";
-export { default as ServiceCountryScreen } from "./service-country-screen/ServiceCountryScreen";
-export { default as CountryCityBranch } from "./country-city-wise-branch/CountryCityBranch";
-export { default as CountryCityWiseShift } from "./country-city-branch-wise-shift/CountryCityWiseShift";
