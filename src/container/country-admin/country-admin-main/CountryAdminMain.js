@@ -8,8 +8,6 @@ import {
   Button,
   Table,
 } from "../../../components/elements";
-import DatePicker from "react-multi-date-picker";
-import TimePicker from "react-multi-date-picker/plugins/time_picker";
 import { useTranslation } from "react-i18next";
 
 const CountryAdminMain = () => {
@@ -86,9 +84,10 @@ const CountryAdminMain = () => {
       render: (text, record) => (
         <>
           <span className="icon-spaceing-dlt-edit">
+            <i className="icon-text-edit icon-EDT-DLT-color"></i>
             <i className="icon-close icon-EDT-DLT-color"></i>
             <i className="icon-settings icon-EDT-DLT-color"></i>
-            <i className="icon-repeat icon-EDT-DLT-color"></i>
+            <i className="icon-branch icon-EDT-DLT-color"></i>
             <i className="icon-counter icon-EDT-DLT-color"></i>
             <i className="icon-user icon-EDT-DLT-color"></i>
           </span>
@@ -103,7 +102,7 @@ const CountryAdminMain = () => {
         <Row>
           <Col lg={12} md={12} sm={12} className="d-flex justify-content-start">
             <span className="shift-heading">
-              {t("Branch")}
+              {t("City")}
               <span className="shift-sub-heading">
                 {" "}
                 {t("Saudi-arabia-riyadh")}

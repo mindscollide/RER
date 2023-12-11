@@ -53,13 +53,21 @@ const Sidebar = () => {
     } else if (e.key === "11") {
       navigate("CountryMain");
     } else if (e.key === "12") {
-      // navigate("CityBranchShift");
+      navigate("CountryAdminMain");
     } else if (e.key === "13") {
-      // navigate("CityWiseCounter");
+      navigate("ServiceCountryScreen");
     } else if (e.key === "14") {
-      // navigate("EmployeeMain");
+      navigate("CountryCityBranch");
     } else if (e.key === "15") {
-      // navigate("CountryCityWise");
+      navigate("CountryCityWiseShift");
+    } else if (e.key === "16") {
+      navigate("CountryCityWiseCounter");
+    } else if (e.key === "17") {
+      navigate("CountryWiseEmployee");
+    } else if (e.key === "18") {
+      navigate("BranchRoaster");
+    } else if (e.key === "19") {
+      navigate("NationalHoliday");
     } else {
       // Handle other keys or add more conditions as needed
     }
