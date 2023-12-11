@@ -4,6 +4,9 @@ const initialState = {
   supportedLanguage: null,
   supportedLanguageSelected: null,
   admin_ResponseMessage: null,
+  branchesList: null,
+  allCountersOfBranchList: null,
+  addBranchShiftData:null
 };
 
 const adminReducer = (state = initialState, action) => {
@@ -55,6 +58,49 @@ const adminReducer = (state = initialState, action) => {
     case actions.SET_LAST_SELECTED_LANGUAGE_FAIL:
       return {
         ...state,
+        admin_ResponseMessage: action.message,
+      };
+
+    //Get All Shifts Of Branch Api fot(Branch Admin for listing of all branches && Branch Roaster for Shifts drop down)
+    case actions.GET_ALL_SHIFTS_OF_BRANCH_SUCCESS:
+      return {
+        ...state,
+        branchesList: action.response,
+        admin_ResponseMessage: action.message,
+      };
+
+    case actions.GET_ALL_SHIFTS_OF_BRANCH_FAIL:
+      return {
+        ...state,
+        admin_ResponseMessage: action.message,
+      };
+
+    //for ALL COUNTERS OF BRANCH Api fot(CounterMain for listing of all branches && Branch Roaster for Counter drop down)
+    case actions.ALL_COUNTERS_OF_BRANCH_SUCCESS:
+      return {
+        ...state,
+        allCountersOfBranchList: action.response,
+        admin_ResponseMessage: action.message,
+      };
+
+    case actions.ALL_COUNTERS_OF_BRANCH_FAIL:
+      return {
+        ...state,
+        admin_ResponseMessage: action.message,
+      };
+
+    //for ALL COUNTERS OF BRANCH Api fot(CounterMain for listing of all branches && Branch Roaster for Counter drop down)
+    case actions.ADD_BRANCH_SHIFT_SUCCESS:
+      return {
+        ...state,
+        addBranchShiftData: action.response,
+        admin_ResponseMessage: action.message,
+      };
+
+    case actions.ADD_BRANCH_SHIFT_FAIL:
+      return {
+        ...state,
+        addBranchShiftData:null,
         admin_ResponseMessage: action.message,
       };
 

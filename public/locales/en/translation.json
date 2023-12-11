@@ -108,5 +108,7 @@
   "Branch-daily-roaster": "Branch Daily Roaster",
   "National-holiday": "National Holiday",
   "National-holidays-list": "National Holidays List",
-  "Date": "Date"
+  "Date": "Date",
+  "Admin_AdminServiceManager_AddBranchShift_02": "Records Not Inserted",
+  "Admin_AdminServiceManager_AddBranchShift_01": "Record Inserted"
 }

@@ -53,7 +53,8 @@ const Header = ({ isLoginScreen }) => {
         // window.location.reload()
         i18n.changeLanguage(localStorage.getItem("i18nextLng"));
       }, 100);
-      document.body.dir = localStorage.getItem("i18nextLng")==="ar"?"rtl" : "ltr";
+      document.body.dir =
+        localStorage.getItem("i18nextLng") === "ar" ? "rtl" : "ltr";
       moment.locale(localStorage.getItem("i18nextLng"));
     } else {
       let data = { UserID: Number(currentUserID) };
@@ -65,14 +66,25 @@ const Header = ({ isLoginScreen }) => {
 
   useEffect(() => {
     if (localStorage.getItem("i18nextLng") === null) {
-      console.log("i18nextLng head", localStorage.getItem("i18nextLng"));
-      dispatch(getSystemSupportedLanguage(t, i18n, navigate, "login"));
-      setTimeout(() => {
-        i18n.changeLanguage("en");
-      }, 100);
-      localStorage.setItem("i18nextLng", "en");
-      document.body.dir =  "ltr";
-      moment.locale("en");
+      if (location.pathname === "/" || location.pathname === "/Forgot") {
+        console.log("i18nextLng head", localStorage.getItem("i18nextLng"));
+        dispatch(getSystemSupportedLanguage(t, i18n, navigate, "login"));
+        setTimeout(() => {
+          i18n.changeLanguage("en");
+        }, 100);
+        localStorage.setItem("i18nextLng", "en");
+        document.body.dir = "ltr";
+        moment.locale("en");
+      } else {
+        console.log("i18nextLng head", localStorage.getItem("i18nextLng"));
+        dispatch(getSystemSupportedLanguage(t, i18n, navigate, "BranchAdmin"));
+        setTimeout(() => {
+          i18n.changeLanguage("en");
+        }, 100);
+        localStorage.setItem("i18nextLng", "en");
+        document.body.dir = "ltr";
+        moment.locale("en");
+      }
     } else {
       callAPIOnPageLoad();
     }
