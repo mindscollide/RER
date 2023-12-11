@@ -1,38 +1,53 @@
 import React, { useState } from "react";
 import { Row, Col } from "react-bootstrap";
-import "./ServiceCountryScreen.css";
+import "./CityScreen.css";
 import { Paper, Table, Button } from "../../../components/elements";
 import { Switch } from "antd";
 import { useTranslation } from "react-i18next";
+import Select from "react-select";
 
-const ServiceCountryScreen = () => {
+const CityScreen = () => {
   const { t } = useTranslation();
 
   const dataSource = [
     {
       id: 1,
+      Country: <span className="table-inside-text">Saudi</span>,
       shiftName: <span className="table-inside-text">First Registry</span>,
+      City: <span className="table-inside-text">Riyadh</span>,
     },
     {
       id: 2,
-      shiftName: (
-        <span className="table-inside-text">
-          Subsequence Transaction Service Before First Registry
-        </span>
-      ),
+      Country: <span className="table-inside-text">Saudi</span>,
+      shiftName: <span className="table-inside-text">First Registry</span>,
+      City: <span className="table-inside-text">Riyadh</span>,
     },
     {
       id: 3,
+      Country: <span className="table-inside-text">Saudi</span>,
       shiftName: <span className="table-inside-text">Change Ownership</span>,
+      City: <span className="table-inside-text">Riyadh</span>,
     },
   ];
 
   const columns = [
     {
+      title: <span className="table-text">{t("Country")}</span>,
+      dataIndex: "Country",
+      key: "Country",
+      width: "200px",
+    },
+    {
       title: <span className="table-text">{t("Service")}</span>,
       dataIndex: "shiftName",
       key: "shiftName",
-      width: "400px",
+      width: "200px",
+    },
+    {
+      title: <span className="table-text">{t("City")}</span>,
+      dataIndex: "City",
+      key: "City",
+      width: "200px",
     },
     {
       title: <span className="table-text">{t("Branch-availability")}</span>,
@@ -62,11 +77,11 @@ const ServiceCountryScreen = () => {
 
   return (
     <>
-      <section className="SectionBranchService-Admin">
+      <section>
         <Row>
           <Col lg={12} md={12} sm={12} className="d-flex justify-content-start">
             <span className="shift-heading">
-              {t("Service-wise-country-availability")}
+              {t("City-wise-service-availability")}
               <span className="shift-sub-heading">
                 {t("Saudi-arabia-riyadh")}
               </span>
@@ -75,18 +90,31 @@ const ServiceCountryScreen = () => {
         </Row>
         <Row className="mt-3">
           <Col lg={12} md={12} sm={12}>
-            <Paper className="Service-Country-paper">
-              <Row>
-                <Col lg={12} md={12} sm={12} className="btn-col-class">
+            <Paper className="City-Screen-paper">
+              <Row className="mx-auto d-flex align-items-center justify-content-center">
+                <Col lg={4} md={4} sm={12}>
+                  <span className="d-flex flex-column w-100">
+                    <label className="text-labels">{t("Country")}</label>
+                    <Select
+                      isSearchable={true}
+                      className="City-Screen-select"
+                    />
+                  </span>
+                </Col>
+                <Col lg={4} md={4} sm={12}>
+                  <span className="d-flex flex-column w-100">
+                    <label className="text-labels">{t("Service")}</label>
+                    <Select
+                      isSearchable={true}
+                      className="City-Screen-select"
+                    />
+                  </span>
+                </Col>
+                <Col lg={2} md={2} sm={12} className="mt-3">
                   <Button
-                    icon={<i className="icon-save icon-space"></i>}
-                    text={t("Save")}
-                    className="save-btn-Country-City-Wise"
-                  />
-                  <Button
-                    icon={<i className="icon-repeat icon-space"></i>}
-                    text={t("Revert")}
-                    className="revert-btn-Country-City-Wise"
+                    icon={<i className="icon-search city-icon-space"></i>}
+                    text={t("Search")}
+                    className="Search-Icon-Btn"
                   />
                 </Col>
               </Row>
@@ -107,4 +135,4 @@ const ServiceCountryScreen = () => {
   );
 };
 
-export default ServiceCountryScreen;
+export default CityScreen;

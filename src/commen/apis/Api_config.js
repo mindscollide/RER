@@ -64,6 +64,21 @@ const updateBranchServices = {
   RequestMethod: "ServiceManager.UpdateBranchServices",
 };
 
+// for Add Branch Shift
+const updateBranchShift = {
+  RequestMethod: "ServiceManager.UpdateBranchShift",
+};
+
+// for Add Branch Shift
+const deleteBranchShift = {
+  RequestMethod: "ServiceManager.DeleteBranchShift",
+};
+
+// for Add Branch Counter
+const addBranchCounter = {
+  RequestMethod: "ServiceManager.AddBranchCounter",
+};
+
 export {
   token,
   logIn,
@@ -79,4 +94,7 @@ export {
   removeBranchRoasterEntry,
   getBranchServices,
   updateBranchServices,
+  updateBranchShift,
+  deleteBranchShift,
+  addBranchCounter,
 };

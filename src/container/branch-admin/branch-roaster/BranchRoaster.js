@@ -95,7 +95,6 @@ const BranchRoaster = () => {
         </span>
       ),
     },
-
     {
       title: <span className="table-text">{t("Counter")}</span>,
       dataIndex: "branchCounterModel",

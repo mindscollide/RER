@@ -68,6 +68,22 @@ const Sidebar = () => {
       navigate("BranchRoaster");
     } else if (e.key === "19") {
       navigate("NationalHoliday");
+    } else if (e.key === "20") {
+      navigate("CountryWiseCity");
+    } else if (e.key === "21") {
+      navigate("GlobalService");
+    } else if (e.key === "22") {
+      navigate("CounteryMain");
+    } else if (e.key === "23") {
+      navigate("CityScreen");
+    } else if (e.key === "24") {
+      navigate("BranchScreen");
+    } else if (e.key === "25") {
+      navigate("EmployeeScreen");
+    } else if (e.key === "26") {
+      navigate("ShiftScreen");
+    } else if (e.key === "27") {
+      navigate("BranchServiceCounter");
     } else {
       // Handle other keys or add more conditions as needed
     }

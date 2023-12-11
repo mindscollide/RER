@@ -1,11 +1,11 @@
 import React, { useState } from "react";
 import { Row, Col } from "react-bootstrap";
-import "./ServiceCountryScreen.css";
+import "./CountryWiseCity.css";
 import { Paper, Table, Button } from "../../../components/elements";
 import { Switch } from "antd";
 import { useTranslation } from "react-i18next";
 
-const ServiceCountryScreen = () => {
+const CountryWiseCity = () => {
   const { t } = useTranslation();
 
   const dataSource = [
@@ -62,11 +62,11 @@ const ServiceCountryScreen = () => {
 
   return (
     <>
-      <section className="SectionBranchService-Admin">
+      <section>
         <Row>
           <Col lg={12} md={12} sm={12} className="d-flex justify-content-start">
             <span className="shift-heading">
-              {t("Service-wise-country-availability")}
+              {t("City-wise-service-availability")}
               <span className="shift-sub-heading">
                 {t("Saudi-arabia-riyadh")}
               </span>
@@ -75,7 +75,7 @@ const ServiceCountryScreen = () => {
         </Row>
         <Row className="mt-3">
           <Col lg={12} md={12} sm={12}>
-            <Paper className="Service-Country-paper">
+            <Paper className="Country-City-Wise-paper">
               <Row>
                 <Col lg={12} md={12} sm={12} className="btn-col-class">
                   <Button
@@ -107,4 +107,4 @@ const ServiceCountryScreen = () => {
   );
 };
 
-export default ServiceCountryScreen;
+export default CountryWiseCity;

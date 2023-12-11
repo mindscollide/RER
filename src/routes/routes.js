@@ -16,7 +16,7 @@ import {
   EmployeeMain,
   CityBranchShift,
   CityWiseCounter,
-  CountryCityWise,
+  CountryWiseCity,
 } from "../container/city-admin";
 
 import {
@@ -29,7 +29,15 @@ import {
   NationalHoliday,
 } from "../container/country-admin";
 
-import CountryMain from "../container/country-main/CountryMain";
+import {
+  GlobalService,
+  CounteryMain,
+  CityScreen,
+  BranchScreen,
+  EmployeeScreen,
+  ShiftScreen,
+  BranchServiceCounter,
+} from "../container/global-admin";
 
 import {
   CityBranchService,
@@ -44,6 +52,7 @@ import GlobalAdminRoutes from "./Global_Admin_routes";
 export const router = createHashRouter(
   createRoutesFromElements(
     <>
+      {/* Branch Admin Routes Start */}
       <Route path="/" element={<Login />} />
       <Route path="/Forgot" element={<ForgotPassword />} />
       <Route element={<BranchAdminRoutes />}>
@@ -55,21 +64,20 @@ export const router = createHashRouter(
           <Route path="BranchRoaster" element={<BranchRoaster />} />
         </Route>
       </Route>
+      {/* Branch Admin Routes End */}
 
+      {/* City Admin Routes Start */}
       <Route element={<CityAdminRoutes />}>
         <Route exact path="/CityAdmin/" element={<Dashboard />}>
-          <Route path="" element={<Shift />} />
-          <Route path="Shift" element={<Shift />} />
-          <Route path="CounterMain" element={<CounterMain />} />
-          <Route path="BranchService" element={<BranchService />} />
+          <Route path="" element={<CityAdmin />} />
           <Route path="CityAdmin" element={<CityAdmin />} />
-          <Route path="CityBranchService" element={<CityBranchService />} />
+          <Route path="CountryWiseCity" element={<CountryWiseCity />} />
           <Route path="CityBranchShift" element={<CityBranchShift />} />
           <Route path="CityWiseCounter" element={<CityWiseCounter />} />
           <Route path="EmployeeMain" element={<EmployeeMain />} />
-          <Route path="CountryCityWise" element={<CountryCityWise />} />
         </Route>
       </Route>
+      {/* City Admin Routes End */}
 
       {/* Country Admin Routes Start */}
       <Route element={<CountryAdminRoutes />}>
@@ -93,27 +101,25 @@ export const router = createHashRouter(
           <Route path="NationalHoliday" element={<NationalHoliday />} />
         </Route>
       </Route>
-
       {/* Country Admin Routes End */}
 
+      {/* Global Admin Routes Start */}
       <Route element={<GlobalAdminRoutes />}>
         <Route exact path="/GlobalAdmin/" element={<Dashboard />}>
-          <Route path="" element={<Shift />} />
-          <Route path="Shift" element={<Shift />} />
-          <Route path="CounterMain" element={<CounterMain />} />
-          <Route path="BranchService" element={<BranchService />} />
-          <Route path="CityAdmin" element={<CityAdmin />} />
-          <Route path="CityBranchService" element={<CityBranchService />} />
-          <Route path="CityBranchShift" element={<CityBranchShift />} />
-          <Route path="CityWiseCounter" element={<CityWiseCounter />} />
-          <Route path="EmployeeMain" element={<EmployeeMain />} />
-          <Route path="CountryCityWise" element={<CountryCityWise />} />
-          {/* <Route
+          <Route path="" element={<GlobalService />} />
+          <Route path="GlobalService" element={<GlobalService />} />
+          <Route path="CounteryMain" element={<CounteryMain />} />
+          <Route path="CityScreen" element={<CityScreen />} />
+          <Route path="BranchScreen" element={<BranchScreen />} />
+          <Route path="EmployeeScreen" element={<EmployeeScreen />} />
+          <Route path="ShiftScreen" element={<ShiftScreen />} />
+          <Route
             path="BranchServiceCounter"
             element={<BranchServiceCounter />}
-          /> */}
+          />
         </Route>
       </Route>
+      {/* Global Admin Routes Start */}
     </>
   )
 );
