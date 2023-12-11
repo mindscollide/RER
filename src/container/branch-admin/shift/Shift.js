@@ -14,19 +14,26 @@ import { useTranslation } from "react-i18next";
 import {
   addBranchShiftApi,
   addBranchShiftFail,
+  deleteBranchShiftFail,
   getAllShiftsOfBranch,
+  updateBranchShiftApi,
+  updateBranchShiftFail,
 } from "../../../store/actions/Admin_action";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router";
 import {
-  convertUtcToGmt12HourFormat,
+  convertDateforInputUTC,
+  convertToGMT,
+  convertToHHMMSSOnchange,
   formatToHHMMSSUTC,
+  resolutionResultTable,
 } from "../../../commen/functions/Date_time_formatter";
 import { loader_Actions } from "../../../store/actions/Loader_action";
 import { regexOnlyForNumberNCharacters } from "../../../commen/functions/regex";
 import gregorian from "react-date-object/calendars/gregorian";
 import gregorian_en from "react-date-object/locales/gregorian_en";
 import gregorian_ar from "react-date-object/locales/gregorian_ar";
+import DeleteEmployeeModal from "../../modals/delete-employee-modal/DeleteEmplyeeModal";
 
 const BranchAdmin = () => {
   const { t } = useTranslation();
@@ -35,15 +42,24 @@ const BranchAdmin = () => {
   const currentLanguage = localStorage.getItem("i18nextLng");
   const local = currentLanguage === "en" ? "en-US" : "ar-SA";
   const branchesList = useSelector((state) => state.admin.branchesList);
+  const updateBranchShiftData = useSelector(
+    (state) => state.admin.updateBranchShiftData
+  );
   const addBranchShiftData = useSelector(
     (state) => state.admin.addBranchShiftData
   );
+  const deleteBranchShiftID = useSelector(
+    (state) => state.admin.deleteBranchShiftID
+  );
+
   const Loading = useSelector((state) => state.Loader.Loading);
   const [rows, setRows] = useState([]);
   // if its false its means its going to add else its going to update
   const [addUpdateCheckFlag, setAddUpdateCheckFlag] = useState(false);
   const [calendarValue, setCalendarValue] = useState(gregorian);
   const [localValue, setLocalValue] = useState(gregorian_en);
+  const [deleteID, setDeleteID] = useState(null);
+  const [deleteModal, setDeleteModal] = useState(false);
   const [newShift, setNewShift] = useState({
     ShiftNameEnglish: "",
     ShiftNameArabic: "",
@@ -51,7 +67,7 @@ const BranchAdmin = () => {
     ShiftStartTime: "",
     ShiftEndTime: "",
     BranchID: 1,
-    shiftID: 0,
+    ShiftID: 0,
   });
 
   //language UseEffect
@@ -86,7 +102,27 @@ const BranchAdmin = () => {
       dispatch(addBranchShiftFail(""));
       dispatch(loader_Actions(false));
     }
-  }, [addBranchShiftData]);
+    if (updateBranchShiftData !== null) {
+      setRows(
+        rows.map((shift) => {
+          if (shift.shiftID === updateBranchShiftData.shiftID) {
+            return updateBranchShiftData; // Replace with the new data if IDs match
+          }
+          return shift; // Keep the existing shift if IDs don't match
+        })
+      );
+      dispatch(updateBranchShiftFail(""));
+      dispatch(loader_Actions(false));
+    }
+    if (deleteBranchShiftID !== null) {
+      let newdata = rows.filter(
+        (shift) => shift.shiftID !== deleteBranchShiftID
+      );
+      setRows(newdata);
+      dispatch(deleteBranchShiftFail(""));
+      dispatch(loader_Actions(false));
+    }
+  }, [addBranchShiftData, updateBranchShiftData, deleteBranchShiftID]);
 
   const columns = [
     {
@@ -109,7 +145,7 @@ const BranchAdmin = () => {
           record?.shiftStartTime !== null &&
           record?.shiftStartTime !== null
         ) {
-          return convertUtcToGmt12HourFormat(record?.shiftStartTime, local);
+          return convertToGMT(record?.shiftStartTime, local);
         }
       },
     },
@@ -119,7 +155,7 @@ const BranchAdmin = () => {
       key: "shiftEndTime",
       render: (text, record) => {
         if (record?.shiftEndTime !== null && record?.shiftEndTime !== null) {
-          return convertUtcToGmt12HourFormat(record?.shiftEndTime, local);
+          return convertToGMT(record?.shiftEndTime, local);
         }
       },
     },
@@ -144,13 +180,19 @@ const BranchAdmin = () => {
     },
     {
       title: "",
-      dataIndex: "column6",
-      key: "column6",
+      dataIndex: "shiftID",
+      key: "shiftID",
       render: (text, record) => (
         <>
           <span className="icon-spaceing-dlt-edit">
-            <i className="icon-text-edit icon-EDT-DLT-color"></i>
-            <i className="icon-close icon-EDT-DLT-color"></i>
+            <i
+              className="icon-text-edit icon-EDT-DLT-color"
+              onClick={() => handleEdittShift(text, 1)}
+            ></i>
+            <i
+              className="icon-close icon-EDT-DLT-color"
+              onClick={() => handleEdittShift(text, 2)}
+            ></i>
           </span>
         </>
       ),
@@ -197,12 +239,38 @@ const BranchAdmin = () => {
   const handleAddShift = () => {
     try {
       if (addUpdateCheckFlag) {
+        if (
+          newShift.ShiftNameEnglish !== "" &&
+          newShift.ShiftNameArabic !== "" &&
+          newShift.ShiftStartTime !== null &&
+          newShift.ShiftEndTime !== null
+        ) {
+          let Data = {
+            ShiftID: newShift.ShiftID,
+            ShiftNameEnglish: newShift.ShiftNameEnglish,
+            ShiftNameArabic: newShift.ShiftNameArabic,
+            IsShiftActive: newShift.IsShiftActive,
+            ShiftStartTime: formatToHHMMSSUTC(newShift.ShiftStartTime),
+            ShiftEndTime: formatToHHMMSSUTC(newShift.ShiftEndTime),
+            BranchID: 1,
+          };
+          dispatch(
+            updateBranchShiftApi(
+              t,
+              navigate,
+              Loading,
+              Data,
+              setNewShift,
+              setAddUpdateCheckFlag
+            )
+          );
+        }
       } else {
         if (
           newShift.ShiftNameEnglish !== "" &&
           newShift.ShiftNameArabic !== "" &&
-          newShift.ShiftStartTime !== "" &&
-          newShift.ShiftEndTime !== ""
+          newShift.ShiftStartTime !== null &&
+          newShift.ShiftEndTime !== null
         ) {
           let Data = {
             ShiftNameEnglish: newShift.ShiftNameEnglish,
@@ -217,6 +285,7 @@ const BranchAdmin = () => {
       }
     } catch {}
   };
+
   const handleRestShift = () => {
     try {
       if (addUpdateCheckFlag) {
@@ -229,10 +298,38 @@ const BranchAdmin = () => {
         ShiftStartTime: "",
         ShiftEndTime: "",
         BranchID: 1,
-        shiftID: 0,
+        ShiftID: 0,
       });
     } catch {}
   };
+
+  const findShiftById = (id) => {
+    return rows.find((shift) => shift.shiftID === id);
+  };
+
+  const handleEdittShift = (value, flag) => {
+    try {
+      if (flag === 1) {
+        setAddUpdateCheckFlag(true);
+        const foundShift = findShiftById(value);
+        if (foundShift) {
+          setNewShift({
+            ShiftNameEnglish: foundShift.shiftNameEnglish,
+            ShiftNameArabic: foundShift.shiftNameArabic,
+            IsShiftActive: foundShift.isShiftActive,
+            ShiftStartTime: convertDateforInputUTC(foundShift.shiftStartTime),
+            ShiftEndTime: convertDateforInputUTC(foundShift.shiftEndTime),
+            BranchID: 1,
+            ShiftID: foundShift.shiftID,
+          });
+        }
+      } else if (flag === 2) {
+        setDeleteID(value);
+        setDeleteModal(true);
+      }
+    } catch {}
+  };
+  console.log("Admin_AdminServiceManager_DeleteBranchShift_01", deleteModal);
   return (
     <>
       <section>
@@ -334,7 +431,7 @@ const BranchAdmin = () => {
                 <Col lg={12} md={12} sm={12} className="btn-class-branch">
                   <Button
                     icon={<i className="icon-add-circle icon-space"></i>}
-                    text={t("Add")}
+                    text={addUpdateCheckFlag ? t("Update") : t("Add")}
                     className="Add-btn-Branch"
                     onClick={handleAddShift}
                   />
@@ -356,6 +453,12 @@ const BranchAdmin = () => {
           </Col>
         </Row>
       </section>
+      <DeleteEmployeeModal
+        setDeleteModal={setDeleteModal}
+        deleteModal={deleteModal}
+        deleteID={deleteID}
+        route={"BranchAdminShift"}
+      />
     </>
   );
 };
