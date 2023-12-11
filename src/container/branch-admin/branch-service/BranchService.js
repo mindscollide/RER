@@ -143,7 +143,9 @@ const BranchService = () => {
           IsServiceAvailableAtBranch: row.isServiceAvailableAtBranch,
           ServiceSlotDurationMinutes: row.serviceSlotDurationMinutes,
         };
-        return dispatch(UpdateBranchServices(requestData, t, navigate, true));
+        return dispatch(
+          UpdateBranchServices(requestData, t, navigate, Loading)
+        );
       });
       await Promise.all(apiPromises);
       dispatch(GetBranchServices(t, navigate, Loading));

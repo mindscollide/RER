@@ -1058,6 +1058,9 @@ const updateBranchServicesFail = (message) => {
 
 const UpdateBranchServices = (Data, t, navigate, loadingFlag) => {
   return async (dispatch) => {
+    if (!loadingFlag) {
+      dispatch(loader_Actions(true));
+    }
     let form = new FormData();
     form.append("RequestMethod", updateBranchServices.RequestMethod);
     form.append("RequestData", JSON.stringify(Data));
