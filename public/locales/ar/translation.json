@@ -15,7 +15,7 @@
   "Service-wise-reports": "Service Wise Reports",
   "Country-city-wise-counter": "Country City Wise Counter",
   "Shift": "Shift",
-  "Saudi-arabia-riyadh": "Saudi Arabia - Riyadh",
+  "Saudi-arabia-riyadh": "(Saudi Arabia - Riyadh)",
   "Olaya-street-branch": "Olaya Street Branch",
   "Shift-name": "Shift Name",
   "Shift-start-time": "Shift Start Time",
@@ -64,6 +64,7 @@
   "Login": "Login",
   "Recover-password": "Recover Password",
   "Recover": "Recover",
+  "Forgot-password": "Forgot Password",
   "ERM_AuthService_AuthManager_Login_01": "Device does not exist",
   "ERM_AuthService_AuthManager_Login_02": "Device ID does not exist",
   "ERM_AuthService_AuthManager_Login_03": "Successfully Logged In",
@@ -96,5 +97,7 @@
   "Service-wise-country-availability": "Service Wise Country Availability",
   "Home-availability": "Home Availability",
   "City-wise-service-availability": "City Wise Service Availability",
-  "Close": "Close"
+  "Close": "Close",
+  "Admin_AdminServiceManager_AddBranchShift_02": "Records Not Inserted",
+  "Admin_AdminServiceManager_AddBranchShift_01": "Record Inserted"
 }

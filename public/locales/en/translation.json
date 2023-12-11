@@ -97,5 +97,7 @@
   "Service-wise-country-availability": "Service Wise Country Availability",
   "Home-availability": "Home Availability",
   "City-wise-service-availability": "City Wise Service Availability",
-  "Close": "Close"
+  "Close": "Close",
+  "Admin_AdminServiceManager_AddBranchShift_02": "Records Not Inserted",
+  "Admin_AdminServiceManager_AddBranchShift_01": "Record Inserted"
 }
