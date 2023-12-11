@@ -612,12 +612,6 @@ const addBranchShiftApi = (t, navigate, loadingFlag, data, setState) => {
 };
 
 // this is for cleare states
-const RoasterClearingState = () => {
-  return {
-    type: actions.ROASTER_CLEARING_STATE,
-  };
-};
-
 const addBrandRoasterEntrySuccess = (response, message) => {
   return {
     type: actions.ADD_BRANCH_ROASTER_ENTRY_SUCCESS,
@@ -634,8 +628,8 @@ const addBrandRoasterEntryFailed = (message) => {
 };
 
 //API function for Add branch Roaster Entry
-const addBranchRoasterEntryApiFunction = (t, navigate, loadingFlag) => {
-  let data = { BranchID: 1 };
+const addBranchRoasterEntryApiFunction = (data, t, navigate, loadingFlag) => {
+  // let data = { BranchID: 1 };
   return async (dispatch) => {
     if (!loadingFlag) {
       dispatch(loader_Actions(true));
@@ -656,7 +650,7 @@ const addBranchRoasterEntryApiFunction = (t, navigate, loadingFlag) => {
           if (response.data.responseCode === 417) {
             // await dispatch(RefreshToken(navigate, t))
             dispatch(
-              addBranchRoasterEntryApiFunction(t, navigate, loadingFlag)
+              addBranchRoasterEntryApiFunction(data, t, navigate, loadingFlag)
             );
           } else if (response.data.responseResult.isExecuted === true) {
             if (
@@ -670,6 +664,7 @@ const addBranchRoasterEntryApiFunction = (t, navigate, loadingFlag) => {
                 )
               );
               await dispatch(loader_Actions(false));
+              dispatch(getSingleBranchRoasterApiFunction(t, navigate, true));
             } else if (
               response.data.responseResult.responseMessage ===
               "Admin_AdminServiceManager_AddBranchRoasterEntry_02"
@@ -685,7 +680,9 @@ const addBranchRoasterEntryApiFunction = (t, navigate, loadingFlag) => {
               "Admin_AdminServiceManager_AddBranchRoasterEntry_03"
             ) {
               await dispatch(
-                addBrandRoasterEntryFailed(t("something_went_wrong"))
+                addBrandRoasterEntryFailed(
+                  t("Admin_AdminServiceManager_AddBranchRoasterEntry_03")
+                )
               );
               await dispatch(loader_Actions(false));
             } else if (
@@ -693,7 +690,9 @@ const addBranchRoasterEntryApiFunction = (t, navigate, loadingFlag) => {
               "Admin_AdminServiceManager_AddBranchRoasterEntry_04"
             ) {
               await dispatch(
-                addBrandRoasterEntryFailed(t("something_went_wrong"))
+                addBrandRoasterEntryFailed(
+                  t("Admin_AdminServiceManager_AddBranchRoasterEntry_04")
+                )
               );
               await dispatch(loader_Actions(false));
             } else if (
@@ -701,7 +700,9 @@ const addBranchRoasterEntryApiFunction = (t, navigate, loadingFlag) => {
               "Admin_AdminServiceManager_AddBranchRoasterEntry_05"
             ) {
               await dispatch(
-                addBrandRoasterEntryFailed(t("something_went_wrong"))
+                addBrandRoasterEntryFailed(
+                  t("Admin_AdminServiceManager_GetBranchServices_03")
+                )
               );
               await dispatch(loader_Actions(false));
             } else if (
@@ -750,7 +751,7 @@ const getSingleBranchRoasterFailed = (message) => {
 
 //API function for Get Single branch Roaster
 const getSingleBranchRoasterApiFunction = (t, navigate, loadingFlag) => {
-  let data = { BranchID: 1 };
+  let data = { BranchID: 1, RoasterDate: "20231213" };
   return async (dispatch) => {
     if (!loadingFlag) {
       dispatch(loader_Actions(true));
@@ -780,7 +781,7 @@ const getSingleBranchRoasterApiFunction = (t, navigate, loadingFlag) => {
             ) {
               await dispatch(
                 getSingleBranchRoasterSuccess(
-                  response.data.responseResult.counterModelList,
+                  response.data.responseResult.roasterList,
                   t("Admin_AdminServiceManager_GetSingleDayBranchRoaster_01")
                 )
               );
@@ -800,7 +801,9 @@ const getSingleBranchRoasterApiFunction = (t, navigate, loadingFlag) => {
               "Admin_AdminServiceManager_GetSingleDayBranchRoaster_03"
             ) {
               await dispatch(
-                getSingleBranchRoasterFailed(t("something_went_wrong"))
+                getSingleBranchRoasterFailed(
+                  t("Admin_AdminServiceManager_GetBranchServices_03")
+                )
               );
               await dispatch(loader_Actions(false));
             } else if (
@@ -901,7 +904,9 @@ const removingBranchEntryRoasterApiFunction = (t, navigate, loadingFlag) => {
               "Admin_AdminServiceManager_RemoveBranchRoasterEntry_03"
             ) {
               await dispatch(
-                removeBranchEntryRoasterFailed(t("something_went_wrong"))
+                removeBranchEntryRoasterFailed(
+                  t("Admin_AdminServiceManager_RemoveBranchRoasterEntry_03")
+                )
               );
               await dispatch(loader_Actions(false));
             } else if (
@@ -909,7 +914,9 @@ const removingBranchEntryRoasterApiFunction = (t, navigate, loadingFlag) => {
               "Admin_AdminServiceManager_RemoveBranchRoasterEntry_04"
             ) {
               await dispatch(
-                removeBranchEntryRoasterFailed(t("something_went_wrong"))
+                removeBranchEntryRoasterFailed(
+                  t("Admin_AdminServiceManager_RemoveBranchRoasterEntry_04")
+                )
               );
               await dispatch(loader_Actions(false));
             } else if (
@@ -1144,7 +1151,6 @@ export {
   getAllCountersOfBranch,
   addBranchShiftApi,
   addBranchShiftFail,
-  RoasterClearingState,
   addBranchRoasterEntryApiFunction,
   getSingleBranchRoasterApiFunction,
   removingBranchEntryRoasterApiFunction,

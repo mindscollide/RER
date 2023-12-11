@@ -115,5 +115,18 @@
   "Admin_AdminServiceManager_GetBranchServices_02": "Branch Services Record Not Found",
   "Admin_AdminServiceManager_GetBranchServices_03": "Branch Not Found",
   "Admin_AdminServiceManager_UpdateBranchServices_01": "Branch Service Record Updated",
-  "Admin_AdminServiceManager_UpdateBranchServices_02": "Branch Services Record Not Updated"
+  "Admin_AdminServiceManager_UpdateBranchServices_02": "Branch Services Record Not Updated",
+
+  "Admin_AdminServiceManager_AddBranchRoasterEntry_01": "Branch Roaster Added for Date",
+  "Admin_AdminServiceManager_AddBranchRoasterEntry_02": "Branch Service Not Found",
+  "Admin_AdminServiceManager_AddBranchRoasterEntry_03": "Branch Counter Not Found",
+  "Admin_AdminServiceManager_AddBranchRoasterEntry_04": "Branch Shift Not Found",
+
+  "Admin_AdminServiceManager_GetSingleDayBranchRoaster_01": "Branch Roaster for Date Found",
+  "Admin_AdminServiceManager_GetSingleDayBranchRoaster_02": "Branch Roaster for Date Not Found",
+
+  "Admin_AdminServiceManager_RemoveBranchRoasterEntry_01": "Roaster Entry Deleted Successfully",
+  "Admin_AdminServiceManager_RemoveBranchRoasterEntry_02": "Roaster Entry Not Found",
+  "Admin_AdminServiceManager_RemoveBranchRoasterEntry_03": "Date of Roaster Entry Not Found",
+  "Admin_AdminServiceManager_RemoveBranchRoasterEntry_04": "Branch for Roaster Entry Not Found"
 }
