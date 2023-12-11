@@ -124,5 +124,11 @@
   "Employee-screen": "Employee Screen",
   "Shift-screen": "Shift Screen",
   "Branch-service-counter": "Counter Screen",
-  "Country-name": "Country Name"
+  "Country-name": "Country Name",
+  "Update": "Update",
+  "Admin_AdminServiceManager_UpdateBranchShift_01": "Shift Details Updated",
+  "Admin_AdminServiceManager_UpdateBranchShift_02": "Shift Details Not Found",
+  "Admin_AdminServiceManager_UpdateBranchShift_03": "Branch Not Found",
+  "Admin_AdminServiceManager_DeleteBranchShift_01": "Shift Deleted Successfully",
+  "Admin_AdminServiceManager_DeleteBranchShift_02": "Shift Not Found"
 }
