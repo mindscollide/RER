@@ -6,7 +6,9 @@ const initialState = {
   admin_ResponseMessage: null,
   branchesList: null,
   allCountersOfBranchList: null,
-  addBranchShiftData:null
+  addBranchShiftData: null,
+  branchServicesData: null,
+  branchServicesUpdatedData: null,
 };
 
 const adminReducer = (state = initialState, action) => {
@@ -100,7 +102,37 @@ const adminReducer = (state = initialState, action) => {
     case actions.ADD_BRANCH_SHIFT_FAIL:
       return {
         ...state,
-        addBranchShiftData:null,
+        addBranchShiftData: null,
+        admin_ResponseMessage: action.message,
+      };
+
+    //Get Branch Services Reducers
+    case actions.GET_ALL_BRANCH_SERVICES_SUCCESS:
+      return {
+        ...state,
+        branchServicesData: action.response,
+        admin_ResponseMessage: action.message,
+      };
+
+    case actions.GET_ALL_BRANCH_SERVICES_FAIL:
+      return {
+        ...state,
+        branchServicesData: null,
+        admin_ResponseMessage: action.message,
+      };
+
+    //Update Branch Services Reducers
+    case actions.UPDATE_BRANCH_SERVICES_SUCCESS:
+      return {
+        ...state,
+        branchServicesUpdatedData: action.response,
+        admin_ResponseMessage: action.message,
+      };
+
+    case actions.UPDATE_BRANCH_SERVICES_FAIL:
+      return {
+        ...state,
+        branchServicesUpdatedData: null,
         admin_ResponseMessage: action.message,
       };
 

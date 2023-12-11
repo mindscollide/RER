@@ -110,5 +110,10 @@
   "National-holidays-list": "National Holidays List",
   "Date": "Date",
   "Admin_AdminServiceManager_AddBranchShift_02": "Records Not Inserted",
-  "Admin_AdminServiceManager_AddBranchShift_01": "Record Inserted"
+  "Admin_AdminServiceManager_AddBranchShift_01": "Record Inserted",
+  "Admin_AdminServiceManager_GetBranchServices_01": "Branch Services Record Found",
+  "Admin_AdminServiceManager_GetBranchServices_02": "Branch Services Record Not Found",
+  "Admin_AdminServiceManager_GetBranchServices_03": "Branch Not Found",
+  "Admin_AdminServiceManager_UpdateBranchServices_01": "Branch Service Record Updated",
+  "Admin_AdminServiceManager_UpdateBranchServices_02": "Branch Services Record Not Updated"
 }

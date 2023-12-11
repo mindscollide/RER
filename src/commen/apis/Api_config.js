@@ -40,6 +40,16 @@ const addBranchShift = {
   RequestMethod: "ServiceManager.AddBranchShift",
 };
 
+// for Get Branch Services
+const getBranchServices = {
+  RequestMethod: "ServiceManager.GetBranchServices",
+};
+
+// for Update Branch Services
+const updateBranchServices = {
+  RequestMethod: "ServiceManager.UpdateBranchServices",
+};
+
 export {
   token,
   logIn,
@@ -49,5 +59,7 @@ export {
   updateLastSelectedLanguage,
   allShiftsOfBranch,
   allCountersOfBranch,
-  addBranchShift
+  addBranchShift,
+  getBranchServices,
+  updateBranchServices,
 };
