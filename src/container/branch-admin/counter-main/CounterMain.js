@@ -10,23 +10,37 @@ import {
   Loader,
 } from "../../../components/elements";
 import { useTranslation } from "react-i18next";
-import { getAllCountersOfBranch } from "../../../store/actions/Admin_action";
+import {
+  addBranchCounterApi,
+  addBranchCountertFail,
+  getAllCountersOfBranch,
+} from "../../../store/actions/Admin_action";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router";
+import { loader_Actions } from "../../../store/actions/Loader_action";
+import { regexOnlyForNumberNCharacters } from "../../../commen/functions/regex";
 
 const CounterMain = () => {
-  const [isCheckboxSelected, setIsCheckboxSelected] = useState(false);
   const { t } = useTranslation();
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const lang = localStorage.getItem("i18nextLng");
-  const local = lang === "en" ? "en-US" : "ar-SA";
   const allCountersOfBranchList = useSelector(
     (state) => state.admin.allCountersOfBranchList
   );
+  const addBranchCounterData = useSelector(
+    (state) => state.admin.addBranchCounterData
+  );
   const Loading = useSelector((state) => state.Loader.Loading);
   const [rows, setRows] = useState([]);
-
+  const [addUpdateCheckFlag, setAddUpdateCheckFlag] = useState(false);
+  const [newCounter, setNewCounter] = useState({
+    CounterNameEnglish: "",
+    CounterNameArabic: "",
+    IsCounterActive: false,
+    BranchID: 1,
+    CounterID: 0,
+  });
   useEffect(() => {
     dispatch(getAllCountersOfBranch(t, navigate, Loading));
   }, []);
@@ -37,11 +51,15 @@ const CounterMain = () => {
     }
   }, [allCountersOfBranchList]);
 
-  const handleCheckboxChange = (e) => {
-    setIsCheckboxSelected(e.target.checked);
-  };
-
-
+  useEffect(() => {
+    if (addBranchCounterData !== null) {
+      let prevData = [...rows];
+      prevData.push(addBranchCounterData);
+      setRows(prevData);
+      dispatch(addBranchCountertFail(""));
+      dispatch(loader_Actions(false));
+    }
+  }, [addBranchCounterData]);
 
   const columns = [
     {
@@ -89,6 +107,61 @@ const CounterMain = () => {
     },
   ];
 
+  const handleChange = (e) => {
+    try {
+      let name = e.target.name;
+      let value = e.target.value;
+      let checked = e.target.checked;
+      if (name === "CounterNameEnglish") {
+        setNewCounter({
+          ...newCounter,
+          ["CounterNameEnglish"]: regexOnlyForNumberNCharacters(value),
+        });
+      } else if (name === "CounterNameArabic") {
+        setNewCounter({
+          ...newCounter,
+          ["CounterNameArabic"]: regexOnlyForNumberNCharacters(value),
+        });
+      } else {
+        setNewCounter({ ...newCounter, ["IsCounterActive"]: checked });
+      }
+    } catch {}
+  };
+
+  const handleAddCounter = () => {
+    try {
+      if (addUpdateCheckFlag) {
+      } else {
+        if (
+          newCounter.CounterNameEnglish !== "" &&
+          newCounter.CounterNameArabic !== "" 
+        ) {
+          let Data = {
+            CounterNameEnglish: newCounter.CounterNameEnglish,
+            CounterNameArabic: newCounter.CounterNameArabic,
+            IsCounterActive: newCounter.IsCounterActive,
+            BranchID: 1,
+          };
+          dispatch(addBranchCounterApi(t, navigate, Loading, Data, setNewCounter));
+        }
+      }
+    } catch {}
+  };
+  const handleRestCounter = () => {
+    try {
+      if (addUpdateCheckFlag) {
+        setAddUpdateCheckFlag(false);
+      }
+      setNewCounter({
+        CounterNameEnglish: "",
+        CounterNameArabic: "",
+        IsCounterActive: false,
+        BranchID: 1,
+        CounterID: 0,
+      });
+    } catch {}
+  };
+
   return (
     <>
       <section>
@@ -113,22 +186,26 @@ const CounterMain = () => {
             <Paper className="Counter-Admin-paper">
               <Row>
                 <Col lg={6} md={6} sm={6}>
-                  <span className="text-labels">{t("Shift-name")}</span>
+                  <span className="text-labels">{t("Counter-name")}</span>
                   <TextField
-                    name="Shift"
-                    placeholder={t("Shift-name")}
+                    name="CounterNameEnglish"
+                    placeholder={t("Counter-name")}
                     labelClass="d-none"
                     className="text-fiels-counterMain"
+                    value={newCounter.CounterNameEnglish}
+                    onChange={handleChange}
                   />
                 </Col>
 
                 <Col lg={6} md={6} sm={6}>
-                  <span className="text-labels">{t("Shift-name")}</span>
+                  <span className="text-labels">{t("Counter-name")}</span>
                   <TextField
-                    name="Shift"
-                    placeholder={t("Shift-name")}
+                    name="CounterNameArabic"
+                    placeholder={t("Counter-name")}
                     labelClass="d-none"
                     className="text-fiels-counterMain"
+                    value={newCounter.CounterNameArabic}
+                    onChange={handleChange}
                   />
                 </Col>
               </Row>
@@ -136,8 +213,8 @@ const CounterMain = () => {
               <Row className="mt-3">
                 <Col lg={6} md={6} sm={6} className="mt-2">
                   <Checkbox
-                    checked={isCheckboxSelected}
-                    onChange={handleCheckboxChange}
+                    checked={newCounter.IsCounterActive}
+                    onChange={handleChange}
                     classNameDiv="Counter-checkbox"
                     label={
                       <span className="checkbox-label">{t("Active")}</span>
@@ -150,11 +227,13 @@ const CounterMain = () => {
                     icon={<i className="icon-add-circle icon-space"></i>}
                     text={t("Add")}
                     className="Add-btn-Counter"
+                    onClick={handleAddCounter}
                   />
                   <Button
                     icon={<i className="icon-refresh icon-space"></i>}
                     text={t("Reset")}
                     className="Reset-btn-Branch"
+                    onClick={handleRestCounter}
                   />
                 </Col>
               </Row>
@@ -164,7 +243,6 @@ const CounterMain = () => {
                     rows={rows}
                     column={columns}
                     pagination={false}
-                    // className="table-text"
                   />
                 </Col>
               </Row>
