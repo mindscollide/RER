@@ -54,6 +54,15 @@ const getSingleDayBranchRoaster = {
 const removeBranchRoasterEntry = {
   RequestMethod: "ServiceManager.RemoveBranchRoasterEntry",
 };
+// for Get Branch Services
+const getBranchServices = {
+  RequestMethod: "ServiceManager.GetBranchServices",
+};
+
+// for Update Branch Services
+const updateBranchServices = {
+  RequestMethod: "ServiceManager.UpdateBranchServices",
+};
 
 export {
   token,
@@ -68,4 +77,6 @@ export {
   addBranchRoasterEntry,
   getSingleDayBranchRoaster,
   removeBranchRoasterEntry,
+  getBranchServices,
+  updateBranchServices,
 };

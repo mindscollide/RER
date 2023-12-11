@@ -12,6 +12,8 @@ import {
   systemSupportedLanguage,
   token,
   updateLastSelectedLanguage,
+  getBranchServices,
+  updateBranchServices,
 } from "../../commen/apis/Api_config";
 import { adminURL } from "../../commen/apis/Api_ends_points";
 import moment from "moment";
@@ -942,6 +944,194 @@ const removingBranchEntryRoasterApiFunction = (t, navigate, loadingFlag) => {
       });
   };
 };
+
+//Get Branch Services
+const getBranchServicesSuccess = (response, message) => {
+  return {
+    type: actions.GET_ALL_BRANCH_SERVICES_SUCCESS,
+    response: response,
+    message: message,
+  };
+};
+
+const getBranchServicesFail = (message) => {
+  return {
+    type: actions.GET_ALL_BRANCH_SERVICES_FAIL,
+    message: message,
+  };
+};
+
+const GetBranchServices = (t, navigate, loadingFlag) => {
+  let data = { BranchID: 1 };
+  return async (dispatch) => {
+    if (!loadingFlag) {
+      dispatch(loader_Actions(true));
+    }
+    let form = new FormData();
+    form.append("RequestMethod", getBranchServices.RequestMethod);
+    form.append("RequestData", JSON.stringify(data));
+    await axios({
+      method: "post",
+      url: adminURL,
+      data: form,
+      headers: {
+        _token: token,
+      },
+    })
+      .then(async (response) => {
+        if (response.data.responseCode === 200) {
+          if (response.data.responseCode === 417) {
+            // await dispatch(RefreshToken(navigate, t))
+            dispatch(GetBranchServices(t, navigate, loadingFlag));
+          } else if (response.data.responseResult.isExecuted === true) {
+            if (
+              response.data.responseResult.responseMessage ===
+              "Admin_AdminServiceManager_GetBranchServices_01"
+            ) {
+              await dispatch(
+                getBranchServicesSuccess(
+                  response.data.responseResult.branchServiceModelList,
+                  t("Admin_AdminServiceManager_GetBranchServices_01")
+                )
+              );
+              await dispatch(loader_Actions(false));
+            } else if (
+              response.data.responseResult.responseMessage ===
+              "Admin_AdminServiceManager_GetBranchServices_02"
+            ) {
+              await dispatch(
+                getBranchServicesFail(
+                  t("Admin_AdminServiceManager_GetBranchServices_02")
+                )
+              );
+              await dispatch(loader_Actions(false));
+            } else if (
+              response.data.responseResult.responseMessage ===
+              "Admin_AdminServiceManager_GetBranchServices_03"
+            ) {
+              await dispatch(
+                getBranchServicesFail(
+                  t("Admin_AdminServiceManager_GetBranchServices_03")
+                )
+              );
+              await dispatch(loader_Actions(false));
+            } else if (
+              response.data.responseResult.responseMessage ===
+              "Admin_AdminServiceManager_GetBranchServices_04"
+            ) {
+              await dispatch(getBranchServicesFail(t("something_went_wrong")));
+              await dispatch(loader_Actions(false));
+            } else {
+              dispatch(getLastSelectedLanguageFail(t("something_went_wrong")));
+            }
+          } else {
+            await dispatch(getBranchServicesFail(t("something_went_wrong")));
+            await dispatch(loader_Actions(false));
+          }
+        } else {
+          await dispatch(getBranchServicesFail(t("something_went_wrong")));
+          await dispatch(loader_Actions(false));
+        }
+      })
+      .catch((response) => {
+        dispatch(getLastSelectedLanguageFail(t("something_went_wrong")));
+        dispatch(loader_Actions(false));
+      });
+  };
+};
+
+//Update Branch Services
+const updateBranchServicesSuccess = (response, message) => {
+  return {
+    type: actions.UPDATE_BRANCH_SERVICES_SUCCESS,
+    response: response,
+    message: message,
+  };
+};
+
+const updateBranchServicesFail = (message) => {
+  return {
+    type: actions.UPDATE_BRANCH_SERVICES_FAIL,
+    message: message,
+  };
+};
+
+const UpdateBranchServices = (Data, t, navigate, loadingFlag) => {
+  return async (dispatch) => {
+    let form = new FormData();
+    form.append("RequestMethod", updateBranchServices.RequestMethod);
+    form.append("RequestData", JSON.stringify(Data));
+    await axios({
+      method: "post",
+      url: adminURL,
+      data: form,
+      headers: {
+        _token: token,
+      },
+    })
+      .then(async (response) => {
+        if (response.data.responseCode === 200) {
+          if (response.data.responseCode === 417) {
+            dispatch(UpdateBranchServices(Data, t, navigate, loadingFlag));
+          } else if (response.data.responseResult.isExecuted === true) {
+            if (
+              response.data.responseResult.responseMessage ===
+              "Admin_AdminServiceManager_UpdateBranchServices_01"
+            ) {
+              await dispatch(
+                updateBranchServicesSuccess(
+                  response.data.responseResult.branchServiceModelList,
+                  t("Admin_AdminServiceManager_UpdateBranchServices_01")
+                )
+              );
+              // await dispatch(loader_Actions(false));
+            } else if (
+              response.data.responseResult.responseMessage ===
+              "Admin_AdminServiceManager_UpdateBranchServices_02"
+            ) {
+              await dispatch(
+                updateBranchServicesFail(
+                  t("Admin_AdminServiceManager_UpdateBranchServices_02")
+                )
+              );
+              // await dispatch(loader_Actions(false));
+            } else if (
+              response.data.responseResult.responseMessage ===
+              "Admin_AdminServiceManager_UpdateBranchServices_03"
+            ) {
+              await dispatch(
+                updateBranchServicesFail(
+                  t("Admin_AdminServiceManager_GetBranchServices_03")
+                )
+              );
+              // await dispatch(loader_Actions(false));
+            } else if (
+              response.data.responseResult.responseMessage ===
+              "Admin_AdminServiceManager_GetBranchServices_04"
+            ) {
+              await dispatch(
+                updateBranchServicesFail(t("something_went_wrong"))
+              );
+              // await dispatch(loader_Actions(false));
+            } else {
+              dispatch(getLastSelectedLanguageFail(t("something_went_wrong")));
+            }
+          } else {
+            await dispatch(updateBranchServicesFail(t("something_went_wrong")));
+            // await dispatch(loader_Actions(false));
+          }
+        } else {
+          await dispatch(updateBranchServicesFail(t("something_went_wrong")));
+          // await dispatch(loader_Actions(false));
+        }
+      })
+      .catch((response) => {
+        dispatch(updateBranchServicesFail(t("something_went_wrong")));
+        // dispatch(loader_Actions(false));
+      });
+  };
+};
+
 export {
   AdminCleareState,
   getSystemSupportedLanguage,
@@ -955,4 +1145,6 @@ export {
   addBranchRoasterEntryApiFunction,
   getSingleBranchRoasterApiFunction,
   removingBranchEntryRoasterApiFunction,
+  GetBranchServices,
+  UpdateBranchServices,
 };

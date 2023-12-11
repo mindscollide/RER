@@ -10,6 +10,8 @@ const initialState = {
   roasterList: [],
   singleDayRoaster: [],
   removeRoasterEntryBranch: [],
+  branchServicesData: null,
+  branchServicesUpdatedData: null,
 };
 
 const adminReducer = (state = initialState, action) => {
@@ -146,6 +148,35 @@ const adminReducer = (state = initialState, action) => {
       return {
         ...state,
         removeRoasterEntryBranch: [],
+        admin_ResponseMessage: action.message,
+      };
+    //Get Branch Services Reducers
+    case actions.GET_ALL_BRANCH_SERVICES_SUCCESS:
+      return {
+        ...state,
+        branchServicesData: action.response,
+        admin_ResponseMessage: action.message,
+      };
+
+    case actions.GET_ALL_BRANCH_SERVICES_FAIL:
+      return {
+        ...state,
+        branchServicesData: null,
+        admin_ResponseMessage: action.message,
+      };
+
+    //Update Branch Services Reducers
+    case actions.UPDATE_BRANCH_SERVICES_SUCCESS:
+      return {
+        ...state,
+        branchServicesUpdatedData: action.response,
+        admin_ResponseMessage: action.message,
+      };
+
+    case actions.UPDATE_BRANCH_SERVICES_FAIL:
+      return {
+        ...state,
+        branchServicesUpdatedData: null,
         admin_ResponseMessage: action.message,
       };
 
