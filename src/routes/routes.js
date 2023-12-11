@@ -8,7 +8,7 @@ import {
   Shift,
   BranchService,
   CounterMain,
-  // BranchServiceCounter,
+  BranchRoaster,
 } from "../container/branch-admin";
 
 import {
@@ -20,11 +20,13 @@ import {
 } from "../container/city-admin";
 
 import {
-  CityCountry,
   CountryAdminMain,
   ServiceCountryScreen,
   CountryCityBranch,
   CountryCityWiseShift,
+  CountryCityWiseCounter,
+  CountryWiseEmployee,
+  NationalHoliday,
 } from "../container/country-admin";
 
 import CountryMain from "../container/country-main/CountryMain";
@@ -50,6 +52,7 @@ export const router = createHashRouter(
           <Route path="Shift" element={<Shift />} />
           <Route path="CounterMain" element={<CounterMain />} />
           <Route path="BranchService" element={<BranchService />} />
+          <Route path="BranchRoaster" element={<BranchRoaster />} />
         </Route>
       </Route>
 
@@ -65,10 +68,6 @@ export const router = createHashRouter(
           <Route path="CityWiseCounter" element={<CityWiseCounter />} />
           <Route path="EmployeeMain" element={<EmployeeMain />} />
           <Route path="CountryCityWise" element={<CountryCityWise />} />
-          {/* <Route
-            path="BranchServiceCounter"
-            element={<BranchServiceCounter />}
-          /> */}
         </Route>
       </Route>
 
@@ -86,10 +85,12 @@ export const router = createHashRouter(
             path="CountryCityWiseShift"
             element={<CountryCityWiseShift />}
           />
-          {/* <Route
-            path="BranchServiceCounter"
-            element={<BranchServiceCounter />}
-          /> */}
+          <Route
+            path="CountryCityWiseCounter"
+            element={<CountryCityWiseCounter />}
+          />
+          <Route path="CountryWiseEmployee" element={<CountryWiseEmployee />} />
+          <Route path="NationalHoliday" element={<NationalHoliday />} />
         </Route>
       </Route>
 

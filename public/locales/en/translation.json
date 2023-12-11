@@ -97,5 +97,16 @@
   "Service-wise-country-availability": "Service Wise Country Availability",
   "Home-availability": "Home Availability",
   "City-wise-service-availability": "City Wise Service Availability",
-  "Close": "Close"
+  "Close": "Close",
+  "Service-country-screen": "Service Country Screen",
+  "Country-city-wise-branch": "Country City Wise Branch",
+  "Country-city-branch-wise-shift": "Country City Branch Wise Shift",
+  "Capacity": "Capacity",
+  "Enabled": "Enabled",
+  "Country-city-wise-employees": "Country City Wise Employees",
+  "Branch-roaster": "Branch Roaster",
+  "Branch-daily-roaster": "Branch Daily Roaster",
+  "National-holiday": "National Holiday",
+  "National-holidays-list": "National Holidays List",
+  "Date": "Date"
 }
