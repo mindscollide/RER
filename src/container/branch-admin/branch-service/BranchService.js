@@ -1,71 +1,167 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Row, Col } from "react-bootstrap";
+import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router";
 import "./BranchService.css";
 import { Paper, TextField, Button, Table } from "../../../components/elements";
 import { Switch } from "antd";
 import { useTranslation } from "react-i18next";
+import {
+  GetBranchServices,
+  UpdateBranchServices,
+} from "../../../store/actions/Admin_action";
 
 const BranchService = () => {
   const { t } = useTranslation();
 
-  const dataSource = [
-    {
-      id: 1,
-      shiftName: <span className="table-inside-text">First Registry</span>,
-    },
-    {
-      id: 2,
-      shiftName: (
-        <span className="table-inside-text">
-          Subsequence Transaction Service Before First Registry
-        </span>
-      ),
-    },
-    {
-      id: 3,
-      shiftName: <span className="table-inside-text">Change Ownership</span>,
-    },
-  ];
+  const currentLanguage = localStorage.getItem("i18nextLng");
+
+  // const { adminReducer } = useSelector((state) => state);
+
+  const Loading = useSelector((state) => state.Loader.Loading);
+
+  const branchServicesData = useSelector(
+    (state) => state.admin.branchServicesData
+  );
+
+  const navigate = useNavigate();
+
+  const dispatch = useDispatch();
+
+  const [branchServices, setBranchServices] = useState([]);
+
+  const [initialBranchServicesData, setInitialBranchServicesData] = useState(
+    []
+  );
+
+  useEffect(() => {
+    dispatch(GetBranchServices(t, navigate, Loading));
+  }, []);
+
+  useEffect(() => {
+    if (branchServicesData !== undefined && branchServicesData !== null) {
+      setBranchServices(branchServicesData);
+      setInitialBranchServicesData(branchServicesData);
+    }
+  }, [branchServicesData]);
+
+  const handleSwitchChange = (checked, rowIndex) => {
+    setBranchServices((prevServices) => {
+      return prevServices.map((service, index) => {
+        if (index === rowIndex) {
+          return {
+            ...service,
+            isServiceAvailableAtBranch: checked,
+          };
+        }
+        return service;
+      });
+    });
+  };
+
+  const handleTextFieldChange = (value, rowIndex) => {
+    setBranchServices((prevServices) => {
+      return prevServices.map((service, index) => {
+        if (index === rowIndex) {
+          return {
+            ...service,
+            serviceSlotDurationMinutes: Number(value),
+          };
+        }
+        return service;
+      });
+    });
+  };
 
   const columns = [
     {
       title: <span className="table-text">{t("Service")}</span>,
-      dataIndex: "shiftName",
-      key: "shiftName",
+      dataIndex: "branchService",
+      key: "branchService",
       width: "400px",
+      render: (text, record) => (
+        <span className="table-inside-text">
+          {currentLanguage === "en"
+            ? record.branchService.serviceNameEnglish
+            : record.branchService.serviceNameArabic}
+        </span>
+      ),
     },
 
     {
       title: <span className="table-text">{t("Branch-availability")}</span>,
-      dataIndex: "active",
-      key: "active",
+      dataIndex: "isServiceAvailableAtBranch",
+      key: "isServiceAvailableAtBranch",
       width: "200px",
       align: "center",
-      render: (text, record) => (
-        <span>
-          <Switch />
-        </span>
+      render: (text, record, rowIndex) => (
+        <Switch
+          checked={text}
+          onChange={(checked) => handleSwitchChange(checked, rowIndex)}
+        />
       ),
     },
     {
       title: <span className="table-text">{t("Service-slot-minutes")}</span>,
-      dataIndex: "column6",
-      key: "column6",
+      dataIndex: "serviceSlotDurationMinutes",
+      key: "serviceSlotDurationMinutes",
       width: "200px",
       align: "center",
-      render: (text, record) => (
+      render: (text, record, rowIndex) => (
         <>
           <span className="For-table-textfield">
             <TextField
-              type={"number"}
               labelClass="d-none"
               className="for-inside-table-textfiel"
+              value={text}
+              onChange={(e) => {
+                const inputValue = e.target.value;
+                const numericInput = inputValue.replace(/[^0-9]/g, "");
+                handleTextFieldChange(numericInput, rowIndex);
+              }}
             />
           </span>
         </>
       ),
     },
   ];
+
+  const revertButton = () => {
+    console.log("Initial Data:", initialBranchServicesData);
+    setBranchServices(initialBranchServicesData);
+    console.log("Updated Data:", branchServices);
+  };
+
+  const saveBranchServices = async (data) => {
+    const branchID = 1; // Hard-coded value
+
+    try {
+      const apiPromises = data.map(async (row) => {
+        const requestData = {
+          BranchID: branchID,
+          BranchServiceID: row.branchService.serviceID,
+          IsServiceAvailableAtBranch: row.isServiceAvailableAtBranch,
+          ServiceSlotDurationMinutes: row.serviceSlotDurationMinutes,
+        };
+        return dispatch(
+          UpdateBranchServices(requestData, t, navigate, Loading)
+        );
+      });
+      await Promise.all(apiPromises);
+      dispatch(GetBranchServices(t, navigate, Loading));
+    } catch (error) {
+      console.error("Error in API calls", error);
+    }
+  };
+
+  console.log("branchServicesDatabranchServicesData", branchServicesData);
+
+  console.log("branchServicesDatabranchServicesData", branchServices);
+
+  console.log(
+    "branchServicesDatabranchServicesData",
+    initialBranchServicesData
+  );
 
   return (
     <>
@@ -95,18 +191,20 @@ const BranchService = () => {
                     icon={<i className="icon-save icon-space"></i>}
                     text={t("Save")}
                     className="save-btn-BranchService"
+                    onClick={() => saveBranchServices(branchServices)}
                   />
                   <Button
                     icon={<i className="icon-repeat icon-space"></i>}
                     text={t("Revert")}
                     className="revert-btn-BranchService"
+                    onClick={revertButton}
                   />
                 </Col>
               </Row>
               <Row className="mt-2">
                 <Col lg={12} md={12} sm={12}>
                   <Table
-                    rows={dataSource}
+                    rows={branchServices}
                     column={columns}
                     pagination={false}
                   />

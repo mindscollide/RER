@@ -40,6 +40,30 @@ const addBranchShift = {
   RequestMethod: "ServiceManager.AddBranchShift",
 };
 
+// for Add Branch Roaster Entry
+const addBranchRoasterEntry = {
+  RequestMethod: "ServiceManager.AddBranchRoasterEntry",
+};
+
+//for getting Single Day  Branch Entry
+
+const getSingleDayBranchRoaster = {
+  RequestMethod: "ServiceManager.GetSingleDayBranchRoaster",
+};
+
+const removeBranchRoasterEntry = {
+  RequestMethod: "ServiceManager.RemoveBranchRoasterEntry",
+};
+// for Get Branch Services
+const getBranchServices = {
+  RequestMethod: "ServiceManager.GetBranchServices",
+};
+
+// for Update Branch Services
+const updateBranchServices = {
+  RequestMethod: "ServiceManager.UpdateBranchServices",
+};
+
 // for Add Branch Shift
 const updateBranchShift = {
   RequestMethod: "ServiceManager.UpdateBranchShift",
@@ -65,6 +89,11 @@ export {
   allShiftsOfBranch,
   allCountersOfBranch,
   addBranchShift,
+  addBranchRoasterEntry,
+  getSingleDayBranchRoaster,
+  removeBranchRoasterEntry,
+  getBranchServices,
+  updateBranchServices,
   updateBranchShift,
   deleteBranchShift,
   addBranchCounter,
