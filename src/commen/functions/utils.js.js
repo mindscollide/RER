@@ -15,9 +15,13 @@ export function generateMenuItems(roleID, t) {
       "sub1",
       <i className="icon-settings side-bar-icons"></i>,
       [
-        getItem(t("Shift"), "2"),
-        getItem(t("Counter-admin"), "3"),
-        getItem(t("Branch-service"), "4"),
+        getItem(t("Global-service"), "21"),
+        getItem(t("Countery-main"), "22"),
+        getItem(t("City-screen"), "23"),
+        getItem(t("Branch-screen"), "24"),
+        getItem(t("Employee-screen"), "25"),
+        getItem(t("Shift-screen"), "26"),
+        getItem(t("Branch-service-counter"), "27"),
       ],
       "menu-item-sub"
     ),
@@ -72,12 +76,10 @@ export function generateMenuItems(roleID, t) {
       <i className="icon-settings side-bar-icons"></i>,
       [
         getItem(t("City-admin"), "5"),
-        getItem(t("City-wise-branch-services"), "6"),
+        getItem(t("Country-wise-city"), "20"),
         getItem(t("City-branch-wise-shifts"), "7"),
         getItem(t("City-branch-shifts-wise-counter"), "8"),
         getItem(t("Employee-main"), "9"),
-        getItem(t("Country-city-wise-counter"), "10"),
-        getItem(t("Country-main"), "11"),
       ],
       "menu-item-sub"
     ),

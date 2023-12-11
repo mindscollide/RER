@@ -93,12 +93,18 @@ const BranchAdmin = () => {
       title: <span className="table-text">#</span>,
       dataIndex: "shiftID",
       key: "shiftID",
+      render: (text, record) => (
+        <span className="table-inside-text">{text}</span>
+      ),
     },
     {
       title: <span className="table-text">{t("Shift-name")}</span>,
       dataIndex:
         currentLanguage === "en" ? "shiftNameEnglish" : "shiftNameArabic",
       key: currentLanguage === "en" ? "shiftNameEnglish" : "shiftNameArabic",
+      render: (text, record) => (
+        <span className="table-inside-text">{text}</span>
+      ),
     },
     {
       title: <span className="table-text">{t("Start-time")}</span>,
@@ -109,7 +115,11 @@ const BranchAdmin = () => {
           record?.shiftStartTime !== null &&
           record?.shiftStartTime !== null
         ) {
-          return convertUtcToGmt12HourFormat(record?.shiftStartTime, local);
+          return (
+            <span className="table-inside-text">
+              {convertUtcToGmt12HourFormat(record?.shiftStartTime, local)}
+            </span>
+          );
         }
       },
     },
@@ -119,7 +129,11 @@ const BranchAdmin = () => {
       key: "shiftEndTime",
       render: (text, record) => {
         if (record?.shiftEndTime !== null && record?.shiftEndTime !== null) {
-          return convertUtcToGmt12HourFormat(record?.shiftEndTime, local);
+          return (
+            <span className="table-inside-text">
+              {convertUtcToGmt12HourFormat(record?.shiftEndTime, local)}
+            </span>
+          );
         }
       },
     },

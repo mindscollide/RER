@@ -41,18 +41,22 @@ const CounterMain = () => {
     setIsCheckboxSelected(e.target.checked);
   };
 
-
-
   const columns = [
     {
       title: <span className="table-text">#</span>,
       dataIndex: "counterID",
       key: "counterID",
+      render: (text, record) => (
+        <span className="table-inside-text">{text}</span>
+      ),
     },
     {
       title: <span className="table-text">{t("Shift-name")}</span>,
       dataIndex: lang === "en" ? "counterNameEnglish" : "counterNameArabic",
       key: lang === "en" ? "counterNameEnglish" : "counterNameArabic",
+      render: (text, record) => (
+        <span className="table-inside-text">{text}</span>
+      ),
     },
 
     {

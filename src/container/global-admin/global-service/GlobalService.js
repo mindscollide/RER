@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Row, Col } from "react-bootstrap";
-import "./CountryAdminMain.css";
+import "./GlobalService.css";
 import {
   Paper,
   TextField,
@@ -10,32 +10,36 @@ import {
 } from "../../../components/elements";
 import { useTranslation } from "react-i18next";
 
-const CountryAdminMain = () => {
+const GlobalService = () => {
   const { t } = useTranslation();
   const [isCheckboxSelected, setIsCheckboxSelected] = useState(false);
+  const [isCheckboxSelectedTwo, setIsCheckboxSelectedTwo] = useState(false);
+  const [isCheckboxSelectedThree, setIsCheckboxSelectedThree] = useState(false);
 
   const handleCheckboxChange = (e) => {
     setIsCheckboxSelected(e.target.checked);
   };
 
+  const handleCheckboxChangeTwo = (e) => {
+    setIsCheckboxSelectedTwo(e.target.checked);
+  };
+
+  const handleCheckboxChangeThree = (e) => {
+    setIsCheckboxSelectedThree(e.target.checked);
+  };
+
   const dataSource = [
     {
       id: <span className="table-inside-text">1</span>,
-      shiftName: <span className="table-inside-text">Morning Shift</span>,
-      startTime: <span className="table-inside-text">08:00 AM</span>,
-      endTime: <span className="table-inside-text">04:00 PM</span>,
+      name: <span className="table-inside-text">Morning Shift</span>,
     },
     {
       id: <span className="table-inside-text">1</span>,
-      shiftName: <span className="table-inside-text">Morning Shift</span>,
-      startTime: <span className="table-inside-text">08:00 AM</span>,
-      endTime: <span className="table-inside-text">04:00 PM</span>,
+      name: <span className="table-inside-text">Morning Shift</span>,
     },
     {
       id: <span className="table-inside-text">1</span>,
-      shiftName: <span className="table-inside-text">Morning Shift</span>,
-      startTime: <span className="table-inside-text">08:00 AM</span>,
-      endTime: <span className="table-inside-text">04:00 PM</span>,
+      name: <span className="table-inside-text">Morning Shift</span>,
     },
   ];
 
@@ -46,22 +50,36 @@ const CountryAdminMain = () => {
       key: "id",
     },
     {
-      title: <span className="table-text">{t("Shift-name")}</span>,
-      dataIndex: "shiftName",
-      key: "shiftName",
+      title: <span className="table-text">{t("Name")}</span>,
+      dataIndex: "name",
+      key: "name",
       align: "left",
     },
     {
-      title: <span className="table-text">{t("Start-time")}</span>,
-      dataIndex: "startTime",
-      key: "startTime",
+      title: <span className="table-text">{t("Branch-availability")}</span>,
+      dataIndex: "branchAvailability",
+      key: "branchAvailability",
       align: "center",
+      render: (text, record) => (
+        <>
+          <span>
+            <i className="icon-check icon-check-color"></i>
+          </span>
+        </>
+      ),
     },
     {
-      title: <span className="table-text">{t("End-time")}</span>,
-      dataIndex: "endTime",
-      key: "endTime",
+      title: <span className="table-text">{t("Home-availability")}</span>,
+      dataIndex: "homeAvailability",
+      key: "homeAvailability",
       align: "center",
+      render: (text, record) => (
+        <>
+          <span>
+            <i className="icon-close icon-close-color"></i>
+          </span>
+        </>
+      ),
     },
     {
       title: <span className="table-text">{t("Active")}</span>,
@@ -87,6 +105,7 @@ const CountryAdminMain = () => {
             <i className="icon-text-edit icon-EDT-DLT-color"></i>
             <i className="icon-close icon-EDT-DLT-color"></i>
             <i className="icon-settings icon-EDT-DLT-color"></i>
+            <i className="icon-location icon-EDT-DLT-color"></i>
             <i className="icon-branch icon-EDT-DLT-color"></i>
             <i className="icon-counter icon-EDT-DLT-color"></i>
             <i className="icon-repeat icon-EDT-DLT-color"></i>
@@ -102,7 +121,7 @@ const CountryAdminMain = () => {
         <Row>
           <Col lg={12} md={12} sm={12} className="d-flex justify-content-start">
             <span className="shift-heading">
-              {t("City")}
+              {t("Service")}
               <span className="shift-sub-heading">
                 {" "}
                 {t("Saudi-arabia-riyadh")}
@@ -112,50 +131,93 @@ const CountryAdminMain = () => {
         </Row>
         <Row className="mt-3">
           <Col lg={12} md={12} sm={12}>
-            <Paper className="CountryAdmin-paper">
+            <Paper className="GlobalService-paper">
               <Row>
                 <Col lg={6} md={6} sm={6}>
-                  <span className="text-labels">{t("City-name")}</span>
+                  <span className="text-labels">{t("Service-name")}</span>
                   <TextField
-                    name="Branch Name"
-                    placeholder={t("Branch-admin")}
+                    name="Service Name"
+                    placeholder={t("Service-name")}
                     labelClass="d-none"
-                    className="text-fiels-CountryAdmin"
+                    className="text-fiels-GlobalService"
                   />
                 </Col>
                 <Col lg={6} md={6} sm={6}>
-                  <span className="text-labels">{t("City-name")}</span>
+                  <span className="text-labels">{t("Service-name")}</span>
                   <TextField
-                    name="Branch Name"
-                    placeholder={t("Branch-admin")}
+                    name="Service Name"
+                    placeholder={t("Service-name")}
                     labelClass="d-none"
-                    className="text-fiels-CountryAdmin"
+                    className="text-fiels-GlobalService"
                   />
                 </Col>
               </Row>
 
               <Row className="mt-3">
-                <Col lg={6} md={6} sm={6} className="mt-1">
+                <Col lg={4} md={4} sm={4} className="mt-4">
                   <Checkbox
                     checked={isCheckboxSelected}
                     onChange={handleCheckboxChange}
-                    classNameDiv="CountryAdmin-checkbox"
+                    classNameDiv="GlobalService-checkbox"
+                    label={
+                      <span className="checkbox-label">
+                        {t("Available-at-branch")}
+                      </span>
+                    }
+                  />
+                </Col>
+
+                <Col
+                  lg={4}
+                  md={4}
+                  sm={4}
+                  className="d-flex justify-content-center mt-4"
+                >
+                  <Checkbox
+                    checked={isCheckboxSelectedTwo}
+                    onChange={handleCheckboxChangeTwo}
+                    classNameDiv="GlobalService-checkbox"
+                    label={
+                      <span className="checkbox-label">
+                        {t("Home-service-available")}
+                      </span>
+                    }
+                  />
+                </Col>
+
+                <Col
+                  lg={4}
+                  md={4}
+                  sm={4}
+                  className="d-flex justify-content-end mt-4"
+                >
+                  <Checkbox
+                    checked={isCheckboxSelectedThree}
+                    onChange={handleCheckboxChangeThree}
+                    classNameDiv="GlobalService-checkbox"
                     label={
                       <span className="checkbox-label">{t("Active")}</span>
                     }
                   />
                 </Col>
+              </Row>
 
-                <Col lg={6} md={6} sm={6} className="btn-class-CountryAdmin">
+              <Row className="my-3">
+                <Col
+                  lg={12}
+                  md={12}
+                  sm={12}
+                  className="btn-class-GlobalService"
+                >
                   <Button
                     icon={<i className="icon-add-circle icon-space"></i>}
                     text={t("Add")}
-                    className="Add-btn-CountryAdmin"
+                    className="Add-btn-GlobalService"
                   />
                   <Button
                     icon={<i className="icon-refresh icon-space"></i>}
                     text={t("Reset")}
-                    className="Reset-btn-CountryAdmin"
+                    className="Reset-btn-GlobalService"
                   />
                 </Col>
               </Row>
@@ -177,4 +239,4 @@ const CountryAdminMain = () => {
   );
 };
 
-export default CountryAdminMain;
+export default GlobalService;

@@ -7,9 +7,7 @@ import {
   Checkbox,
   Button,
   Table,
-} from "../../components/elements";
-import DatePicker from "react-multi-date-picker";
-import TimePicker from "react-multi-date-picker/plugins/time_picker";
+} from "../../../components/elements";
 import { useTranslation } from "react-i18next";
 
 const CountryMain = () => {
@@ -23,21 +21,15 @@ const CountryMain = () => {
   const dataSource = [
     {
       id: <span className="table-inside-text">1</span>,
-      shiftName: <span className="table-inside-text">Morning Shift</span>,
-      startTime: <span className="table-inside-text">08:00 AM</span>,
-      endTime: <span className="table-inside-text">04:00 PM</span>,
+      shiftName: <span className="table-inside-text">Saudi Arabia</span>,
     },
     {
       id: <span className="table-inside-text">1</span>,
-      shiftName: <span className="table-inside-text">Morning Shift</span>,
-      startTime: <span className="table-inside-text">08:00 AM</span>,
-      endTime: <span className="table-inside-text">04:00 PM</span>,
+      shiftName: <span className="table-inside-text">Bahrain</span>,
     },
     {
       id: <span className="table-inside-text">1</span>,
-      shiftName: <span className="table-inside-text">Morning Shift</span>,
-      startTime: <span className="table-inside-text">08:00 AM</span>,
-      endTime: <span className="table-inside-text">04:00 PM</span>,
+      shiftName: <span className="table-inside-text">Bahrain</span>,
     },
   ];
 
@@ -53,18 +45,7 @@ const CountryMain = () => {
       key: "shiftName",
       align: "left",
     },
-    {
-      title: <span className="table-text">{t("Start-time")}</span>,
-      dataIndex: "startTime",
-      key: "startTime",
-      align: "center",
-    },
-    {
-      title: <span className="table-text">{t("End-time")}</span>,
-      dataIndex: "endTime",
-      key: "endTime",
-      align: "center",
-    },
+
     {
       title: <span className="table-text">{t("Active")}</span>,
       dataIndex: "active",
@@ -119,19 +100,19 @@ const CountryMain = () => {
             <Paper className="Country-paper">
               <Row>
                 <Col lg={6} md={6} sm={6}>
-                  <span className="text-labels">{t("City-name")}</span>
+                  <span className="text-labels">{t("Country-name")}</span>
                   <TextField
-                    name="Branch Name"
-                    placeholder={t("Branch-admin")}
+                    name="Countryname"
+                    placeholder={t("Country-name")}
                     labelClass="d-none"
                     className="text-fiels-Country"
                   />
                 </Col>
                 <Col lg={6} md={6} sm={6}>
-                  <span className="text-labels">{t("City-name")}</span>
+                  <span className="text-labels">{t("Country-name")}</span>
                   <TextField
-                    name="Branch Name"
-                    placeholder={t("Branch-admin")}
+                    name="Countryname"
+                    placeholder={t("Country-name")}
                     labelClass="d-none"
                     className="text-fiels-Country"
                   />

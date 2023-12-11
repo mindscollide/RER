@@ -46,7 +46,6 @@ const BranchRoaster = () => {
       key: "shiftName",
       width: "400px",
     },
-
     {
       title: <span className="table-text">{t("Counter")}</span>,
       dataIndex: "Counter",
