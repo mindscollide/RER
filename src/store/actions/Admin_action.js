@@ -14,6 +14,8 @@ import {
   updateLastSelectedLanguage,
   getBranchServices,
   updateBranchServices,
+  updateBranchCounter,
+  deleteBranchCounter,
 } from "../../commen/apis/Api_config";
 import { adminURL } from "../../commen/apis/Api_ends_points";
 import moment from "moment";
@@ -1135,6 +1137,197 @@ const UpdateBranchServices = (Data, t, navigate, loadingFlag) => {
   };
 };
 
+//Update Branch Counter
+const updateBranchCounterSuccess = (response, message) => {
+  return {
+    type: actions.UPDATE_BRANCH_COUNTER_SUCCESS,
+    response: response,
+    message: message,
+  };
+};
+
+const updateBranchCounterFail = (message) => {
+  return {
+    type: actions.UPDATE_BRANCH_COUNTER_FAILED,
+    message: message,
+  };
+};
+
+const UpdateBranchCounterApi = (t, navigate, loadingFlag, Data) => {
+  return async (dispatch) => {
+    if (!loadingFlag) {
+      dispatch(loader_Actions(true));
+    }
+    let form = new FormData();
+    form.append("RequestMethod", updateBranchCounter.RequestMethod);
+    form.append("RequestData", JSON.stringify(Data));
+    await axios({
+      method: "post",
+      url: adminURL,
+      data: form,
+      headers: {
+        _token: token,
+      },
+    })
+      .then(async (response) => {
+        if (response.data.responseCode === 200) {
+          if (response.data.responseCode === 417) {
+            dispatch(UpdateBranchCounterApi(t, navigate, loadingFlag, Data));
+          } else if (response.data.responseResult.isExecuted === true) {
+            if (
+              response.data.responseResult.responseMessage ===
+              "Admin_AdminServiceManager_UpdateBranchCounter_01"
+            ) {
+              await dispatch(
+                updateBranchCounterSuccess(
+                  response.data.responseResult.updatedCounter,
+                  t("Admin_AdminServiceManager_UpdateBranchCounter_01")
+                )
+              );
+              await dispatch(loader_Actions(false));
+            } else if (
+              response.data.responseResult.responseMessage ===
+              "Admin_AdminServiceManager_UpdateBranchCounter_02"
+            ) {
+              await dispatch(
+                updateBranchCounterFail(
+                  t("Admin_AdminServiceManager_UpdateBranchCounter_02")
+                )
+              );
+              await dispatch(loader_Actions(false));
+            } else if (
+              response.data.responseResult.responseMessage ===
+              "Admin_AdminServiceManager_UpdateBranchCounter_03"
+            ) {
+              await dispatch(
+                updateBranchCounterFail(
+                  t("Admin_AdminServiceManager_UpdateBranchCounter_03")
+                )
+              );
+              await dispatch(loader_Actions(false));
+            } else if (
+              response.data.responseResult.responseMessage ===
+              "Admin_AdminServiceManager_UpdateBranchCounter_04"
+            ) {
+              await dispatch(
+                updateBranchCounterFail(t("something_went_wrong"))
+              );
+              await dispatch(loader_Actions(false));
+            } else {
+              dispatch(updateBranchCounterFail(t("something_went_wrong")));
+            }
+          } else {
+            await dispatch(updateBranchCounterFail(t("something_went_wrong")));
+            await dispatch(loader_Actions(false));
+          }
+        } else {
+          await dispatch(updateBranchCounterFail(t("something_went_wrong")));
+          await dispatch(loader_Actions(false));
+        }
+      })
+      .catch((response) => {
+        dispatch(updateBranchCounterFail(t("something_went_wrong")));
+        dispatch(loader_Actions(false));
+      });
+  };
+};
+
+//Delete Branch Counter
+
+const deleteBranchCounterSuccess = (response, message) => {
+  return {
+    type: actions.DELETE_BRANCH_COUNTER_SUCCESS,
+    response: response,
+    message: message,
+  };
+};
+
+const deleteBranchCounterFail = (message) => {
+  return {
+    type: actions.DELETE_BRANCH_COUNTER_FAILED,
+    message: message,
+  };
+};
+
+const DeleteBranchCounterApi = (t, navigate, loadingFlag, Data) => {
+  return async (dispatch) => {
+    if (!loadingFlag) {
+      dispatch(loader_Actions(true));
+    }
+    let form = new FormData();
+    form.append("RequestMethod", deleteBranchCounter.RequestMethod);
+    form.append("RequestData", JSON.stringify(Data));
+    await axios({
+      method: "post",
+      url: adminURL,
+      data: form,
+      headers: {
+        _token: token,
+      },
+    })
+      .then(async (response) => {
+        if (response.data.responseCode === 200) {
+          if (response.data.responseCode === 417) {
+            dispatch(DeleteBranchCounterApi(t, navigate, loadingFlag, Data));
+          } else if (response.data.responseResult.isExecuted === true) {
+            if (
+              response.data.responseResult.responseMessage ===
+              "Admin_AdminServiceManager_DeleteBranchCounter_01"
+            ) {
+              await dispatch(
+                deleteBranchCounterSuccess(
+                  response.data.responseResult.deletedCounterID,
+                  t("Admin_AdminServiceManager_DeleteBranchCounter_01")
+                )
+              );
+              await dispatch(loader_Actions(false));
+            } else if (
+              response.data.responseResult.responseMessage ===
+              "Admin_AdminServiceManager_DeleteBranchCounter_02"
+            ) {
+              await dispatch(
+                deleteBranchCounterFail(
+                  t("Admin_AdminServiceManager_DeleteBranchCounter_02")
+                )
+              );
+              await dispatch(loader_Actions(false));
+            } else if (
+              response.data.responseResult.responseMessage ===
+              "Admin_AdminServiceManager_DeleteBranchCounter_03"
+            ) {
+              await dispatch(
+                deleteBranchCounterFail(
+                  t("Admin_AdminServiceManager_DeleteBranchCounter_03")
+                )
+              );
+              await dispatch(loader_Actions(false));
+            } else if (
+              response.data.responseResult.responseMessage ===
+              "Admin_AdminServiceManager_DeleteBranchCounter_04"
+            ) {
+              await dispatch(
+                deleteBranchCounterFail(t("something_went_wrong"))
+              );
+              await dispatch(loader_Actions(false));
+            } else {
+              dispatch(deleteBranchCounterFail(t("something_went_wrong")));
+            }
+          } else {
+            await dispatch(deleteBranchCounterFail(t("something_went_wrong")));
+            await dispatch(loader_Actions(false));
+          }
+        } else {
+          await dispatch(deleteBranchCounterFail(t("something_went_wrong")));
+          await dispatch(loader_Actions(false));
+        }
+      })
+      .catch((response) => {
+        dispatch(deleteBranchCounterFail(t("something_went_wrong")));
+        dispatch(loader_Actions(false));
+      });
+  };
+};
+
 export {
   AdminCleareState,
   getSystemSupportedLanguage,
@@ -1150,4 +1343,6 @@ export {
   removingBranchEntryRoasterApiFunction,
   GetBranchServices,
   UpdateBranchServices,
+  UpdateBranchCounterApi,
+  DeleteBranchCounterApi,
 };

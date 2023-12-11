@@ -115,5 +115,11 @@
   "Admin_AdminServiceManager_GetBranchServices_02": "Branch Services Record Not Found",
   "Admin_AdminServiceManager_GetBranchServices_03": "Branch Not Found",
   "Admin_AdminServiceManager_UpdateBranchServices_01": "Branch Service Record Updated",
-  "Admin_AdminServiceManager_UpdateBranchServices_02": "Branch Services Record Not Updated"
+  "Admin_AdminServiceManager_UpdateBranchServices_02": "Branch Services Record Not Updated",
+  "Admin_AdminServiceManager_UpdateBranchCounter_01": "Counter Details Updated",
+  "Admin_AdminServiceManager_UpdateBranchCounter_02": "Counter Details Not Found",
+  "Admin_AdminServiceManager_UpdateBranchCounter_03": "Branch Not Found",
+  "Admin_AdminServiceManager_DeleteBranchCounter_01": "Counter Deleted Successfully",
+  "Admin_AdminServiceManager_DeleteBranchCounter_02": "Counter Not Found",
+  "Admin_AdminServiceManager_DeleteBranchCounter_03": "Branch Not Found"
 }

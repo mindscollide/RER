@@ -12,6 +12,8 @@ const initialState = {
   removeRoasterEntryBranch: [],
   branchServicesData: null,
   branchServicesUpdatedData: null,
+  updateBranchCounterData: null,
+  deleteBranchCounterData: null,
 };
 
 const adminReducer = (state = initialState, action) => {
@@ -177,6 +179,38 @@ const adminReducer = (state = initialState, action) => {
       return {
         ...state,
         branchServicesUpdatedData: null,
+        admin_ResponseMessage: action.message,
+      };
+
+    //Update branch counter reducer cases
+
+    case actions.UPDATE_BRANCH_COUNTER_SUCCESS:
+      return {
+        ...state,
+        updateBranchCounterData: action.response,
+        admin_ResponseMessage: action.message,
+      };
+
+    case actions.UPDATE_BRANCH_COUNTER_FAILED:
+      return {
+        ...state,
+        updateBranchCounterData: null,
+        admin_ResponseMessage: action.message,
+      };
+
+    //Delete Branch Counter
+
+    case actions.DELETE_BRANCH_COUNTER_SUCCESS:
+      return {
+        ...state,
+        deleteBranchCounterData: action.response,
+        admin_ResponseMessage: action.message,
+      };
+
+    case actions.DELETE_BRANCH_COUNTER_FAILED:
+      return {
+        ...state,
+        deleteBranchCounterData: null,
         admin_ResponseMessage: action.message,
       };
 
