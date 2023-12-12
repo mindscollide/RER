@@ -123,13 +123,13 @@ const CountryAdminMain = () => {
                     className="text-fiels-CountryAdmin"
                   />
                 </Col>
-                <Col lg={6} md={6} sm={6}>
-                  <span className="text-labels">{t("City-name")}</span>
+                <Col lg={6} md={6} sm={6} className="text-end">
+                  <span className="text-labels">اسم المدينة</span>
                   <TextField
                     name="Branch Name"
-                    placeholder={t("Branch-admin")}
+                    placeholder="اسم المدينة"
                     labelClass="d-none"
-                    className="text-fiels-CountryAdmin"
+                    className="text-fields-CountryAdmin-arabic"
                   />
                 </Col>
               </Row>

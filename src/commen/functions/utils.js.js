@@ -75,11 +75,11 @@ export function generateMenuItems(roleID, t) {
       "sub1",
       <i className="icon-settings side-bar-icons"></i>,
       [
-        getItem(t("City-admin"), "5"),
-        getItem(t("Country-wise-city"), "20"),
-        getItem(t("City-branch-wise-shifts"), "7"),
-        getItem(t("City-branch-shifts-wise-counter"), "8"),
-        getItem(t("Employee-main"), "9"),
+        getItem(t("Branch"), "5"),
+        getItem(t("Services"), "20"),
+        getItem(t("Shifts"), "7"),
+        getItem(t("Counters"), "8"),
+        getItem(t("Employee"), "9"),
       ],
       "menu-item-sub"
     ),

@@ -142,13 +142,13 @@ const GlobalService = () => {
                     className="text-fiels-GlobalService"
                   />
                 </Col>
-                <Col lg={6} md={6} sm={6}>
-                  <span className="text-labels">{t("Service-name")}</span>
+                <Col lg={6} md={6} sm={6} className="text-end">
+                  <span className="text-labels">اسم الخدمة</span>
                   <TextField
                     name="Service Name"
-                    placeholder={t("Service-name")}
+                    placeholder={"اسم الخدمة"}
                     labelClass="d-none"
-                    className="text-fiels-GlobalService"
+                    className="text-fiels-GlobalService-arabic"
                   />
                 </Col>
               </Row>

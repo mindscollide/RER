@@ -261,7 +261,7 @@ const BranchRoaster = () => {
   const saveSingleRoaster = () => {
     let Data = {
       RoasterDate: selectedDate,
-      BranchID: 1,
+      BranchID: Number(localStorage.getItem("branchID")),
       ServiceID: selectedOptionServices.value,
       ShiftID: selectedOptionShift.value,
       CounterID: selectedOptionCounter.value,

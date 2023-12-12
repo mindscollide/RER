@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Row, Col } from "react-bootstrap";
 import "./City.css";
 import {
@@ -11,10 +11,42 @@ import {
 import DatePicker from "react-multi-date-picker";
 import TimePicker from "react-multi-date-picker/plugins/time_picker";
 import { useTranslation } from "react-i18next";
+import gregorian from "react-date-object/calendars/gregorian";
+import gregorian_en from "react-date-object/locales/gregorian_en";
+import gregorian_ar from "react-date-object/locales/gregorian_ar";
+import { getCityBranchListApi } from "../../../store/actions/Admin_action";
+import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router";
 
 const CityAdmin = () => {
   const { t } = useTranslation();
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const Loading = useSelector((state) => state.Loader.Loading);
+
+  const currentLanguage = localStorage.getItem("i18nextLng");
+  const local = currentLanguage === "en" ? "en-US" : "ar-SA";
   const [isCheckboxSelected, setIsCheckboxSelected] = useState(false);
+  const [addUpdateCheckFlag, setAddUpdateCheckFlag] = useState(false);
+  const [calendarValue, setCalendarValue] = useState(gregorian);
+  const [localValue, setLocalValue] = useState(gregorian_en);
+
+  //language UseEffect
+  useEffect(() => {
+    if (currentLanguage !== undefined) {
+      if (currentLanguage === "en") {
+        setCalendarValue(gregorian);
+        setLocalValue(gregorian_en);
+      } else if (currentLanguage === "ar") {
+        setCalendarValue(gregorian);
+        setLocalValue(gregorian_ar);
+      }
+    }
+  }, [currentLanguage]);
+
+  useEffect(() => {
+    dispatch(getCityBranchListApi(t, navigate, Loading));
+  }, []);
 
   const handleCheckboxChange = (e) => {
     setIsCheckboxSelected(e.target.checked);
@@ -107,7 +139,21 @@ const CityAdmin = () => {
               {t("Branch")}
               <span className="shift-sub-heading">
                 {" "}
-                {t("Saudi-arabia-riyadh")}
+                {currentLanguage === "en"
+                  ? "(" +
+                    localStorage.getItem("countryName") +
+                    " " +
+                    "-" +
+                    " " +
+                    localStorage.getItem("cityName") +
+                    ")"
+                  : "(" +
+                    localStorage.getItem("countryNameArabic") +
+                    " " +
+                    "-" +
+                    " " +
+                    localStorage.getItem("cityNameArabic") +
+                    ")"}
               </span>
             </span>
           </Col>
@@ -125,13 +171,13 @@ const CityAdmin = () => {
                     className="text-fiels-cityAdmin"
                   />
                 </Col>
-                <Col lg={6} md={6} sm={6}>
-                  <span className="text-labels">{t("Branch-name")}</span>
+                <Col lg={6} md={6} sm={6} className="text-end">
+                  <span className="text-labels">اسم الفرع</span>
                   <TextField
                     name="Branch Name"
-                    placeholder={t("Branch-admin")}
+                    placeholder={"اسم الفرع"}
                     labelClass="d-none"
-                    className="text-fiels-cityAdmin"
+                    className="text-fiels-cityAdmin-arabic"
                   />
                 </Col>
               </Row>

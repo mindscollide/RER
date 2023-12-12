@@ -108,13 +108,13 @@ const CountryMain = () => {
                     className="text-fiels-Country"
                   />
                 </Col>
-                <Col lg={6} md={6} sm={6}>
-                  <span className="text-labels">{t("Country-name")}</span>
+                <Col lg={6} md={6} sm={6} className="text-end">
+                  <span className="text-labels">اسم الدولة</span>
                   <TextField
                     name="Countryname"
-                    placeholder={t("Country-name")}
+                    placeholder={"اسم الدولة"}
                     labelClass="d-none"
-                    className="text-fiels-Country"
+                    className="text-fiels-Country-arabic"
                   />
                 </Col>
               </Row>
