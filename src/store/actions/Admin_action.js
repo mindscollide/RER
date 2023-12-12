@@ -18,6 +18,7 @@ import {
   updateBranchServices,
   updateBranchCounter,
   deleteBranchCounter,
+  getCityBranchList,
 } from "../../commen/apis/Api_config";
 import { adminURL } from "../../commen/apis/Api_ends_points";
 import moment from "moment";
@@ -189,7 +190,7 @@ const getLastSelectedLanguage = (t, i18n, navigate, data) => {
                   t("Admin_AdminServiceManager_GetLastSelectedLanguage_01")
                 )
               );
-              // await dispatch(loader_Actions(false));
+              await dispatch(loader_Actions(false));
             } else if (
               response.data.responseResult.responseMessage ===
               "Admin_AdminServiceManager_GetLastSelectedLanguage_02"
@@ -367,7 +368,7 @@ const getAllShiftsOfBranchFail = (message) => {
 };
 
 const getAllShiftsOfBranch = (t, navigate, loadingFlag) => {
-  let data = { BranchID: 1 };
+  let data = { BranchID: Number(localStorage.getItem("branchID")) };
   return async (dispatch) => {
     if (!loadingFlag) {
       dispatch(loader_Actions(true));
@@ -454,7 +455,7 @@ const allCountersOfBranchFail = (message) => {
 };
 
 const getAllCountersOfBranch = (t, navigate, loadingFlag) => {
-  let data = { BranchID: 1 };
+  let data = { BranchID: Number(localStorage.getItem("branchID")) };
   return async (dispatch) => {
     if (!loadingFlag) {
       dispatch(loader_Actions(true));
@@ -574,7 +575,7 @@ const addBranchShiftApi = (t, navigate, loadingFlag, data, setState) => {
                 IsShiftActive: false,
                 ShiftStartTime: "",
                 ShiftEndTime: "",
-                BranchID: 1,
+                BranchID: Number(localStorage.getItem("branchID")),
                 shiftID: 0,
               });
               await dispatch(
@@ -675,7 +676,7 @@ const updateBranchShiftApi = (
                 IsShiftActive: false,
                 ShiftStartTime: "",
                 ShiftEndTime: "",
-                BranchID: 1,
+                BranchID: Number(localStorage.getItem("branchID")),
                 shiftID: 0,
               });
               setCheckFlag(false);
@@ -864,7 +865,7 @@ const addBranchCounterApi = (t, navigate, loadingFlag, data, setState) => {
                 CounterNameEnglish: "",
                 CounterNameArabic: "",
                 IsCounterActive: false,
-                BranchID: 1,
+                BranchID: Number(localStorage.getItem("branchID")),
                 CounterID: 0,
               });
               await dispatch(
@@ -1048,7 +1049,10 @@ const getSingleBranchRoasterFailed = (message) => {
 
 //API function for Get Single branch Roaster
 const getSingleBranchRoasterApiFunction = (t, navigate, loadingFlag) => {
-  let data = { BranchID: 1, RoasterDate: "20231213" };
+  let data = {
+    BranchID: Number(localStorage.getItem("branchID")),
+    RoasterDate: "20231213",
+  };
   return async (dispatch) => {
     if (!loadingFlag) {
       dispatch(loader_Actions(true));
@@ -1151,7 +1155,7 @@ const removeBranchEntryRoasterFailed = (message) => {
 
 //API function for Removing Branch Entry Roaster
 const removingBranchEntryRoasterApiFunction = (t, navigate, loadingFlag) => {
-  let data = { BranchID: 1 };
+  let data = { BranchID: Number(localStorage.getItem("branchID")) };
   return async (dispatch) => {
     if (!loadingFlag) {
       dispatch(loader_Actions(true));
@@ -1266,7 +1270,7 @@ const getBranchServicesFail = (message) => {
 };
 
 const getBranchServicesApi = (t, navigate, loadingFlag) => {
-  let data = { BranchID: 1 };
+  let data = { BranchID: Number(localStorage.getItem("branchID")) };
   return async (dispatch) => {
     if (!loadingFlag) {
       dispatch(loader_Actions(true));
@@ -1456,7 +1460,14 @@ const updateBranchCounterFail = (message) => {
   };
 };
 
-const updateBranchCounterApi = (t, navigate, loadingFlag, data) => {
+const updateBranchCounterApi = (
+  t,
+  navigate,
+  loadingFlag,
+  data,
+  setState,
+  setCheckFlag
+) => {
   return async (dispatch) => {
     if (!loadingFlag) {
       dispatch(loader_Actions(true));
@@ -1476,12 +1487,29 @@ const updateBranchCounterApi = (t, navigate, loadingFlag, data) => {
         if (response.data.responseCode === 200) {
           if (response.data.responseCode === 417) {
             // await dispatch(RefreshToken(navigate, t))
-            dispatch(updateBranchCounterApi(t, navigate, loadingFlag, data));
+            dispatch(
+              updateBranchCounterApi(
+                t,
+                navigate,
+                loadingFlag,
+                data,
+                setState,
+                setCheckFlag
+              )
+            );
           } else if (response.data.responseResult.isExecuted === true) {
             if (
               response.data.responseResult.responseMessage ===
               "Admin_AdminServiceManager_UpdateBranchCounter_01"
             ) {
+              await setState({
+                CounterNameEnglish: "",
+                CounterNameArabic: "",
+                IsCounterActive: false,
+                BranchID: Number(localStorage.getItem("branchID")),
+                CounterID: 0,
+              });
+              await setCheckFlag(false);
               await dispatch(
                 updateBranchCounterSuccess(
                   response.data.responseResult.updatedCounter,
@@ -1553,7 +1581,13 @@ const deleteBranchCounterFail = (message) => {
   };
 };
 
-const deleteBranchCounterApi = (t, navigate, loadingFlag, Data) => {
+const deleteBranchCounterApi = (
+  t,
+  navigate,
+  loadingFlag,
+  Data,
+  setModalFlag
+) => {
   return async (dispatch) => {
     if (!loadingFlag) {
       dispatch(loader_Actions(true));
@@ -1573,19 +1607,27 @@ const deleteBranchCounterApi = (t, navigate, loadingFlag, Data) => {
         if (response.data.responseCode === 200) {
           if (response.data.responseCode === 417) {
             // await dispatch(RefreshToken(navigate, t))
-            dispatch(deleteBranchCounterApi(t, navigate, loadingFlag, Data));
+            dispatch(
+              deleteBranchCounterApi(
+                t,
+                navigate,
+                loadingFlag,
+                Data,
+                setModalFlag
+              )
+            );
           } else if (response.data.responseResult.isExecuted === true) {
             if (
               response.data.responseResult.responseMessage ===
               "Admin_AdminServiceManager_DeleteBranchCounter_01"
             ) {
+              setModalFlag(false);
               await dispatch(
                 deleteBranchCounterSuccess(
                   response.data.responseResult.deletedCounterID,
                   t("Admin_AdminServiceManager_DeleteBranchCounter_01")
                 )
               );
-              await dispatch(loader_Actions(false));
             } else if (
               response.data.responseResult.responseMessage ===
               "Admin_AdminServiceManager_DeleteBranchCounter_02"
@@ -1633,6 +1675,92 @@ const deleteBranchCounterApi = (t, navigate, loadingFlag, Data) => {
   };
 };
 
+// ===================================CITY ADMIN==========================================//
+
+//Get All GET CITY BRANCH LIST Api for(City Admin for listing down existing branches in city)
+const getCityBranchListSuccess = (response, message) => {
+  return {
+    type: actions.GET_CITY_BRANCH_LIST_SUCCESS,
+    response: response,
+    message: message,
+  };
+};
+
+const getCityBranchListFail = (message) => {
+  return {
+    type: actions.GET_CITY_BRANCH_LIST_FAIL,
+    message: message,
+  };
+};
+
+const getCityBranchListApi = (t, navigate, loadingFlag) => {
+  let data = { BranchID: Number(localStorage.getItem("branchID")) };
+  return async (dispatch) => {
+    if (!loadingFlag) {
+      dispatch(loader_Actions(true));
+    }
+    let form = new FormData();
+    form.append("RequestMethod", getCityBranchList.RequestMethod);
+    form.append("RequestData", JSON.stringify(data));
+    await axios({
+      method: "post",
+      url: adminURL,
+      data: form,
+      headers: {
+        _token: token,
+      },
+    })
+      .then(async (response) => {
+        if (response.data.responseCode === 200) {
+          if (response.data.responseCode === 417) {
+            // await dispatch(RefreshToken(navigate, t))
+            dispatch(getCityBranchListApi(t, navigate, loadingFlag));
+          } else if (response.data.responseResult.isExecuted === true) {
+            if (
+              response.data.responseResult.responseMessage ===
+              "Admin_AdminServiceManager_GetAllShiftsOfBranch_01"
+            ) {
+              await dispatch(
+                getCityBranchListSuccess(
+                  response.data.responseResult.shiftModelList,
+                  t("Admin_AdminServiceManager_GetLastSelectedLanguage_01")
+                )
+              );
+              await dispatch(loader_Actions(false));
+            } else if (
+              response.data.responseResult.responseMessage ===
+              "Admin_AdminServiceManager_GetAllShiftsOfBranch_02"
+            ) {
+              await dispatch(
+                getCityBranchListFail(
+                  t("Admin_AdminServiceManager_GetLastSelectedLanguage_02")
+                )
+              );
+              await dispatch(loader_Actions(false));
+            } else if (
+              response.data.responseResult.responseMessage ===
+              "Admin_AdminServiceManager_GetAllShiftsOfBranch_03"
+            ) {
+              await dispatch(getCityBranchListFail(t("something_went_wrong")));
+              await dispatch(loader_Actions(false));
+            } else {
+              dispatch(getCityBranchListFail(t("something_went_wrong")));
+            }
+          } else {
+            await dispatch(getCityBranchListFail(t("something_went_wrong")));
+            await dispatch(loader_Actions(false));
+          }
+        } else {
+          await dispatch(getCityBranchListFail(t("something_went_wrong")));
+          await dispatch(loader_Actions(false));
+        }
+      })
+      .catch((response) => {
+        dispatch(getCityBranchListFail(t("something_went_wrong")));
+        dispatch(loader_Actions(false));
+      });
+  };
+};
 export {
   AdminCleareState,
   getSystemSupportedLanguage,
@@ -1654,5 +1782,9 @@ export {
   getBranchServicesApi,
   updateBranchServicesApi,
   updateBranchCounterApi,
+  updateBranchCounterFail,
   deleteBranchCounterApi,
+  deleteBranchCounterFail,
+  // ===================================CITY ADMIN==========================================//
+  getCityBranchListApi,
 };

@@ -1,4 +1,3 @@
-
 // for login
 const logIn = {
   RequestMethod: "ServiceManager.Login",
@@ -88,6 +87,13 @@ const addBranchCounter = {
   RequestMethod: "ServiceManager.AddBranchCounter",
 };
 
+// ===================================CITY ADMIN==========================================//
+
+// for all Shifts Of Branch list and drope down
+const getCityBranchList = {
+  RequestMethod: "ServiceManager.GetCityBranchList",
+};
+
 export {
   logIn,
   roleList,
@@ -107,4 +113,6 @@ export {
   updateBranchShift,
   deleteBranchShift,
   addBranchCounter,
+  // ===================================CITY ADMIN==========================================//
+  getCityBranchList,
 };

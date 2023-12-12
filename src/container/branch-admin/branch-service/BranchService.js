@@ -133,12 +133,10 @@ const BranchService = () => {
   };
 
   const saveBranchServices = async (data) => {
-    const branchID = 1; // Hard-coded value
-
     try {
       const apiPromises = data.map(async (row) => {
         const requestData = {
-          BranchID: branchID,
+          BranchID: Number(localStorage.getItem("branchID")),
           BranchServiceID: row.branchService.serviceID,
           IsServiceAvailableAtBranch: row.isServiceAvailableAtBranch,
           ServiceSlotDurationMinutes: row.serviceSlotDurationMinutes,

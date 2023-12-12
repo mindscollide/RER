@@ -91,3 +91,9 @@ export const DELETE_BRANCH_SHIFT_FAIL = "DELETE_BRANCH_SHIFT_FAIL";
 //for ADD BRANCH COUNTER  for adding new BRANCH COUNTER
 export const ADD_BRANCH_COUNTER_SUCCESS = "ADD_BRANCH_COUNTER_SUCCESS";
 export const ADD_BRANCH_COUNTERT_FAIL = "ADD_BRANCH_COUNTERT_FAIL";
+
+// ===================================CITY ADMIN==========================================//
+
+//Get All GET CITY BRANCH LIST Api for(City Admin for listing down existing branches in city)
+export const GET_CITY_BRANCH_LIST_SUCCESS = "GET_CITY_BRANCH_LIST_SUCCESS";
+export const GET_CITY_BRANCH_LIST_FAIL = "GET_CITY_BRANCH_LIST_FAIL";
