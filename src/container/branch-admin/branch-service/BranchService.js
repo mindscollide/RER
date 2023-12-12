@@ -364,11 +364,11 @@ const BranchService = () => {
           </Col>
         </Row>
       </section>
-      <Notification
+      {/* <Notification
         show={notification.notificationFlag}
         hide={setNotification}
         message={notification.notificationMessage}
-      />
+      /> */}
     </>
   );
 };
