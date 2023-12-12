@@ -1,0 +1,8 @@
+{
+  "CityID": 1,
+  "BranchNameEnglish": "Test Branch",
+  "BranchNameArabic": "فرع الاختبار",
+  "IsBranchActive": true,
+  "BranchStartTime": "060000",
+  "BranchEndTime": "150000"
+}

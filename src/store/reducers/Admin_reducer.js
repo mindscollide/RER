@@ -20,6 +20,9 @@ const initialState = {
   updateBranchShiftData: null,
   deleteBranchShiftID: null,
   cityBranchListData: null,
+  addedCityBranchData: null,
+  deletedCityBranchData: null,
+  updatedCityBranchData: null,
 };
 
 const adminReducer = (state = initialState, action) => {
@@ -293,6 +296,51 @@ const adminReducer = (state = initialState, action) => {
       return {
         ...state,
         cityBranchListData: null,
+        admin_ResponseMessage: action.message,
+      };
+
+    //Get add City Branch Api for(City Admin for adding new branch in the city)
+    case actions.ADD_CITY_BRANCH_SUCCESS:
+      return {
+        ...state,
+        addedCityBranchData: action.response,
+        admin_ResponseMessage: action.message,
+      };
+
+    case actions.ADD_CITY_BRANCH_FAIL:
+      return {
+        ...state,
+        addedCityBranchData: null,
+        admin_ResponseMessage: action.message,
+      };
+
+    //for delete City Branch Api (City Admin for deleting existing branch in the city)
+    case actions.DELETE_CITY_BRANCH_SUCCESS:
+      return {
+        ...state,
+        deletedCityBranchData: action.response,
+        admin_ResponseMessage: action.message,
+      };
+
+    case actions.DELETE_CITY_BRANCH_FAIL:
+      return {
+        ...state,
+        deletedCityBranchData: null,
+        admin_ResponseMessage: action.message,
+      };
+
+    //for UPDAT Shifts Of Branch Api (City Admin for update existing branch in the city)
+    case actions.UPDATE_CITY_BRANCH_SUCCESS:
+      return {
+        ...state,
+        updatedCityBranchData: action.response,
+        admin_ResponseMessage: action.message,
+      };
+
+    case actions.UPDATE_CITY_BRANCH_FAIL:
+      return {
+        ...state,
+        updatedCityBranchData: null,
         admin_ResponseMessage: action.message,
       };
 
