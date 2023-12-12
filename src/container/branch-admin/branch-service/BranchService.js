@@ -368,6 +368,8 @@ const BranchService = () => {
         show={notification.notificationFlag}
         hide={setNotification}
         message={notification.notificationMessage}
+        // notificationIcon={<i className="icon-add-circle" />}
+        severity="error"
       /> */}
     </>
   );

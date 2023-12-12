@@ -13,7 +13,7 @@ const Message = {
 function Alert(props) {
   return <MuiAlert elevation={6} variant="filled" {...props} />;
 }
-const Notification = ({ hide, show, message }) => {
+const Notification = ({ hide, show, message, severity }) => {
   const state = useSelector((state) => state);
   const classes = useStyles();
   const vertical = "top";
@@ -41,7 +41,7 @@ const Notification = ({ hide, show, message }) => {
           >
             <Alert
               onClose={handleClose}
-              severity={"error"}
+              severity={severity}
               className={classes.BackGroundSucces}
             >
               {message}
