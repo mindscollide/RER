@@ -15,6 +15,9 @@ export const LOG_IN_FAIL = "LOG_IN_FAIL";
 // for cleare states of admin reducer
 export const ADMIN_CLEARE_STATE = "ADMIN_CLEARE_STATE";
 
+//Clear Response Message Admin
+export const CLEAR_RESPONSEMESSAGE_ADMIN = "CLEAR_RESPONSEMESSAGE_ADMIN";
+
 // for GET_SYSTEM_SUPPORTED_LANGUAGE Api
 export const GET_SYSTEM_SUPPORTED_LANGUAGE_SUCCESS =
   "GET_SYSTEM_SUPPORTED_LANGUAGE_SUCCESS";

@@ -3,10 +3,17 @@ import { Row, Col } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router";
 import "./BranchService.css";
-import { Paper, TextField, Button, Table } from "../../../components/elements";
+import {
+  Paper,
+  TextField,
+  Button,
+  Table,
+  Notification,
+} from "../../../components/elements";
 import { Switch } from "antd";
 import { useTranslation } from "react-i18next";
 import {
+  clearResponseMessageAdmin,
   getBranchServicesApi,
   //Commented Because Using Update All
   // updateBranchServicesApi,
@@ -31,6 +38,11 @@ const BranchService = () => {
   const dispatch = useDispatch();
 
   const [branchServices, setBranchServices] = useState([]);
+
+  const [notification, setNotification] = useState({
+    notificationFlag: false,
+    notificationMessage: null,
+  });
 
   const [initialBranchServicesData, setInitialBranchServicesData] = useState(
     []
@@ -275,6 +287,18 @@ const BranchService = () => {
     }
   };
 
+  useEffect(() => {
+    setTimeout(
+      setNotification({
+        ...notification,
+        notificationFlag: true,
+        notificationMessage: "Record Saved",
+      }),
+      3000
+    );
+    dispatch(clearResponseMessageAdmin(null));
+  }, []);
+
   return (
     <>
       <section className="SectionBranchService-Admin">
@@ -340,6 +364,13 @@ const BranchService = () => {
           </Col>
         </Row>
       </section>
+      {/* <Notification
+        show={notification.notificationFlag}
+        hide={setNotification}
+        message={notification.notificationMessage}
+        // notificationIcon={<i className="icon-add-circle" />}
+        severity="error"
+      /> */}
     </>
   );
 };

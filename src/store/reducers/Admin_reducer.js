@@ -27,6 +27,14 @@ const initialState = {
 
 const adminReducer = (state = initialState, action) => {
   switch (action.type) {
+    //Response Message Admin Clear
+    case actions.CLEAR_RESPONSEMESSAGE_ADMIN: {
+      return {
+        ...state,
+        admin_ResponseMessage: action.response,
+      };
+    }
+
     // For Admin Cleare State
     case actions.ADMIN_CLEARE_STATE:
       return {

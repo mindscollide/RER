@@ -28,6 +28,14 @@ import {
 import { adminURL } from "../../commen/apis/Api_ends_points";
 import moment from "moment";
 
+//Clear Response Message
+const clearResponseMessageAdmin = (message) => {
+  return {
+    type: actions.CLEAR_RESPONSEMESSAGE_ADMIN,
+    message: message,
+  };
+};
+
 // this is for cleare states
 const AdminCleareState = () => {
   return {
@@ -2208,6 +2216,7 @@ const updateCityBranchApi = (
 };
 
 export {
+  clearResponseMessageAdmin,
   AdminCleareState,
   getSystemSupportedLanguage,
   getLastSelectedLanguage,
