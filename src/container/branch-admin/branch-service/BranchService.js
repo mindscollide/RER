@@ -154,15 +154,6 @@ const BranchService = () => {
     }
   };
 
-  console.log("branchServicesDatabranchServicesData", branchServicesData);
-
-  console.log("branchServicesDatabranchServicesData", branchServices);
-
-  console.log(
-    "branchServicesDatabranchServicesData",
-    initialBranchServicesData
-  );
-
   return (
     <>
       <section className="SectionBranchService-Admin">
@@ -172,13 +163,27 @@ const BranchService = () => {
               {t("Branch")}
               <span className="shift-sub-heading">
                 {" "}
-                {t("Saudi-arabia-riyadh")}
+                {currentLanguage === "en"
+                  ? "(" +
+                    localStorage.getItem("countryName") +
+                    " " +
+                    "-" +
+                    " " +
+                    localStorage.getItem("cityName") +
+                    ")"
+                  : "(" +
+                    localStorage.getItem("countryNameArabic") +
+                    " - " +
+                    localStorage.getItem("cityNameArabic") +
+                    ")"}
               </span>
             </span>
           </Col>
           <Col lg={6} md={6} sm={6} className="d-flex justify-content-end">
             <span className="shift-sub-heading-right">
-              {t("Olaya-street-branch")}
+              {currentLanguage === "en"
+                ? localStorage.getItem("branchName")
+                : localStorage.getItem("branchNameArabic")}
             </span>
           </Col>
         </Row>

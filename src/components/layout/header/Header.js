@@ -204,7 +204,9 @@ const Header = ({ isLoginScreen }) => {
                             : { marginLeft: "5px" }
                         }
                       >
-                        Owais Wajid
+                        {selectedLanguage.code === "en"
+                          ? localStorage.getItem("name")
+                          : localStorage.getItem("nameArabic")}
                       </span>
                       <span className="user-thumb">
                         <img
