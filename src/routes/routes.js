@@ -70,11 +70,11 @@ export const router = createHashRouter(
       <Route element={<CityAdminRoutes />}>
         <Route exact path="/CityAdmin/" element={<Dashboard />}>
           <Route path="" element={<CityAdmin />} />
-          <Route path="CityAdmin" element={<CityAdmin />} />
-          <Route path="CountryWiseCity" element={<CountryWiseCity />} />
-          <Route path="CityBranchShift" element={<CityBranchShift />} />
-          <Route path="CityWiseCounter" element={<CityWiseCounter />} />
-          <Route path="EmployeeMain" element={<EmployeeMain />} />
+          <Route path="Branch" element={<CityAdmin />} />
+          <Route path="Services" element={<CountryWiseCity />} />
+          <Route path="Shifts" element={<CityBranchShift />} />
+          <Route path="Counters" element={<CityWiseCounter />} />
+          <Route path="Employee" element={<EmployeeMain />} />
         </Route>
       </Route>
       {/* City Admin Routes End */}

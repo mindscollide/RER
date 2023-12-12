@@ -53,6 +53,7 @@ const CounterMain = () => {
     BranchID: Number(localStorage.getItem("branchID")),
     CounterID: 0,
   });
+
   useEffect(() => {
     dispatch(getAllCountersOfBranch(t, navigate, Loading));
   }, []);
@@ -250,6 +251,7 @@ const CounterMain = () => {
       }
     } catch {}
   };
+
   return (
     <>
       <section>

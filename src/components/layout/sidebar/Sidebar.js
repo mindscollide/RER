@@ -29,7 +29,6 @@ const Sidebar = () => {
   };
 
   const onClick = (e) => {
-    console.log("click ", e);
     setSelectedKeys([e.key]);
     localStorage.setItem("selectedKeys", e.key);
     if (e.key === "2") {
@@ -39,15 +38,15 @@ const Sidebar = () => {
     } else if (e.key === "4") {
       navigate("BranchService");
     } else if (e.key === "5") {
-      navigate("CityAdmin");
+      navigate("Branch");
     } else if (e.key === "6") {
       navigate("CityBranchService");
     } else if (e.key === "7") {
-      navigate("CityBranchShift");
+      navigate("Shifts");
     } else if (e.key === "8") {
-      navigate("CityWiseCounter");
+      navigate("Counters");
     } else if (e.key === "9") {
-      navigate("EmployeeMain");
+      navigate("Employee");
     } else if (e.key === "10") {
       navigate("CountryCityWise");
     } else if (e.key === "11") {
@@ -69,7 +68,7 @@ const Sidebar = () => {
     } else if (e.key === "19") {
       navigate("NationalHoliday");
     } else if (e.key === "20") {
-      navigate("CountryWiseCity");
+      navigate("Services");
     } else if (e.key === "21") {
       navigate("GlobalService");
     } else if (e.key === "22") {

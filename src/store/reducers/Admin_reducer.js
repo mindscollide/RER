@@ -17,6 +17,7 @@ const initialState = {
   addBranchCounterData: null,
   updateBranchShiftData: null,
   deleteBranchShiftID: null,
+  cityBranchListData: null,
 };
 
 const adminReducer = (state = initialState, action) => {
@@ -202,7 +203,6 @@ const adminReducer = (state = initialState, action) => {
       };
 
     //Delete Branch Counter
-
     case actions.DELETE_BRANCH_COUNTER_SUCCESS:
       return {
         ...state,
@@ -259,6 +259,23 @@ const adminReducer = (state = initialState, action) => {
       return {
         ...state,
         addBranchCounterData: null,
+        admin_ResponseMessage: action.message,
+      };
+
+    // ===================================CITY ADMIN==========================================//
+
+    //Get All GET CITY BRANCH LIST Api for(City Admin for listing down existing branches in city)
+    case actions.GET_CITY_BRANCH_LIST_SUCCESS:
+      return {
+        ...state,
+        cityBranchListData: action.response,
+        admin_ResponseMessage: action.message,
+      };
+
+    case actions.GET_CITY_BRANCH_LIST_FAIL:
+      return {
+        ...state,
+        cityBranchListData: null,
         admin_ResponseMessage: action.message,
       };
 

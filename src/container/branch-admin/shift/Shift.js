@@ -24,9 +24,7 @@ import { useNavigate } from "react-router";
 import {
   convertDateforInputUTC,
   convertToGMT,
-  convertToHHMMSSOnchange,
   formatToHHMMSSUTC,
-  resolutionResultTable,
 } from "../../../commen/functions/Date_time_formatter";
 import { loader_Actions } from "../../../store/actions/Loader_action";
 import { regexOnlyForNumberNCharacters } from "../../../commen/functions/regex";
@@ -313,15 +311,15 @@ const BranchAdmin = () => {
     try {
       if (flag === 1) {
         setAddUpdateCheckFlag(true);
-          setNewShift({
-            ShiftNameEnglish: value.shiftNameEnglish,
-            ShiftNameArabic: value.shiftNameArabic,
-            IsShiftActive: value.isShiftActive,
-            ShiftStartTime: convertDateforInputUTC(value.shiftStartTime),
-            ShiftEndTime: convertDateforInputUTC(value.shiftEndTime),
-            BranchID: Number(localStorage.getItem("branchID")),
-            ShiftID: value.shiftID,
-          });
+        setNewShift({
+          ShiftNameEnglish: value.shiftNameEnglish,
+          ShiftNameArabic: value.shiftNameArabic,
+          IsShiftActive: value.isShiftActive,
+          ShiftStartTime: convertDateforInputUTC(value.shiftStartTime),
+          ShiftEndTime: convertDateforInputUTC(value.shiftEndTime),
+          BranchID: Number(localStorage.getItem("branchID")),
+          ShiftID: value.shiftID,
+        });
       } else if (flag === 2) {
         setDeleteID(value.shiftID);
         setDeleteModal(true);
@@ -339,12 +337,20 @@ const BranchAdmin = () => {
               <span className="shift-sub-heading">
                 {" "}
                 {currentLanguage === "en"
-                  ? localStorage.getItem("countryName") +
+                  ? "(" +
+                    localStorage.getItem("countryName") +
+                    " " +
                     "-" +
-                    localStorage.getItem("cityName")
-                  : localStorage.getItem("countryNameArabic") +
+                    " " +
+                    localStorage.getItem("cityName") +
+                    ")"
+                  : "(" +
+                    localStorage.getItem("countryNameArabic") +
+                    " " +
                     "-" +
-                    localStorage.getItem("cityNameArabic")}
+                    " " +
+                    localStorage.getItem("cityNameArabic") +
+                    ")"}
               </span>
             </span>
           </Col>
