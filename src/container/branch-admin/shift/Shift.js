@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { Row, Col } from "react-bootstrap";
 import "./Shift.css";
 import {
@@ -304,10 +304,12 @@ const BranchAdmin = () => {
         ShiftNameArabic: "",
         IsShiftActive: false,
         ShiftStartTime: "",
-        ShiftEndTime: "",
+        ShiftEndTime: null,
         BranchID: Number(localStorage.getItem("branchID")),
         ShiftID: 0,
       });
+
+      console.log(newShift.ShiftEndTime, "ShiftEndTimeShiftEndTime");
     } catch {}
   };
 
