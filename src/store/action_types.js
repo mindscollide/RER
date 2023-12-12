@@ -15,6 +15,9 @@ export const LOG_IN_FAIL = "LOG_IN_FAIL";
 // for cleare states of admin reducer
 export const ADMIN_CLEARE_STATE = "ADMIN_CLEARE_STATE";
 
+//Clear Response Message Admin
+export const CLEAR_RESPONSEMESSAGE_ADMIN = "CLEAR_RESPONSEMESSAGE_ADMIN";
+
 // for GET_SYSTEM_SUPPORTED_LANGUAGE Api
 export const GET_SYSTEM_SUPPORTED_LANGUAGE_SUCCESS =
   "GET_SYSTEM_SUPPORTED_LANGUAGE_SUCCESS";
@@ -69,9 +72,15 @@ export const GET_ALL_BRANCH_SERVICES_SUCCESS =
   "GET_ALL_BRANCH_SERVICES_SUCCESS";
 export const GET_ALL_BRANCH_SERVICES_FAIL = "GET_ALL_BRANCH_SERVICES_FAIL";
 
-//Update Branch Services
-export const UPDATE_BRANCH_SERVICES_SUCCESS = "UPDATE_BRANCH_SERVICES_SUCCESS";
-export const UPDATE_BRANCH_SERVICES_FAIL = "UPDATE_BRANCH_SERVICES_FAIL";
+//Update Branch Services (Commented Because Using Update All)
+// export const UPDATE_BRANCH_SERVICES_SUCCESS = "UPDATE_BRANCH_SERVICES_SUCCESS";
+// export const UPDATE_BRANCH_SERVICES_FAIL = "UPDATE_BRANCH_SERVICES_FAIL";
+
+//Update All Branch Services
+export const UPDATE_ALL_BRANCH_SERVICES_SUCCESS =
+  "UPDATE_ALL_BRANCH_SERVICES_SUCCESS";
+export const UPDATE_ALL_BRANCH_SERVICES_FAIL =
+  "UPDATE_ALL_BRANCH_SERVICES_FAIL";
 
 //update Branch Counter
 export const UPDATE_BRANCH_COUNTER_SUCCESS = "UPDATE_BRANCH_COUNTER_SUCCESS";
@@ -97,3 +106,15 @@ export const ADD_BRANCH_COUNTERT_FAIL = "ADD_BRANCH_COUNTERT_FAIL";
 //Get All GET CITY BRANCH LIST Api for(City Admin for listing down existing branches in city)
 export const GET_CITY_BRANCH_LIST_SUCCESS = "GET_CITY_BRANCH_LIST_SUCCESS";
 export const GET_CITY_BRANCH_LIST_FAIL = "GET_CITY_BRANCH_LIST_FAIL";
+
+//Get add City Branch Api for(City Admin for adding new branch in the city)
+export const ADD_CITY_BRANCH_SUCCESS = "ADD_CITY_BRANCH_SUCCESS";
+export const ADD_CITY_BRANCH_FAIL = "ADD_CITY_BRANCH_FAIL";
+
+//for delete City Branch Api (City Admin for deleting existing branch in the city)
+export const DELETE_CITY_BRANCH_SUCCESS = "DELETE_CITY_BRANCH_SUCCESS";
+export const DELETE_CITY_BRANCH_FAIL = "DELETE_CITY_BRANCH_FAIL";
+
+//for UPDAT Shifts Of Branch Api (City Admin for update existing branch in the city)
+export const UPDATE_CITY_BRANCH_SUCCESS = "UPDATE_CITY_BRANCH_SUCCESS";
+export const UPDATE_CITY_BRANCH_FAIL = "UPDATE_CITY_BRANCH_FAIL";

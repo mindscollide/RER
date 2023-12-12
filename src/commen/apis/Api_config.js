@@ -57,9 +57,14 @@ const getBranchServices = {
   RequestMethod: "ServiceManager.GetBranchServices",
 };
 
-// for Update Branch Services
-const updateBranchServices = {
-  RequestMethod: "ServiceManager.UpdateBranchServices",
+// for Update Branch Services (Commented Because Using Update All)
+// const updateBranchServices = {
+//   RequestMethod: "ServiceManager.UpdateBranchServices",
+// };
+
+// for Update Branch All Services
+const updateAllBranchServices = {
+  RequestMethod: "ServiceManager.UpdateAllBranchServices",
 };
 
 //For update branch Counter
@@ -94,6 +99,21 @@ const getCityBranchList = {
   RequestMethod: "ServiceManager.GetCityBranchList",
 };
 
+// for Add City Branch
+const addCityBranch = {
+  RequestMethod: "ServiceManager.AddCityBranch",
+};
+
+// for delete City Branch
+const deleteCityBranch = {
+  RequestMethod: "ServiceManager.DeleteCityBranch",
+};
+
+// for Update City Branch
+const updateCityBranch = {
+  RequestMethod: "ServiceManager.UpdateCityBranch",
+};
+
 export {
   logIn,
   roleList,
@@ -107,7 +127,9 @@ export {
   getSingleDayBranchRoaster,
   removeBranchRoasterEntry,
   getBranchServices,
-  updateBranchServices,
+  //Commented Because Using Update All
+  // updateBranchServices,
+  updateAllBranchServices,
   updateBranchCounter,
   deleteBranchCounter,
   updateBranchShift,
@@ -115,4 +137,7 @@ export {
   addBranchCounter,
   // ===================================CITY ADMIN==========================================//
   getCityBranchList,
+  addCityBranch,
+  deleteCityBranch,
+  updateCityBranch,
 };

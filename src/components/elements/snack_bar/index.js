@@ -13,7 +13,7 @@ const Message = {
 function Alert(props) {
   return <MuiAlert elevation={6} variant="filled" {...props} />;
 }
-const Notification = ({ setOpen, open, message }) => {
+const Notification = ({ hide, show, message, severity }) => {
   const state = useSelector((state) => state);
   const classes = useStyles();
   const vertical = "top";
@@ -22,8 +22,7 @@ const Notification = ({ setOpen, open, message }) => {
     if (reason === "clickaway") {
       return;
     }
-    // setOpen(!open);
-    setOpen({
+    hide({
       flag: false,
       message: "",
     });
@@ -35,14 +34,14 @@ const Notification = ({ setOpen, open, message }) => {
           <Snackbar
             autoHideDuration={4000}
             anchorOrigin={{ vertical, horizontal }}
-            open={open}
+            open={show}
             onClose={handleClose}
             message={message}
             key={vertical + horizontal}
           >
             <Alert
               onClose={handleClose}
-              severity={"error"}
+              severity={severity}
               className={classes.BackGroundSucces}
             >
               {message}

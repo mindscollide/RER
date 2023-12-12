@@ -3,7 +3,11 @@ import { Col, Row } from "react-bootstrap";
 import { Button, Modal } from "../../../components/elements";
 import "./DeleteEmployeeModal.css";
 import { useTranslation } from "react-i18next";
-import { deleteBranchCounterApi, deleteBranchShiftApi } from "../../../store/actions/Admin_action";
+import {
+  deleteBranchCounterApi,
+  deleteBranchShiftApi,
+  deleteCityBranchApi,
+} from "../../../store/actions/Admin_action";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router";
 
@@ -31,13 +35,21 @@ const DeleteEmployeeModal = ({
       await dispatch(
         deleteBranchShiftApi(t, navigate, Loading, data, setDeleteModal)
       );
-    }else if(route ==="BranchAdminCounterMain"){
+    } else if (route === "BranchAdminCounterMain") {
       let data = {
         CounterID: deleteID,
         BranchID: Number(localStorage.getItem("branchID")),
       };
       await dispatch(
         deleteBranchCounterApi(t, navigate, Loading, data, setDeleteModal)
+      );
+    } else if (route === "CityAdminBranch") {
+      let data = {
+        CityID: Number(localStorage.getItem("cityID")),
+        BranchID: deleteID,
+      };
+      await dispatch(
+        deleteCityBranchApi(t, navigate, Loading, data, setDeleteModal)
       );
     }
   };

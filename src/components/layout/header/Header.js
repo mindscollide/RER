@@ -42,7 +42,9 @@ const Header = ({ isLoginScreen }) => {
     code:
       localStorage.getItem("i18nextLng") === null
         ? "en"
-        : localStorage.getItem("i18nextLng"),
+        : localStorage.getItem("i18nextLng") === "en"
+        ? "en"
+        : "ar",
   });
 
   // Assuming "en" is the default language
@@ -155,7 +157,9 @@ const Header = ({ isLoginScreen }) => {
                 <div className="language-dd d-flex align-items-center ps-2">
                   <span className="user-name text-truncate">
                     {" "}
-                    {selectedLanguage.code === "en" ? "English" : "عربى"}
+                    {localStorage.getItem("i18nextLng") === "en"
+                      ? "English"
+                      : "عربى"}
                   </span>
                   <span
                     className="user-thumb-globe"
@@ -203,7 +207,7 @@ const Header = ({ isLoginScreen }) => {
                             : { marginLeft: "5px" }
                         }
                       >
-                        {selectedLanguage.code === "en"
+                        {localStorage.getItem("i18nextLng") === "en"
                           ? localStorage.getItem("name")
                           : localStorage.getItem("nameArabic")}
                       </span>

@@ -11,17 +11,30 @@ const initialState = {
   singleDayRoaster: [],
   removeRoasterEntryBranch: [],
   branchServicesData: null,
-  branchServicesUpdatedData: null,
+  //Commented Because Using Update All
+  // branchServicesUpdatedData: null,
+  branchServicesUpdatedAllData: null,
   updateBranchCounterData: null,
   deleteBranchCounterData: null,
   addBranchCounterData: null,
   updateBranchShiftData: null,
   deleteBranchShiftID: null,
   cityBranchListData: null,
+  addedCityBranchData: null,
+  deletedCityBranchData: null,
+  updatedCityBranchData: null,
 };
 
 const adminReducer = (state = initialState, action) => {
   switch (action.type) {
+    //Response Message Admin Clear
+    case actions.CLEAR_RESPONSEMESSAGE_ADMIN: {
+      return {
+        ...state,
+        admin_ResponseMessage: action.response,
+      };
+    }
+
     // For Admin Cleare State
     case actions.ADMIN_CLEARE_STATE:
       return {
@@ -171,18 +184,33 @@ const adminReducer = (state = initialState, action) => {
         admin_ResponseMessage: action.message,
       };
 
-    //Update Branch Services Reducers
-    case actions.UPDATE_BRANCH_SERVICES_SUCCESS:
+    //Update Branch Services Reducers (Commented Because Using Update All)
+    // case actions.UPDATE_BRANCH_SERVICES_SUCCESS:
+    //   return {
+    //     ...state,
+    //     branchServicesUpdatedData: action.response,
+    //     admin_ResponseMessage: action.message,
+    //   };
+
+    // case actions.UPDATE_BRANCH_SERVICES_FAIL:
+    //   return {
+    //     ...state,
+    //     branchServicesUpdatedData: null,
+    //     admin_ResponseMessage: action.message,
+    //   };
+
+    //Update All Branch Services Reducer
+    case actions.UPDATE_ALL_BRANCH_SERVICES_SUCCESS:
       return {
         ...state,
-        branchServicesUpdatedData: action.response,
+        branchServicesUpdatedAllData: action.response,
         admin_ResponseMessage: action.message,
       };
 
-    case actions.UPDATE_BRANCH_SERVICES_FAIL:
+    case actions.UPDATE_ALL_BRANCH_SERVICES_FAIL:
       return {
         ...state,
-        branchServicesUpdatedData: null,
+        branchServicesUpdatedAllData: null,
         admin_ResponseMessage: action.message,
       };
 
@@ -276,6 +304,51 @@ const adminReducer = (state = initialState, action) => {
       return {
         ...state,
         cityBranchListData: null,
+        admin_ResponseMessage: action.message,
+      };
+
+    //Get add City Branch Api for(City Admin for adding new branch in the city)
+    case actions.ADD_CITY_BRANCH_SUCCESS:
+      return {
+        ...state,
+        addedCityBranchData: action.response,
+        admin_ResponseMessage: action.message,
+      };
+
+    case actions.ADD_CITY_BRANCH_FAIL:
+      return {
+        ...state,
+        addedCityBranchData: null,
+        admin_ResponseMessage: action.message,
+      };
+
+    //for delete City Branch Api (City Admin for deleting existing branch in the city)
+    case actions.DELETE_CITY_BRANCH_SUCCESS:
+      return {
+        ...state,
+        deletedCityBranchData: action.response,
+        admin_ResponseMessage: action.message,
+      };
+
+    case actions.DELETE_CITY_BRANCH_FAIL:
+      return {
+        ...state,
+        deletedCityBranchData: null,
+        admin_ResponseMessage: action.message,
+      };
+
+    //for UPDAT Shifts Of Branch Api (City Admin for update existing branch in the city)
+    case actions.UPDATE_CITY_BRANCH_SUCCESS:
+      return {
+        ...state,
+        updatedCityBranchData: action.response,
+        admin_ResponseMessage: action.message,
+      };
+
+    case actions.UPDATE_CITY_BRANCH_FAIL:
+      return {
+        ...state,
+        updatedCityBranchData: null,
         admin_ResponseMessage: action.message,
       };
 

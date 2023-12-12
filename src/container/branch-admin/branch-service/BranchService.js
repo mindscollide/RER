@@ -3,12 +3,21 @@ import { Row, Col } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router";
 import "./BranchService.css";
-import { Paper, TextField, Button, Table } from "../../../components/elements";
+import {
+  Paper,
+  TextField,
+  Button,
+  Table,
+  Notification,
+} from "../../../components/elements";
 import { Switch } from "antd";
 import { useTranslation } from "react-i18next";
 import {
+  clearResponseMessageAdmin,
   getBranchServicesApi,
-  updateBranchServicesApi,
+  //Commented Because Using Update All
+  // updateBranchServicesApi,
+  updateAllBranchServicesApi,
 } from "../../../store/actions/Admin_action";
 
 const BranchService = () => {
@@ -29,6 +38,11 @@ const BranchService = () => {
   const dispatch = useDispatch();
 
   const [branchServices, setBranchServices] = useState([]);
+
+  const [notification, setNotification] = useState({
+    notificationFlag: false,
+    notificationMessage: null,
+  });
 
   const [initialBranchServicesData, setInitialBranchServicesData] = useState(
     []
@@ -59,18 +73,64 @@ const BranchService = () => {
     });
   };
 
-  const handleTextFieldChange = (value, rowIndex) => {
-    setBranchServices((prevServices) => {
-      return prevServices.map((service, index) => {
-        if (index === rowIndex) {
-          return {
-            ...service,
-            serviceSlotDurationMinutes: Number(value),
-          };
-        }
-        return service;
+  const handleTextFieldChangeService = (value, rowIndex, min, max) => {
+    // Validate the input range
+    const numericValue = Number(value);
+    if (numericValue >= min && numericValue <= max) {
+      setBranchServices((prevServices) => {
+        return prevServices.map((service, index) => {
+          if (index === rowIndex) {
+            return {
+              ...service,
+              serviceSlotDurationMinutes: numericValue,
+            };
+          }
+          return service;
+        });
       });
-    });
+      // Handle invalid input (e.g., show an error message)
+      console.error("Invalid input. Please enter a value between 10 and 100.");
+    }
+  };
+
+  const handleTextFieldChangeRoaster = (value, rowIndex, min, max) => {
+    // Validate the input range
+    const numericValue = Number(value);
+    if (numericValue >= min && numericValue <= max) {
+      setBranchServices((prevServices) => {
+        return prevServices.map((service, index) => {
+          if (index === rowIndex) {
+            return {
+              ...service,
+              maximumAdvanceRoasterDays: numericValue,
+            };
+          }
+          return service;
+        });
+      });
+      // Handle invalid input (e.g., show an error message)
+      console.error("Invalid input. Please enter a value between 10 and 100.");
+    }
+  };
+
+  const handleTextFieldChangeMargin = (value, rowIndex, min, max) => {
+    // Validate the input range
+    const numericValue = Number(value);
+    if (numericValue >= min && numericValue <= max) {
+      setBranchServices((prevServices) => {
+        return prevServices.map((service, index) => {
+          if (index === rowIndex) {
+            return {
+              ...service,
+              prebookingDaysMarginForBranch: numericValue,
+            };
+          }
+          return service;
+        });
+      });
+      // Handle invalid input (e.g., show an error message)
+      console.error("Invalid input. Please enter a value between 10 and 100.");
+    }
   };
 
   const columns = [
@@ -117,8 +177,63 @@ const BranchService = () => {
               onChange={(e) => {
                 const inputValue = e.target.value;
                 const numericInput = inputValue.replace(/[^0-9]/g, "");
-                handleTextFieldChange(numericInput, rowIndex);
+                handleTextFieldChangeService(numericInput, rowIndex, 10, 100);
               }}
+              type="number"
+              min={10}
+              max={100}
+            />
+          </span>
+        </>
+      ),
+    },
+    {
+      title: <span className="table-text">{t("Advance-roaster-days")}</span>,
+      dataIndex: "maximumAdvanceRoasterDays",
+      key: "maximumAdvanceRoasterDays",
+      width: "200px",
+      align: "center",
+      render: (text, record, rowIndex) => (
+        <>
+          <span className="For-table-textfield">
+            <TextField
+              labelClass="d-none"
+              className="for-inside-table-textfiel"
+              value={text}
+              onChange={(e) => {
+                const inputValue = e.target.value;
+                const numericInput = inputValue.replace(/[^0-9]/g, "");
+                handleTextFieldChangeRoaster(numericInput, rowIndex, 0, 30);
+              }}
+              type="number"
+              min={0}
+              max={30}
+            />
+          </span>
+        </>
+      ),
+    },
+    {
+      title: <span className="table-text">{t("Prebooking-margin-days")}</span>,
+      dataIndex: "prebookingDaysMarginForBranch",
+      key: "prebookingDaysMarginForBranch",
+      width: "200px",
+      align: "center",
+      render: (text, record, rowIndex) => (
+        <>
+          <span className="For-table-textfield">
+            <TextField
+              labelClass="d-none"
+              className="for-inside-table-textfiel"
+              value={text}
+              onChange={(e) => {
+                const inputValue = e.target.value;
+                const numericInput = inputValue.replace(/[^0-9]/g, "");
+                handleTextFieldChangeMargin(numericInput, rowIndex, 10, 100);
+              }}
+              type="number"
+              min={0}
+              max={30}
             />
           </span>
         </>
@@ -134,23 +249,55 @@ const BranchService = () => {
 
   const saveBranchServices = async (data) => {
     try {
-      const apiPromises = data.map(async (row) => {
-        const requestData = {
-          BranchID: Number(localStorage.getItem("branchID")),
-          BranchServiceID: row.branchService.serviceID,
-          IsServiceAvailableAtBranch: row.isServiceAvailableAtBranch,
-          ServiceSlotDurationMinutes: row.serviceSlotDurationMinutes,
-        };
-        return dispatch(
-          updateBranchServicesApi(requestData, t, navigate, Loading)
-        );
-      });
-      await Promise.all(apiPromises);
-      dispatch(getBranchServicesApi(t, navigate, Loading));
+      //Commenting Because Using Get All
+      // const apiPromises = data.map(async (row) => {
+      //   const requestData = {
+      //     BranchID: Number(localStorage.getItem("branchID")),
+      //     BranchServiceID: row.branchService.serviceID,
+      //     IsServiceAvailableAtBranch: row.isServiceAvailableAtBranch,
+      //     ServiceSlotDurationMinutes: row.serviceSlotDurationMinutes,
+      //   };
+      //   return dispatch(
+      //     updateBranchServicesApi(requestData, t, navigate, Loading)
+      //   );
+      // });
+      // await Promise.all(apiPromises);
+
+      //Update All Functionality
+      const requestData = {
+        BranchID: 1,
+        ListOfBranchServices: data.map((branchService) => {
+          return {
+            BranchServiceID: branchService.branchServiceID,
+            IsServiceAvailableAtBranch:
+              branchService.isServiceAvailableAtBranch,
+            ServiceSlotDurationMinutes:
+              branchService.serviceSlotDurationMinutes,
+            MaximumAdvanceRoasterDays: branchService.maximumAdvanceRoasterDays,
+            PrebookingDaysMarginForBranch:
+              branchService.prebookingDaysMarginForBranch,
+          };
+        }),
+      };
+      console.log("Update Branch Services Data", requestData);
+      dispatch(updateAllBranchServicesApi(t, navigate, Loading, requestData));
+      // dispatch(getBranchServicesApi(t, navigate, Loading));
     } catch (error) {
       console.error("Error in API calls", error);
     }
   };
+
+  useEffect(() => {
+    setTimeout(
+      setNotification({
+        ...notification,
+        notificationFlag: true,
+        notificationMessage: "Record Saved",
+      }),
+      3000
+    );
+    dispatch(clearResponseMessageAdmin(null));
+  }, []);
 
   return (
     <>
@@ -217,6 +364,13 @@ const BranchService = () => {
           </Col>
         </Row>
       </section>
+      {/* <Notification
+        show={notification.notificationFlag}
+        hide={setNotification}
+        message={notification.notificationMessage}
+        // notificationIcon={<i className="icon-add-circle" />}
+        severity="error"
+      /> */}
     </>
   );
 };
