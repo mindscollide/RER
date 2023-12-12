@@ -153,6 +153,8 @@ const setLogIn = (t, navigate, data) => {
                     t("ERM_AuthService_AuthManager_Login_03")
                   )
                 );
+                await  localStorage.setItem("selectedKeys","5")
+
                 await navigate("/CityAdmin/");
                 // await dispatch(loader_Actions(false));
               } else if (response.data.responseResult.roleID === 4) {
@@ -162,6 +164,7 @@ const setLogIn = (t, navigate, data) => {
                     t("ERM_AuthService_AuthManager_Login_03")
                   )
                 );
+                await  localStorage.setItem("selectedKeys",["2"])
                 await navigate("/BranchAdmin/");
                 // await dispatch(loader_Actions(false));
               } else if (response.data.responseResult.roleID === 5) {
