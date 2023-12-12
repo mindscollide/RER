@@ -12,3 +12,47 @@
   align-items: center;
   gap: 5px;
 }
+
+.save-btn-Service-Country {
+  font-size: 14px;
+  font-weight: 500;
+  font-family: "Montserrat", sans-serif !important;
+  padding: 6px 12px !important;
+  border-top-right-radius: 0px;
+  border-bottom-left-radius: 0px;
+  border-top-left-radius: 8px;
+  border-bottom-right-radius: 8px;
+  background: linear-gradient(to bottom, #7484b7 0%, #536395 100%);
+  border-color: #7484b7 !important;
+}
+
+body[dir="rtl"] .save-btn-Service-Country {
+  font-family: "Times New Roman", Times, serif !important;
+}
+
+.save-btn-Service-Country:hover {
+  background: linear-gradient(to bottom, #77c0cb 0%, #2c9cc0 100%);
+  border-color: #77c0cb !important;
+}
+
+.revert-btn-Service-Country {
+  font-size: 14px;
+  font-weight: 500;
+  font-family: "Montserrat", sans-serif !important;
+  padding: 6px 18px !important;
+  border-top-right-radius: 0px;
+  border-bottom-left-radius: 0px;
+  border-top-left-radius: 8px;
+  border-bottom-right-radius: 8px;
+  background: linear-gradient(to bottom, #77c0cb 0%, #2c9cc0 100%);
+  border-color: #77c0cb !important;
+}
+
+body[dir="rtl"] .revert-btn-Service-Country {
+  font-family: "Times New Roman", Times, serif !important;
+}
+
+.revert-btn-Service-Country:hover {
+  background: linear-gradient(to bottom, #7484b7 0%, #536395 100%);
+  border-color: #7484b7 !important;
+}

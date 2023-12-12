@@ -30,6 +30,10 @@
   border-color: #7484b7 !important;
 }
 
+body[dir="rtl"] .Yes-btn-Employee {
+  font-family: "Times New Roman", Times, serif !important;
+}
+
 .Yes-btn-Employee:hover {
   background: linear-gradient(to bottom, #77c0cb 0%, #2c9cc0 100%);
   border-color: #77c0cb !important;
@@ -47,6 +51,10 @@
   border-bottom-right-radius: 8px;
   background: #f7f8ff;
   border-color: #f7f8ff !important;
+}
+
+body[dir="rtl"] .No-btn-Employee {
+  font-family: "Times New Roman", Times, serif !important;
 }
 
 .No-btn-Employee:hover {

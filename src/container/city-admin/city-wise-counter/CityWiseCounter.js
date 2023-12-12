@@ -66,14 +66,19 @@ const CityWiseCounter = () => {
 
   const columns = [
     {
-      title: <span>{t("Counter-name")}</span>,
+      title: (
+        <span className="table-inside-header-text-new">
+          {t("Counter-name")}
+        </span>
+      ),
       dataIndex: "counterName",
       key: "counterName",
       width: "400px",
-      align: "left",
     },
     {
-      title: <span>{t("Service")}</span>,
+      title: (
+        <span className="table-inside-header-text-new">{t("Service")}</span>
+      ),
       dataIndex: "service",
       key: "service",
       width: "200px",

@@ -95,7 +95,7 @@ const Login = () => {
                   </Row>
                   <Row>
                     <Col sm={12} md={12} lg={12} className="mt-1">
-                      <span className="Heading-js">{t("Login")}</span>
+                      <span className="Heading-Rer">{t("Login")}</span>
                     </Col>
                     <Col sm={12} md={12} lg={12} className="mt-3">
                       <div className="textfield-padding">

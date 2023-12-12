@@ -178,7 +178,7 @@ const EmployeeMain = () => {
                   <Button
                     icon={<i className="icon-repeat icon-space"></i>}
                     text={t("Revert")}
-                    className="revert-btn-CityBranchWise"
+                    className="revert-btn-Employeemain"
                   />
                   <Button
                     icon={<i className="icon-user-plus icon-space"></i>}

@@ -34,9 +34,9 @@ const Sidebar = () => {
     if (e.key === "2") {
       navigate("Shift");
     } else if (e.key === "3") {
-      navigate("CounterMain");
+      navigate("Counter");
     } else if (e.key === "4") {
-      navigate("BranchService");
+      navigate("Services");
     } else if (e.key === "5") {
       navigate("Branch");
     } else if (e.key === "6") {
@@ -52,37 +52,37 @@ const Sidebar = () => {
     } else if (e.key === "11") {
       navigate("CountryMain");
     } else if (e.key === "12") {
-      navigate("CountryAdminMain");
+      navigate("City");
     } else if (e.key === "13") {
-      navigate("ServiceCountryScreen");
+      navigate("Services");
     } else if (e.key === "14") {
-      navigate("CountryCityBranch");
+      navigate("Branch");
     } else if (e.key === "15") {
-      navigate("CountryCityWiseShift");
+      navigate("Shifts");
     } else if (e.key === "16") {
-      navigate("CountryCityWiseCounter");
+      navigate("Counters");
     } else if (e.key === "17") {
-      navigate("CountryWiseEmployee");
+      navigate("Employee");
     } else if (e.key === "18") {
       navigate("BranchRoaster");
     } else if (e.key === "19") {
-      navigate("NationalHoliday");
+      navigate("Holidays");
     } else if (e.key === "20") {
       navigate("Services");
     } else if (e.key === "21") {
-      navigate("GlobalService");
+      navigate("Services");
     } else if (e.key === "22") {
-      navigate("CounteryMain");
+      navigate("Country");
     } else if (e.key === "23") {
-      navigate("CityScreen");
+      navigate("City");
     } else if (e.key === "24") {
-      navigate("BranchScreen");
+      navigate("Branch");
     } else if (e.key === "25") {
-      navigate("EmployeeScreen");
+      navigate("Employee");
     } else if (e.key === "26") {
-      navigate("ShiftScreen");
+      navigate("Shifts");
     } else if (e.key === "27") {
-      navigate("BranchServiceCounter");
+      navigate("Counters");
     } else {
       // Handle other keys or add more conditions as needed
     }

@@ -26,6 +26,10 @@
   border-color: #7484b7 !important;
 }
 
+body[dir="rtl"] .save-btn-Country-City-Wise {
+  font-family: "Times New Roman", Times, serif !important;
+}
+
 .save-btn-Country-City-Wise:hover {
   background: linear-gradient(to bottom, #77c0cb 0%, #2c9cc0 100%);
   border-color: #77c0cb !important;
@@ -42,6 +46,10 @@
   border-bottom-right-radius: 8px;
   background: linear-gradient(to bottom, #77c0cb 0%, #2c9cc0 100%);
   border-color: #77c0cb !important;
+}
+
+body[dir="rtl"] .revert-btn-Country-City-Wise {
+  font-family: "Times New Roman", Times, serif !important;
 }
 
 .revert-btn-Country-City-Wise:hover {

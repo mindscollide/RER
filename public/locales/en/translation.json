@@ -2,7 +2,7 @@
   "Setups": "Setups",
   "Branch-admin": "Branch Admin",
   "Counter-admin": "Counter Admin",
-  "Branch-service": "Branch Service",
+  "Branch-service-countryadmin": "Services",
   "City-admin": "City Admin",
   "City-wise-branch-services": "City Wise Branch Services",
   "City-branch-wise-shifts": "City Branch Wise Shifts",
@@ -152,5 +152,6 @@
   "Admin_AdminServiceManager_UpdateBranchShift_03": "Branch Not Found",
   "Admin_AdminServiceManager_DeleteBranchShift_01": "Shift Deleted Successfully",
   "Admin_AdminServiceManager_DeleteBranchShift_02": "Shift Not Found",
-  "Shifts": "Shifts"
+  "Shifts": "Shifts",
+  "Holidays": "Holidays"
 }

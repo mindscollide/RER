@@ -58,7 +58,6 @@ const CountryCityBranch = () => {
       dataIndex: "shiftName",
       key: "shiftName",
       width: "400px",
-      align: "left",
     },
 
     {

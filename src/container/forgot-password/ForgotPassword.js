@@ -90,7 +90,7 @@ const ForgotPassword = () => {
                   </Row>
                   <Row>
                     <Col sm={12} md={12} lg={12}>
-                      <span className="forgot-Heading-js">
+                      <span className="forgot-Heading-Rer">
                         {t("Recover-password")}
                       </span>
                     </Col>
