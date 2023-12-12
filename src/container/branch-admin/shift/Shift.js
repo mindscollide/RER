@@ -49,9 +49,9 @@ const BranchAdmin = () => {
   const deleteBranchShiftID = useSelector(
     (state) => state.admin.deleteBranchShiftID
   );
-
   const Loading = useSelector((state) => state.Loader.Loading);
   const [rows, setRows] = useState([]);
+
   // if its false its means its going to add else its going to update
   const [addUpdateCheckFlag, setAddUpdateCheckFlag] = useState(false);
   const [calendarValue, setCalendarValue] = useState(gregorian);
@@ -81,13 +81,17 @@ const BranchAdmin = () => {
     }
   }, [currentLanguage]);
 
+  // calling  data api
   useEffect(() => {
     dispatch(getAllShiftsOfBranch(t, navigate, Loading));
   }, []);
 
+  // updating data in table
   useEffect(() => {
     if (branchesList !== null) {
       setRows(branchesList);
+    } else {
+      setRows([]);
     }
   }, [branchesList]);
 

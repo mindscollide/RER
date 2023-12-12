@@ -94,6 +94,21 @@ const getCityBranchList = {
   RequestMethod: "ServiceManager.GetCityBranchList",
 };
 
+// for Add City Branch
+const addCityBranch = {
+  RequestMethod: "ServiceManager.AddCityBranch",
+};
+
+// for delete City Branch
+const deleteCityBranch = {
+  RequestMethod: "ServiceManager.DeleteCityBranch",
+};
+
+// for Update City Branch
+const updateCityBranch = {
+  RequestMethod: "ServiceManager.UpdateCityBranch",
+};
+
 export {
   logIn,
   roleList,
@@ -115,4 +130,7 @@ export {
   addBranchCounter,
   // ===================================CITY ADMIN==========================================//
   getCityBranchList,
+  addCityBranch,
+  deleteCityBranch,
+  updateCityBranch,
 };
