@@ -151,5 +151,6 @@
   "Admin_AdminServiceManager_UpdateBranchShift_02": "Shift Details Not Found",
   "Admin_AdminServiceManager_UpdateBranchShift_03": "Branch Not Found",
   "Admin_AdminServiceManager_DeleteBranchShift_01": "Shift Deleted Successfully",
-  "Admin_AdminServiceManager_DeleteBranchShift_02": "Shift Not Found"
+  "Admin_AdminServiceManager_DeleteBranchShift_02": "Shift Not Found",
+  "Shift-arabic-name": "اسم الخدمة"
 }

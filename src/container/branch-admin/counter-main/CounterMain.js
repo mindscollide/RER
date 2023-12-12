@@ -221,13 +221,13 @@ const CounterMain = () => {
                   />
                 </Col>
 
-                <Col lg={6} md={6} sm={6}>
-                  <span className="text-labels">{t("Counter-name")}</span>
+                <Col lg={6} md={6} sm={6} className="text-end">
+                  <span className="text-labels">اسم العداد</span>
                   <TextField
                     name="CounterNameArabic"
-                    placeholder={t("Counter-name")}
+                    placeholder="اسم العداد"
                     labelClass="d-none"
-                    className="text-fiels-counterMain"
+                    className="text-fiels-counterMain-arabic"
                     value={newCounter.CounterNameArabic}
                     onChange={handleChange}
                   />

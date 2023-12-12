@@ -31,6 +31,13 @@ body::-webkit-scrollbar-thumb {
   font-weight: 600;
 }
 
+body[dir="rtl"] .shift-heading {
+  font-size: 18px;
+  color: #004990;
+  font-family: "Times New Roman", Times, serif !important;
+  font-weight: 600;
+}
+
 .shift-sub-heading {
   font-size: 18px;
   color: #1ab4d0 !important;
@@ -38,9 +45,23 @@ body::-webkit-scrollbar-thumb {
   font-weight: 600;
 }
 
+body[dir="rtl"] .shift-sub-heading {
+  font-size: 18px;
+  color: #1ab4d0;
+  font-family: "Times New Roman", Times, serif !important;
+  font-weight: 600;
+}
+
 .shift-sub-heading-right {
   font-size: 18px;
   font-family: "Montserrat", sans-serif;
+  color: #87b939 !important;
+  font-weight: 600;
+}
+
+body[dir="rtl"] .shift-sub-heading-right {
+  font-size: 18px;
+  font-family: "Times New Roman", Times, serif !important;
   color: #87b939 !important;
   font-weight: 600;
 }
@@ -53,6 +74,13 @@ body::-webkit-scrollbar-thumb {
   font-size: 11px;
   font-weight: 700;
   font-family: "Montserrat", sans-serif;
+  color: #45494d !important;
+}
+
+body[dir="rtl"] .text-labels {
+  font-size: 11px;
+  font-weight: 700;
+  font-family: "Times New Roman", Times, serif !important;
   color: #45494d !important;
 }
 
@@ -70,7 +98,7 @@ body::-webkit-scrollbar-thumb {
 body[dir="rtl"] .checkbox-label {
   margin-right: 10px;
   color: #45494d !important;
-  font-family: "Montserrat", sans-serif;
+  font-family: "Times New Roman", Times, serif !important;
   font-weight: 500;
 }
 
@@ -90,10 +118,22 @@ body[dir="rtl"] .checkbox-label {
   font-size: 14px !important;
 }
 
+body[dir="rtl"] .table-text {
+  font-family: "Times New Roman", Times, serif !important;
+  font-size: 14px !important;
+}
+
 .table-inside-text {
   color: #212529 !important;
   font-family: "Montserrat", sans-serif;
   font-size: 14px;
+  font-weight: 500;
+}
+
+body[dir="rtl"] .table-inside-text {
+  color: #212529 !important;
+  font-family: "Times New Roman", Times, serif !important;
+  font-size: 14px !important;
   font-weight: 500;
 }
 
