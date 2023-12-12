@@ -226,15 +226,15 @@ const Header = ({ isLoginScreen }) => {
                     eventKey={1}
                   >
                     <i className="icon-settings me-1" />
-                    {t("Setting")}
+                    <span>{t("Setting")}</span>
                   </NavDropdown.Item>
                   <NavDropdown.Item eventKey={2}>
                     <i className="icon-lock me-1"></i>
-                    {t("Lock-screen")}
+                    <span>{t("Lock-screen")}</span>
                   </NavDropdown.Item>
                   <NavDropdown.Item eventKey={3}>
                     <i className="icon-logout me-1"></i>
-                    {t("Logout")}
+                    <span>{t("Logout")}</span>
                   </NavDropdown.Item>
                 </NavDropdown>
               </>

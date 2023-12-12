@@ -119,6 +119,22 @@ body[dir="rtl"] .ant-layout .ant-layout-sider-children {
   font-weight: 500 !important;
 }
 
+body[dir="rtl"]
+  :where(.css-dev-only-do-not-override-2q8sxy).ant-menu-inline.ant-menu-root
+  .ant-menu-item
+  > .ant-menu-title-content,
+:where(.css-dev-only-do-not-override-2q8sxy).ant-menu-inline.ant-menu-root
+  .ant-menu-submenu-title
+  > .ant-menu-title-content {
+  flex: auto;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-family: "Times New Roman", Times, serif !important;
+  font-size: 14px !important;
+  font-weight: 500 !important;
+}
+
 :where(.css-dev-only-do-not-override-2q8sxy).ant-menu-light.ant-menu-inline
   .ant-menu-item,
 :where(.css-dev-only-do-not-override-2q8sxy).ant-menu-light
@@ -145,4 +161,8 @@ li.ant-menu-item.ant-menu-item-selected.ant-menu-item-only-child {
   font-weight: 600;
   font-family: "Montserrat", sans-serif !important;
   color: #536395 !important;
+}
+
+body[dir="rtl"] .setup-text-style {
+  font-family: "Times New Roman", Times, serif !important;
 }
