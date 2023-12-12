@@ -81,12 +81,12 @@ const ServiceCountryScreen = () => {
                   <Button
                     icon={<i className="icon-save icon-space"></i>}
                     text={t("Save")}
-                    className="save-btn-Country-City-Wise"
+                    className="save-btn-Service-Country"
                   />
                   <Button
                     icon={<i className="icon-repeat icon-space"></i>}
                     text={t("Revert")}
-                    className="revert-btn-Country-City-Wise"
+                    className="revert-btn-Service-Country"
                   />
                 </Col>
               </Row>

@@ -109,6 +109,24 @@ body[dir="rtl"] .checkbox-label {
   font-weight: 400;
 }
 
+body[dir="rtl"] .checkbox-label-Active-Employee-Modal {
+  margin-right: 3px;
+  font-family: "Times New Roman", Times, serif !important;
+}
+
+.branch-employee-checkbox {
+  margin-left: 2px;
+  font-size: 12px;
+  color: #21252d !important;
+  font-family: "Montserrat", sans-serif;
+  font-weight: 400;
+}
+
+body[dir="rtl"] .branch-employee-checkbox {
+  margin-right: 3px;
+  font-family: "Times New Roman", Times, serif !important;
+}
+
 /* For checkbox labels End */
 
 /* For table Title Text and inside text Start*/
@@ -135,6 +153,20 @@ body[dir="rtl"] .table-inside-text {
   font-family: "Times New Roman", Times, serif !important;
   font-size: 14px !important;
   font-weight: 500;
+}
+
+.table-inside-header-text-new {
+  color: #002650 !important;
+  font-family: "Montserrat", sans-serif;
+  font-size: 14px !important;
+  font-weight: 700;
+}
+
+body[dir="rtl"] .table-inside-header-text-new {
+  color: #002650 !important;
+  font-family: "Times New Roman", Times, serif !important;
+  font-size: 14px !important;
+  font-weight: 700;
 }
 
 /* For table Title Text and inside text End*/
@@ -225,11 +257,22 @@ body[dir="rtl"] .table-inside-text {
   color: #ffffff;
 }
 
+body[dir="rtl"] .toggle-tiles {
+  font-size: 16px;
+  font-weight: 600;
+  font-family: "Times New Roman", Times, serif !important;
+  color: #ffffff;
+}
+
 .toggle-insidetile-available {
   font-size: 14px;
   font-weight: 700;
   font-family: "Montserrat", sans-serif !important;
   color: #45494d;
+}
+
+body[dir="rtl"] .toggle-insidetile-available {
+  font-family: "Times New Roman", Times, serif !important;
 }
 
 /* toggle title End*/
@@ -243,11 +286,19 @@ body[dir="rtl"] .table-inside-text {
   color: #4b5576;
 }
 
+body[dir="rtl"] .add-edit-heading-modal {
+  font-family: "Times New Roman", Times, serif !important;
+}
+
 .confirm-delete-text {
   font-size: 14px;
   font-family: "Montserrat", sans-serif !important;
   color: #45494d !important;
   font-weight: 500;
+}
+
+body[dir="rtl"] .confirm-delete-text {
+  font-family: "Times New Roman", Times, serif !important;
 }
 
 /* Labels For Modals End */

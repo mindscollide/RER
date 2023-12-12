@@ -64,7 +64,7 @@ const AddEditEmployee = ({ addEditModal, setAddEditModal }) => {
                     checked={isCheckbox}
                     classNameDiv="chechbox-align-label"
                     label={
-                      <span className="checkbox-label-Active-Employee-Modal">
+                      <span className="branch-employee-checkbox">
                         {t("Active")}
                       </span>
                     }
@@ -82,7 +82,9 @@ const AddEditEmployee = ({ addEditModal, setAddEditModal }) => {
                     onChange={branchEmployeeRadioChange}
                     value={branchEmployee}
                   >
-                    <Radio value="option1">{t("Branch-employee")}</Radio>
+                    <Radio className="branch-employee-checkbox" value="option1">
+                      {t("Branch-employee")}
+                    </Radio>
                   </Radio.Group>
                 </div>
               </Col>
@@ -93,7 +95,9 @@ const AddEditEmployee = ({ addEditModal, setAddEditModal }) => {
             <Row>
               <Col lg={12} md={12} sm={12} className="mt-3">
                 <Radio.Group onChange={homeVisitRadioChange} value={homeVisit}>
-                  <Radio value="option1">{t("Home-visit")}</Radio>
+                  <Radio value="option1" className="branch-employee-checkbox">
+                    {t("Home-visit")}
+                  </Radio>
                 </Radio.Group>
               </Col>
             </Row>
