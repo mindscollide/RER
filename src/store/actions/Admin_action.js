@@ -27,7 +27,6 @@ import {
 } from "../../commen/apis/Api_config";
 import { adminURL } from "../../commen/apis/Api_ends_points";
 import moment from "moment";
-let token = JSON.parse(localStorage.getItem("token"));
 
 //Clear Response Message
 const clearResponseMessageAdmin = (message) => {
@@ -394,7 +393,7 @@ const getAllShiftsOfBranch = (t, navigate, loadingFlag) => {
       url: adminURL,
       data: form,
       headers: {
-        _token: token,
+        _token: JSON.parse(localStorage.getItem("token")),
       },
     })
       .then(async (response) => {
@@ -481,7 +480,7 @@ const getAllCountersOfBranch = (t, navigate, loadingFlag) => {
       url: adminURL,
       data: form,
       headers: {
-        _token: token,
+        _token: JSON.parse(localStorage.getItem("token")),
       },
     })
       .then(async (response) => {
@@ -567,7 +566,7 @@ const addBranchShiftApi = (t, navigate, loadingFlag, data, setState) => {
       url: adminURL,
       data: form,
       headers: {
-        _token: token,
+        _token: JSON.parse(localStorage.getItem("token")),
       },
     })
       .then(async (response) => {
@@ -668,7 +667,7 @@ const updateBranchShiftApi = (
       url: adminURL,
       data: form,
       headers: {
-        _token: token,
+        _token: JSON.parse(localStorage.getItem("token")),
       },
     })
       .then(async (response) => {
@@ -768,7 +767,7 @@ const deleteBranchShiftApi = (t, navigate, loadingFlag, data, setModalFlag) => {
       url: adminURL,
       data: form,
       headers: {
-        _token: token,
+        _token: JSON.parse(localStorage.getItem("token")),
       },
     })
       .then(async (response) => {
@@ -859,7 +858,7 @@ const addBranchCounterApi = (t, navigate, loadingFlag, data, setState) => {
       url: adminURL,
       data: form,
       headers: {
-        _token: token,
+        _token: JSON.parse(localStorage.getItem("token")),
       },
     })
       .then(async (response) => {
@@ -959,7 +958,7 @@ const addBranchRoasterEntryApiFunction = (
       url: adminURL,
       data: form,
       headers: {
-        _token: token,
+        _token: JSON.parse(localStorage.getItem("token")),
       },
     })
       .then(async (response) => {
@@ -1099,7 +1098,7 @@ const getSingleBranchRoasterApiFunction = (
       url: adminURL,
       data: form,
       headers: {
-        _token: token,
+        _token: JSON.parse(localStorage.getItem("token")),
       },
     })
       .then(async (response) => {
@@ -1213,7 +1212,7 @@ const removingBranchEntryRoasterApiFunction = (
       url: adminURL,
       data: form,
       headers: {
-        _token: token,
+        _token: JSON.parse(localStorage.getItem("token")),
       },
     })
       .then(async (response) => {
@@ -1342,7 +1341,7 @@ const getBranchServicesApi = (t, navigate, loadingFlag) => {
       url: adminURL,
       data: form,
       headers: {
-        _token: token,
+        _token: JSON.parse(localStorage.getItem("token")),
       },
     })
       .then(async (response) => {
@@ -1436,7 +1435,7 @@ const getBranchServicesApi = (t, navigate, loadingFlag) => {
 //       url: adminURL,
 //       data: form,
 //       headers: {
-//         _token: token,
+//        _token : JSON.parse(localStorage.getItem("token"))
 //       },
 //     })
 //       .then(async (response) => {
@@ -1532,7 +1531,7 @@ const updateAllBranchServicesApi = (t, navigate, loadingFlag, data) => {
       url: adminURL,
       data: form,
       headers: {
-        _token: token,
+        _token: JSON.parse(localStorage.getItem("token")),
       },
     })
       .then(async (response) => {
@@ -1642,7 +1641,7 @@ const updateBranchCounterApi = (
       url: adminURL,
       data: form,
       headers: {
-        _token: token,
+        _token: JSON.parse(localStorage.getItem("token")),
       },
     })
       .then(async (response) => {
@@ -1762,7 +1761,7 @@ const deleteBranchCounterApi = (
       url: adminURL,
       data: form,
       headers: {
-        _token: token,
+        _token: JSON.parse(localStorage.getItem("token")),
       },
     })
       .then(async (response) => {
@@ -1869,7 +1868,7 @@ const getCityBranchListApi = (t, navigate, loadingFlag) => {
       url: adminURL,
       data: form,
       headers: {
-        _token: token,
+        _token: JSON.parse(localStorage.getItem("token")),
       },
     })
       .then(async (response) => {
@@ -1953,7 +1952,7 @@ const addCityBranchApi = (t, navigate, loadingFlag, data, setState) => {
       url: adminURL,
       data: form,
       headers: {
-        _token: token,
+        _token: JSON.parse(localStorage.getItem("token")),
       },
     })
       .then(async (response) => {
@@ -2047,7 +2046,7 @@ const deleteCityBranchApi = (t, navigate, loadingFlag, data, setModalFlag) => {
       url: adminURL,
       data: form,
       headers: {
-        _token: token,
+        _token: JSON.parse(localStorage.getItem("token")),
       },
     })
       .then(async (response) => {
@@ -2145,7 +2144,7 @@ const updateCityBranchApi = (
       url: adminURL,
       data: form,
       headers: {
-        _token: token,
+        _token: JSON.parse(localStorage.getItem("token")),
       },
     })
       .then(async (response) => {
