@@ -11,7 +11,9 @@ const initialState = {
   singleDayRoaster: [],
   removeRoasterEntryBranch: [],
   branchServicesData: null,
-  branchServicesUpdatedData: null,
+  //Commented Because Using Update All
+  // branchServicesUpdatedData: null,
+  branchServicesUpdatedAllData: null,
   updateBranchCounterData: null,
   deleteBranchCounterData: null,
   addBranchCounterData: null,
@@ -174,18 +176,33 @@ const adminReducer = (state = initialState, action) => {
         admin_ResponseMessage: action.message,
       };
 
-    //Update Branch Services Reducers
-    case actions.UPDATE_BRANCH_SERVICES_SUCCESS:
+    //Update Branch Services Reducers (Commented Because Using Update All)
+    // case actions.UPDATE_BRANCH_SERVICES_SUCCESS:
+    //   return {
+    //     ...state,
+    //     branchServicesUpdatedData: action.response,
+    //     admin_ResponseMessage: action.message,
+    //   };
+
+    // case actions.UPDATE_BRANCH_SERVICES_FAIL:
+    //   return {
+    //     ...state,
+    //     branchServicesUpdatedData: null,
+    //     admin_ResponseMessage: action.message,
+    //   };
+
+    //Update All Branch Services Reducer
+    case actions.UPDATE_ALL_BRANCH_SERVICES_SUCCESS:
       return {
         ...state,
-        branchServicesUpdatedData: action.response,
+        branchServicesUpdatedAllData: action.response,
         admin_ResponseMessage: action.message,
       };
 
-    case actions.UPDATE_BRANCH_SERVICES_FAIL:
+    case actions.UPDATE_ALL_BRANCH_SERVICES_FAIL:
       return {
         ...state,
-        branchServicesUpdatedData: null,
+        branchServicesUpdatedAllData: null,
         admin_ResponseMessage: action.message,
       };
 

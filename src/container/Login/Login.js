@@ -1,11 +1,9 @@
 import React, { Fragment, useEffect, useState } from "react";
 import { Container, Col, Row, InputGroup, Form } from "react-bootstrap";
-// import { Button, TextField, Loader } from "../../../components/elements";
-// import { logIn } from "../../../store/actions/Auth-Actions";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import "./Login.css";
-import { Button } from "../../components/elements";
+import { Button, Notification } from "../../components/elements";
 import { useTranslation } from "react-i18next";
 import Header from "../../components/layout/header/Header";
 import { setLogIn } from "../../store/actions/Auth_action";
@@ -66,7 +64,7 @@ const Login = () => {
       setOpen({
         ...open,
         open: true,
-        message: "Please Fill All Credentials Fields",
+        message: "Please Fill All Fields",
       });
     }
   };
@@ -201,7 +199,7 @@ const Login = () => {
           </Row>
         </Container>
       </Col>
-
+      <Notification setOpen={setOpen} open={open.open} message={open.message} />
       {/* {auth.Loading ? <Loader /> : null} */}
     </Fragment>
   );

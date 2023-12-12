@@ -57,9 +57,14 @@ const getBranchServices = {
   RequestMethod: "ServiceManager.GetBranchServices",
 };
 
-// for Update Branch Services
-const updateBranchServices = {
-  RequestMethod: "ServiceManager.UpdateBranchServices",
+// for Update Branch Services (Commented Because Using Update All)
+// const updateBranchServices = {
+//   RequestMethod: "ServiceManager.UpdateBranchServices",
+// };
+
+// for Update Branch All Services
+const updateAllBranchServices = {
+  RequestMethod: "ServiceManager.UpdateAllBranchServices",
 };
 
 //For update branch Counter
@@ -122,7 +127,9 @@ export {
   getSingleDayBranchRoaster,
   removeBranchRoasterEntry,
   getBranchServices,
-  updateBranchServices,
+  //Commented Because Using Update All
+  // updateBranchServices,
+  updateAllBranchServices,
   updateBranchCounter,
   deleteBranchCounter,
   updateBranchShift,

@@ -156,5 +156,7 @@
   "Admin_AdminServiceManager_UpdateCityBranch_03": "City Not Found",
   "Admin_AdminServiceManager_DeleteCityBranch_01": "Branch Deleted Successfully",
   "Admin_AdminServiceManager_GetCityBranchList_01": "Branches available for the city",
-  "Admin_AdminServiceManager_GetCityBranchList_02": "No Branches found for the city"
+  "Admin_AdminServiceManager_GetCityBranchList_02": "No Branches found for the city",
+  "Advance-roaster-days": "Advance Roaster (Days)",
+  "Prebooking-margin-days": "Prebooking Margin (Days)"
 }

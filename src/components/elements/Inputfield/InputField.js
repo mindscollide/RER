@@ -31,6 +31,9 @@ const TextField = ({
   maxLength,
   onPaste,
   onCopy,
+  min,
+  max,
+  readOnly,
 }) => {
   return (
     <>
@@ -59,6 +62,9 @@ const TextField = ({
           required={required}
           onPaste={onPaste}
           onCopy={onCopy}
+          min={min}
+          max={max}
+          readOnly={readOnly}
         />
         <FormControl.Feedback className={iconClassName} onClick={clickIcon}>
           {inputIcon}
