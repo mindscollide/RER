@@ -12,7 +12,7 @@ import {
   getSingleBranchRoasterApiFunction,
   getAllShiftsOfBranch,
   getAllCountersOfBranch,
-  GetBranchServices,
+  getBranchServicesApi,
   addBranchRoasterEntryApiFunction,
 } from "../../../store/actions/Admin_action";
 
@@ -124,7 +124,7 @@ const BranchRoaster = () => {
   useEffect(() => {
     dispatch(getAllShiftsOfBranch(t, navigate, Loading));
     dispatch(getAllCountersOfBranch(t, navigate, Loading));
-    dispatch(GetBranchServices(t, navigate, Loading));
+    dispatch(getBranchServicesApi(t, navigate, Loading));
     dispatch(getSingleBranchRoasterApiFunction(t, navigate, Loading));
   }, []);
 

@@ -1265,7 +1265,7 @@ const getBranchServicesFail = (message) => {
   };
 };
 
-const GetBranchServices = (t, navigate, loadingFlag) => {
+const getBranchServicesApi = (t, navigate, loadingFlag) => {
   let data = { BranchID: 1 };
   return async (dispatch) => {
     if (!loadingFlag) {
@@ -1286,7 +1286,7 @@ const GetBranchServices = (t, navigate, loadingFlag) => {
         if (response.data.responseCode === 200) {
           if (response.data.responseCode === 417) {
             // await dispatch(RefreshToken(navigate, t))
-            dispatch(GetBranchServices(t, navigate, loadingFlag));
+            dispatch(getBranchServicesApi(t, navigate, loadingFlag));
           } else if (response.data.responseResult.isExecuted === true) {
             if (
               response.data.responseResult.responseMessage ===
@@ -1360,14 +1360,14 @@ const updateBranchServicesFail = (message) => {
   };
 };
 
-const UpdateBranchServices = (Data, t, navigate, loadingFlag) => {
+const updateBranchServicesApi = (t, navigate, loadingFlag, data) => {
   return async (dispatch) => {
     if (!loadingFlag) {
       dispatch(loader_Actions(true));
     }
     let form = new FormData();
     form.append("RequestMethod", updateBranchServices.RequestMethod);
-    form.append("RequestData", JSON.stringify(Data));
+    form.append("RequestData", JSON.stringify(data));
     await axios({
       method: "post",
       url: adminURL,
@@ -1379,7 +1379,8 @@ const UpdateBranchServices = (Data, t, navigate, loadingFlag) => {
       .then(async (response) => {
         if (response.data.responseCode === 200) {
           if (response.data.responseCode === 417) {
-            dispatch(UpdateBranchServices(Data, t, navigate, loadingFlag));
+            // await dispatch(RefreshToken(navigate, t))
+            dispatch(updateBranchServicesApi(t, navigate, loadingFlag, data));
           } else if (response.data.responseResult.isExecuted === true) {
             if (
               response.data.responseResult.responseMessage ===
@@ -1455,14 +1456,14 @@ const updateBranchCounterFail = (message) => {
   };
 };
 
-const UpdateBranchCounterApi = (t, navigate, loadingFlag, Data) => {
+const updateBranchCounterApi = (t, navigate, loadingFlag, data) => {
   return async (dispatch) => {
     if (!loadingFlag) {
       dispatch(loader_Actions(true));
     }
     let form = new FormData();
     form.append("RequestMethod", updateBranchCounter.RequestMethod);
-    form.append("RequestData", JSON.stringify(Data));
+    form.append("RequestData", JSON.stringify(data));
     await axios({
       method: "post",
       url: adminURL,
@@ -1474,7 +1475,8 @@ const UpdateBranchCounterApi = (t, navigate, loadingFlag, Data) => {
       .then(async (response) => {
         if (response.data.responseCode === 200) {
           if (response.data.responseCode === 417) {
-            dispatch(UpdateBranchCounterApi(t, navigate, loadingFlag, Data));
+            // await dispatch(RefreshToken(navigate, t))
+            dispatch(updateBranchCounterApi(t, navigate, loadingFlag, data));
           } else if (response.data.responseResult.isExecuted === true) {
             if (
               response.data.responseResult.responseMessage ===
@@ -1551,7 +1553,7 @@ const deleteBranchCounterFail = (message) => {
   };
 };
 
-const DeleteBranchCounterApi = (t, navigate, loadingFlag, Data) => {
+const deleteBranchCounterApi = (t, navigate, loadingFlag, Data) => {
   return async (dispatch) => {
     if (!loadingFlag) {
       dispatch(loader_Actions(true));
@@ -1570,7 +1572,8 @@ const DeleteBranchCounterApi = (t, navigate, loadingFlag, Data) => {
       .then(async (response) => {
         if (response.data.responseCode === 200) {
           if (response.data.responseCode === 417) {
-            dispatch(DeleteBranchCounterApi(t, navigate, loadingFlag, Data));
+            // await dispatch(RefreshToken(navigate, t))
+            dispatch(deleteBranchCounterApi(t, navigate, loadingFlag, Data));
           } else if (response.data.responseResult.isExecuted === true) {
             if (
               response.data.responseResult.responseMessage ===
@@ -1648,8 +1651,8 @@ export {
   addBranchRoasterEntryApiFunction,
   getSingleBranchRoasterApiFunction,
   removingBranchEntryRoasterApiFunction,
-  GetBranchServices,
-  UpdateBranchServices,
-  UpdateBranchCounterApi,
-  DeleteBranchCounterApi,
+  getBranchServicesApi,
+  updateBranchServicesApi,
+  updateBranchCounterApi,
+  deleteBranchCounterApi,
 };
