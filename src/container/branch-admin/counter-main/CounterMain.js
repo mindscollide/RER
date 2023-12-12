@@ -24,7 +24,7 @@ const CounterMain = () => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const lang = localStorage.getItem("i18nextLng");
+  const currentLanguage = localStorage.getItem("i18nextLng");
   const allCountersOfBranchList = useSelector(
     (state) => state.admin.allCountersOfBranchList
   );
@@ -72,8 +72,10 @@ const CounterMain = () => {
     },
     {
       title: <span className="table-text">{t("Shift-name")}</span>,
-      dataIndex: lang === "en" ? "counterNameEnglish" : "counterNameArabic",
-      key: lang === "en" ? "counterNameEnglish" : "counterNameArabic",
+      dataIndex:
+        currentLanguage === "en" ? "counterNameEnglish" : "counterNameArabic",
+      key:
+        currentLanguage === "en" ? "counterNameEnglish" : "counterNameArabic",
       render: (text, record) => (
         <span className="table-inside-text">{text}</span>
       ),
@@ -179,13 +181,27 @@ const CounterMain = () => {
               {t("Counters")}
               <span className="shift-sub-heading">
                 {" "}
-                {t("Saudi-arabia-riyadh")}
+                {currentLanguage === "en"
+                  ? "(" +
+                    localStorage.getItem("countryName") +
+                    " " +
+                    "-" +
+                    " " +
+                    localStorage.getItem("cityName") +
+                    ")"
+                  : "(" +
+                    localStorage.getItem("countryNameArabic") +
+                    " - " +
+                    localStorage.getItem("cityNameArabic") +
+                    ")"}
               </span>
             </span>
           </Col>
           <Col lg={6} md={6} sm={6} className="d-flex justify-content-end">
             <span className="shift-sub-heading-right">
-              {t("Olaya-street-branch")}
+              {currentLanguage === "en"
+                ? localStorage.getItem("branchName")
+                : localStorage.getItem("branchNameArabic")}
             </span>
           </Col>
         </Row>

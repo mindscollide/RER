@@ -9,7 +9,6 @@ import {
   deleteBranchShift,
   lastSelectedLanguage,
   systemSupportedLanguage,
-  token,
   updateBranchShift,
   updateLastSelectedLanguage,
   addBranchRoasterEntry,
@@ -22,6 +21,7 @@ import {
 } from "../../commen/apis/Api_config";
 import { adminURL } from "../../commen/apis/Api_ends_points";
 import moment from "moment";
+let token = JSON.parse(localStorage.getItem("token"));
 
 // this is for cleare states
 const AdminCleareState = () => {

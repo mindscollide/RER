@@ -1,4 +1,3 @@
-let token = JSON.parse(localStorage.getItem("token"));
 
 // for login
 const logIn = {
@@ -90,7 +89,6 @@ const addBranchCounter = {
 };
 
 export {
-  token,
   logIn,
   roleList,
   systemSupportedLanguage,

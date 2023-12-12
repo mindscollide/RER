@@ -3,6 +3,7 @@ import axios from "axios";
 import { loader_Actions } from "./Loader_action";
 import { logIn } from "../../commen/apis/Api_config";
 import { authURL } from "../../commen/apis/Api_ends_points";
+let token = JSON.parse(localStorage.getItem("token"));
 
 // for Log In APi
 const loginsuccess = (response, message) => {
@@ -63,6 +64,10 @@ const setLogIn = (t, navigate, data) => {
                 response.data.responseResult.name
               );
               await localStorage.setItem(
+                "nameArabic",
+                response.data.responseResult.nameArabic
+              );
+              await localStorage.setItem(
                 "loginID",
                 response.data.responseResult.loginID
               );
@@ -78,6 +83,50 @@ const setLogIn = (t, navigate, data) => {
               await localStorage.setItem(
                 "refreshToken",
                 JSON.stringify(response.data.responseResult.refreshToken)
+              );
+              await localStorage.setItem(
+                "loginID",
+                response.data.responseResult.loginID
+              );
+              await localStorage.setItem(
+                "isFirstLogIn",
+                response.data.responseResult.isFirstLogIn
+              );
+              await localStorage.setItem(
+                "countryID",
+                response.data.responseResult.countryID
+              );
+              await localStorage.setItem(
+                "cityID",
+                response.data.responseResult.cityID
+              );
+              await localStorage.setItem(
+                "branchID",
+                response.data.responseResult.branchID
+              );
+              await localStorage.setItem(
+                "cityName",
+                response.data.responseResult.cityName
+              );
+              await localStorage.setItem(
+                "cityNameArabic",
+                response.data.responseResult.cityNameArabic
+              );
+              await localStorage.setItem(
+                "countryName",
+                response.data.responseResult.countryName
+              );
+              await localStorage.setItem(
+                "countryNameArabic",
+                response.data.responseResult.countryNameArabic
+              );
+              await localStorage.setItem(
+                "branchName",
+                response.data.responseResult.branchName
+              );
+              await localStorage.setItem(
+                "branchNameArabic",
+                response.data.responseResult.branchNameArabic
               );
               if (response.data.responseResult.roleID === 1) {
                 await dispatch(

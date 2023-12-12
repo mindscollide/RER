@@ -60,27 +60,6 @@ const BranchRoaster = () => {
     setRoasterModal(true);
   };
 
-  const dataSource = [
-    {
-      id: 1,
-      shiftName: <span className="table-inside-text">Shift 1</span>,
-      Counter: <span className="table-inside-text">Counter 1</span>,
-      Service: <span className="table-inside-text">First Registry</span>,
-    },
-    {
-      id: 2,
-      shiftName: <span className="table-inside-text">Shift 1</span>,
-      Counter: <span className="table-inside-text">Counter 1</span>,
-      Service: <span className="table-inside-text">First Registry</span>,
-    },
-    {
-      id: 3,
-      shiftName: <span className="table-inside-text">Shift 1</span>,
-      Counter: <span className="table-inside-text">Counter 1</span>,
-      Service: <span className="table-inside-text">First Registry</span>,
-    },
-  ];
-
   const columns = [
     {
       title: <span className="table-text">{t("Service")}</span>,
@@ -255,8 +234,6 @@ const BranchRoaster = () => {
     }
   };
 
-  console.log("selectedDateselectedDate", selectedDate);
-
   const handleChangeShift = (selectedOptionShift) => {
     setSelectedOptionShift(selectedOptionShift);
   };
@@ -290,8 +267,6 @@ const BranchRoaster = () => {
     setSelectedOptionServices(null);
   };
 
-  console.log("Table Rows Roaster", singleRoasterRowData);
-
   return (
     <>
       <section>
@@ -301,13 +276,27 @@ const BranchRoaster = () => {
               {t("Branch-daily-roaster")}
               <span className="shift-sub-heading">
                 {" "}
-                {t("Saudi-arabia-riyadh")}
+                {currentLanguage === "en"
+                  ? "(" +
+                    localStorage.getItem("countryName") +
+                    " " +
+                    "-" +
+                    " " +
+                    localStorage.getItem("cityName") +
+                    ")"
+                  : "(" +
+                    localStorage.getItem("countryNameArabic") +
+                    " - " +
+                    localStorage.getItem("cityNameArabic") +
+                    ")"}
               </span>
             </span>
           </Col>
           <Col lg={6} md={6} sm={6} className="d-flex justify-content-end">
             <span className="shift-sub-heading-right">
-              {t("Olaya-street-branch")}
+              {currentLanguage === "en"
+                ? localStorage.getItem("branchName")
+                : localStorage.getItem("branchNameArabic")}
             </span>
           </Col>
         </Row>
