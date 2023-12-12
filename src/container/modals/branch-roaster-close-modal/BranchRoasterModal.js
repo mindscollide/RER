@@ -4,16 +4,21 @@ import { Button, Modal } from "../../../components/elements";
 import "./BranchRoasterModal.css";
 import { useTranslation } from "react-i18next";
 
-const BranchRoasterModal = ({ roasterModal, setRoasterModal }) => {
+const BranchRoasterModal = ({
+  roasterModal,
+  setRoasterModal,
+  onNoModalHandler,
+  onYesModalHandler,
+}) => {
   const { t } = useTranslation();
 
-  const onCloseModal = () => {
-    setRoasterModal(false);
-  };
+  // const onCloseModal = () => {
+  //   setRoasterModal(false);
+  // };
 
-  const onNoModalHandler = () => {
-    setRoasterModal(false);
-  };
+  // const onNoModalHandler = () => {
+  //   setRoasterModal(false);
+  // };
 
   return (
     <>
@@ -23,7 +28,7 @@ const BranchRoasterModal = ({ roasterModal, setRoasterModal }) => {
         className="modaldialog roaster-modal"
         modalHeaderClassName="d-none"
         modalFooterClassName="roaster-modal-footer"
-        onHide={onCloseModal}
+        onHide={onNoModalHandler}
         ModalBody={
           <>
             <Row>
@@ -49,7 +54,11 @@ const BranchRoasterModal = ({ roasterModal, setRoasterModal }) => {
                 sm={12}
                 className="Yes-No-Roaster-modal-btn-col"
               >
-                <Button text={t("Yes")} className="Yes-btn-Employee" />
+                <Button
+                  onClick={onYesModalHandler}
+                  text={t("Yes")}
+                  className="Yes-btn-Employee"
+                />
                 <Button
                   text={t("No")}
                   className="No-btn-Employee"
