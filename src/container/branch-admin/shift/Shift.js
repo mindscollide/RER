@@ -66,7 +66,7 @@ const BranchAdmin = () => {
     IsShiftActive: false,
     ShiftStartTime: "",
     ShiftEndTime: "",
-    BranchID: 1,
+    BranchID: Number(localStorage.getItem("branchID")),
     ShiftID: 0,
   });
 
@@ -193,11 +193,11 @@ const BranchAdmin = () => {
           <span className="icon-spaceing-dlt-edit">
             <i
               className="icon-text-edit icon-EDT-DLT-color"
-              onClick={() => handleEdittShift(text, 1)}
+              onClick={() => handleEdittShift(record, 1)}
             ></i>
             <i
               className="icon-close icon-EDT-DLT-color"
-              onClick={() => handleEdittShift(text, 2)}
+              onClick={() => handleEdittShift(record, 2)}
             ></i>
           </span>
         </>
@@ -258,7 +258,7 @@ const BranchAdmin = () => {
             IsShiftActive: newShift.IsShiftActive,
             ShiftStartTime: formatToHHMMSSUTC(newShift.ShiftStartTime),
             ShiftEndTime: formatToHHMMSSUTC(newShift.ShiftEndTime),
-            BranchID: 1,
+            BranchID: Number(localStorage.getItem("branchID")),
           };
           dispatch(
             updateBranchShiftApi(
@@ -284,7 +284,7 @@ const BranchAdmin = () => {
             IsShiftActive: newShift.IsShiftActive,
             ShiftStartTime: formatToHHMMSSUTC(newShift.ShiftStartTime),
             ShiftEndTime: formatToHHMMSSUTC(newShift.ShiftEndTime),
-            BranchID: 1,
+            BranchID: Number(localStorage.getItem("branchID")),
           };
           dispatch(addBranchShiftApi(t, navigate, Loading, Data, setNewShift));
         }
@@ -303,34 +303,27 @@ const BranchAdmin = () => {
         IsShiftActive: false,
         ShiftStartTime: "",
         ShiftEndTime: "",
-        BranchID: 1,
+        BranchID: Number(localStorage.getItem("branchID")),
         ShiftID: 0,
       });
     } catch {}
-  };
-
-  const findShiftById = (id) => {
-    return rows.find((shift) => shift.shiftID === id);
   };
 
   const handleEdittShift = (value, flag) => {
     try {
       if (flag === 1) {
         setAddUpdateCheckFlag(true);
-        const foundShift = findShiftById(value);
-        if (foundShift) {
           setNewShift({
-            ShiftNameEnglish: foundShift.shiftNameEnglish,
-            ShiftNameArabic: foundShift.shiftNameArabic,
-            IsShiftActive: foundShift.isShiftActive,
-            ShiftStartTime: convertDateforInputUTC(foundShift.shiftStartTime),
-            ShiftEndTime: convertDateforInputUTC(foundShift.shiftEndTime),
-            BranchID: 1,
-            ShiftID: foundShift.shiftID,
+            ShiftNameEnglish: value.shiftNameEnglish,
+            ShiftNameArabic: value.shiftNameArabic,
+            IsShiftActive: value.isShiftActive,
+            ShiftStartTime: convertDateforInputUTC(value.shiftStartTime),
+            ShiftEndTime: convertDateforInputUTC(value.shiftEndTime),
+            BranchID: Number(localStorage.getItem("branchID")),
+            ShiftID: value.shiftID,
           });
-        }
       } else if (flag === 2) {
-        setDeleteID(value);
+        setDeleteID(value.shiftID);
         setDeleteModal(true);
       }
     } catch {}
@@ -346,26 +339,18 @@ const BranchAdmin = () => {
               <span className="shift-sub-heading">
                 {" "}
                 {currentLanguage === "en"
-                  ? "(" +
-                    localStorage.getItem("countryName") +
-                    " " +
+                  ? localStorage.getItem("countryName") +
                     "-" +
-                    " " +
-                    localStorage.getItem("cityName") +
-                    ")"
-                  : "(" +
-                    localStorage.getItem("countryNameArabic") +
-                    " - " +
-                    localStorage.getItem("cityNameArabic") +
-                    ")"}
+                    localStorage.getItem("cityName")
+                  : localStorage.getItem("countryNameArabic") +
+                    "-" +
+                    localStorage.getItem("cityNameArabic")}
               </span>
             </span>
           </Col>
           <Col lg={6} md={6} sm={6} className="d-flex justify-content-end">
             <span className="shift-sub-heading-right">
-              {currentLanguage === "en"
-                ? localStorage.getItem("branchName")
-                : localStorage.getItem("branchNameArabic")}
+              {t("Olaya-street-branch")}
             </span>
           </Col>
         </Row>

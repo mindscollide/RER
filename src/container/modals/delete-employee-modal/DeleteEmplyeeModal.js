@@ -3,7 +3,7 @@ import { Col, Row } from "react-bootstrap";
 import { Button, Modal } from "../../../components/elements";
 import "./DeleteEmployeeModal.css";
 import { useTranslation } from "react-i18next";
-import { deleteBranchShiftApi } from "../../../store/actions/Admin_action";
+import { deleteBranchCounterApi, deleteBranchShiftApi } from "../../../store/actions/Admin_action";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router";
 
@@ -24,9 +24,20 @@ const DeleteEmployeeModal = ({
 
   const yesHandler = async () => {
     if (route === "BranchAdminShift") {
-      let data = { ShiftID: deleteID, BranchID: 1 };
+      let data = {
+        ShiftID: deleteID,
+        BranchID: Number(localStorage.getItem("branchID")),
+      };
       await dispatch(
         deleteBranchShiftApi(t, navigate, Loading, data, setDeleteModal)
+      );
+    }else if(route ==="BranchAdminCounterMain"){
+      let data = {
+        CounterID: deleteID,
+        BranchID: Number(localStorage.getItem("branchID")),
+      };
+      await dispatch(
+        deleteBranchCounterApi(t, navigate, Loading, data, setDeleteModal)
       );
     }
   };

@@ -13,12 +13,16 @@ import { useTranslation } from "react-i18next";
 import {
   addBranchCounterApi,
   addBranchCountertFail,
+  deleteBranchCounterFail,
   getAllCountersOfBranch,
+  updateBranchCounterApi,
+  updateBranchCounterFail,
 } from "../../../store/actions/Admin_action";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router";
 import { loader_Actions } from "../../../store/actions/Loader_action";
 import { regexOnlyForNumberNCharacters } from "../../../commen/functions/regex";
+import DeleteEmployeeModal from "../../modals/delete-employee-modal/DeleteEmplyeeModal";
 
 const CounterMain = () => {
   const { t } = useTranslation();
@@ -31,14 +35,22 @@ const CounterMain = () => {
   const addBranchCounterData = useSelector(
     (state) => state.admin.addBranchCounterData
   );
+  const updateBranchCounterData = useSelector(
+    (state) => state.admin.updateBranchCounterData
+  );
+  const deleteBranchCounterData = useSelector(
+    (state) => state.admin.deleteBranchCounterData
+  );
   const Loading = useSelector((state) => state.Loader.Loading);
   const [rows, setRows] = useState([]);
   const [addUpdateCheckFlag, setAddUpdateCheckFlag] = useState(false);
+  const [deleteID, setDeleteID] = useState(null);
+  const [deleteModal, setDeleteModal] = useState(false);
   const [newCounter, setNewCounter] = useState({
     CounterNameEnglish: "",
     CounterNameArabic: "",
     IsCounterActive: false,
-    BranchID: 1,
+    BranchID: Number(localStorage.getItem("branchID")),
     CounterID: 0,
   });
   useEffect(() => {
@@ -59,7 +71,27 @@ const CounterMain = () => {
       dispatch(addBranchCountertFail(""));
       dispatch(loader_Actions(false));
     }
-  }, [addBranchCounterData]);
+    if (updateBranchCounterData !== null) {
+      setRows(
+        rows.map((counter) => {
+          if (counter.counterID === updateBranchCounterData.counterID) {
+            return updateBranchCounterData; // Replace with the new data if IDs match
+          }
+          return counter; // Keep the existing shift if IDs don't match
+        })
+      );
+      dispatch(updateBranchCounterFail(""));
+      dispatch(loader_Actions(false));
+    }
+    if (deleteBranchCounterData !== null) {
+      let newdata = rows.filter(
+        (counter) => counter.counterID !== deleteBranchCounterData
+      );
+      setRows(newdata);
+      dispatch(deleteBranchCounterFail(""));
+      dispatch(loader_Actions(false));
+    }
+  }, [addBranchCounterData, updateBranchCounterData, deleteBranchCounterData]);
 
   const columns = [
     {
@@ -107,8 +139,14 @@ const CounterMain = () => {
       render: (text, record) => (
         <>
           <span className="icon-spaceing-dlt-edit">
-            <i className="icon-text-edit icon-EDT-DLT-color"></i>
-            <i className="icon-close icon-EDT-DLT-color"></i>
+            <i
+              className="icon-text-edit icon-EDT-DLT-color"
+              onClick={() => handleEdittShift(record, 1)}
+            ></i>
+            <i
+              className="icon-close icon-EDT-DLT-color"
+              onClick={() => handleEdittShift(record, 2)}
+            ></i>
           </span>
         </>
       ),
@@ -139,6 +177,28 @@ const CounterMain = () => {
   const handleAddCounter = () => {
     try {
       if (addUpdateCheckFlag) {
+        if (
+          newCounter.CounterNameEnglish !== "" &&
+          newCounter.CounterNameArabic !== ""
+        ) {
+          let Data = {
+            CounterID: newCounter.CounterID,
+            CounterNameEnglish: newCounter.CounterNameEnglish,
+            CounterNameArabic: newCounter.CounterNameArabic,
+            IsCounterActive: newCounter.IsCounterActive,
+            BranchID: Number(localStorage.getItem("branchID")),
+          };
+          dispatch(
+            updateBranchCounterApi(
+              t,
+              navigate,
+              Loading,
+              Data,
+              setNewCounter,
+              setAddUpdateCheckFlag
+            )
+          );
+        }
       } else {
         if (
           newCounter.CounterNameEnglish !== "" &&
@@ -148,7 +208,7 @@ const CounterMain = () => {
             CounterNameEnglish: newCounter.CounterNameEnglish,
             CounterNameArabic: newCounter.CounterNameArabic,
             IsCounterActive: newCounter.IsCounterActive,
-            BranchID: 1,
+            BranchID: Number(localStorage.getItem("branchID")),
           };
           dispatch(
             addBranchCounterApi(t, navigate, Loading, Data, setNewCounter)
@@ -157,6 +217,7 @@ const CounterMain = () => {
       }
     } catch {}
   };
+
   const handleRestCounter = () => {
     try {
       if (addUpdateCheckFlag) {
@@ -166,12 +227,29 @@ const CounterMain = () => {
         CounterNameEnglish: "",
         CounterNameArabic: "",
         IsCounterActive: false,
-        BranchID: 1,
+        BranchID: Number(localStorage.getItem("branchID")),
         CounterID: 0,
       });
     } catch {}
   };
 
+  const handleEdittShift = (value, flag) => {
+    try {
+      if (flag === 1) {
+        setAddUpdateCheckFlag(true);
+        setNewCounter({
+          CounterNameEnglish: value.counterNameEnglish,
+          CounterNameArabic: value.counterNameArabic,
+          IsCounterActive: value.isCounterActive,
+          BranchID: Number(localStorage.getItem("branchID")),
+          CounterID: value.counterID,
+        });
+      } else if (flag === 2) {
+        setDeleteID(value.counterID);
+        setDeleteModal(true);
+      }
+    } catch {}
+  };
   return (
     <>
       <section>
@@ -249,7 +327,7 @@ const CounterMain = () => {
                 <Col lg={6} md={6} sm={6} className="btn-col-class">
                   <Button
                     icon={<i className="icon-add-circle icon-space"></i>}
-                    text={t("Add")}
+                    text={addUpdateCheckFlag ? t("Update") : t("Add")}
                     className="Add-btn-Counter"
                     onClick={handleAddCounter}
                   />
@@ -270,6 +348,12 @@ const CounterMain = () => {
           </Col>
         </Row>
       </section>
+      <DeleteEmployeeModal
+        setDeleteModal={setDeleteModal}
+        deleteModal={deleteModal}
+        deleteID={deleteID}
+        route={"BranchAdminCounterMain"}
+      />
     </>
   );
 };
