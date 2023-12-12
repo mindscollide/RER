@@ -171,13 +171,13 @@ const CityAdmin = () => {
                     className="text-fiels-cityAdmin"
                   />
                 </Col>
-                <Col lg={6} md={6} sm={6}>
-                  <span className="text-labels">{t("Branch-name")}</span>
+                <Col lg={6} md={6} sm={6} className="text-end">
+                  <span className="text-labels">اسم الفرع</span>
                   <TextField
                     name="Branch Name"
-                    placeholder={t("Branch-admin")}
+                    placeholder={"اسم الفرع"}
                     labelClass="d-none"
-                    className="text-fiels-cityAdmin"
+                    className="text-fiels-cityAdmin-arabic"
                   />
                 </Col>
               </Row>

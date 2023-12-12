@@ -129,7 +129,7 @@ const Header = ({ isLoginScreen }) => {
 
   return (
     <>
-      {loading ? <Loader /> : null}
+      {/* {loading ? <Loader /> : null} */}
       <Navbar expand="lg" className="site-header">
         <Container fluid className="page-gutter">
           <Navbar.Brand href="#">

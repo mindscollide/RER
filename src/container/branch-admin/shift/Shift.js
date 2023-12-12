@@ -376,13 +376,13 @@ const BranchAdmin = () => {
                   />
                 </Col>
 
-                <Col lg={6} md={6} sm={6}>
-                  <span className="text-labels">{t("Shift-name")}</span>
+                <Col lg={6} md={6} sm={6} className="text-end">
+                  <span className="text-labels">اسم الخدمة</span>
                   <TextField
                     name="ShiftNameArabic"
-                    placeholder={t("Shift-name")}
+                    placeholder="اسم الخدمة"
                     labelClass="d-none"
-                    className="text-fiels-Branch"
+                    className="text-fields-Branch-arabic"
                     value={newShift.ShiftNameArabic}
                     onChange={handleChange}
                   />

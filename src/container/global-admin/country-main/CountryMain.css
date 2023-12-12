@@ -99,3 +99,21 @@
   color: #212529 !important;
   font-weight: 500 !important;
 }
+
+.text-fiels-Country-arabic {
+  font-size: 13px !important;
+  font-family: "Montserrat", sans-serif !important;
+  height: 37px;
+  color: #212529 !important;
+  font-weight: 500 !important;
+  text-align: end !important;
+}
+
+body[dir="rtl"] .text-fiels-Country-arabic {
+  font-size: 13px !important;
+  font-family: "Montserrat", sans-serif !important;
+  height: 37px;
+  color: #212529 !important;
+  font-weight: 500 !important;
+  text-align: start !important;
+}
