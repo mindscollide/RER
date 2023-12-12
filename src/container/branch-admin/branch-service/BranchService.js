@@ -7,8 +7,8 @@ import { Paper, TextField, Button, Table } from "../../../components/elements";
 import { Switch } from "antd";
 import { useTranslation } from "react-i18next";
 import {
-  GetBranchServices,
-  UpdateBranchServices,
+  getBranchServicesApi,
+  updateBranchServicesApi,
 } from "../../../store/actions/Admin_action";
 
 const BranchService = () => {
@@ -35,7 +35,7 @@ const BranchService = () => {
   );
 
   useEffect(() => {
-    dispatch(GetBranchServices(t, navigate, Loading));
+    dispatch(getBranchServicesApi(t, navigate, Loading));
   }, []);
 
   useEffect(() => {
@@ -144,11 +144,11 @@ const BranchService = () => {
           ServiceSlotDurationMinutes: row.serviceSlotDurationMinutes,
         };
         return dispatch(
-          UpdateBranchServices(requestData, t, navigate, Loading)
+          updateBranchServicesApi(requestData, t, navigate, Loading)
         );
       });
       await Promise.all(apiPromises);
-      dispatch(GetBranchServices(t, navigate, Loading));
+      dispatch(getBranchServicesApi(t, navigate, Loading));
     } catch (error) {
       console.error("Error in API calls", error);
     }
