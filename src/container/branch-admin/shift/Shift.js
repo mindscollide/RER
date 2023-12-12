@@ -360,7 +360,9 @@ const BranchAdmin = () => {
           </Col>
           <Col lg={6} md={6} sm={6} className="d-flex justify-content-end">
             <span className="shift-sub-heading-right">
-              {t("Olaya-street-branch")}
+              {currentLanguage === "en"
+                ? localStorage.getItem("branchName")
+                : localStorage.getItem("branchNameArabic")}
             </span>
           </Col>
         </Row>
