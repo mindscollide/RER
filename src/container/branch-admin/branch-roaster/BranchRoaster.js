@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Row, Col } from "react-bootstrap";
 import "./BranchRoaster.css";
 import { Paper, Button, Table } from "../../../components/elements";
+import { getCurrentDateUTC } from "../../../commen/functions/Date_time_formatter";
 import { useTranslation } from "react-i18next";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router";
@@ -14,6 +15,7 @@ import {
   getAllCountersOfBranch,
   getBranchServicesApi,
   addBranchRoasterEntryApiFunction,
+  removingBranchEntryRoasterApiFunction,
 } from "../../../store/actions/Admin_action";
 
 const BranchRoaster = () => {
@@ -53,11 +55,27 @@ const BranchRoaster = () => {
   const [optionsServices, setOptionsServices] = useState([]);
   const [selectedOptionServices, setSelectedOptionServices] = useState(null);
 
-  const [selectedDate, setSelectedDate] = useState(null);
+  //Delete Roaster Record Data
+  const [deleteRoasterRecordData, setDeleteRoasterRecordData] = useState(null);
+
+  // Usage
+  const selectedDateUTC = getCurrentDateUTC();
+  console.log("Selected date in UTC format (YYYYMMDD):", selectedDateUTC);
+
+  // const getCurrentDate = () => {
+  //   const currentDate = new Date();
+  //   const year = currentDate.getFullYear();
+  //   const month = (currentDate.getMonth() + 1).toString().padStart(2, "0");
+  //   const day = currentDate.getDate().toString().padStart(2, "0");
+  //   return `${year}${month}${day}`;
+  // };
+
+  const [selectedDate, setSelectedDate] = useState(selectedDateUTC);
 
   // open roaster modal on click
-  const onClickOpenRoaster = () => {
+  const onClickOpenRoaster = (data) => {
     setRoasterModal(true);
+    setDeleteRoasterRecordData(data);
   };
 
   const columns = [
@@ -113,7 +131,7 @@ const BranchRoaster = () => {
           <span>
             <i
               className="icon-close icon-close-style"
-              onClick={onClickOpenRoaster}
+              onClick={() => onClickOpenRoaster(record)}
             ></i>
           </span>
         </>
@@ -125,7 +143,9 @@ const BranchRoaster = () => {
     dispatch(getAllShiftsOfBranch(t, navigate, Loading));
     dispatch(getAllCountersOfBranch(t, navigate, Loading));
     dispatch(getBranchServicesApi(t, navigate, Loading));
-    dispatch(getSingleBranchRoasterApiFunction(t, navigate, Loading));
+    dispatch(
+      getSingleBranchRoasterApiFunction(t, navigate, Loading, selectedDate)
+    );
   }, []);
 
   useEffect(() => {
@@ -135,6 +155,8 @@ const BranchRoaster = () => {
       getRoasterData.length !== 0
     ) {
       setSingleRoasterRowData(getRoasterData);
+    } else {
+      setSingleRoasterRowData([]);
     }
   }, [getRoasterData]);
 
@@ -210,27 +232,17 @@ const BranchRoaster = () => {
     }
   }, [globalBranchServicesOptions, currentLanguage]);
 
-  useEffect(() => {
-    // Set the current date if selectedDate is null on initial render
-    if (!selectedDate) {
-      const currentDate = new Date();
-      const formattedCurrentDate = currentDate
-        .toISOString()
-        .slice(0, 10)
-        .replace(/-/g, ""); // YYYYMMDD format
-      setSelectedDate(formattedCurrentDate);
-    }
-  }, [selectedDate]);
-
   const handleDateChange = (date) => {
-    // 'date' here is the selected date object
-
-    // Format the date into YYYYMMDD format
     if (date) {
-      const formattedDate = date.format("YYYYMMDD");
-      console.log("Selected date in YYYYMMDD format:", formattedDate);
-      setSelectedDate(formattedDate);
-      // Use 'formattedDate' as needed
+      const utcDate = date
+        .toDate()
+        .toISOString()
+        .split("T")[0]
+        .replace(/-/g, "");
+      setSelectedDate(utcDate);
+      dispatch(
+        getSingleBranchRoasterApiFunction(t, navigate, Loading, utcDate)
+      );
     }
   };
 
@@ -261,10 +273,55 @@ const BranchRoaster = () => {
       selectedOptionShift,
       selectedOptionCounter
     );
-    dispatch(addBranchRoasterEntryApiFunction(Data, t, navigate, Loading));
+    let currentDate = getCurrentDateUTC();
+    if (Data.RoasterDate >= currentDate) {
+      dispatch(
+        addBranchRoasterEntryApiFunction(
+          Data,
+          t,
+          navigate,
+          Loading,
+          selectedDate
+        )
+      );
+      setSelectedOptionCounter(null);
+      setSelectedOptionShift(null);
+      setSelectedOptionServices(null);
+    } else {
+      alert("Previous Dates Cannot be selected");
+    }
+  };
+
+  const revertAll = () => {
     setSelectedOptionCounter(null);
     setSelectedOptionShift(null);
     setSelectedOptionServices(null);
+  };
+
+  const deleteRoasterRecord = () => {
+    console.log("Delete Record Data", deleteRoasterRecordData);
+    let deleteData = {
+      RoasterDate: selectedDate,
+      BranchID: 1,
+      ServiceID: deleteRoasterRecordData.shiftService.serviceID,
+      ShiftID: deleteRoasterRecordData.branchShift.shiftID,
+      CounterID: deleteRoasterRecordData.branchCounterModel.counterID,
+    };
+    console.log("Delete Record Data", deleteData);
+    dispatch(
+      removingBranchEntryRoasterApiFunction(
+        t,
+        navigate,
+        Loading,
+        deleteData,
+        selectedDate
+      )
+    );
+    setRoasterModal(false);
+  };
+
+  const cancelDeleteRecord = () => {
+    setRoasterModal(false);
   };
 
   return (
@@ -332,6 +389,7 @@ const BranchRoaster = () => {
                       value={selectedOptionShift}
                       onChange={handleChangeShift}
                       options={optionsShift}
+                      isSearchable={false}
                     />
                   </span>
                   <Row className="mt-4">
@@ -342,6 +400,7 @@ const BranchRoaster = () => {
                           value={selectedOptionServices}
                           onChange={handleChangeServices}
                           options={optionsServices}
+                          isSearchable={false}
                         />
                       </span>
                     </Col>
@@ -364,6 +423,7 @@ const BranchRoaster = () => {
                         icon={<i className="icon-repeat icon-space"></i>}
                         text={t("Revert")}
                         className="revert-btn-BranchRoaster"
+                        onClick={revertAll}
                       />
                     </Col>
                   </Row>
@@ -375,6 +435,7 @@ const BranchRoaster = () => {
                       value={selectedOptionCounter}
                       onChange={handleChangeCounter}
                       options={optionsCounter}
+                      isSearchable={false}
                     />
                   </span>
                 </Col>
@@ -397,6 +458,8 @@ const BranchRoaster = () => {
         <BranchRoasterModal
           roasterModal={roasterModal}
           setRoasterModal={setRoasterModal}
+          onYesModalHandler={deleteRoasterRecord}
+          onNoModalHandler={cancelDeleteRecord}
         />
       ) : null}
     </>

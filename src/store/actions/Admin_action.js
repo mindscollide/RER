@@ -15,7 +15,9 @@ import {
   getSingleDayBranchRoaster,
   removeBranchRoasterEntry,
   getBranchServices,
-  updateBranchServices,
+  //Commented Because Using Update All
+  // updateBranchServices,
+  updateAllBranchServices,
   updateBranchCounter,
   deleteBranchCounter,
   getCityBranchList,
@@ -926,7 +928,13 @@ const addBrandRoasterEntryFailed = (message) => {
 };
 
 //API function for Add branch Roaster Entry
-const addBranchRoasterEntryApiFunction = (data, t, navigate, loadingFlag) => {
+const addBranchRoasterEntryApiFunction = (
+  data,
+  t,
+  navigate,
+  loadingFlag,
+  selectedDate
+) => {
   // let data = { BranchID: 1 };
   return async (dispatch) => {
     if (!loadingFlag) {
@@ -948,7 +956,13 @@ const addBranchRoasterEntryApiFunction = (data, t, navigate, loadingFlag) => {
           if (response.data.responseCode === 417) {
             // await dispatch(RefreshToken(navigate, t))
             dispatch(
-              addBranchRoasterEntryApiFunction(data, t, navigate, loadingFlag)
+              addBranchRoasterEntryApiFunction(
+                data,
+                t,
+                navigate,
+                loadingFlag,
+                selectedDate
+              )
             );
           } else if (response.data.responseResult.isExecuted === true) {
             if (
@@ -962,7 +976,14 @@ const addBranchRoasterEntryApiFunction = (data, t, navigate, loadingFlag) => {
                 )
               );
               await dispatch(loader_Actions(false));
-              dispatch(getSingleBranchRoasterApiFunction(t, navigate, true));
+              dispatch(
+                getSingleBranchRoasterApiFunction(
+                  t,
+                  navigate,
+                  true,
+                  selectedDate
+                )
+              );
             } else if (
               response.data.responseResult.responseMessage ===
               "Admin_AdminServiceManager_AddBranchRoasterEntry_02"
@@ -1048,11 +1069,13 @@ const getSingleBranchRoasterFailed = (message) => {
 };
 
 //API function for Get Single branch Roaster
-const getSingleBranchRoasterApiFunction = (t, navigate, loadingFlag) => {
-  let data = {
-    BranchID: Number(localStorage.getItem("branchID")),
-    RoasterDate: "20231213",
-  };
+const getSingleBranchRoasterApiFunction = (
+  t,
+  navigate,
+  loadingFlag,
+  selectedData
+) => {
+  let data = { BranchID: 1, RoasterDate: selectedData };
   return async (dispatch) => {
     if (!loadingFlag) {
       dispatch(loader_Actions(true));
@@ -1073,7 +1096,12 @@ const getSingleBranchRoasterApiFunction = (t, navigate, loadingFlag) => {
           if (response.data.responseCode === 417) {
             // await dispatch(RefreshToken(navigate, t))
             dispatch(
-              getSingleBranchRoasterApiFunction(t, navigate, loadingFlag)
+              getSingleBranchRoasterApiFunction(
+                t,
+                navigate,
+                loadingFlag,
+                selectedData
+              )
             );
           } else if (response.data.responseResult.isExecuted === true) {
             if (
@@ -1154,8 +1182,14 @@ const removeBranchEntryRoasterFailed = (message) => {
 };
 
 //API function for Removing Branch Entry Roaster
-const removingBranchEntryRoasterApiFunction = (t, navigate, loadingFlag) => {
-  let data = { BranchID: Number(localStorage.getItem("branchID")) };
+const removingBranchEntryRoasterApiFunction = (
+  t,
+  navigate,
+  loadingFlag,
+  data,
+  selectedDate
+) => {
+  // let data = { BranchID: 1 };
   return async (dispatch) => {
     if (!loadingFlag) {
       dispatch(loader_Actions(true));
@@ -1176,7 +1210,13 @@ const removingBranchEntryRoasterApiFunction = (t, navigate, loadingFlag) => {
           if (response.data.responseCode === 417) {
             // await dispatch(RefreshToken(navigate, t))
             dispatch(
-              removingBranchEntryRoasterApiFunction(t, navigate, loadingFlag)
+              removingBranchEntryRoasterApiFunction(
+                t,
+                navigate,
+                loadingFlag,
+                data,
+                selectedDate
+              )
             );
           } else if (response.data.responseResult.isExecuted === true) {
             if (
@@ -1190,6 +1230,14 @@ const removingBranchEntryRoasterApiFunction = (t, navigate, loadingFlag) => {
                 )
               );
               await dispatch(loader_Actions(false));
+              dispatch(
+                getSingleBranchRoasterApiFunction(
+                  t,
+                  navigate,
+                  loadingFlag,
+                  selectedDate
+                )
+              );
             } else if (
               response.data.responseResult.responseMessage ===
               "Admin_AdminServiceManager_RemoveBranchRoasterEntry_02"
@@ -1348,29 +1396,125 @@ const getBranchServicesApi = (t, navigate, loadingFlag) => {
   };
 };
 
-//Update Branch Services
-const updateBranchServicesSuccess = (response, message) => {
+//Update Branch Services (Commented because update all is being used and not sequential api)
+// const updateBranchServicesSuccess = (response, message) => {
+//   return {
+//     type: actions.UPDATE_BRANCH_SERVICES_SUCCESS,
+//     response: response,
+//     message: message,
+//   };
+// };
+
+// const updateBranchServicesFail = (message) => {
+//   return {
+//     type: actions.UPDATE_BRANCH_SERVICES_FAIL,
+//     message: message,
+//   };
+// };
+
+// const updateBranchServicesApi = (t, navigate, loadingFlag, data) => {
+//   return async (dispatch) => {
+//     if (!loadingFlag) {
+//       dispatch(loader_Actions(true));
+//     }
+//     let form = new FormData();
+//     form.append("RequestMethod", updateBranchServices.RequestMethod);
+//     form.append("RequestData", JSON.stringify(data));
+//     await axios({
+//       method: "post",
+//       url: adminURL,
+//       data: form,
+//       headers: {
+//         _token: token,
+//       },
+//     })
+//       .then(async (response) => {
+//         if (response.data.responseCode === 200) {
+//           if (response.data.responseCode === 417) {
+//             // await dispatch(RefreshToken(navigate, t))
+//             dispatch(updateBranchServicesApi(t, navigate, loadingFlag, data));
+//           } else if (response.data.responseResult.isExecuted === true) {
+//             if (
+//               response.data.responseResult.responseMessage ===
+//               "Admin_AdminServiceManager_UpdateBranchServices_01"
+//             ) {
+//               await dispatch(
+//                 updateBranchServicesSuccess(
+//                   response.data.responseResult.branchServiceModelList,
+//                   t("Admin_AdminServiceManager_UpdateBranchServices_01")
+//                 )
+//               );
+//               // await dispatch(loader_Actions(false));
+//             } else if (
+//               response.data.responseResult.responseMessage ===
+//               "Admin_AdminServiceManager_UpdateBranchServices_02"
+//             ) {
+//               await dispatch(
+//                 updateBranchServicesFail(
+//                   t("Admin_AdminServiceManager_UpdateBranchServices_02")
+//                 )
+//               );
+//               // await dispatch(loader_Actions(false));
+//             } else if (
+//               response.data.responseResult.responseMessage ===
+//               "Admin_AdminServiceManager_UpdateBranchServices_03"
+//             ) {
+//               await dispatch(
+//                 updateBranchServicesFail(
+//                   t("Admin_AdminServiceManager_GetBranchServices_03")
+//                 )
+//               );
+//               // await dispatch(loader_Actions(false));
+//             } else if (
+//               response.data.responseResult.responseMessage ===
+//               "Admin_AdminServiceManager_GetBranchServices_04"
+//             ) {
+//               await dispatch(
+//                 updateBranchServicesFail(t("something_went_wrong"))
+//               );
+//               // await dispatch(loader_Actions(false));
+//             } else {
+//               dispatch(getLastSelectedLanguageFail(t("something_went_wrong")));
+//             }
+//           } else {
+//             await dispatch(updateBranchServicesFail(t("something_went_wrong")));
+//             // await dispatch(loader_Actions(false));
+//           }
+//         } else {
+//           await dispatch(updateBranchServicesFail(t("something_went_wrong")));
+//           // await dispatch(loader_Actions(false));
+//         }
+//       })
+//       .catch((response) => {
+//         dispatch(updateBranchServicesFail(t("something_went_wrong")));
+//         // dispatch(loader_Actions(false));
+//       });
+//   };
+// };
+
+//Update All Branch Services
+const updateAllBranchServicesSuccess = (response, message) => {
   return {
-    type: actions.UPDATE_BRANCH_SERVICES_SUCCESS,
+    type: actions.UPDATE_ALL_BRANCH_SERVICES_SUCCESS,
     response: response,
     message: message,
   };
 };
 
-const updateBranchServicesFail = (message) => {
+const updateAllBranchServicesFail = (message) => {
   return {
-    type: actions.UPDATE_BRANCH_SERVICES_FAIL,
+    type: actions.UPDATE_ALL_BRANCH_SERVICES_FAIL,
     message: message,
   };
 };
 
-const updateBranchServicesApi = (t, navigate, loadingFlag, data) => {
+const updateAllBranchServicesApi = (t, navigate, loadingFlag, data) => {
   return async (dispatch) => {
     if (!loadingFlag) {
       dispatch(loader_Actions(true));
     }
     let form = new FormData();
-    form.append("RequestMethod", updateBranchServices.RequestMethod);
+    form.append("RequestMethod", updateAllBranchServices.RequestMethod);
     form.append("RequestData", JSON.stringify(data));
     await axios({
       method: "post",
@@ -1384,61 +1528,68 @@ const updateBranchServicesApi = (t, navigate, loadingFlag, data) => {
         if (response.data.responseCode === 200) {
           if (response.data.responseCode === 417) {
             // await dispatch(RefreshToken(navigate, t))
-            dispatch(updateBranchServicesApi(t, navigate, loadingFlag, data));
+            dispatch(
+              updateAllBranchServicesApi(t, navigate, loadingFlag, data)
+            );
           } else if (response.data.responseResult.isExecuted === true) {
             if (
               response.data.responseResult.responseMessage ===
-              "Admin_AdminServiceManager_UpdateBranchServices_01"
+              "Admin_AdminServiceManager_UpdateAllBranchServices_01"
             ) {
               await dispatch(
-                updateBranchServicesSuccess(
-                  response.data.responseResult.branchServiceModelList,
+                updateAllBranchServicesSuccess(
+                  response.data.responseResult.listOfBranchServices,
                   t("Admin_AdminServiceManager_UpdateBranchServices_01")
                 )
               );
+              await dispatch(getBranchServicesApi(t, navigate, loadingFlag));
               // await dispatch(loader_Actions(false));
             } else if (
               response.data.responseResult.responseMessage ===
-              "Admin_AdminServiceManager_UpdateBranchServices_02"
+              "Admin_AdminServiceManager_UpdateAllBranchServices_02"
             ) {
               await dispatch(
-                updateBranchServicesFail(
+                updateAllBranchServicesFail(
                   t("Admin_AdminServiceManager_UpdateBranchServices_02")
                 )
               );
               // await dispatch(loader_Actions(false));
             } else if (
               response.data.responseResult.responseMessage ===
-              "Admin_AdminServiceManager_UpdateBranchServices_03"
+              "Admin_AdminServiceManager_UpdateAllBranchServices_03"
             ) {
               await dispatch(
-                updateBranchServicesFail(
+                updateAllBranchServicesFail(
                   t("Admin_AdminServiceManager_GetBranchServices_03")
                 )
               );
               // await dispatch(loader_Actions(false));
             } else if (
               response.data.responseResult.responseMessage ===
-              "Admin_AdminServiceManager_GetBranchServices_04"
+              "Admin_AdminServiceManager_UpdateAllBranchServices_04"
             ) {
               await dispatch(
-                updateBranchServicesFail(t("something_went_wrong"))
+                updateAllBranchServicesFail(t("something_went_wrong"))
               );
               // await dispatch(loader_Actions(false));
             } else {
               dispatch(getLastSelectedLanguageFail(t("something_went_wrong")));
             }
           } else {
-            await dispatch(updateBranchServicesFail(t("something_went_wrong")));
+            await dispatch(
+              updateAllBranchServicesFail(t("something_went_wrong"))
+            );
             // await dispatch(loader_Actions(false));
           }
         } else {
-          await dispatch(updateBranchServicesFail(t("something_went_wrong")));
+          await dispatch(
+            updateAllBranchServicesFail(t("something_went_wrong"))
+          );
           // await dispatch(loader_Actions(false));
         }
       })
       .catch((response) => {
-        dispatch(updateBranchServicesFail(t("something_went_wrong")));
+        dispatch(updateAllBranchServicesFail(t("something_went_wrong")));
         // dispatch(loader_Actions(false));
       });
   };
@@ -1780,7 +1931,9 @@ export {
   getSingleBranchRoasterApiFunction,
   removingBranchEntryRoasterApiFunction,
   getBranchServicesApi,
-  updateBranchServicesApi,
+  //Commented Because Using
+  // updateBranchServicesApi,
+  updateAllBranchServicesApi,
   updateBranchCounterApi,
   updateBranchCounterFail,
   deleteBranchCounterApi,
