@@ -127,61 +127,23 @@ const CountryWiseCity = () => {
     } catch {}
   };
 
-  const data = [
-    {
-      cityServiceID: 1,
-      citySM: {
-        serviceID: 1,
-        serviceNameEnglish: "First Registry",
-        serviceNameArabic: "التسجيل الأول",
-        isServiceActive: true,
-      },
-      branchAvailability: true,
-      homeAvailability: true,
-      homeVisitCharges: 7859,
-    },
-    {
-      cityServiceID: 2,
-      citySM: {
-        serviceID: 2,
-        serviceNameEnglish:
-          "Subsequence Transaction Service Before First\u00A0Registry",
-        serviceNameArabic: "خدمة المعاملات اللاحقة قبل التسجيل الأول",
-        isServiceActive: true,
-      },
-      branchAvailability: true,
-      homeAvailability: true,
-      homeVisitCharges: 8959,
-    },
-    {
-      cityServiceID: 3,
-      citySM: {
-        serviceID: 3,
-        serviceNameEnglish: "Change Ownership",
-        serviceNameArabic: "تغيير الملكية",
-        isServiceActive: true,
-      },
-      branchAvailability: true,
-      homeAvailability: true,
-      homeVisitCharges: 0,
-    },
-  ];
-
   const handleSave = () => {
     try {
-      let convertedData=capitalizeKeysInArray(rows)
-      const newArray = convertedData.map(item => ({
-        "BranchAvailability": item.BranchAvailability,
-        "CityServiceID": item.CityServiceID,
-        "HomeAvailability": item.HomeAvailability,
-        "HomeVisitCharges": item.HomeVisitCharges
+      let convertedData = capitalizeKeysInArray(rows);
+      const newArray = convertedData.map((item) => ({
+        BranchAvailability: item.BranchAvailability,
+        CityServiceID: item.CityServiceID,
+        HomeAvailability: item.HomeAvailability,
+        HomeVisitCharges: item.HomeVisitCharges,
       }));
-      let data = { CityID: Number(localStorage.getItem("cityID")), CityServices: newArray };
-      console.log("handleSave", capitalizeKeysInArray(rows));
-      console.log("handleSave", newArray);
+      let data = {
+        CityID: Number(localStorage.getItem("cityID")),
+        CityServices: newArray,
+      };
       dispatch(updateCityServiceListApi(t, navigate, Loading, data));
     } catch {}
   };
+
   return (
     <>
       <section>
