@@ -106,7 +106,7 @@ const CityAdmin = () => {
       dispatch(loader_Actions(false));
     }
     if (updatedCityBranchData !== null) {
-      console.log("updatedCityBranchData",updatedCityBranchData)
+      console.log("updatedCityBranchData", updatedCityBranchData);
       setRows(
         rows.map((branch) => {
           if (branch.branchID === updatedCityBranchData.branchID) {
@@ -127,6 +127,21 @@ const CityAdmin = () => {
       dispatch(loader_Actions(false));
     }
   }, [addedCityBranchData, updatedCityBranchData, deletedCityBranchData]);
+
+  //to navigate on cityWiseBranchService page by click on service Icon
+  const onClickServiceIcon = () => {
+    navigate("/CityAdmin/CityWiseBranchService");
+  };
+
+  //to navigate on shift page by click on service Icon
+  const onClickShiftIcon = () => {
+    navigate("/CityAdmin/Shifts");
+  };
+
+  //to navigate on Employee page by click on service Icon
+  const onClickEmployeeIcon = () => {
+    navigate("/CityAdmin/Employee");
+  };
 
   const columns = [
     {
@@ -201,10 +216,19 @@ const CityAdmin = () => {
               className="icon-close icon-EDT-DLT-color"
               onClick={() => handleEditt(record, 2)}
             ></i>
-            <i className="icon-settings icon-EDT-DLT-color"></i>
+            <i
+              className="icon-settings icon-EDT-DLT-color"
+              onClick={onClickServiceIcon}
+            ></i>
             <i className="icon-counter icon-EDT-DLT-color"></i>
-            <i className="icon-repeat icon-EDT-DLT-color"></i>
-            <i className="icon-user icon-EDT-DLT-color"></i>
+            <i
+              className="icon-repeat icon-EDT-DLT-color"
+              onClick={onClickShiftIcon}
+            ></i>
+            <i
+              className="icon-user icon-EDT-DLT-color"
+              onClick={onClickEmployeeIcon}
+            ></i>
           </span>
         </>
       ),

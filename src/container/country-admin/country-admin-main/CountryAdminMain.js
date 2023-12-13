@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Row, Col } from "react-bootstrap";
 import "./CountryAdminMain.css";
 import {
@@ -13,6 +13,7 @@ import { useTranslation } from "react-i18next";
 const CountryAdminMain = () => {
   const { t } = useTranslation();
   const [isCheckboxSelected, setIsCheckboxSelected] = useState(false);
+  const currentLanguage = localStorage.getItem("i18nextLng");
 
   const handleCheckboxChange = (e) => {
     setIsCheckboxSelected(e.target.checked);
@@ -105,7 +106,22 @@ const CountryAdminMain = () => {
               {t("City")}
               <span className="shift-sub-heading">
                 {" "}
-                {t("Saudi-arabia-riyadh")}
+                {currentLanguage === "en"
+                  ? "(" +
+                    localStorage.getItem("countryName") +
+                    " " +
+                    "-" +
+                    " " +
+                    localStorage.getItem("cityName") +
+                    ")"
+                  : "(" +
+                    localStorage.getItem("countryNameArabic") +
+                    " " +
+                    "-" +
+                    " " +
+                    localStorage.getItem("cityNameArabic") +
+                    ")"}
+                {/* {t("Saudi-arabia-riyadh")} */}
               </span>
             </span>
           </Col>

@@ -52,9 +52,10 @@ import GlobalAdminRoutes from "./Global_Admin_routes";
 export const router = createHashRouter(
   createRoutesFromElements(
     <>
-      {/* Branch Admin Routes Start */}
       <Route path="/" element={<Login />} />
       <Route path="/Forgot" element={<ForgotPassword />} />
+
+      {/* Branch Admin Routes Start */}
       <Route element={<BranchAdminRoutes />}>
         <Route exact path="/BranchAdmin/" element={<Dashboard />}>
           <Route path="" element={<Shift />} />
@@ -75,6 +76,7 @@ export const router = createHashRouter(
           <Route path="Shifts" element={<CityBranchShift />} />
           <Route path="Counters" element={<CityWiseCounter />} />
           <Route path="Employee" element={<EmployeeMain />} />
+          <Route path="CityWiseBranchService" element={<CityBranchService />} />
         </Route>
       </Route>
       {/* City Admin Routes End */}
