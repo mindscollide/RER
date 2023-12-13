@@ -7,6 +7,7 @@ import {
   Checkbox,
   Button,
   Table,
+  Notification,
 } from "../../../components/elements";
 import DatePicker from "react-multi-date-picker";
 import TimePicker from "react-multi-date-picker/plugins/time_picker";
@@ -18,6 +19,7 @@ import {
   getAllShiftsOfBranch,
   updateBranchShiftApi,
   updateBranchShiftFail,
+  clearResponseMessageAdmin,
 } from "../../../store/actions/Admin_action";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router";
@@ -49,8 +51,14 @@ const BranchAdmin = () => {
   const deleteBranchShiftID = useSelector(
     (state) => state.admin.deleteBranchShiftID
   );
+  //Response Message Reducer
+  const responseMessage = useSelector(
+    (state) => state.admin.admin_ResponseMessage
+  );
   const Loading = useSelector((state) => state.Loader.Loading);
   const [rows, setRows] = useState([]);
+
+  //Notification States
 
   // if its false its means its going to add else its going to update
   const [addUpdateCheckFlag, setAddUpdateCheckFlag] = useState(false);
@@ -66,6 +74,12 @@ const BranchAdmin = () => {
     ShiftEndTime: "",
     BranchID: Number(localStorage.getItem("branchID")),
     ShiftID: 0,
+  });
+
+  const [notification, setNotification] = useState({
+    notificationFlag: false,
+    notificationMessage: null,
+    severity: "none",
   });
 
   //language UseEffect
@@ -331,6 +345,111 @@ const BranchAdmin = () => {
     } catch {}
   };
 
+  useEffect(() => {
+    if (
+      responseMessage !== null &&
+      responseMessage !== undefined &&
+      responseMessage !== ""
+    ) {
+      if (
+        responseMessage === t("Admin_AdminServiceManager_AddBranchShift_01")
+      ) {
+        setTimeout(
+          setNotification({
+            ...notification,
+            notificationFlag: true,
+            notificationMessage: t(
+              "Admin_AdminServiceManager_AddBranchShift_01"
+            ),
+            severity: "success",
+          }),
+          3000
+        );
+      } else if (
+        responseMessage === t("Admin_AdminServiceManager_AddBranchShift_02")
+      ) {
+        setTimeout(
+          setNotification({
+            ...notification,
+            notificationFlag: true,
+            notificationMessage: t(
+              "Admin_AdminServiceManager_AddBranchShift_02"
+            ),
+            severity: "error",
+          }),
+          3000
+        );
+      } else if (responseMessage === t("something_went_wrong")) {
+        setTimeout(
+          setNotification({
+            ...notification,
+            notificationFlag: true,
+            notificationMessage: t("something_went_wrong"),
+            severity: "error",
+          }),
+          3000
+        );
+      } else if (
+        responseMessage === t("Admin_AdminServiceManager_UpdateBranchShift_01")
+      ) {
+        setTimeout(
+          setNotification({
+            ...notification,
+            notificationFlag: true,
+            notificationMessage: t(
+              "Admin_AdminServiceManager_UpdateBranchShift_01"
+            ),
+            severity: "success",
+          }),
+          3000
+        );
+      } else if (
+        responseMessage === t("Admin_AdminServiceManager_UpdateBranchShift_02")
+      ) {
+        setTimeout(
+          setNotification({
+            ...notification,
+            notificationFlag: true,
+            notificationMessage: t(
+              "Admin_AdminServiceManager_UpdateBranchShift_02"
+            ),
+            severity: "error",
+          }),
+          3000
+        );
+      } else if (
+        responseMessage === t("Admin_AdminServiceManager_DeleteBranchShift_01")
+      ) {
+        setTimeout(
+          setNotification({
+            ...notification,
+            notificationFlag: true,
+            notificationMessage: t(
+              "Admin_AdminServiceManager_DeleteBranchShift_01"
+            ),
+            severity: "success",
+          }),
+          3000
+        );
+      } else if (
+        responseMessage === t("Admin_AdminServiceManager_DeleteBranchShift_02")
+      ) {
+        setTimeout(
+          setNotification({
+            ...notification,
+            notificationFlag: true,
+            notificationMessage: t(
+              "Admin_AdminServiceManager_DeleteBranchShift_02"
+            ),
+            severity: "error",
+          }),
+          3000
+        );
+      }
+    }
+    dispatch(clearResponseMessageAdmin(null));
+  }, [responseMessage]);
+
   return (
     <>
       <section>
@@ -475,6 +594,17 @@ const BranchAdmin = () => {
         deleteModal={deleteModal}
         deleteID={deleteID}
         route={"BranchAdminShift"}
+      />
+      <Notification
+        show={notification.notificationFlag}
+        hide={setNotification}
+        message={notification.notificationMessage}
+        severity={notification.severity}
+        notificationClass={
+          notification.severity === "error"
+            ? "notification-error"
+            : "notification-success"
+        }
       />
     </>
   );
