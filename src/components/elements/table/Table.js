@@ -13,8 +13,6 @@ const CustomTable = ({
   onChange,
   locale,
 }) => {
-  console.log("CustomTable", className);
-
   return (
     <>
       <h4 className="labelTitle">{labelTitle}</h4>

@@ -1,64 +1,148 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Row, Col } from "react-bootstrap";
 import "./CountryWiseCity.css";
 import { Paper, Table, Button } from "../../../components/elements";
 import { Switch } from "antd";
 import { useTranslation } from "react-i18next";
+import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router";
+import {
+  getCityServiceListApi,
+  updateCityServiceListApi,
+} from "../../../store/actions/Admin_action";
+import { capitalizeKeysInArray } from "../../../commen/functions/utils.js";
 
 const CountryWiseCity = () => {
   const { t } = useTranslation();
-
-  const dataSource = [
-    {
-      id: 1,
-      shiftName: <span className="table-inside-text">First Registry</span>,
-    },
-    {
-      id: 2,
-      shiftName: (
-        <span className="table-inside-text">
-          Subsequence Transaction Service Before First Registry
-        </span>
-      ),
-    },
-    {
-      id: 3,
-      shiftName: <span className="table-inside-text">Change Ownership</span>,
-    },
-  ];
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const Loading = useSelector((state) => state.Loader.Loading);
+  const cityServiceListData = useSelector(
+    (state) => state.admin.cityServiceListData
+  );
+  const currentLanguage = localStorage.getItem("i18nextLng");
+  const local = currentLanguage === "en" ? "en-US" : "ar-SA";
+  const [rows, setRows] = useState([]);
 
   const columns = [
     {
       title: <span className="table-text">{t("Service")}</span>,
-      dataIndex: "shiftName",
-      key: "shiftName",
       width: "400px",
+      dataIndex: "citySM",
+      key: "citySM",
+
+      render: (text, record) => (
+        <span className="table-inside-text">
+          {currentLanguage === "en"
+            ? record.citySM.serviceNameEnglish
+            : record.citySM.serviceNameArabic}
+        </span>
+      ),
     },
     {
       title: <span className="table-text">{t("Branch-availability")}</span>,
-      dataIndex: "active",
-      key: "active",
+      dataIndex: "branchAvailability",
+      key: "branchAvailability",
       width: "200px",
       align: "center",
       render: (text, record) => (
         <span>
-          <Switch />
+          <Switch
+            checked={text}
+            onChange={(value) =>
+              handleSwitch("branchAvailability", value, record)
+            }
+          />
         </span>
       ),
     },
     {
       title: <span className="table-text">{t("Home-availability")}</span>,
-      dataIndex: "column6",
-      key: "column6",
+      dataIndex: "homeAvailability",
+      key: "homeAvailability",
       width: "200px",
       align: "center",
       render: (text, record) => (
         <span>
-          <Switch />
+          <Switch
+            checked={text}
+            onChange={(value) =>
+              handleSwitch("homeAvailability", value, record)
+            }
+          />
         </span>
       ),
     },
   ];
+
+  // calling branch data api
+  useEffect(() => {
+    dispatch(getCityServiceListApi(t, navigate, Loading));
+  }, []);
+
+  // updating data in table
+  useEffect(() => {
+    if (cityServiceListData !== null) {
+      setRows(cityServiceListData);
+    } else {
+      setRows([]);
+    }
+  }, [cityServiceListData]);
+
+  const handleSwitch = (name, value, record) => {
+    try {
+      if (name === "homeAvailability") {
+        setRows(
+          rows.map((service) => {
+            if (service.cityServiceID === record.cityServiceID) {
+              return {
+                ...service,
+                homeAvailability: value,
+              };
+            }
+            return service;
+          })
+        );
+      } else if (name === "branchAvailability") {
+        setRows(
+          rows.map((service) => {
+            if (service.cityServiceID === record.cityServiceID) {
+              return {
+                ...service,
+                branchAvailability: value,
+              };
+            }
+            return service;
+          })
+        );
+      }
+    } catch {}
+  };
+
+  const handleRevert = () => {
+    try {
+      if (cityServiceListData !== null) {
+        setRows(cityServiceListData);
+      }
+    } catch {}
+  };
+
+  const handleSave = () => {
+    try {
+      let convertedData = capitalizeKeysInArray(rows);
+      const newArray = convertedData.map((item) => ({
+        BranchAvailability: item.BranchAvailability,
+        CityServiceID: item.CityServiceID,
+        HomeAvailability: item.HomeAvailability,
+        HomeVisitCharges: item.HomeVisitCharges,
+      }));
+      let data = {
+        CityID: Number(localStorage.getItem("cityID")),
+        CityServices: newArray,
+      };
+      dispatch(updateCityServiceListApi(t, navigate, Loading, data));
+    } catch {}
+  };
 
   return (
     <>
@@ -68,7 +152,22 @@ const CountryWiseCity = () => {
             <span className="shift-heading">
               {t("City-wise-service-availability")}
               <span className="shift-sub-heading">
-                {t("Saudi-arabia-riyadh")}
+                {" "}
+                {currentLanguage === "en"
+                  ? "(" +
+                    localStorage.getItem("countryName") +
+                    " " +
+                    "-" +
+                    " " +
+                    localStorage.getItem("cityName") +
+                    ")"
+                  : "(" +
+                    localStorage.getItem("countryNameArabic") +
+                    " " +
+                    "-" +
+                    " " +
+                    localStorage.getItem("cityNameArabic") +
+                    ")"}
               </span>
             </span>
           </Col>
@@ -82,21 +181,19 @@ const CountryWiseCity = () => {
                     icon={<i className="icon-save icon-space"></i>}
                     text={t("Save")}
                     className="save-btn-Country-City-Wise"
+                    onClick={handleSave}
                   />
                   <Button
                     icon={<i className="icon-repeat icon-space"></i>}
                     text={t("Revert")}
                     className="revert-btn-Country-City-Wise"
+                    onClick={handleRevert}
                   />
                 </Col>
               </Row>
               <Row className="mt-2">
                 <Col lg={12} md={12} sm={12}>
-                  <Table
-                    rows={dataSource}
-                    column={columns}
-                    pagination={false}
-                  />
+                  <Table rows={rows} column={columns} pagination={false} />
                 </Col>
               </Row>
             </Paper>

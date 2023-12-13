@@ -52,7 +52,6 @@ const CityAdmin = () => {
   );
   const currentLanguage = localStorage.getItem("i18nextLng");
   const local = currentLanguage === "en" ? "en-US" : "ar-SA";
-  const [isCheckboxSelected, setIsCheckboxSelected] = useState(false);
   const [addUpdateCheckFlag, setAddUpdateCheckFlag] = useState(false);
   const [calendarValue, setCalendarValue] = useState(gregorian);
   const [localValue, setLocalValue] = useState(gregorian_en);
@@ -106,7 +105,6 @@ const CityAdmin = () => {
       dispatch(loader_Actions(false));
     }
     if (updatedCityBranchData !== null) {
-      console.log("updatedCityBranchData",updatedCityBranchData)
       setRows(
         rows.map((branch) => {
           if (branch.branchID === updatedCityBranchData.branchID) {
@@ -468,12 +466,7 @@ const CityAdmin = () => {
 
               <Row className="mt-3">
                 <Col lg={12} md={12} sm={12}>
-                  <Table
-                    rows={rows}
-                    column={columns}
-                    pagination={false}
-                    // className="table-text"
-                  />
+                  <Table rows={rows} column={columns} pagination={false} />
                 </Col>
               </Row>
             </Paper>

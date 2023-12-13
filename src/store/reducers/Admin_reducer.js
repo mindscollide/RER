@@ -23,6 +23,7 @@ const initialState = {
   addedCityBranchData: null,
   deletedCityBranchData: null,
   updatedCityBranchData: null,
+  cityServiceListData: null,
 };
 
 const adminReducer = (state = initialState, action) => {
@@ -349,6 +350,34 @@ const adminReducer = (state = initialState, action) => {
       return {
         ...state,
         updatedCityBranchData: null,
+        admin_ResponseMessage: action.message,
+      };
+
+    //Get  Country Wise City for listing down existing services in city
+    case actions.GET_CITY_SERVICE_LIST_SUCCESS:
+      return {
+        ...state,
+        cityServiceListData: action.response,
+        admin_ResponseMessage: action.message,
+      };
+
+    case actions.GET_CITY_SERVICE_LIST_FAIL:
+      return {
+        ...state,
+        cityServiceListData: null,
+        admin_ResponseMessage: action.message,
+      };
+
+    //Country Wise City for updating all existing services in a city in a single request
+    case actions.UPDATE_CITY_SERVICE_LIST_SUCCESS:
+      return {
+        ...state,
+        admin_ResponseMessage: action.message,
+      };
+
+    case actions.UPDATE_CITY_SERVICE_LIST_FAIL:
+      return {
+        ...state,
         admin_ResponseMessage: action.message,
       };
 
