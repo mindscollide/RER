@@ -159,5 +159,10 @@
   "Admin_AdminServiceManager_GetCityBranchList_01": "Branches available for the city",
   "Admin_AdminServiceManager_GetCityBranchList_02": "No Branches found for the city",
   "Advance-roaster-days": "Advance Roaster (Days)",
-  "Prebooking-margin-days": "Prebooking Margin (Days)"
+  "Prebooking-margin-days": "Prebooking Margin (Days)",
+  "Admin_AdminServiceManager_GetCityServiceList_01":"Services available for the city",
+  "Admin_AdminServiceManager_GetCityServiceList_02":"No Service found for the city",
+  "Admin_AdminServiceManager_UpdateCityServiceList_01":"Services updated for city",
+  "Admin_AdminServiceManager_UpdateCityServiceList_02":"No Record Updated"
+
 }

@@ -20,10 +20,13 @@ import {
   updateAllBranchServices,
   updateBranchCounter,
   deleteBranchCounter,
+  // ===================================CITY ADMIN==========================================//
   getCityBranchList,
   addCityBranch,
   deleteCityBranch,
   updateCityBranch,
+  getCityServiceList,
+  updateCityServiceList,
 } from "../../commen/apis/Api_config";
 import { adminURL } from "../../commen/apis/Api_ends_points";
 import moment from "moment";
@@ -1503,6 +1506,7 @@ const getBranchServicesApi = (t, navigate, loadingFlag) => {
 // };
 
 //Update All Branch Services
+
 const updateAllBranchServicesSuccess = (response, message) => {
   return {
     type: actions.UPDATE_ALL_BRANCH_SERVICES_SUCCESS,
@@ -1553,7 +1557,6 @@ const updateAllBranchServicesApi = (t, navigate, loadingFlag, data) => {
                 )
               );
               await dispatch(getBranchServicesApi(t, navigate, loadingFlag));
-              // await dispatch(loader_Actions(false));
             } else if (
               response.data.responseResult.responseMessage ===
               "Admin_AdminServiceManager_UpdateAllBranchServices_02"
@@ -1563,7 +1566,7 @@ const updateAllBranchServicesApi = (t, navigate, loadingFlag, data) => {
                   t("Admin_AdminServiceManager_UpdateBranchServices_02")
                 )
               );
-              // await dispatch(loader_Actions(false));
+              await dispatch(loader_Actions(false));
             } else if (
               response.data.responseResult.responseMessage ===
               "Admin_AdminServiceManager_UpdateAllBranchServices_03"
@@ -1573,7 +1576,7 @@ const updateAllBranchServicesApi = (t, navigate, loadingFlag, data) => {
                   t("Admin_AdminServiceManager_GetBranchServices_03")
                 )
               );
-              // await dispatch(loader_Actions(false));
+              await dispatch(loader_Actions(false));
             } else if (
               response.data.responseResult.responseMessage ===
               "Admin_AdminServiceManager_UpdateAllBranchServices_04"
@@ -1581,7 +1584,7 @@ const updateAllBranchServicesApi = (t, navigate, loadingFlag, data) => {
               await dispatch(
                 updateAllBranchServicesFail(t("something_went_wrong"))
               );
-              // await dispatch(loader_Actions(false));
+              await dispatch(loader_Actions(false));
             } else {
               dispatch(getLastSelectedLanguageFail(t("something_went_wrong")));
             }
@@ -1589,18 +1592,18 @@ const updateAllBranchServicesApi = (t, navigate, loadingFlag, data) => {
             await dispatch(
               updateAllBranchServicesFail(t("something_went_wrong"))
             );
-            // await dispatch(loader_Actions(false));
+            await dispatch(loader_Actions(false));
           }
         } else {
           await dispatch(
             updateAllBranchServicesFail(t("something_went_wrong"))
           );
-          // await dispatch(loader_Actions(false));
+          await dispatch(loader_Actions(false));
         }
       })
       .catch((response) => {
         dispatch(updateAllBranchServicesFail(t("something_went_wrong")));
-        // dispatch(loader_Actions(false));
+        dispatch(loader_Actions(false));
       });
   };
 };
@@ -2215,6 +2218,196 @@ const updateCityBranchApi = (
   };
 };
 
+//Get  Country Wise City for listing down existing services in city
+const getCityServiceListSuccess = (response, message) => {
+  return {
+    type: actions.GET_CITY_SERVICE_LIST_SUCCESS,
+    response: response,
+    message: message,
+  };
+};
+
+const getCityServiceListFail = (message) => {
+  return {
+    type: actions.GET_CITY_SERVICE_LIST_FAIL,
+    message: message,
+  };
+};
+
+const getCityServiceListApi = (t, navigate, loadingFlag) => {
+  let data = { CityID: Number(localStorage.getItem("cityID")) };
+  return async (dispatch) => {
+    if (!loadingFlag) {
+      dispatch(loader_Actions(true));
+    }
+    let form = new FormData();
+    form.append("RequestMethod", getCityServiceList.RequestMethod);
+    form.append("RequestData", JSON.stringify(data));
+    await axios({
+      method: "post",
+      url: adminURL,
+      data: form,
+      headers: {
+        _token: JSON.parse(localStorage.getItem("token")),
+      },
+    })
+      .then(async (response) => {
+        if (response.data.responseCode === 200) {
+          if (response.data.responseCode === 417) {
+            // await dispatch(RefreshToken(navigate, t))
+            dispatch(getCityServiceListApi(t, navigate, loadingFlag));
+          } else if (response.data.responseResult.isExecuted === true) {
+            if (
+              response.data.responseResult.responseMessage ===
+              "Admin_AdminServiceManager_GetCityServiceList_01"
+            ) {
+              await dispatch(
+                getCityServiceListSuccess(
+                  response.data.responseResult.cityServices,
+                  t("Admin_AdminServiceManager_GetCityServiceList_01")
+                )
+              );
+              await dispatch(loader_Actions(false));
+            } else if (
+              response.data.responseResult.responseMessage ===
+              "Admin_AdminServiceManager_GetCityServiceList_02"
+            ) {
+              await dispatch(
+                getCityServiceListFail(
+                  t("Admin_AdminServiceManager_GetCityServiceList_02")
+                )
+              );
+              await dispatch(loader_Actions(false));
+            } else if (
+              response.data.responseResult.responseMessage ===
+              "Admin_AdminServiceManager_GetCityServiceList_03"
+            ) {
+              await dispatch(
+                getCityServiceListFail(
+                  t("Admin_AdminServiceManager_UpdateCityBranch_03")
+                )
+              );
+              await dispatch(loader_Actions(false));
+            } else if (
+              response.data.responseResult.responseMessage ===
+              "Admin_AdminServiceManager_GetCityServiceList_04"
+            ) {
+              await dispatch(getCityServiceListFail(t("something_went_wrong")));
+              await dispatch(loader_Actions(false));
+            } else {
+              dispatch(getLastSelectedLanguageFail(t("something_went_wrong")));
+            }
+          } else {
+            await dispatch(getCityServiceListFail(t("something_went_wrong")));
+            await dispatch(loader_Actions(false));
+          }
+        } else {
+          await dispatch(getCityServiceListFail(t("something_went_wrong")));
+          await dispatch(loader_Actions(false));
+        }
+      })
+      .catch((response) => {
+        dispatch(getCityServiceListFail(t("something_went_wrong")));
+        dispatch(loader_Actions(false));
+      });
+  };
+};
+
+//Country Wise City for updating all existing services in a city in a single request
+const updateCityServiceListSuccess = (message) => {
+  return {
+    type: actions.UPDATE_CITY_SERVICE_LIST_SUCCESS,
+    message: message,
+  };
+};
+
+const updateCityServiceListFail = (message) => {
+  return {
+    type: actions.UPDATE_CITY_SERVICE_LIST_FAIL,
+    message: message,
+  };
+};
+
+const updateCityServiceListApi = (t, navigate, loadingFlag, data) => {
+  return async (dispatch) => {
+    if (!loadingFlag) {
+      dispatch(loader_Actions(true));
+    }
+    let form = new FormData();
+    form.append("RequestMethod", updateCityServiceList.RequestMethod);
+    form.append("RequestData", JSON.stringify(data));
+    await axios({
+      method: "post",
+      url: adminURL,
+      data: form,
+      headers: {
+        _token: JSON.parse(localStorage.getItem("token")),
+      },
+    })
+      .then(async (response) => {
+        if (response.data.responseCode === 200) {
+          if (response.data.responseCode === 417) {
+            // await dispatch(RefreshToken(navigate, t))
+            dispatch(updateCityServiceListApi(t, navigate, loadingFlag, data));
+          } else if (response.data.responseResult.isExecuted === true) {
+            if (
+              response.data.responseResult.responseMessage ===
+              "Admin_AdminServiceManager_UpdateCityServiceList_01"
+            ) {
+              await dispatch(
+                updateCityServiceListSuccess(
+                  t("Admin_AdminServiceManager_UpdateBranchServices_01")
+                )
+              );
+              await dispatch(getCityServiceListApi(t, navigate, loadingFlag));
+            } else if (
+              response.data.responseResult.responseMessage ===
+              "Admin_AdminServiceManager_UpdateCityServiceList_02"
+            ) {
+              await dispatch(
+                updateCityServiceListFail(
+                  t("Admin_AdminServiceManager_UpdateCityServiceList_02")
+                )
+              );
+              await dispatch(loader_Actions(false));
+            } else if (
+              response.data.responseResult.responseMessage ===
+              "Admin_AdminServiceManager_UpdateCityServiceList_03"
+            ) {
+              await dispatch(
+                updateCityServiceListFail(
+                  t("Admin_AdminServiceManager_UpdateCityBranch_03")
+                )
+              );
+              await dispatch(loader_Actions(false));
+            } else if (
+              response.data.responseResult.responseMessage ===
+              "Admin_AdminServiceManager_UpdateCityServiceList_04"
+            ) {
+              await dispatch(
+                updateCityServiceListFail(t("something_went_wrong"))
+              );
+              await dispatch(loader_Actions(false));
+            } else {
+              dispatch(updateCityServiceListFail(t("something_went_wrong")));
+            }
+          } else {
+            await dispatch(
+              updateCityServiceListFail(t("something_went_wrong"))
+            );
+            await dispatch(loader_Actions(false));
+          }
+        } else {
+          await dispatch(updateCityServiceListFail(t("something_went_wrong")));
+          await dispatch(loader_Actions(false));
+        }
+      })
+      .catch((response) => {
+        dispatch(updateCityServiceListFail(t("something_went_wrong")));
+        dispatch(loader_Actions(false));
+      });
+  };
+};
 export {
   clearResponseMessageAdmin,
   AdminCleareState,
@@ -2250,4 +2443,6 @@ export {
   deleteCityBranchFail,
   updateCityBranchApi,
   updateCityBranchFail,
+  getCityServiceListApi,
+  updateCityServiceListApi,
 };
