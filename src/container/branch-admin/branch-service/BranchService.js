@@ -33,6 +33,11 @@ const BranchService = () => {
     (state) => state.admin.branchServicesData
   );
 
+  //Response MEssage Reducer
+  const responseMessage = useSelector(
+    (state) => state.admin.admin_ResponseMessage
+  );
+
   const navigate = useNavigate();
 
   const dispatch = useDispatch();
@@ -42,6 +47,7 @@ const BranchService = () => {
   const [notification, setNotification] = useState({
     notificationFlag: false,
     notificationMessage: null,
+    severity: "none",
   });
 
   const [initialBranchServicesData, setInitialBranchServicesData] = useState(
@@ -288,16 +294,71 @@ const BranchService = () => {
   };
 
   useEffect(() => {
-    setTimeout(
-      setNotification({
-        ...notification,
-        notificationFlag: true,
-        notificationMessage: "Record Saved",
-      }),
-      3000
-    );
+    if (
+      responseMessage !== null &&
+      responseMessage !== undefined &&
+      responseMessage !== ""
+    ) {
+      if (
+        responseMessage ===
+        t("Admin_AdminServiceManager_UpdateBranchServices_01")
+      ) {
+        setTimeout(
+          setNotification({
+            ...notification,
+            notificationFlag: true,
+            notificationMessage: t(
+              "Admin_AdminServiceManager_UpdateBranchServices_01"
+            ),
+            severity: "success",
+          }),
+          3000
+        );
+      } else if (
+        responseMessage ===
+        t("Admin_AdminServiceManager_UpdateBranchServices_02")
+      ) {
+        setTimeout(
+          setNotification({
+            ...notification,
+            notificationFlag: true,
+            notificationMessage: t(
+              "Admin_AdminServiceManager_UpdateBranchServices_02"
+            ),
+            severity: "error",
+          }),
+          3000
+        );
+      } else if (
+        responseMessage === t("Admin_AdminServiceManager_GetBranchServices_03")
+      ) {
+        setTimeout(
+          setNotification({
+            ...notification,
+            notificationFlag: true,
+            notificationMessage: t(
+              "Admin_AdminServiceManager_GetBranchServices_03"
+            ),
+            severity: "error",
+          }),
+          3000
+        );
+      } else if (responseMessage === t("something_went_wrong")) {
+        setTimeout(
+          setNotification({
+            ...notification,
+            notificationFlag: true,
+            notificationMessage: t("something_went_wrong"),
+            severity: "error",
+          }),
+          3000
+        );
+      }
+    }
     dispatch(clearResponseMessageAdmin(null));
-  }, []);
+  }, [responseMessage]);
+
+  console.log("responseMessageresponseMessage", responseMessage);
 
   return (
     <>
@@ -364,13 +425,17 @@ const BranchService = () => {
           </Col>
         </Row>
       </section>
-      {/* <Notification
+      <Notification
         show={notification.notificationFlag}
         hide={setNotification}
         message={notification.notificationMessage}
-        // notificationIcon={<i className="icon-add-circle" />}
-        severity="error"
-      /> */}
+        severity={notification.severity}
+        notificationClass={
+          notification.severity === "error"
+            ? "notification-error"
+            : "notification-success"
+        }
+      />
     </>
   );
 };

@@ -183,3 +183,28 @@ export function generateMenuItems(roleID, t) {
     // ...
   ];
 }
+// ================== This is used for covert json all key values first charactor itno capitle =========//
+const capitalizeFirstLetter = (str) => {
+  return str.charAt(0).toUpperCase() + str.slice(1);
+};
+
+// Recursively capitalize keys in an object
+const capitalizeObjectKeys = (obj) => {
+  const newObj = {};
+  for (const key in obj) {
+    if (Object.prototype.hasOwnProperty.call(obj, key)) {
+      const newKey = capitalizeFirstLetter(key);
+      newObj[newKey] =
+        typeof obj[key] === "object"
+          ? capitalizeObjectKeys(obj[key])
+          : obj[key];
+    }
+  }
+  return newObj;
+};
+
+// Capitalize keys in an array of objects
+export function capitalizeKeysInArray(arr) {
+  return arr.map((item) => capitalizeObjectKeys(item));
+}
+// ================== End This is used for covert json all key values first charactor itno capitle =========//

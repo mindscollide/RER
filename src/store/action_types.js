@@ -118,3 +118,12 @@ export const DELETE_CITY_BRANCH_FAIL = "DELETE_CITY_BRANCH_FAIL";
 //for UPDAT Shifts Of Branch Api (City Admin for update existing branch in the city)
 export const UPDATE_CITY_BRANCH_SUCCESS = "UPDATE_CITY_BRANCH_SUCCESS";
 export const UPDATE_CITY_BRANCH_FAIL = "UPDATE_CITY_BRANCH_FAIL";
+
+//Get  Country Wise City for listing down existing services in city
+export const GET_CITY_SERVICE_LIST_SUCCESS = "GET_CITY_SERVICE_LIST_SUCCESS";
+export const GET_CITY_SERVICE_LIST_FAIL = "GET_CITY_SERVICE_LIST_FAIL";
+
+///Country Wise City for updating all existing services in a city in a single request
+export const UPDATE_CITY_SERVICE_LIST_SUCCESS =
+  "UPDATE_CITY_SERVICE_LIST_SUCCESS";
+export const UPDATE_CITY_SERVICE_LIST_FAIL = "UPDATE_CITY_SERVICE_LIST_FAIL";

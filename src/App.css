@@ -346,3 +346,32 @@ body[dir="rtl"] .confirm-delete-text {
 }
 
 /* Labels For Modals End */
+
+/* Snackbar Notification CSS */
+.MuiAlert-filledError.notification-error {
+  width: 100% !important;
+  background: #cc0000 !important;
+  position: relative !important;
+  box-shadow: none !important;
+}
+
+.MuiAlert-filledSuccess.notification-success {
+  width: 100% !important;
+  background: #55c5d1 !important;
+  position: relative !important;
+  box-shadow: none !important;
+}
+
+.MuiSnackbar-anchorOriginTopLeft .MuiAlert-icon {
+  margin-right: auto !important;
+  margin-left: 12px !important;
+}
+
+.MuiSnackbar-anchorOriginTopLeft .MuiAlert-action {
+  display: flex;
+  align-items: center;
+  margin-left: -8px !important;
+  margin-right: auto !important;
+  padding-left: auto !important;
+  padding-right: 16px !important;
+}

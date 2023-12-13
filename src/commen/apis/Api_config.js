@@ -114,6 +114,16 @@ const updateCityBranch = {
   RequestMethod: "ServiceManager.UpdateCityBranch",
 };
 
+// for Get Branch Services
+const getCityServiceList = {
+  RequestMethod: "ServiceManager.GetCityServiceList",
+};
+
+// for update City Service List
+const updateCityServiceList = {
+  RequestMethod: "ServiceManager.UpdateCityServiceList",
+};
+
 export {
   logIn,
   roleList,
@@ -140,4 +150,6 @@ export {
   addCityBranch,
   deleteCityBranch,
   updateCityBranch,
+  getCityServiceList,
+  updateCityServiceList,
 };
