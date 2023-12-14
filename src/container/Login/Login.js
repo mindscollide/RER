@@ -11,7 +11,7 @@ const Login = () => {
   const { auth } = useSelector((state) => state);
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
 
   const [errorBar, setErrorBar] = useState("");
 
@@ -58,7 +58,7 @@ const Login = () => {
         Device: "browser",
       };
       setErrorBar(false);
-      dispatch(setLogIn(t, navigate, data));
+      dispatch(setLogIn(t, navigate, data, i18n));
     } else {
       setErrorBar(true);
       setOpen({
