@@ -1,8 +1,23 @@
 {
-  "CityID": 1,
-  "BranchNameEnglish": "Test Branch",
-  "BranchNameArabic": "فرع الاختبار",
-  "IsBranchActive": true,
-  "BranchStartTime": "060000",
-  "BranchEndTime": "150000"
+  "CityID": "1",
+  "CityServices": [
+    {
+      "BranchAvailability": true,
+      "CityServiceID": 1,
+      "HomeAvailability": true,
+      "HomeVisitCharges": 9211
+    },
+    {
+      "BranchAvailability": false,
+      "CityServiceID": 2,
+      "HomeAvailability": true,
+      "HomeVisitCharges": 312
+    },
+    {
+      "BranchAvailability": true,
+      "CityServiceID": 3,
+      "HomeAvailability": true,
+      "HomeVisitCharges": 1412
+    }
+  ]
 }

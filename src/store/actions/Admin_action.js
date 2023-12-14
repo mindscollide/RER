@@ -85,6 +85,12 @@ const getSystemSupportedLanguage = (t, i18n, navigate, route, data) => {
                   t("Admin_AdminServiceManager_GetSystemSupportedLanguage_01")
                 )
               );
+              localStorage.setItem(
+                "languageData",
+                JSON.stringify(
+                  response.data.responseResult.systemSupportedLanguages
+                )
+              );
               //   this check is for which routes its comming from
               if (route === "login") {
                 await dispatch(loader_Actions(false));
@@ -170,6 +176,7 @@ const getLastSelectedLanguage = (t, i18n, navigate, data) => {
               response.data.responseResult.responseMessage ===
               "Admin_AdminServiceManager_GetLastSelectedLanguage_01"
             ) {
+              localStorage.setItem("i18nextLngFlag", true);
               localStorage.setItem(
                 "i18nextLng",
                 response.data.responseResult.userSelectedLanguage
@@ -205,6 +212,7 @@ const getLastSelectedLanguage = (t, i18n, navigate, data) => {
                   t("Admin_AdminServiceManager_GetLastSelectedLanguage_01")
                 )
               );
+
               await dispatch(loader_Actions(false));
             } else if (
               response.data.responseResult.responseMessage ===
@@ -292,8 +300,6 @@ const setLastSelectedLanguage = (
                   t("Admin_AdminServiceManager_SetLastSelectedLanguage_01")
                 )
               );
-              console.log("i18nextLng", data.SystemSupportedLanguageID === 2);
-              console.log("i18nextLng", data.SystemSupportedLanguageID);
               setSelectedLanguage({
                 languageTitle:
                   data.SystemSupportedLanguageID === 2 ? "Ø¹Ø±Ø¨Ù‰" : "English",
@@ -304,7 +310,6 @@ const setLastSelectedLanguage = (
                 data.SystemSupportedLanguageID === 2 ? "ar" : "en";
               // Change the language using i18next instance directly
               setTimeout(() => {
-                // window.location.reload()
                 i18n.changeLanguage(newLanguage);
               }, 100);
               console.log("i18nextLng", newLanguage);
@@ -2408,6 +2413,7 @@ const updateCityServiceListApi = (t, navigate, loadingFlag, data) => {
       });
   };
 };
+
 export {
   clearResponseMessageAdmin,
   AdminCleareState,
