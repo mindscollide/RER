@@ -1,6 +1,15 @@
 // its allow only character  space and number and also didnt allow space as a first character
 export const regexOnlyForNumberNCharacters = (data) => {
-  return data.replace(/^\s/, "").replace(/[^a-zA-Z0-9\s]/g, "");
+  // Remove leading space
+  const trimmedData = data.replace(/^\s*/, "");
+
+  // Allow Arabic and English characters, spaces, and numbers
+  const sanitizedData = trimmedData.replace(
+    /[^\u0600-\u06FF\u0750-\u077F\u08A0-\u08FF\uFB50-\uFDFF\uFE70-\uFEFFa-zA-Z0-9\s]/gu,
+    ""
+  );
+
+  return sanitizedData;
 };
 
 // its allow only character  space and also didnt allow space as a first character
