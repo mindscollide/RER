@@ -136,6 +136,7 @@ const CountryWiseCity = () => {
         HomeAvailability: item.HomeAvailability,
         HomeVisitCharges: item.HomeVisitCharges,
       }));
+      console.log(newArray, "newArraynewArray");
       let data = {
         CityID: Number(localStorage.getItem("cityID")),
         CityServices: newArray,

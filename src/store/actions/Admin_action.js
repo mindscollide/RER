@@ -30,6 +30,7 @@ import {
 
   // =================== City Branch Service Start ===================== //
   getCityBranchServices,
+  updateCityBranchService,
 } from "../../commen/apis/Api_config";
 import { adminURL } from "../../commen/apis/Api_ends_points";
 import moment from "moment";
@@ -2434,7 +2435,10 @@ const getCityBranchServiceFail = (message) => {
 };
 
 const getCityBranchServiceListApi = (t, navigate, loadingFlag) => {
-  let data = { CityID: Number(localStorage.getItem("cityID")) };
+  let data = {
+    CityID: Number(localStorage.getItem("cityID")),
+    BranchID: 1,
+  };
   return async (dispatch) => {
     if (!loadingFlag) {
       dispatch(loader_Actions(true));
@@ -2461,7 +2465,7 @@ const getCityBranchServiceListApi = (t, navigate, loadingFlag) => {
             ) {
               await dispatch(
                 getCityBranchServiceSuccess(
-                  response.data.responseResult.cityServices,
+                  response.data.responseResult.branchServiceModelList,
                   t("Admin_AdminServiceManager_GetCityBranchServices_01")
                 )
               );
@@ -2515,6 +2519,109 @@ const getCityBranchServiceListApi = (t, navigate, loadingFlag) => {
 
 // GET CITY BRANCH SERVICE MAIN API END
 
+// UPDATE CITY BRANCH SERVICE MAIN API START
+const updateCityBranchServiceSuccess = (message) => {
+  return {
+    type: actions.UPDATE_CITY_BRANCH_SERVICE_SUCCESS,
+    message: message,
+  };
+};
+
+const updateCityBranchServiceFail = (message) => {
+  return {
+    type: actions.UPDATE_CITY_BRANCH_SERVICE_FAIL,
+    message: message,
+  };
+};
+
+const updateCityBranchServiceListApi = (t, navigate, loadingFlag, newData) => {
+  return async (dispatch) => {
+    if (!loadingFlag) {
+      dispatch(loader_Actions(true));
+    }
+    let form = new FormData();
+    form.append("RequestMethod", updateCityBranchService.RequestMethod);
+    form.append("RequestData", JSON.stringify(newData));
+    await axios({
+      method: "post",
+      url: adminURL,
+      data: form,
+      headers: {
+        _token: JSON.parse(localStorage.getItem("token")),
+      },
+    })
+      .then(async (response) => {
+        if (response.data.responseCode === 200) {
+          if (response.data.responseCode === 417) {
+            // await dispatch(RefreshToken(navigate, t))
+            dispatch(
+              updateCityBranchServiceListApi(t, navigate, loadingFlag, newData)
+            );
+          } else if (response.data.responseResult.isExecuted === true) {
+            if (
+              response.data.responseResult.responseMessage ===
+              "Admin_AdminServiceManager_UpdateCityBranchServices_01"
+            ) {
+              await dispatch(
+                updateCityBranchServiceSuccess(
+                  t("Admin_AdminServiceManager_UpdateBranchServices_01")
+                )
+              );
+              await dispatch(
+                getCityBranchServiceListApi(t, navigate, loadingFlag)
+              );
+            } else if (
+              response.data.responseResult.responseMessage ===
+              "Admin_AdminServiceManager_UpdateCityBranchServices_02"
+            ) {
+              await dispatch(
+                updateCityBranchServiceFail(
+                  t("Admin_AdminServiceManager_UpdateCityBranchServices_02")
+                )
+              );
+              await dispatch(loader_Actions(false));
+            } else if (
+              response.data.responseResult.responseMessage ===
+              "Admin_AdminServiceManager_UpdateCityServiceList_03"
+            ) {
+              await dispatch(
+                updateCityBranchServiceFail(
+                  t("Admin_AdminServiceManager_GetBranchServices_03")
+                )
+              );
+              await dispatch(loader_Actions(false));
+            } else if (
+              response.data.responseResult.responseMessage ===
+              "Admin_AdminServiceManager_UpdateCityServiceList_04"
+            ) {
+              await dispatch(
+                updateCityBranchServiceFail(t("something_went_wrong"))
+              );
+              await dispatch(loader_Actions(false));
+            } else {
+              dispatch(updateCityBranchServiceFail(t("something_went_wrong")));
+            }
+          } else {
+            await dispatch(
+              updateCityBranchServiceFail(t("something_went_wrong"))
+            );
+            await dispatch(loader_Actions(false));
+          }
+        } else {
+          await dispatch(
+            updateCityBranchServiceFail(t("something_went_wrong"))
+          );
+          await dispatch(loader_Actions(false));
+        }
+      })
+      .catch((response) => {
+        dispatch(updateCityBranchServiceFail(t("something_went_wrong")));
+        dispatch(loader_Actions(false));
+      });
+  };
+};
+// UPDATE CITY BRANCH SERVICE MAIN API END
+
 export {
   clearResponseMessageAdmin,
   AdminCleareState,
@@ -2553,4 +2660,5 @@ export {
   getCityServiceListApi,
   updateCityServiceListApi,
   getCityBranchServiceListApi,
+  updateCityBranchServiceListApi,
 };

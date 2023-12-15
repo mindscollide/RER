@@ -21,7 +21,10 @@ import {
   getCityBranchListApi,
   updateCityBranchApi,
   updateCityBranchFail,
+  getCityBranchServiceListApi,
+  updateCityBranchServiceListApi,
 } from "../../../store/actions/Admin_action";
+
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router";
 import { regexOnlyForNumberNCharacters } from "../../../commen/functions/regex";
@@ -34,6 +37,7 @@ import DeleteEmployeeModal from "../../modals/delete-employee-modal/DeleteEmplye
 import { loader_Actions } from "../../../store/actions/Loader_action";
 import { Collapse, Switch } from "antd";
 import Select from "react-select";
+import { capitalizeKeysInArray } from "../../../commen/functions/utils.js";
 
 const CityAdmin = () => {
   const { t } = useTranslation();
@@ -54,6 +58,29 @@ const CityAdmin = () => {
   const updatedCityBranchData = useSelector(
     (state) => state.admin.updatedCityBranchData
   );
+
+  // reducer for get City Branch Services
+  const cityBranchWiseData = useSelector(
+    (state) => state.admin.cityBranchWiseData
+  );
+
+  console.log(cityBranchWiseData, "cityBranchRowscityBranchRows");
+
+  if (cityBranchWiseData && cityBranchWiseData.length > 0) {
+    const firstItem = cityBranchWiseData[0];
+
+    if (
+      firstItem &&
+      firstItem.branchService &&
+      firstItem.branchService.serviceID
+    ) {
+      const serviceID = firstItem.branchService.serviceID;
+      console.log("Service ID:", serviceID);
+
+      // Now you can use the 'serviceID' variable as needed
+    }
+  }
+
   const currentLanguage = localStorage.getItem("i18nextLng");
   const local = currentLanguage === "en" ? "en-US" : "ar-SA";
   const [addUpdateCheckFlag, setAddUpdateCheckFlag] = useState(false);
@@ -62,6 +89,11 @@ const CityAdmin = () => {
   const [deleteID, setDeleteID] = useState(null);
   const [deleteModal, setDeleteModal] = useState(false);
   const [rows, setRows] = useState([]);
+
+  // rows for get city branch services
+  const [cityBranchRows, setCityBranchRows] = useState(false);
+  // console.log(cityBranchRows, "cityBranchRowscityBranchRows");
+
   const [Branch, setBranch] = useState({
     BranchNameEnglish: "",
     BranchNameArabic: "",
@@ -148,8 +180,67 @@ const CityAdmin = () => {
     }
   }, [addedCityBranchData, updatedCityBranchData, deletedCityBranchData]);
 
+  // updating get city branch services data in table
+  useEffect(() => {
+    if (cityBranchWiseData !== null) {
+      setCityBranchRows(cityBranchWiseData);
+    } else {
+      setCityBranchRows([]);
+    }
+  }, [cityBranchWiseData]);
+
+  // for switch onChange on update
+  const handleSwitchCityBranchWise = (name, value, record) => {
+    try {
+      if (name === "isServiceAvailableAtBranch") {
+        setCityBranchRows(
+          cityBranchRows.map((branchService) => {
+            if (branchService.branchServiceID === record.branchServiceID) {
+              return {
+                ...branchService,
+                isServiceAvailableAtBranch: value,
+              };
+            }
+            return branchService;
+          })
+        );
+      }
+    } catch {}
+  };
+  const revertHandler = () => {
+    try {
+      if (cityBranchWiseData !== null) {
+        setCityBranchRows(cityBranchWiseData);
+      }
+    } catch {}
+  };
+
+  const handleSaveCityBranchWise = () => {
+    let serviceID =
+      cityBranchWiseData && cityBranchWiseData.length > 0
+        ? cityBranchWiseData[0].branchService &&
+          cityBranchWiseData[0].branchService.serviceID
+        : null;
+    try {
+      let convertedData = capitalizeKeysInArray(cityBranchRows);
+      const newArray = convertedData.map((item) => ({
+        BranchServiceID: item.BranchServiceID,
+        ServiceID: serviceID,
+        IsServiceAvailableAtBranch: item.IsServiceAvailableAtBranch,
+      }));
+      console.log(newArray, "newArraynewArray");
+      let newData = {
+        CityID: Number(localStorage.getItem("cityID")),
+        CityBranchServices: newArray,
+        BranchID: 1,
+      };
+      dispatch(updateCityBranchServiceListApi(t, navigate, Loading, newData));
+    } catch {}
+  };
+
   //to navigate on cityWiseBranchService page by click on service Icon
   const onClickServiceIcon = () => {
+    dispatch(getCityBranchServiceListApi(t, navigate, Loading));
     setIsCityWiseBranchService(true);
   };
 
@@ -294,21 +385,37 @@ const CityAdmin = () => {
   const cityWiseColumns = [
     {
       title: <span className="table-text">{t("Services")}</span>,
-      dataIndex: "shiftName",
-      key: "shiftName",
+      dataIndex: "branchService",
+      key: "branchService",
       width: "400px",
       align: "left",
+      render: (text, record) => (
+        <span className="table-inside-text">
+          {currentLanguage === "en"
+            ? record.branchService.serviceNameEnglish
+            : record.branchService.serviceNameArabic}
+        </span>
+      ),
     },
 
     {
       title: <span className="table-text">{t("Branch-availability")}</span>,
-      dataIndex: "active",
-      key: "active",
+      dataIndex: "isServiceAvailableAtBranch",
+      key: "isServiceAvailableAtBranch",
       width: "200px",
       align: "center",
       render: (text, record) => (
         <span>
-          <Switch />
+          <Switch
+            checked={text}
+            onChange={(value) =>
+              handleSwitchCityBranchWise(
+                "isServiceAvailableAtBranch",
+                value,
+                record
+              )
+            }
+          />
         </span>
       ),
     },
@@ -556,11 +663,13 @@ const CityAdmin = () => {
                       <Button
                         icon={<i className="icon-save icon-space"></i>}
                         text={t("Save")}
+                        onClick={handleSaveCityBranchWise}
                         className="save-btn-CityBranchWise"
                       />
                       <Button
                         icon={<i className="icon-repeat icon-space"></i>}
                         text={t("Revert")}
+                        onClick={revertHandler}
                         className="revert-btn-CityBranchWise"
                       />
                     </Col>
@@ -568,7 +677,7 @@ const CityAdmin = () => {
                   <Row className="mt-2">
                     <Col lg={12} md={12} sm={12}>
                       <Table
-                        rows={cityWiseData}
+                        rows={cityBranchRows}
                         column={cityWiseColumns}
                         pagination={false}
                       />

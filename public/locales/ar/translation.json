@@ -166,5 +166,13 @@
   "Admin_AdminServiceManager_UpdateCityServiceList_02": "No Record Updated",
   "Previous-dates-cannot-be-selected": "Previous dates cannot be selected",
   "Admin_AdminServiceManager_GetCityBranchServices_01": "Branch Services Record Found",
-  "Admin_AdminServiceManager_GetCityBranchServices_02": "Branch Services Record Not Found"
+  "Admin_AdminServiceManager_GetCityBranchServices_02": "Branch Services Record Not Found",
+  "Admin_AdminServiceManager_UpdateCityBranchServices_01": "Services updated for branch of city",
+  "Admin_AdminServiceManager_UpdateCityBranchServices_02": "No Record Updated",
+  "Appoinment-report": "Appointment Report",
+  "Visitor-Name": "Visitor Name",
+  "Mobile": "Mobile",
+  "Time": "Time",
+  "Email": "Email",
+  "Branch-wise-appoinment": "Branch Wise Appointment"
 }
