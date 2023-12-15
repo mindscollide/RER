@@ -164,5 +164,7 @@
   "Admin_AdminServiceManager_GetCityServiceList_02": "No Service found for the city",
   "Admin_AdminServiceManager_UpdateCityServiceList_01": "Services updated for city",
   "Admin_AdminServiceManager_UpdateCityServiceList_02": "No Record Updated",
-  "Previous-dates-cannot-be-selected": "Previous dates cannot be selected"
+  "Previous-dates-cannot-be-selected": "Previous dates cannot be selected",
+  "Admin_AdminServiceManager_GetCityBranchServices_01": "Branch Services Record Found",
+  "Admin_AdminServiceManager_GetCityBranchServices_02": "Branch Services Record Not Found"
 }

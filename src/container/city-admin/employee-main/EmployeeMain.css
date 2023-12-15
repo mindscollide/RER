@@ -20,7 +20,7 @@
 }
 
 body[dir="rtl"] .text-fiels-employeeMain {
-  font-family: "Times New Roman", Times, serif !important;
+  font-family: "NeoSansArabic" !important;
 }
 
 .checkbox-label {
@@ -125,7 +125,7 @@ body[dir="rtl"] .text-fiels-employeeMain {
 }
 
 body[dir="rtl"] .Employee-Add-Btn {
-  font-family: "Times New Roman", Times, serif !important;
+  font-family: "NeoSansArabic" !important;
 }
 
 .Employee-Add-Btn:hover {
@@ -154,7 +154,7 @@ body[dir="rtl"] .Employee-Add-Btn {
 }
 
 body[dir="rtl"] .revert-btn-Employeemain {
-  font-family: "Times New Roman", Times, serif !important;
+  font-family: "NeoSansArabic" !important;
 }
 
 .revert-btn-Employeemain:hover {

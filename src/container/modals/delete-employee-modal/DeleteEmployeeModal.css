@@ -31,7 +31,7 @@
 }
 
 body[dir="rtl"] .Yes-btn-Employee {
-  font-family: "Times New Roman", Times, serif !important;
+  font-family: "NeoSansArabic" !important;
 }
 
 .Yes-btn-Employee:hover {
@@ -54,7 +54,7 @@ body[dir="rtl"] .Yes-btn-Employee {
 }
 
 body[dir="rtl"] .No-btn-Employee {
-  font-family: "Times New Roman", Times, serif !important;
+  font-family: "NeoSansArabic" !important;
 }
 
 .No-btn-Employee:hover {

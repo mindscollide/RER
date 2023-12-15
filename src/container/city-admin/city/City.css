@@ -31,7 +31,7 @@
 }
 
 body[dir="rtl"] .Add-btn-CityAdmin {
-  font-family: "Times New Roman", Times, serif !important;
+  font-family: "NeoSansArabic" !important;
 }
 
 .Add-btn-CityAdmin:hover {
@@ -53,12 +53,30 @@ body[dir="rtl"] .Add-btn-CityAdmin {
 }
 
 body[dir="rtl"] .Reset-btn-CityAdmin {
-  font-family: "Times New Roman", Times, serif !important;
+  font-family: "NeoSansArabic" !important;
 }
 
 .Reset-btn-CityAdmin:hover {
   background: linear-gradient(to bottom, #7484b7 0%, #536395 100%);
   border-color: #7484b7 !important;
+}
+
+.goback-button {
+  font-size: 14px;
+  font-weight: 500;
+  font-family: "Montserrat", sans-serif !important;
+  padding: 6px 12px !important;
+  border-top-right-radius: 0px;
+  border-bottom-left-radius: 0px;
+  border-top-left-radius: 8px;
+  border-bottom-right-radius: 8px;
+  color: #212529;
+  background: #b0b7c0 !important;
+  border-color: #b0b7c0 !important;
+}
+
+body[dir="rtl"] .goback-button {
+  font-family: "NeoSansArabic" !important;
 }
 
 .icon-space {
@@ -108,7 +126,7 @@ body[dir="rtl"] .Reset-btn-CityAdmin {
 }
 
 body[dir="rtl"] .text-fiels-cityAdmin {
-  font-family: "Times New Roman", Times, serif !important;
+  font-family: "NeoSansArabic" !important;
 }
 
 .text-fiels-cityAdmin-arabic {
@@ -122,7 +140,7 @@ body[dir="rtl"] .text-fiels-cityAdmin {
 
 body[dir="rtl"] .text-fiels-cityAdmin-arabic {
   font-size: 13px !important;
-  font-family: "Montserrat", sans-serif !important;
+  font-family: "NeoSansArabic" !important;
   height: 37px;
   color: #212529 !important;
   font-weight: 500 !important;

@@ -168,7 +168,7 @@ body[dir="rtl"] .checkbox-label-Active-Employee-Modal {
 
 body[dir="rtl"] .branch-employee-checkbox {
   margin-right: 3px;
-  font-family: "Times New Roman", Times, serif !important;
+  font-family: "NeoSansArabic" !important;
 }
 
 /* For checkbox labels End */
@@ -207,10 +207,7 @@ body[dir="rtl"] .table-inside-text {
 }
 
 body[dir="rtl"] .table-inside-header-text-new {
-  color: #002650 !important;
-  font-family: "Times New Roman", Times, serif !important;
-  font-size: 14px !important;
-  font-weight: 700;
+  font-family: "NeoSansArabic" !important;
 }
 
 /* For table Title Text and inside text End*/
@@ -302,10 +299,7 @@ body[dir="rtl"] .table-inside-header-text-new {
 }
 
 body[dir="rtl"] .toggle-tiles {
-  font-size: 16px;
-  font-weight: 600;
-  font-family: "Times New Roman", Times, serif !important;
-  color: #ffffff;
+  font-family: "NeoSansArabic" !important;
 }
 
 .toggle-insidetile-available {
@@ -316,7 +310,7 @@ body[dir="rtl"] .toggle-tiles {
 }
 
 body[dir="rtl"] .toggle-insidetile-available {
-  font-family: "Times New Roman", Times, serif !important;
+  font-family: "NeoSansArabic" !important;
 }
 
 /* toggle title End*/
@@ -331,7 +325,7 @@ body[dir="rtl"] .toggle-insidetile-available {
 }
 
 body[dir="rtl"] .add-edit-heading-modal {
-  font-family: "Times New Roman", Times, serif !important;
+  font-family: "NeoSansArabic" !important;
 }
 
 .confirm-delete-text {
@@ -342,7 +336,7 @@ body[dir="rtl"] .add-edit-heading-modal {
 }
 
 body[dir="rtl"] .confirm-delete-text {
-  font-family: "Times New Roman", Times, serif !important;
+  font-family: "NeoSansArabic" !important;
 }
 
 /* Labels For Modals End */
@@ -375,3 +369,17 @@ body[dir="rtl"] .confirm-delete-text {
   padding-left: auto !important;
   padding-right: 16px !important;
 }
+
+/* react select start */
+.select-dropdown-all {
+  color: #45494d !important;
+  font-family: "Montserrat", sans-serif !important;
+  font-size: 13px !important;
+  font-weight: 500 !important;
+}
+
+body[dir="rtl"] .select-dropdown-all {
+  font-family: "NeoSansArabic" !important;
+}
+
+/* react select end */

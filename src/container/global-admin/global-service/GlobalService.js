@@ -9,12 +9,43 @@ import {
   Table,
 } from "../../../components/elements";
 import { useTranslation } from "react-i18next";
+import GlobalDeleteModal from "../../modals/global-delete-modal/GlobalDeleteModal";
+import { useNavigate } from "react-router";
 
 const GlobalService = () => {
+  const navigate = useNavigate();
+
   const { t } = useTranslation();
   const [isCheckboxSelected, setIsCheckboxSelected] = useState(false);
   const [isCheckboxSelectedTwo, setIsCheckboxSelectedTwo] = useState(false);
   const [isCheckboxSelectedThree, setIsCheckboxSelectedThree] = useState(false);
+
+  const [globalModal, setGlobalModal] = useState(false);
+
+  // open delete modal
+  const openDeleteGlobalModal = () => {
+    setGlobalModal(true);
+  };
+
+  //open city screen page
+  const openClickCityScreen = () => {
+    navigate("/GlobalAdmin/City");
+  };
+
+  //open branch screen page
+  const openClickBranchScreen = () => {
+    navigate("/GlobalAdmin/Branch");
+  };
+
+  //open branch Counters page
+  const openClickCountersScreen = () => {
+    navigate("/GlobalAdmin/Counters");
+  };
+
+  //open branch shifts page
+  const openClickshiftsScreen = () => {
+    navigate("/GlobalAdmin/Shifts");
+  };
 
   const handleCheckboxChange = (e) => {
     setIsCheckboxSelected(e.target.checked);
@@ -103,12 +134,27 @@ const GlobalService = () => {
         <>
           <span className="icon-spaceing-dlt-edit">
             <i className="icon-text-edit icon-EDT-DLT-color"></i>
-            <i className="icon-close icon-EDT-DLT-color"></i>
+            <i
+              className="icon-close icon-EDT-DLT-color"
+              onClick={openDeleteGlobalModal}
+            ></i>
             <i className="icon-settings icon-EDT-DLT-color"></i>
-            <i className="icon-location icon-EDT-DLT-color"></i>
-            <i className="icon-branch icon-EDT-DLT-color"></i>
-            <i className="icon-counter icon-EDT-DLT-color"></i>
-            <i className="icon-repeat icon-EDT-DLT-color"></i>
+            <i
+              className="icon-location icon-EDT-DLT-color"
+              onClick={openClickCityScreen}
+            ></i>
+            <i
+              className="icon-branch icon-EDT-DLT-color"
+              onClick={openClickBranchScreen}
+            ></i>
+            <i
+              className="icon-counter icon-EDT-DLT-color"
+              onClick={openClickCountersScreen}
+            ></i>
+            <i
+              className="icon-repeat icon-EDT-DLT-color"
+              onClick={openClickshiftsScreen}
+            ></i>
           </span>
         </>
       ),
@@ -235,6 +281,13 @@ const GlobalService = () => {
           </Col>
         </Row>
       </section>
+
+      {globalModal ? (
+        <GlobalDeleteModal
+          globalModal={globalModal}
+          setGlobalModal={setGlobalModal}
+        />
+      ) : null}
     </>
   );
 };

@@ -27,6 +27,9 @@ import {
   updateCityBranch,
   getCityServiceList,
   updateCityServiceList,
+
+  // =================== City Branch Service Start ===================== //
+  getCityBranchServices,
 } from "../../commen/apis/Api_config";
 import { adminURL } from "../../commen/apis/Api_ends_points";
 import moment from "moment";
@@ -2408,6 +2411,105 @@ const updateCityServiceListApi = (t, navigate, loadingFlag, data) => {
       });
   };
 };
+
+// GET CITY BRANCH SERVICE MAIN API START
+const getCityBranchServiceSuccess = (response, message) => {
+  return {
+    type: actions.GET_CITY_BRANCH_SERVICE_SUCCESS,
+    response: response,
+    message: message,
+  };
+};
+
+const getCityBranchServiceFail = (message) => {
+  return {
+    type: actions.GET_CITY_BRANCH_SERVICE_FAIL,
+    message: message,
+  };
+};
+
+const getCityBranchServiceListApi = (t, navigate, loadingFlag) => {
+  let data = { CityID: Number(localStorage.getItem("cityID")) };
+  return async (dispatch) => {
+    if (!loadingFlag) {
+      dispatch(loader_Actions(true));
+    }
+    let form = new FormData();
+    form.append("RequestMethod", getCityBranchServices.RequestMethod);
+    form.append("RequestData", JSON.stringify(data));
+    await axios({
+      method: "post",
+      url: adminURL,
+      data: form,
+      headers: {
+        _token: JSON.parse(localStorage.getItem("token")),
+      },
+    })
+      .then(async (response) => {
+        if (response.data.responseCode === 200) {
+          if (response.data.responseCode === 417) {
+            dispatch(getCityBranchServiceListApi(t, navigate, loadingFlag));
+          } else if (response.data.responseResult.isExecuted === true) {
+            if (
+              response.data.responseResult.responseMessage ===
+              "Admin_AdminServiceManager_GetCityBranchServices_01"
+            ) {
+              await dispatch(
+                getCityBranchServiceSuccess(
+                  response.data.responseResult.cityServices,
+                  t("Admin_AdminServiceManager_GetCityBranchServices_01")
+                )
+              );
+              await dispatch(loader_Actions(false));
+            } else if (
+              response.data.responseResult.responseMessage ===
+              "Admin_AdminServiceManager_GetCityBranchServices_02"
+            ) {
+              await dispatch(
+                getCityBranchServiceFail(
+                  t("Admin_AdminServiceManager_GetCityBranchServices_02")
+                )
+              );
+              await dispatch(loader_Actions(false));
+            } else if (
+              response.data.responseResult.responseMessage ===
+              "Admin_AdminServiceManager_GetBranchServices_03"
+            ) {
+              await dispatch(
+                getCityBranchServiceFail(
+                  t("Admin_AdminServiceManager_GetBranchServices_03")
+                )
+              );
+              await dispatch(loader_Actions(false));
+            } else if (
+              response.data.responseResult.responseMessage ===
+              "Admin_AdminServiceManager_GetCityBranchServices_04"
+            ) {
+              await dispatch(
+                getCityBranchServiceFail(t("something_went_wrong"))
+              );
+              await dispatch(loader_Actions(false));
+            } else {
+              dispatch(getLastSelectedLanguageFail(t("something_went_wrong")));
+            }
+          } else {
+            await dispatch(getCityBranchServiceFail(t("something_went_wrong")));
+            await dispatch(loader_Actions(false));
+          }
+        } else {
+          await dispatch(getCityBranchServiceFail(t("something_went_wrong")));
+          await dispatch(loader_Actions(false));
+        }
+      })
+      .catch((response) => {
+        dispatch(getCityBranchServiceFail(t("something_went_wrong")));
+        dispatch(loader_Actions(false));
+      });
+  };
+};
+
+// GET CITY BRANCH SERVICE MAIN API END
+
 export {
   clearResponseMessageAdmin,
   AdminCleareState,
@@ -2445,4 +2547,5 @@ export {
   updateCityBranchFail,
   getCityServiceListApi,
   updateCityServiceListApi,
+  getCityBranchServiceListApi,
 };

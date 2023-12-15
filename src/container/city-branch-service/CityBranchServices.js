@@ -3,10 +3,21 @@ import { Row, Col } from "react-bootstrap";
 import "./CityBranchServices.css";
 import { Paper, Button, Table } from "../../components/elements";
 import { Switch } from "antd";
+import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router";
 import { useTranslation } from "react-i18next";
+import { getCityBranchServiceListApi } from "../../store/actions/Admin_action";
 
 const CityBranchService = () => {
   const { t } = useTranslation();
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const Loading = useSelector((state) => state.Loader.Loading);
+  const cityBranchWiseData = useSelector(
+    (state) => state.admin.cityBranchWiseData
+  );
+
+  const [rows, setRows] = useState([]);
 
   const dataSource = [
     {

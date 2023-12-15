@@ -152,7 +152,7 @@ const EmployeeMain = () => {
                   </Radio.Group>
                 </Col>
                 <Col lg={2} md={2} sm={2} className="mt-3">
-                  <Select />
+                  <Select className="select-dropdown-all" />
                 </Col>
 
                 <Col lg={2} md={2} sm={2} className="mt-4">

@@ -95,7 +95,7 @@ const EmployeeScreen = () => {
                     <label className="text-labels">{t("Country")}</label>
                     <Select
                       isSearchable={true}
-                      className="Emplyee-screen-select"
+                      className="select-dropdown-all"
                     />
                   </span>
                 </Col>
@@ -104,7 +104,7 @@ const EmployeeScreen = () => {
                     <label className="text-labels">{t("City")}</label>
                     <Select
                       isSearchable={true}
-                      className="Emplyee-screen-select"
+                      className="select-dropdown-all"
                     />
                   </span>
                 </Col>

@@ -121,7 +121,7 @@ const CountryCityWise = () => {
                       onChange={setSelectedOption}
                       options={options}
                       isSearchable={true}
-                      className="CountryCityWise"
+                      className="select-dropdown-all"
                     />
                   </span>
                 </Col>
@@ -133,7 +133,7 @@ const CountryCityWise = () => {
                       onChange={setSelectedOption}
                       options={options}
                       isSearchable={true}
-                      className="CountryCityWise"
+                      className="select-dropdown-all"
                     />
                   </span>
                 </Col>

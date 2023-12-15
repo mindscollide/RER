@@ -97,7 +97,7 @@ const CityScreen = () => {
                     <label className="text-labels">{t("Country")}</label>
                     <Select
                       isSearchable={true}
-                      className="City-Screen-select"
+                      className="select-dropdown-all"
                     />
                   </span>
                 </Col>
@@ -106,7 +106,7 @@ const CityScreen = () => {
                     <label className="text-labels">{t("Service")}</label>
                     <Select
                       isSearchable={true}
-                      className="City-Screen-select"
+                      className="select-dropdown-all"
                     />
                   </span>
                 </Col>

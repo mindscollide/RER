@@ -97,6 +97,7 @@ const BranchScreen = () => {
                     <label className="text-labels">{t("Country")}</label>
                     <Select
                       isSearchable={true}
+                      className="select-dropdown-all"
                       // className="Branch-Screen-Select"
                     />
                   </span>
@@ -106,6 +107,8 @@ const BranchScreen = () => {
                     <label className="text-labels">{t("Service")}</label>
                     <Select
                       isSearchable={true}
+                      className="select-dropdown-all"
+
                       // className="Branch-Screen-Select"
                     />
                   </span>
@@ -118,6 +121,8 @@ const BranchScreen = () => {
                     <label className="text-labels">{t("City")}</label>
                     <Select
                       isSearchable={true}
+                      className="select-dropdown-all"
+
                       // className="Branch-Screen-Wise"
                     />
                   </span>
