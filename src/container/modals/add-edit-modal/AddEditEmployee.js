@@ -10,12 +10,59 @@ import { Radio } from "antd";
 import Select from "react-select";
 import "./AddEditEmployee.css";
 import { useTranslation } from "react-i18next";
+import { regexOnlyForNumberNCharacters } from "../../../commen/functions/regex";
+import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router";
+import { addCityEmployeeMainApi } from "../../../store/actions/Admin_action";
 
 const AddEditEmployee = ({ addEditModal, setAddEditModal }) => {
   const { t } = useTranslation();
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const loadingFlag = useSelector((state) => state.Loader.Loading);
+  const addNewEmployeeData = useSelector(
+    (state) => state.admin.addNewEmployeeData
+  );
+
   const [homeVisit, setHomeVisit] = useState(null);
   const [branchEmployee, setBranchEmployee] = useState(null);
   const [isCheckbox, setIsCheckbox] = useState(false);
+
+  const [employeeMain, setEmployeeMain] = useState({
+    EmployeeEnglishName: "",
+    EmployeeNameArabic: "",
+    EmployeeEmail: "",
+    IsEmployeeActive: true,
+    EmployeeBelongsToBranch: true,
+    BranchID: 0,
+    CityID: Number(localStorage.getItem("cityID")),
+  });
+
+  const handleChangeEmployee = (e) => {
+    try {
+      let name = e.target.name;
+      let value = e.target.value;
+      let checked = e.target.checked;
+      if (name === "EmployeeEnglishName") {
+        setEmployeeMain({
+          ...employeeMain,
+          ["EmployeeEnglishName"]: regexOnlyForNumberNCharacters(value),
+        });
+      } else if (name === "EmployeeNameArabic") {
+        setEmployeeMain({
+          ...employeeMain,
+          ["EmployeeNameArabic"]: regexOnlyForNumberNCharacters(value),
+        });
+      } else if (name === "EmployeeEmail") {
+        setEmployeeMain({
+          ...employeeMain,
+          ["EmployeeEmail"]: value,
+        });
+      } else {
+        setEmployeeMain({ ...employeeMain, ["IsEmployeeActive"]: checked });
+      }
+    } catch {}
+  };
 
   const homeVisitRadioChange = (e) => {
     setHomeVisit(e.target.value);
@@ -35,6 +82,35 @@ const AddEditEmployee = ({ addEditModal, setAddEditModal }) => {
 
   const handleCheckboxChange = (e) => {
     setIsCheckbox(e.target.checked);
+  };
+
+  const employeeeAddHandler = () => {
+    if (
+      employeeMain.EmployeeEnglishName !== "" &&
+      employeeMain.EmployeeNameArabic !== "" &&
+      employeeMain.EmployeeEmail !== "" &&
+      employeeMain.IsEmployeeActive !== false
+    ) {
+      let Data = {
+        EmployeeEnglishName: employeeMain.EmployeeEnglishName,
+        EmployeeNameArabic: employeeMain.EmployeeNameArabic,
+        EmployeeEmail: employeeMain.EmployeeEmail,
+        IsEmployeeActive: employeeMain.IsEmployeeActive,
+        EmployeeBelongsToBranch: true,
+        BranchID: 1,
+        CityID: Number(localStorage.getItem("cityID")),
+      };
+      dispatch(
+        addCityEmployeeMainApi(
+          t,
+          navigate,
+          loadingFlag,
+          Data,
+          setEmployeeMain,
+          setAddEditModal
+        )
+      );
+    }
   };
 
   return (
@@ -57,25 +133,54 @@ const AddEditEmployee = ({ addEditModal, setAddEditModal }) => {
               </Col>
             </Row>
             <Row>
-              <Col lg={2} md={2} sm={2} className="mt-3">
-                <div className="checkbox-div">
-                  <Checkbox
-                    onChange={handleCheckboxChange}
-                    checked={isCheckbox}
-                    classNameDiv="chechbox-align-label"
-                    label={
-                      <span className="branch-employee-checkbox">
-                        {t("Active")}
-                      </span>
-                    }
-                  />
-                </div>
+              <Col lg={6} md={6} sm={6}>
+                <span className="text-labels">{t("Employee-name")}</span>
+                <TextField
+                  name="EmployeeEnglishName"
+                  value={employeeMain.EmployeeEnglishName}
+                  onChange={handleChangeEmployee}
+                  placeholder={t("Employee-name")}
+                  labelClass="d-none"
+                  className="text-fields-addEdit"
+                />
               </Col>
-              <Col lg={10} md={10} sm={10}>
-                <TextField className="textfield-with-checkbox" />
+              <Col lg={6} md={6} sm={6} className="text-end">
+                <span className="text-labels">اسم الموظف</span>
+                <TextField
+                  name="EmployeeNameArabic"
+                  value={employeeMain.EmployeeNameArabic}
+                  onChange={handleChangeEmployee}
+                  placeholder="اسم الموظف"
+                  labelClass="d-none"
+                  className="text-fields-addEdit-arabic"
+                />
               </Col>
             </Row>
-            <Row className="mt-2">
+
+            <Row className="mt-3">
+              <Col lg={6} md={6} sm={6}>
+                <span className="text-labels">{t("Employee-id")}</span>
+                <TextField
+                  name="EmployeeName"
+                  placeholder={t("Employee-id")}
+                  labelClass="d-none"
+                  className="text-fields-addEdit"
+                />
+              </Col>
+              <Col lg={6} md={6} sm={6}>
+                <span className="text-labels">{t("Employee-email")}</span>
+                <TextField
+                  name="EmployeeEmail"
+                  placeholder={t("Employee-email")}
+                  value={employeeMain.EmployeeEmail}
+                  onChange={handleChangeEmployee}
+                  labelClass="d-none"
+                  className="text-fields-addEdit"
+                />
+              </Col>
+            </Row>
+
+            <Row className="mt-3">
               <Col lg={4} md={4} sm={4}>
                 <div className="Radio-Btn-div-For-Select">
                   <Radio.Group
@@ -93,7 +198,32 @@ const AddEditEmployee = ({ addEditModal, setAddEditModal }) => {
               </Col>
             </Row>
             <Row>
-              <Col lg={12} md={12} sm={12} className="mt-3">
+              <Col lg={3} md={3} sm={3} className="mt-3">
+                <Checkbox
+                  onChange={handleChangeEmployee}
+                  checked={employeeMain.IsEmployeeActive}
+                  classNameDiv="chechbox-align-label"
+                  label={
+                    <span className="branch-employee-checkbox">
+                      {t("Active")}
+                    </span>
+                  }
+                />
+              </Col>
+              <Col lg={5} md={5} sm={5} className="mt-3">
+                <Radio.Group onChange={homeVisitRadioChange} value={homeVisit}>
+                  <Radio value="option1" className="branch-employee-checkbox">
+                    {t("Branch-employee")}
+                  </Radio>
+                </Radio.Group>
+              </Col>
+
+              <Col
+                lg={4}
+                md={4}
+                sm={5}
+                className="d-flex justify-content-end mt-3"
+              >
                 <Radio.Group onChange={homeVisitRadioChange} value={homeVisit}>
                   <Radio value="option1" className="branch-employee-checkbox">
                     {t("Home-visit")}
@@ -115,6 +245,7 @@ const AddEditEmployee = ({ addEditModal, setAddEditModal }) => {
                 <Button
                   text={t("Add-update")}
                   className="AddEdit-btn-Employee"
+                  onClick={employeeeAddHandler}
                 />
                 <Button
                   text={t("Cancel")}

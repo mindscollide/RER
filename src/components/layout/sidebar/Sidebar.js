@@ -5,7 +5,10 @@ import { useNavigate } from "react-router-dom";
 import "./Sidebar.css";
 import { useTranslation } from "react-i18next";
 import { generateMenuItems, getItem } from "../../../commen/functions/utils.js";
-import { setIsCityWiseBranchService, setIsCountryCityWiseCounter } from "../../../store/actions/global_action";
+import {
+  setIsCityWiseBranchService,
+  setIsCountryCityWiseCounter,
+} from "../../../store/actions/global_action";
 import { useDispatch } from "react-redux";
 const { Sider } = Layout;
 
@@ -47,7 +50,7 @@ const Sidebar = () => {
       navigate("Services");
     } else if (e.key === "5") {
       dispatch(setIsCityWiseBranchService(false));
-    dispatch(setIsCountryCityWiseCounter(false));
+      dispatch(setIsCountryCityWiseCounter(false));
       navigate("Branch");
     } else if (e.key === "6") {
       navigate("CityBranchService");

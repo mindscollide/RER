@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Row, Col } from "react-bootstrap";
 import "./EmployeeMain.css";
 import {
@@ -13,19 +13,44 @@ import { Radio } from "antd";
 import AddEditEmployee from "../../modals/add-edit-modal/AddEditEmployee";
 import DeleteEmployeeModal from "../../modals/delete-employee-modal/DeleteEmplyeeModal";
 import { useTranslation } from "react-i18next";
+import { getCityEmployeeMainApi } from "../../../store/actions/Admin_action";
+import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router";
 
 const EmployeeMain = () => {
   const { t } = useTranslation();
-
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
   const [isCheckboxSelected, setIsCheckboxSelected] = useState(false);
   const [branchEmployeeOption, setBranchEmployeeOption] = useState(null);
   const [branchEmployeeOptionTwo, setBranchEmployeeOptionTwo] = useState(null);
+  const loadingFlag = useSelector((state) => state.Loader.Loading);
+  const cityEmployeeMain = useSelector((state) => state.admin.cityEmployeeMain);
+  console.log(cityEmployeeMain, "cityEmployeeMaincityEmployeeMain");
+  const currentLanguage = localStorage.getItem("i18nextLng");
+
+  // row state for city Employee Main
+  const [rows, setRows] = useState([]);
 
   // add edit modal states
   const [addEditModal, setAddEditModal] = useState(false);
 
   //delete modal states
   const [deleteModal, setDeleteModal] = useState(false);
+
+  useEffect(() => {
+    dispatch(getCityEmployeeMainApi(t, navigate, loadingFlag));
+  }, []);
+
+  // updating table of city employee Main
+  useEffect(() => {
+    console.log(rows);
+    if (cityEmployeeMain !== null) {
+      setRows(cityEmployeeMain);
+    } else {
+      setRows([]);
+    }
+  }, [cityEmployeeMain]);
 
   const handleBranchEmployeeChange = (e) => {
     setBranchEmployeeOption(e.target.value);
@@ -54,19 +79,36 @@ const EmployeeMain = () => {
       id: <span className="table-inside-text">1</span>,
       name: <span className="table-inside-text">Morning Shift</span>,
       capcity: <span className="table-inside-text">Olaya Branch</span>,
+      email: <span className="table-inside-text">ali@gmail.com</span>,
+      employeeID: <span className="table-inside-text">657294745</span>,
+    },
+    {
+      id: <span className="table-inside-text">2</span>,
+      name: <span className="table-inside-text">Morning Shift</span>,
+      capcity: <span className="table-inside-text">Home Visit</span>,
+      email: <span className="table-inside-text">ahmed@gmail.com</span>,
+      employeeID: <span className="table-inside-text">657294745</span>,
     },
   ];
 
   const columns = [
     {
       title: <span className="table-text">#</span>,
-      dataIndex: "id",
-      key: "id",
+      dataIndex: "employeeCity",
+      key: "employeeCity",
+      render: (text, record, index) => <span>{index + 1}</span>,
     },
     {
       title: <span className="table-text">{t("Name")}</span>,
-      dataIndex: "name",
+      dataIndex: "cityEmployeeList",
       key: "name",
+      render: (text, record) => (
+        <span className="table-inside-text">
+          {currentLanguage === "en"
+            ? record.employeeEnglishName
+            : record.employeeNameArabic}
+        </span>
+      ),
     },
     {
       title: <span className="table-text">{t("Capcity")}</span>,
@@ -74,14 +116,34 @@ const EmployeeMain = () => {
       key: "capcity",
     },
     {
+      title: <span className="table-text">{t("Email")}</span>,
+      dataIndex: "employeeEmail",
+      key: "employeeEmail",
+      align: "center",
+      render: (text, record) => <span>{text}</span>,
+    },
+    {
+      title: <span className="table-text">{t("Employee-id")}</span>,
+      dataIndex: "employeeID",
+      align: "center",
+      key: "employeeID",
+      render: (text, record) => <span>{text}</span>,
+    },
+    {
       title: <span className="table-text">{t("Active")}</span>,
-      dataIndex: "active",
-      key: "active",
+      dataIndex: "isEmployeeActive",
+      key: "isEmployeeActive",
       render: (text, record) => (
         <>
-          <span>
-            <i className="icon-check icon-check-color"></i>
-          </span>
+          {text ? (
+            <span>
+              <i className="icon-check icon-check-color"></i>
+            </span>
+          ) : (
+            <span>
+              <i className="icon-close icon-check-close-color"></i>
+            </span>
+          )}
         </>
       ),
     },
@@ -116,17 +178,49 @@ const EmployeeMain = () => {
           <Col lg={12} md={12} sm={12}>
             <Paper className="Employee-Main-paper">
               <Row>
-                <Col lg={4} md={4} sm={4} className="mt-3">
-                  {/* <span className="text-labels"></span> */}
+                <Col lg={6} md={6} sm={6}>
+                  <span className="text-labels">{t("Employee-name")}</span>
                   <TextField
-                    name="Shift"
+                    name="EmployeeName"
                     placeholder={t("Employee-name")}
                     labelClass="d-none"
                     className="text-fiels-employeeMain"
                   />
                 </Col>
+                <Col lg={6} md={6} sm={6} className="text-end">
+                  <span className="text-labels">اسم الموظف</span>
+                  <TextField
+                    name="BranchNameArabic"
+                    placeholder="اسم الموظف"
+                    labelClass="d-none"
+                    className="text-fiels-employeeMain-arabic"
+                  />
+                </Col>
+              </Row>
 
-                <Col lg={1} md={1} sm={1} className="mt-4">
+              <Row className="mt-3">
+                <Col lg={6} md={6} sm={6}>
+                  <span className="text-labels">{t("Employee-id")}</span>
+                  <TextField
+                    name="EmployeeName"
+                    placeholder={t("Employee-id")}
+                    labelClass="d-none"
+                    className="text-fiels-employeeMain"
+                  />
+                </Col>
+                <Col lg={6} md={6} sm={6}>
+                  <span className="text-labels">{t("Employee-email")}</span>
+                  <TextField
+                    name="EmployeeName"
+                    placeholder={t("Employee-email")}
+                    labelClass="d-none"
+                    className="text-fiels-employeeMain"
+                  />
+                </Col>
+              </Row>
+
+              <Row className="mt-2">
+                <Col lg={4} md={4} sm={4} className="mt-4">
                   <Checkbox
                     checked={isCheckboxSelected}
                     onChange={handleCheckboxChange}
@@ -137,9 +231,9 @@ const EmployeeMain = () => {
                   />
                 </Col>
                 <Col
-                  lg={2}
-                  md={2}
-                  sm={2}
+                  lg={4}
+                  md={4}
+                  sm={4}
                   className="d-flex justify-content-center mt-4"
                 >
                   <Radio.Group
@@ -151,11 +245,13 @@ const EmployeeMain = () => {
                     </Radio>
                   </Radio.Group>
                 </Col>
-                <Col lg={2} md={2} sm={2} className="mt-3">
-                  <Select className="select-dropdown-all" />
-                </Col>
 
-                <Col lg={2} md={2} sm={2} className="mt-4">
+                <Col
+                  lg={4}
+                  md={4}
+                  sm={4}
+                  className="d-flex justify-content-end mt-4"
+                >
                   <Radio.Group
                     onChange={handleBranchEmployeeChangesTwo}
                     value={branchEmployeeOptionTwo}
@@ -165,7 +261,6 @@ const EmployeeMain = () => {
                     </Radio>
                   </Radio.Group>
                 </Col>
-                <Col lg={1} md={1} sm={1} />
               </Row>
 
               <Row>
@@ -191,7 +286,7 @@ const EmployeeMain = () => {
               <Row className="mt-2">
                 <Col lg={12} md={12} sm={12}>
                   <Table
-                    rows={dataSource}
+                    rows={rows}
                     column={columns}
                     pagination={false}
                     // className="table-text"

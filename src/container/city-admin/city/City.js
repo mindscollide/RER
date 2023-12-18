@@ -42,6 +42,8 @@ import {
   setIsCityWiseBranchService,
   setIsCountryCityWiseCounter,
 } from "../../../store/actions/global_action";
+import CityBranchServiceComponent from "../city-branch-service-component/CityBranchServiceComponent";
+import CountryCityCounterComponent from "../country-city-counter-component/CountryCityCounterComponent";
 
 const CityAdmin = () => {
   const { t } = useTranslation();
@@ -92,16 +94,6 @@ const CityAdmin = () => {
     BranchID: 0,
     CityID: Number(localStorage.getItem("cityID")),
   });
-  const [isPanelOpen, setIsPanelOpen] = useState(false);
-  const [isPanelOpenCountry, setIsPanelOpenCountry] = useState(false);
-
-  const togglePanel = () => {
-    setIsPanelOpen(!isPanelOpen);
-  };
-
-  const togglePanelCountry = () => {
-    setIsPanelOpenCountry(!isPanelOpenCountry);
-  };
 
   //language UseEffect
   useEffect(() => {
@@ -130,20 +122,21 @@ const CityAdmin = () => {
     }
   }, [cityBranchListData]);
 
-  useEffect(() => {
-    if (cityBranchWiseData != null) {
-      const firstItem = cityBranchWiseData[0];
+  // useEffect(() => {
+  //   if (cityBranchWiseData !== null) {
+  //     const firstItem = cityBranchWiseData[0];
 
-      if (
-        firstItem &&
-        firstItem.branchService &&
-        firstItem.branchService.serviceID
-      ) {
-        const serviceID = firstItem.branchService.serviceID;
-        // Now you can use the 'serviceID' variable as needed
-      }
-    }
-  }, [cityBranchWiseData]);
+  //     if (
+  //       firstItem &&
+  //       firstItem.branchService &&
+  //       firstItem.branchService.serviceID
+  //     ) {
+  //       const serviceID = firstItem.branchService.serviceID;
+  //       // Now you can use the 'serviceID' variable as needed
+  //     }
+  //   }
+  // }, [cityBranchWiseData]);
+
   // use for when new data add its add it in table row with calling get api and then get loader false and cleare its state
   useEffect(() => {
     if (addedCityBranchData !== null) {
@@ -234,17 +227,21 @@ const CityAdmin = () => {
   };
 
   //to navigate on cityWiseBranchService page by click on service Icon
-  const onClickServiceIcon = () => {
+  const onClickServiceIcon = (record) => {
+    localStorage.setItem("branchID", record.branchID);
     dispatch(getCityBranchServiceListApi(t, navigate, Loading));
     dispatch(setIsCityWiseBranchService(true));
   };
 
   //to navigate on countryCityWiseCounter  page by click on counter Icon
-  const onClickCounterIcon = () => {
-    dispatch(setIsCountryCityWiseCounter(true));
+  const onClickCounterIcon = (record) => {
+    localStorage.setItem("branchID", record.branchID);
+    localStorage.setItem("selectedKeys", ["8"]);
+    navigate("/CityAdmin/Counters");
   };
 
-  const goBackButtonOnclick = () => {
+  const goBackButtonOnclick = (record) => {
+    localStorage.removeItem("branchID", record.branchID);
     dispatch(setIsCityWiseBranchService(false));
   };
 
@@ -366,7 +363,6 @@ const CityAdmin = () => {
       dataIndex: "branchService",
       key: "branchService",
       width: "400px",
-      align: "left",
       render: (text, record) => (
         <span className="table-inside-text">
           {currentLanguage === "en"
@@ -398,7 +394,7 @@ const CityAdmin = () => {
       ),
     },
   ];
-  
+
   // data and columns for cityWiseBranchService end
 
   // data and columns for countryCityWiseCounter start
@@ -601,215 +597,21 @@ const CityAdmin = () => {
       <section>
         {isCityWiseBranchService === true ? (
           <>
-            <Row>
-              <Col
-                lg={6}
-                md={6}
-                sm={6}
-                className="d-flex justify-content-start"
-              >
-                <span className="shift-heading">
-                  <i
-                    className="icon-back go-back-arrow"
-                    onClick={goBackButtonOnclick}
-                  ></i>
-                  {t("City-branch-wise-service")}
-                  <span className="shift-sub-heading">
-                    {" "}
-                    {t("Saudi-arabia-riyadh")}
-                  </span>
-                </span>
-              </Col>
-              <Col lg={6} md={6} sm={6} className="d-flex justify-content-end">
-                <span className="shift-sub-heading-right">
-                  {t("Olaya-street-branch")}
-                </span>
-              </Col>
-            </Row>
-            <Row className="mt-3">
-              <Col lg={12} md={12} sm={12}>
-                <Paper className="CityBranchWise-Admin-paper">
-                  <Row>
-                    <Col
-                      lg={12}
-                      md={12}
-                      sm={12}
-                      className="btn-col-class-CityBranchWise"
-                    >
-                      <Button
-                        icon={<i className="icon-save icon-space"></i>}
-                        text={t("Save")}
-                        onClick={handleSaveCityBranchWise}
-                        className="save-btn-CityBranchWise"
-                      />
-                      <Button
-                        icon={<i className="icon-repeat icon-space"></i>}
-                        text={t("Revert")}
-                        onClick={revertHandler}
-                        className="revert-btn-CityBranchWise"
-                      />
-                    </Col>
-                  </Row>
-                  <Row className="mt-2">
-                    <Col lg={12} md={12} sm={12}>
-                      <Table
-                        rows={cityBranchRows}
-                        column={cityWiseColumns}
-                        pagination={false}
-                      />
-                    </Col>
-                  </Row>
-                </Paper>
-              </Col>
-            </Row>
+            <CityBranchServiceComponent
+              cityBranchRows={cityBranchRows}
+              cityWiseColumns={cityWiseColumns}
+              revertHandler={revertHandler}
+              handleSaveCityBranchWise={handleSaveCityBranchWise}
+              goBackButtonOnclick={goBackButtonOnclick}
+            />
           </>
         ) : isCountryCityWiseCounter === true ? (
           <>
-            <Row>
-              <Col
-                lg={12}
-                md={12}
-                sm={12}
-                className="d-flex justify-content-start"
-              >
-                <span className="shift-heading">
-                  <i
-                    className="icon-back go-back-arrow"
-                    onClick={goBackCountryCounter}
-                  ></i>
-                  {t("Country-level-shift-and-counter-details")}
-                  <span className="shift-sub-heading">
-                    {" "}
-                    {t("Saudi-arabia-riyadh")}
-                  </span>
-                </span>
-              </Col>
-            </Row>
-            <Row className="mt-3">
-              <Col lg={12} md={12} sm={12}>
-                <Paper className="CountryCityWise-paper">
-                  <Row className="mx-auto d-flex align-items-center justify-content-center">
-                    <Col lg={4} md={4} sm={12}>
-                      <span className="d-flex flex-column w-100">
-                        <label className="text-labels">{t("City")}</label>
-                        <Select
-                          isSearchable={true}
-                          className="select-dropdown-all"
-                        />
-                      </span>
-                    </Col>
-                    <Col lg={4} md={4} sm={12}>
-                      <span className="d-flex flex-column w-100">
-                        <label className="text-labels">{t("Branch")}</label>
-                        <Select
-                          isSearchable={true}
-                          className="select-dropdown-all"
-                        />
-                      </span>
-                    </Col>
-                    <Col lg={2} md={2} sm={12} className="mt-3">
-                      <Button
-                        icon={<i className="icon-search city-icon-space"></i>}
-                        text={t("Search")}
-                        className="Search-Icon-Btn"
-                      />
-                    </Col>
-                  </Row>
-
-                  <Row className="mt-2">
-                    <Col lg={12} md={12} sm={12}>
-                      <Collapse
-                        bordered={false}
-                        className="collapse-Country-Wise-disable-bg"
-                        expandIcon={false}
-                      >
-                        <Panel
-                          header={
-                            <div
-                              className={`Country-Wise-collapse-bg-color ${
-                                isPanelOpen ? "open" : ""
-                              }`}
-                              onClick={togglePanel}
-                            >
-                              <span className="toggle-tiles">
-                                {t("Riyadh")}
-                              </span>
-                              {isPanelOpen ? (
-                                <i
-                                  className={
-                                    "icon-arrow-up Country-wise-collapse"
-                                  }
-                                ></i>
-                              ) : (
-                                <i
-                                  className={
-                                    "icon-arrow-down Country-wise-collapse"
-                                  }
-                                ></i>
-                              )}
-                            </div>
-                          }
-                          key="1"
-                        >
-                          <Table
-                            column={countryCityWiseColumn}
-                            rows={countryCityWiseData}
-                            pagination={false}
-                            className="div-table-country-wise"
-                          />
-                        </Panel>
-                      </Collapse>
-                    </Col>
-                  </Row>
-
-                  <Row>
-                    <Col lg={12} md={12} sm={12}>
-                      <Collapse
-                        bordered={false}
-                        className="collapse-Country-Wise-disable-bg"
-                        expandIcon={false}
-                      >
-                        <Panel
-                          header={
-                            <div
-                              className={`Country-Wise-collapse-bg-color ${
-                                isPanelOpenCountry ? "open" : ""
-                              }`}
-                              onClick={togglePanelCountry}
-                            >
-                              <span className="toggle-tiles">
-                                {t("Dammam")}
-                              </span>
-                              {isPanelOpenCountry ? (
-                                <i
-                                  className={
-                                    "icon-arrow-up Country-wise-collapse"
-                                  }
-                                ></i>
-                              ) : (
-                                <i
-                                  className={
-                                    "icon-arrow-down Country-wise-collapse"
-                                  }
-                                ></i>
-                              )}
-                            </div>
-                          }
-                          key="1"
-                        >
-                          <Table
-                            column={countryCityWiseColumn}
-                            rows={countryCityWiseData}
-                            pagination={false}
-                            className="div-table-country-wise"
-                          />
-                        </Panel>
-                      </Collapse>
-                    </Col>
-                  </Row>
-                </Paper>
-              </Col>
-            </Row>
+            <CountryCityCounterComponent
+              countryCityWiseColumn={countryCityWiseColumn}
+              countryCityWiseData={countryCityWiseData}
+              goBackCountryCounter={goBackCountryCounter}
+            />
           </>
         ) : (
           <>
@@ -901,6 +703,7 @@ const CityAdmin = () => {
                         value={Branch.BranchStartTime}
                         calendar={calendarValue}
                         locale={localValue}
+                        editable={false}
                         onChange={(value) =>
                           handleTimeChange("BranchStartTime", value)
                         }
@@ -925,6 +728,7 @@ const CityAdmin = () => {
                         value={Branch.BranchEndTime}
                         calendar={calendarValue}
                         locale={localValue}
+                        editable={false}
                         onChange={(value) =>
                           handleTimeChange("BranchEndTime", value)
                         }

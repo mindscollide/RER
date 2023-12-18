@@ -1,6 +1,6 @@
 .add-edit-modal .modal-content {
   position: relative;
-  height: 276px !important;
+  height: 376px !important;
   width: 500px !important;
   background-color: #ffffff !important;
   border-radius: 8px !important;
@@ -107,4 +107,34 @@ body[dir="rtl"] .Cancel-btn-Employee {
 .textfield-with-checkbox {
   border-top-left-radius: 0px !important;
   border-bottom-left-radius: 0px !important;
+}
+
+.text-fields-addEdit {
+  font-size: 13px !important;
+  font-family: "Montserrat", sans-serif !important;
+  height: 37px;
+  color: #212529 !important;
+  font-weight: 500 !important;
+}
+
+body[dir="rtl"] .text-fiels-addEdit {
+  font-family: "NeoSansArabic" !important;
+}
+
+.text-fiels-addEdit-arabic {
+  font-size: 13px !important;
+  font-family: "Montserrat", sans-serif !important;
+  height: 37px;
+  color: #212529 !important;
+  font-weight: 500 !important;
+  text-align: end !important;
+}
+
+body[dir="rtl"] .text-fiels-addEdit-arabic {
+  font-size: 13px !important;
+  font-family: "NeoSansArabic" !important;
+  height: 37px;
+  color: #212529 !important;
+  font-weight: 500 !important;
+  text-align: start !important;
 }
