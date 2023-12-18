@@ -1,15 +1,18 @@
 // Import necessary components from Ant Design
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Layout, Menu } from "antd";
 import { useNavigate } from "react-router-dom";
 import "./Sidebar.css";
 import { useTranslation } from "react-i18next";
 import { generateMenuItems, getItem } from "../../../commen/functions/utils.js";
+import { setIsCityWiseBranchService, setIsCountryCityWiseCounter } from "../../../store/actions/global_action";
+import { useDispatch } from "react-redux";
 const { Sider } = Layout;
 
 const Sidebar = () => {
   const navigate = useNavigate();
   const { t } = useTranslation();
+  const dispatch = useDispatch();
   let roleID = localStorage.getItem("roleID");
   const items = generateMenuItems(roleID, t);
   const [openKeys, setOpenKeys] = useState(["sub1"]);
@@ -18,6 +21,11 @@ const Sidebar = () => {
       ? ["2"]
       : [localStorage.getItem("selectedKeys")]
   );
+  let sideBar = localStorage.getItem("selectedKeys");
+  // updating get city branch services data in table
+  useEffect(() => {
+    setSelectedKeys(localStorage.getItem("selectedKeys"));
+  }, [sideBar]);
 
   const handleOpenChange = (keys) => {
     // Ensure only one submenu is open at a time
@@ -38,6 +46,8 @@ const Sidebar = () => {
     } else if (e.key === "4") {
       navigate("Services");
     } else if (e.key === "5") {
+      dispatch(setIsCityWiseBranchService(false));
+    dispatch(setIsCountryCityWiseCounter(false));
       navigate("Branch");
     } else if (e.key === "6") {
       navigate("CityBranchService");

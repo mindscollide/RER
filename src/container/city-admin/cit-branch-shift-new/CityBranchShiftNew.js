@@ -27,8 +27,6 @@ const CityBranchShiftNew = () => {
   // reducer for table rendering
   const branchesList = useSelector((state) => state.admin.branchesList);
 
-  console.log(branchesList, "cityShiftsBranchDropdowncityShiftsBranchDropdown");
-
   // state of city branch Wise shift
   const [cityShiftRows, setCityShiftRows] = useState([]);
 
@@ -36,10 +34,13 @@ const CityBranchShiftNew = () => {
   const [cityShiftOption, setCityShiftOption] = useState([]);
   const [cityShiftOptionValue, setCityShiftOptionValue] = useState(null);
 
-  // onchange handler for branch dropdown
-  const onChangeBranchHandler = (cityShiftOptionValue) => {
-    setCityShiftOptionValue(cityShiftOptionValue);
-  };
+  // calling branch data api
+  useEffect(() => {
+    callApi();
+    return()=>{
+      localStorage.removeItem("branchID");
+    }
+  }, []);
 
   // updating data in table
   useEffect(() => {
@@ -50,27 +51,16 @@ const CityBranchShiftNew = () => {
     }
   }, [branchesList]);
 
-  // calling branch data api
-  useEffect(() => {
-    dispatch(getCityBranchListApi(t, navigate, Loading));
+  // onchange handler for branch dropdown
+  const callApi = async () => {
+    await dispatch(getCityBranchListApi(t, navigate, Loading));
     // for table rendering api branch shift
-    dispatch(getAllShiftsOfBranch(t, navigate, Loading));
-  }, []);
-
-  const dataSource = [
-    {
-      id: 1,
-      shiftName: <span className="table-inside-text">shift 1</span>,
-    },
-    {
-      id: 2,
-      shiftName: <span className="table-inside-text">shift 2</span>,
-    },
-    {
-      id: 3,
-      shiftName: <span className="table-inside-text">shift 3</span>,
-    },
-  ];
+    await dispatch(getAllShiftsOfBranch(t, navigate, Loading));
+  };
+  // onchange handler for branch dropdown
+  const onChangeBranchHandler = (cityShiftOptionValue) => {
+    setCityShiftOptionValue(cityShiftOptionValue);
+  };
 
   const columns = [
     {
