@@ -104,7 +104,7 @@ const CityBranchShift = () => {
                       onChange={setSelectedOption}
                       options={options}
                       isSearchable={true}
-                      className="citywisebranchwiseselector"
+                      className="select-dropdown-all"
                     />
                   </span>
                 </Col>

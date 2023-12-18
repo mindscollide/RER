@@ -26,7 +26,7 @@
 }
 
 body[dir="rtl"] .save-btn-NationalHoliday {
-  font-family: "Times New Roman", Times, serif !important;
+  font-family: "NeoSansArabic" !important;
 }
 
 .save-btn-NationalHoliday:hover {
@@ -48,7 +48,7 @@ body[dir="rtl"] .save-btn-NationalHoliday {
 }
 
 body[dir="rtl"] .revert-btn-NationalHoliday {
-  font-family: "Times New Roman", Times, serif !important;
+  font-family: "NeoSansArabic" !important;
 }
 
 .revert-btn-NationalHoliday:hover {

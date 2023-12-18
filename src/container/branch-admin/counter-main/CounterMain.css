@@ -21,7 +21,7 @@
 
 body[dir="rtl"] .text-fiels-counterMain {
   font-size: 13px !important;
-  font-family: "Times New Roman", Times, serif !important;
+  font-family: "NeoSansArabic" !important;
   height: 37px;
   color: #212529 !important;
   font-weight: 500 !important;
@@ -38,7 +38,7 @@ body[dir="rtl"] .text-fiels-counterMain {
 
 body[dir="rtl"] .text-fiels-counterMain-arabic {
   font-size: 13px !important;
-  font-family: "Montserrat", sans-serif !important;
+  font-family: "NeoSansArabic" !important;
   height: 37px;
   color: #212529 !important;
   font-weight: 500 !important;
@@ -69,7 +69,7 @@ body[dir="rtl"] .text-fiels-counterMain-arabic {
 }
 
 body[dir="rtl"] .Add-btn-Counter {
-  font-family: "Times New Roman", Times, serif !important;
+  font-family: "NeoSansArabic" !important;
 }
 
 .Add-btn-Counter:hover {
@@ -91,7 +91,7 @@ body[dir="rtl"] .Add-btn-Counter {
 }
 
 body[dir="rtl"] .Reset-btn-Counter {
-  font-family: "Times New Roman", Times, serif !important;
+  font-family: "NeoSansArabic" !important;
 }
 
 .Reset-btn-Counter:hover {

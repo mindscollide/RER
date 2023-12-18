@@ -1,3 +1,47 @@
+/* Arabic font start */
+
+@font-face {
+  font-family: "NeoSansArabic-Regular";
+  src: url(./assets/arabic-fonts/Neo\ Sans\ Arabic\ Regular.ttf);
+}
+
+@font-face {
+  font-family: "NeoSans-Medium";
+  src: url(./assets/arabic-fonts/Neo_Sans_Medium.ttf);
+}
+
+@font-face {
+  font-family: "NeoSansArabic";
+  src: url(./assets/arabic-fonts/NeoSansArabic.ttf);
+}
+
+@font-face {
+  font-family: "NeoSansArabic-Black";
+  src: url(./assets/arabic-fonts/NeoSansArabicBlack.ttf);
+}
+
+@font-face {
+  font-family: "NeoSansArabic-Bold";
+  src: url(./assets/arabic-fonts/NeoSansArabicBold.ttf);
+}
+
+@font-face {
+  font-family: "NeoSansArabic-Light";
+  src: url(./assets/arabic-fonts/NeoSansArabicLight.ttf);
+}
+
+@font-face {
+  font-family: "NeoSansArabic-Medium";
+  src: url(./assets/arabic-fonts/NeoSansArabicMedium.ttf);
+}
+
+@font-face {
+  font-family: "NeoSansArabic-Ultra";
+  src: url(./assets/arabic-fonts/NeoSansArabicUltra.ttf);
+}
+
+/* Arabic font End */
+
 /* this is for the whole body of project */
 body {
   background: #f4f4f4 !important;
@@ -34,7 +78,7 @@ body::-webkit-scrollbar-thumb {
 body[dir="rtl"] .shift-heading {
   font-size: 18px;
   color: #004990;
-  font-family: "Times New Roman", Times, serif !important;
+  font-family: "NeoSansArabic" !important;
   font-weight: 600;
 }
 
@@ -48,7 +92,7 @@ body[dir="rtl"] .shift-heading {
 body[dir="rtl"] .shift-sub-heading {
   font-size: 18px;
   color: #1ab4d0;
-  font-family: "Times New Roman", Times, serif !important;
+  font-family: "NeoSansArabic" !important;
   font-weight: 600;
 }
 
@@ -61,7 +105,7 @@ body[dir="rtl"] .shift-sub-heading {
 
 body[dir="rtl"] .shift-sub-heading-right {
   font-size: 18px;
-  font-family: "Times New Roman", Times, serif !important;
+  font-family: "NeoSansArabic" !important;
   color: #87b939 !important;
   font-weight: 600;
 }
@@ -80,7 +124,7 @@ body[dir="rtl"] .shift-sub-heading-right {
 body[dir="rtl"] .text-labels {
   font-size: 11px;
   font-weight: 700;
-  font-family: "Times New Roman", Times, serif !important;
+  font-family: "NeoSansArabic" !important;
   color: #45494d !important;
 }
 
@@ -98,7 +142,7 @@ body[dir="rtl"] .text-labels {
 body[dir="rtl"] .checkbox-label {
   margin-right: 10px;
   color: #45494d !important;
-  font-family: "Times New Roman", Times, serif !important;
+  font-family: "NeoSansArabic" !important;
   font-weight: 500;
 }
 
@@ -124,7 +168,7 @@ body[dir="rtl"] .checkbox-label-Active-Employee-Modal {
 
 body[dir="rtl"] .branch-employee-checkbox {
   margin-right: 3px;
-  font-family: "Times New Roman", Times, serif !important;
+  font-family: "NeoSansArabic" !important;
 }
 
 /* For checkbox labels End */
@@ -137,7 +181,7 @@ body[dir="rtl"] .branch-employee-checkbox {
 }
 
 body[dir="rtl"] .table-text {
-  font-family: "Times New Roman", Times, serif !important;
+  font-family: "NeoSansArabic" !important;
   font-size: 14px !important;
 }
 
@@ -150,7 +194,7 @@ body[dir="rtl"] .table-text {
 
 body[dir="rtl"] .table-inside-text {
   color: #212529 !important;
-  font-family: "Times New Roman", Times, serif !important;
+  font-family: "NeoSansArabic" !important;
   font-size: 14px !important;
   font-weight: 500;
 }
@@ -163,10 +207,7 @@ body[dir="rtl"] .table-inside-text {
 }
 
 body[dir="rtl"] .table-inside-header-text-new {
-  color: #002650 !important;
-  font-family: "Times New Roman", Times, serif !important;
-  font-size: 14px !important;
-  font-weight: 700;
+  font-family: "NeoSansArabic" !important;
 }
 
 /* For table Title Text and inside text End*/
@@ -258,10 +299,7 @@ body[dir="rtl"] .table-inside-header-text-new {
 }
 
 body[dir="rtl"] .toggle-tiles {
-  font-size: 16px;
-  font-weight: 600;
-  font-family: "Times New Roman", Times, serif !important;
-  color: #ffffff;
+  font-family: "NeoSansArabic" !important;
 }
 
 .toggle-insidetile-available {
@@ -272,7 +310,7 @@ body[dir="rtl"] .toggle-tiles {
 }
 
 body[dir="rtl"] .toggle-insidetile-available {
-  font-family: "Times New Roman", Times, serif !important;
+  font-family: "NeoSansArabic" !important;
 }
 
 /* toggle title End*/
@@ -287,7 +325,7 @@ body[dir="rtl"] .toggle-insidetile-available {
 }
 
 body[dir="rtl"] .add-edit-heading-modal {
-  font-family: "Times New Roman", Times, serif !important;
+  font-family: "NeoSansArabic" !important;
 }
 
 .confirm-delete-text {
@@ -298,7 +336,7 @@ body[dir="rtl"] .add-edit-heading-modal {
 }
 
 body[dir="rtl"] .confirm-delete-text {
-  font-family: "Times New Roman", Times, serif !important;
+  font-family: "NeoSansArabic" !important;
 }
 
 /* Labels For Modals End */
@@ -331,3 +369,17 @@ body[dir="rtl"] .confirm-delete-text {
   padding-left: auto !important;
   padding-right: 16px !important;
 }
+
+/* react select start */
+.select-dropdown-all {
+  color: #45494d !important;
+  font-family: "Montserrat", sans-serif !important;
+  font-size: 13px !important;
+  font-weight: 500 !important;
+}
+
+body[dir="rtl"] .select-dropdown-all {
+  font-family: "NeoSansArabic" !important;
+}
+
+/* react select end */

@@ -24,6 +24,8 @@ const initialState = {
   deletedCityBranchData: null,
   updatedCityBranchData: null,
   cityServiceListData: null,
+  cityBranchWiseData: null,
+  updateCityBranchWiseData: null,
 };
 
 const adminReducer = (state = initialState, action) => {
@@ -378,6 +380,36 @@ const adminReducer = (state = initialState, action) => {
     case actions.UPDATE_CITY_SERVICE_LIST_FAIL:
       return {
         ...state,
+        admin_ResponseMessage: action.message,
+      };
+
+    // Get City Branch Services in City Admin
+    case actions.GET_CITY_BRANCH_SERVICE_SUCCESS:
+      return {
+        ...state,
+        cityBranchWiseData: action.response,
+        admin_ResponseMessage: action.message,
+      };
+
+    case actions.GET_CITY_BRANCH_SERVICE_FAIL:
+      return {
+        ...state,
+        cityBranchWiseData: null,
+        admin_ResponseMessage: action.message,
+      };
+
+    // Update City Branch Services in City Admin
+    case actions.UPDATE_CITY_BRANCH_SERVICE_SUCCESS:
+      return {
+        ...state,
+        updateCityBranchWiseData: action.response,
+        admin_ResponseMessage: action.message,
+      };
+
+    case actions.UPDATE_CITY_BRANCH_SERVICE_FAIL:
+      return {
+        ...state,
+        updateCityBranchWiseData: null,
         admin_ResponseMessage: action.message,
       };
 

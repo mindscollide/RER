@@ -31,7 +31,7 @@
 }
 
 body[dir="rtl"] .Add-btn-GlobalService {
-  font-family: "Times New Roman", Times, serif !important;
+  font-family: "NeoSansArabic" !important;
 }
 
 .Add-btn-GlobalService:hover {
@@ -53,7 +53,7 @@ body[dir="rtl"] .Add-btn-GlobalService {
 }
 
 body[dir="rtl"] .Reset-btn-GlobalService {
-  font-family: "Times New Roman", Times, serif !important;
+  font-family: "NeoSansArabic" !important;
 }
 
 .Reset-btn-GlobalService:hover {
@@ -115,7 +115,7 @@ body[dir="rtl"] .Reset-btn-GlobalService {
 }
 
 body[dir="rtl"] .text-fiels-GlobalService {
-  font-family: "Times New Roman", Times, serif !important;
+  font-family: "NeoSansArabic" !important;
 }
 
 .text-fiels-GlobalService-arabic {
@@ -128,10 +128,6 @@ body[dir="rtl"] .text-fiels-GlobalService {
 }
 
 body[dir="rtl"] .text-fiels-GlobalService-arabic {
-  font-size: 13px !important;
-  font-family: "Times New Roman", Times, serif !important;
-  height: 37px;
-  color: #212529 !important;
-  font-weight: 500 !important;
+  font-family: "NeoSansArabic" !important;
   text-align: start !important;
 }

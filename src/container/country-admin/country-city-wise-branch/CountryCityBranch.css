@@ -25,10 +25,6 @@
   border-color: #7484b7 !important;
 }
 
-body[dir="rtl"] .Search-Icon-Btn {
-  font-family: "Times New Roman", Times, serif !important;
-}
-
 .Search-Icon-Btn:hover {
   background: linear-gradient(to bottom, #77c0cb 0%, #2c9cc0 100%);
   border-color: #77c0cb !important;

@@ -32,7 +32,7 @@
 }
 
 body[dir="rtl"] .Add-btn-CountryAdmin {
-  font-family: "Times New Roman", Times, serif !important;
+  font-family: "NeoSansArabic" !important;
 }
 
 .Add-btn-CountryAdmin:hover {
@@ -54,7 +54,7 @@ body[dir="rtl"] .Add-btn-CountryAdmin {
 }
 
 body[dir="rtl"] .Reset-btn-CountryAdmin {
-  font-family: "Times New Roman", Times, serif !important;
+  font-family: "NeoSansArabic" !important;
 }
 
 .Reset-btn-CountryAdmin:hover {
@@ -109,11 +109,7 @@ body[dir="rtl"] .Reset-btn-CountryAdmin {
 }
 
 body[dir="rtl"] .text-fiels-CountryAdmin {
-  font-size: 13px !important;
-  font-family: "Times New Roman", Times, serif !important;
-  height: 37px;
-  color: #212529 !important;
-  font-weight: 500 !important;
+  font-family: "NeoSansArabic" !important;
 }
 
 .text-fields-CountryAdmin-arabic {
@@ -126,10 +122,6 @@ body[dir="rtl"] .text-fiels-CountryAdmin {
 }
 
 body[dir="rtl"] .text-fields-CountryAdmin-arabic {
-  font-size: 13px !important;
-  font-family: "Montserrat", sans-serif !important;
-  height: 37px;
-  color: #212529 !important;
-  font-weight: 500 !important;
+  font-family: "NeoSansArabic" !important;
   text-align: start !important;
 }

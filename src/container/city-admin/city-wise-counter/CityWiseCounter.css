@@ -51,12 +51,7 @@
 }
 
 body[dir="rtl"] .CitywiseCounter-div-row {
-  padding: 8px 15px;
-  font-size: 16px;
-  font-family: "Times New Roman", Times, serif !important;
-  font-weight: 600;
-  background: #f1f7ec;
-  color: #76c641;
+  font-family: "NeoSansArabic" !important;
 }
 
 .div-table-counter {

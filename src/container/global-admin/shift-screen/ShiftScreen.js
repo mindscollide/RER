@@ -109,6 +109,7 @@ const ShiftScreen = () => {
                     <label className="text-labels">{t("Country")}</label>
                     <Select
                       isSearchable={true}
+                      className="select-dropdown-all"
                       // className="Shift-screen-select"
                     />
                   </span>
@@ -118,6 +119,7 @@ const ShiftScreen = () => {
                     <label className="text-labels">{t("City")}</label>
                     <Select
                       isSearchable={true}
+                      className="select-dropdown-all"
                       // className="Shift-screen-select"
                     />
                   </span>
@@ -129,6 +131,7 @@ const ShiftScreen = () => {
                     <label className="text-labels">{t("Branch")}</label>
                     <Select
                       isSearchable={true}
+                      className="select-dropdown-all"
                       // className="Shift-screen-select"
                     />
                   </span>
@@ -138,6 +141,7 @@ const ShiftScreen = () => {
                     <label className="text-labels">{t("Service")}</label>
                     <Select
                       isSearchable={true}
+                      className="select-dropdown-all"
                       // className="Shift-screen-select"
                     />
                   </span>

@@ -129,7 +129,7 @@ const BranchServiceCounter = () => {
                       onChange={setSelectedOption}
                       options={options}
                       isSearchable={true}
-                      className="BranchServiceCounter"
+                      className="select-dropdown-all"
                     />
                   </span>
                 </Col>
@@ -141,7 +141,7 @@ const BranchServiceCounter = () => {
                       onChange={setSelectedOption}
                       options={options}
                       isSearchable={true}
-                      className="BranchServiceCounter"
+                      className="select-dropdown-all"
                     />
                   </span>
                 </Col>
@@ -153,7 +153,7 @@ const BranchServiceCounter = () => {
                       onChange={setSelectedOption}
                       options={options}
                       isSearchable={true}
-                      className="BranchServiceCounter"
+                      className="select-dropdown-all"
                     />
                   </span>
                 </Col>
@@ -165,7 +165,7 @@ const BranchServiceCounter = () => {
                       onChange={setSelectedOption}
                       options={options}
                       isSearchable={true}
-                      className="BranchServiceCounter"
+                      className="select-dropdown-all"
                     />
                   </span>
                 </Col>

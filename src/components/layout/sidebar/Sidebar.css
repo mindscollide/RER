@@ -130,7 +130,7 @@ body[dir="rtl"]
   min-width: 0;
   overflow: hidden;
   text-overflow: ellipsis;
-  font-family: "Times New Roman", Times, serif !important;
+  font-family: "NeoSansArabic" !important;
   font-size: 14px !important;
   font-weight: 500 !important;
 }
@@ -164,5 +164,5 @@ li.ant-menu-item.ant-menu-item-selected.ant-menu-item-only-child {
 }
 
 body[dir="rtl"] .setup-text-style {
-  font-family: "Times New Roman", Times, serif !important;
+  font-family: "NeoSansArabic" !important;
 }

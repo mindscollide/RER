@@ -17,6 +17,7 @@ import {
   CityBranchShift,
   CityWiseCounter,
   CountryWiseCity,
+  CityBranchShiftNew,
 } from "../container/city-admin";
 
 import {
@@ -49,12 +50,14 @@ import BranchAdminRoutes from "./Branch_Admin_routes";
 import CityAdminRoutes from "./City_Admin_routes";
 import CountryAdminRoutes from "./Country_Admin_routes";
 import GlobalAdminRoutes from "./Global_Admin_routes";
+import { AppoinmentReportBranch } from "../container/branch-reports";
 export const router = createHashRouter(
   createRoutesFromElements(
     <>
-      {/* Branch Admin Routes Start */}
       <Route path="/" element={<Login />} />
       <Route path="/Forgot" element={<ForgotPassword />} />
+
+      {/* Branch Admin Routes Start */}
       <Route element={<BranchAdminRoutes />}>
         <Route exact path="/BranchAdmin/" element={<Dashboard />}>
           <Route path="" element={<Shift />} />
@@ -72,9 +75,11 @@ export const router = createHashRouter(
           <Route path="" element={<CityAdmin />} />
           <Route path="Branch" element={<CityAdmin />} />
           <Route path="Services" element={<CountryWiseCity />} />
-          <Route path="Shifts" element={<CityBranchShift />} />
+          <Route path="Shifts" element={<CityBranchShiftNew />} />
           <Route path="Counters" element={<CityWiseCounter />} />
           <Route path="Employee" element={<EmployeeMain />} />
+          <Route path="CityWiseBranchService" element={<CityBranchService />} />
+          <Route path="AppoinmentReport" element={<AppoinmentReportBranch />} />
         </Route>
       </Route>
       {/* City Admin Routes End */}

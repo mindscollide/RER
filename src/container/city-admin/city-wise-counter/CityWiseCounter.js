@@ -115,7 +115,7 @@ const CityWiseCounter = () => {
                       onChange={setSelectedOption}
                       options={options}
                       isSearchable={true}
-                      className="CityWiseCounterselector"
+                      className="select-dropdown-all"
                     />
                   </span>
                 </Col>

@@ -27,7 +27,7 @@
 }
 
 body[dir="rtl"] .save-btn-Service-Country {
-  font-family: "Times New Roman", Times, serif !important;
+  font-family: "NeoSansArabic" !important;
 }
 
 .save-btn-Service-Country:hover {
@@ -49,7 +49,7 @@ body[dir="rtl"] .save-btn-Service-Country {
 }
 
 body[dir="rtl"] .revert-btn-Service-Country {
-  font-family: "Times New Roman", Times, serif !important;
+  font-family: "NeoSansArabic" !important;
 }
 
 .revert-btn-Service-Country:hover {

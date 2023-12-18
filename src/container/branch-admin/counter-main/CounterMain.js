@@ -471,7 +471,7 @@ const CounterMain = () => {
                   <Button
                     icon={<i className="icon-refresh icon-space"></i>}
                     text={t("Reset")}
-                    className="Reset-btn-Branch"
+                    className="Reset-btn-Counter"
                     onClick={handleRestCounter}
                   />
                 </Col>

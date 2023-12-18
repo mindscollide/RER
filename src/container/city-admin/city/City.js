@@ -21,7 +21,10 @@ import {
   getCityBranchListApi,
   updateCityBranchApi,
   updateCityBranchFail,
+  getCityBranchServiceListApi,
+  updateCityBranchServiceListApi,
 } from "../../../store/actions/Admin_action";
+
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router";
 import { regexOnlyForNumberNCharacters } from "../../../commen/functions/regex";
@@ -32,9 +35,14 @@ import {
 } from "../../../commen/functions/Date_time_formatter";
 import DeleteEmployeeModal from "../../modals/delete-employee-modal/DeleteEmplyeeModal";
 import { loader_Actions } from "../../../store/actions/Loader_action";
+import { Collapse, Switch } from "antd";
+import Select from "react-select";
+import { capitalizeKeysInArray } from "../../../commen/functions/utils.js";
 
 const CityAdmin = () => {
   const { t } = useTranslation();
+  const { Panel } = Collapse;
+
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const Loading = useSelector((state) => state.Loader.Loading);
@@ -50,6 +58,29 @@ const CityAdmin = () => {
   const updatedCityBranchData = useSelector(
     (state) => state.admin.updatedCityBranchData
   );
+
+  // reducer for get City Branch Services
+  const cityBranchWiseData = useSelector(
+    (state) => state.admin.cityBranchWiseData
+  );
+
+  console.log(cityBranchWiseData, "cityBranchRowscityBranchRows");
+
+  if (cityBranchWiseData && cityBranchWiseData.length > 0) {
+    const firstItem = cityBranchWiseData[0];
+
+    if (
+      firstItem &&
+      firstItem.branchService &&
+      firstItem.branchService.serviceID
+    ) {
+      const serviceID = firstItem.branchService.serviceID;
+      console.log("Service ID:", serviceID);
+
+      // Now you can use the 'serviceID' variable as needed
+    }
+  }
+
   const currentLanguage = localStorage.getItem("i18nextLng");
   const local = currentLanguage === "en" ? "en-US" : "ar-SA";
   const [addUpdateCheckFlag, setAddUpdateCheckFlag] = useState(false);
@@ -58,6 +89,11 @@ const CityAdmin = () => {
   const [deleteID, setDeleteID] = useState(null);
   const [deleteModal, setDeleteModal] = useState(false);
   const [rows, setRows] = useState([]);
+
+  // rows for get city branch services
+  const [cityBranchRows, setCityBranchRows] = useState(false);
+  // console.log(cityBranchRows, "cityBranchRowscityBranchRows");
+
   const [Branch, setBranch] = useState({
     BranchNameEnglish: "",
     BranchNameArabic: "",
@@ -67,6 +103,24 @@ const CityAdmin = () => {
     BranchID: 0,
     CityID: Number(localStorage.getItem("cityID")),
   });
+
+  // state to open cityWiseBranchService
+  const [isCityWiseBranchService, setIsCityWiseBranchService] = useState(false);
+
+  // state to open countryCityWiseCounter
+  const [isCountryCityWiseCounter, setIsCountryCityWiseCounter] =
+    useState(false);
+
+  const [isPanelOpen, setIsPanelOpen] = useState(false);
+  const [isPanelOpenCountry, setIsPanelOpenCountry] = useState(false);
+
+  const togglePanel = () => {
+    setIsPanelOpen(!isPanelOpen);
+  };
+
+  const togglePanelCountry = () => {
+    setIsPanelOpenCountry(!isPanelOpenCountry);
+  };
 
   //language UseEffect
   useEffect(() => {
@@ -125,6 +179,93 @@ const CityAdmin = () => {
       dispatch(loader_Actions(false));
     }
   }, [addedCityBranchData, updatedCityBranchData, deletedCityBranchData]);
+
+  // updating get city branch services data in table
+  useEffect(() => {
+    if (cityBranchWiseData !== null) {
+      setCityBranchRows(cityBranchWiseData);
+    } else {
+      setCityBranchRows([]);
+    }
+  }, [cityBranchWiseData]);
+
+  // for switch onChange on update
+  const handleSwitchCityBranchWise = (name, value, record) => {
+    try {
+      if (name === "isServiceAvailableAtBranch") {
+        setCityBranchRows(
+          cityBranchRows.map((branchService) => {
+            if (branchService.branchServiceID === record.branchServiceID) {
+              return {
+                ...branchService,
+                isServiceAvailableAtBranch: value,
+              };
+            }
+            return branchService;
+          })
+        );
+      }
+    } catch {}
+  };
+  const revertHandler = () => {
+    try {
+      if (cityBranchWiseData !== null) {
+        setCityBranchRows(cityBranchWiseData);
+      }
+    } catch {}
+  };
+
+  const handleSaveCityBranchWise = () => {
+    let serviceID =
+      cityBranchWiseData && cityBranchWiseData.length > 0
+        ? cityBranchWiseData[0].branchService &&
+          cityBranchWiseData[0].branchService.serviceID
+        : null;
+    try {
+      let convertedData = capitalizeKeysInArray(cityBranchRows);
+      const newArray = convertedData.map((item) => ({
+        BranchServiceID: item.BranchServiceID,
+        ServiceID: serviceID,
+        IsServiceAvailableAtBranch: item.IsServiceAvailableAtBranch,
+      }));
+      console.log(newArray, "newArraynewArray");
+      let newData = {
+        CityID: Number(localStorage.getItem("cityID")),
+        CityBranchServices: newArray,
+        BranchID: 1,
+      };
+      dispatch(updateCityBranchServiceListApi(t, navigate, Loading, newData));
+    } catch {}
+  };
+
+  //to navigate on cityWiseBranchService page by click on service Icon
+  const onClickServiceIcon = () => {
+    dispatch(getCityBranchServiceListApi(t, navigate, Loading));
+    setIsCityWiseBranchService(true);
+  };
+
+  //to navigate on countryCityWiseCounter  page by click on counter Icon
+  const onClickCounterIcon = () => {
+    setIsCountryCityWiseCounter(true);
+  };
+
+  const goBackButtonOnclick = () => {
+    setIsCityWiseBranchService(false);
+  };
+
+  const goBackCountryCounter = () => {
+    setIsCountryCityWiseCounter(false);
+  };
+
+  //to navigate on shift page by click on service Icon
+  const onClickShiftIcon = () => {
+    navigate("/CityAdmin/Shifts");
+  };
+
+  //to navigate on Employee page by click on service Icon
+  const onClickEmployeeIcon = () => {
+    navigate("/CityAdmin/Employee");
+  };
 
   const columns = [
     {
@@ -199,15 +340,159 @@ const CityAdmin = () => {
               className="icon-close icon-EDT-DLT-color"
               onClick={() => handleEditt(record, 2)}
             ></i>
-            <i className="icon-settings icon-EDT-DLT-color"></i>
-            <i className="icon-counter icon-EDT-DLT-color"></i>
-            <i className="icon-repeat icon-EDT-DLT-color"></i>
-            <i className="icon-user icon-EDT-DLT-color"></i>
+            <i
+              className="icon-settings icon-EDT-DLT-color"
+              onClick={onClickServiceIcon}
+            ></i>
+            <i
+              className="icon-counter icon-EDT-DLT-color"
+              onClick={onClickCounterIcon}
+            ></i>
+            <i
+              className="icon-repeat icon-EDT-DLT-color"
+              onClick={onClickShiftIcon}
+            ></i>
+            <i
+              className="icon-user icon-EDT-DLT-color"
+              onClick={onClickEmployeeIcon}
+            ></i>
           </span>
         </>
       ),
     },
   ];
+
+  // data and columns for cityWiseBranchService start
+  const cityWiseData = [
+    {
+      id: 1,
+      shiftName: <span className="table-inside-text">First Registry</span>,
+    },
+    {
+      id: 2,
+      shiftName: (
+        <span className="table-inside-text">
+          Subsequence Transaction Service Before First Registry
+        </span>
+      ),
+    },
+    {
+      id: 3,
+      shiftName: <span className="table-inside-text">Change Ownership</span>,
+    },
+  ];
+
+  const cityWiseColumns = [
+    {
+      title: <span className="table-text">{t("Services")}</span>,
+      dataIndex: "branchService",
+      key: "branchService",
+      width: "400px",
+      align: "left",
+      render: (text, record) => (
+        <span className="table-inside-text">
+          {currentLanguage === "en"
+            ? record.branchService.serviceNameEnglish
+            : record.branchService.serviceNameArabic}
+        </span>
+      ),
+    },
+
+    {
+      title: <span className="table-text">{t("Branch-availability")}</span>,
+      dataIndex: "isServiceAvailableAtBranch",
+      key: "isServiceAvailableAtBranch",
+      width: "200px",
+      align: "center",
+      render: (text, record) => (
+        <span>
+          <Switch
+            checked={text}
+            onChange={(value) =>
+              handleSwitchCityBranchWise(
+                "isServiceAvailableAtBranch",
+                value,
+                record
+              )
+            }
+          />
+        </span>
+      ),
+    },
+  ];
+  // data and columns for cityWiseBranchService end
+
+  // data and columns for countryCityWiseCounter start
+
+  const countryCityWiseData = [
+    {
+      id: 1,
+      branchName: (
+        <span className="table-inside-text">Olaya Street Branch</span>
+      ),
+      counterName: <span className="table-inside-text">Counter 1</span>,
+      shift: <span className="table-inside-text">Shift 1</span>,
+      service: <span className="table-inside-text">First Registry</span>,
+    },
+    {
+      id: 2,
+      branchName: (
+        <span className="table-inside-text">Olaya Street Branch</span>
+      ),
+      counterName: <span className="table-inside-text">Counter 2</span>,
+      shift: <span className="table-inside-text">Shift 2</span>,
+      service: <span className="table-inside-text">Change Ownership</span>,
+    },
+    {
+      id: 3,
+      branchName: <span className="table-inside-text">King Fahad</span>,
+      counterName: <span className="table-inside-text">Counter 1</span>,
+      shift: <span className="table-inside-text">Shift 1</span>,
+      service: <span className="table-inside-text">First Registry</span>,
+    },
+    {
+      id: 4,
+      branchName: <span className="table-inside-text">King Fahad</span>,
+      counterName: <span className="table-inside-text">Counter 2</span>,
+      shift: <span className="table-inside-text">Shift 2</span>,
+      service: <span className="table-inside-text">Change Ownership</span>,
+    },
+  ];
+
+  const countryCityWiseColumn = [
+    {
+      title: (
+        <span className="table-inside-header-text-new">{t("Branch-name")}</span>
+      ),
+      dataIndex: "branchName",
+      key: "branchName",
+      width: "250px",
+    },
+    {
+      title: (
+        <span className="table-inside-header-text-new">
+          {t("Counter-name")}
+        </span>
+      ),
+      dataIndex: "counterName",
+      key: "counterName",
+    },
+    {
+      title: <span className="table-inside-header-text-new">{t("Shift")}</span>,
+      dataIndex: "shift",
+      key: "shift",
+    },
+    {
+      title: (
+        <span className="table-inside-header-text-new">{t("Service")}</span>
+      ),
+      dataIndex: "service",
+      key: "service",
+    },
+  ];
+
+  // data and columns for countryCityWiseCounter end
+
   const handleChange = (e) => {
     try {
       let name = e.target.name;
@@ -335,143 +620,371 @@ const CityAdmin = () => {
   return (
     <>
       <section>
-        <Row>
-          <Col lg={12} md={12} sm={12} className="d-flex justify-content-start">
-            <span className="shift-heading">
-              {t("Branch")}
-              <span className="shift-sub-heading">
-                {" "}
-                {currentLanguage === "en"
-                  ? "(" +
-                    localStorage.getItem("countryName") +
-                    " " +
-                    "-" +
-                    " " +
-                    localStorage.getItem("cityName") +
-                    ")"
-                  : "(" +
-                    localStorage.getItem("countryNameArabic") +
-                    " " +
-                    "-" +
-                    " " +
-                    localStorage.getItem("cityNameArabic") +
-                    ")"}
-              </span>
-            </span>
-          </Col>
-        </Row>
-        <Row className="mt-3">
-          <Col lg={12} md={12} sm={12}>
-            <Paper className="CityAdmin-paper">
-              <Row>
-                <Col lg={6} md={6} sm={6}>
-                  <span className="text-labels">{t("Branch-name")}</span>
-                  <TextField
-                    name="BranchNameEnglish"
-                    placeholder={t("Branch-admin")}
-                    labelClass="d-none"
-                    className="text-fiels-cityAdmin"
-                    value={Branch.BranchNameEnglish}
-                    onChange={handleChange}
-                  />
-                </Col>
-                <Col lg={6} md={6} sm={6} className="text-end">
-                  <span className="text-labels">اسم الفرع</span>
-                  <TextField
-                    name="BranchNameArabic"
-                    placeholder={"اسم الفرع"}
-                    labelClass="d-none"
-                    className="text-fiels-cityAdmin-arabic"
-                    value={Branch.BranchNameArabic}
-                    onChange={handleChange}
-                  />
-                </Col>
-              </Row>
+        {isCityWiseBranchService === true ? (
+          <>
+            <Row>
+              <Col
+                lg={6}
+                md={6}
+                sm={6}
+                className="d-flex justify-content-start"
+              >
+                <span className="shift-heading">
+                  <i
+                    className="icon-back go-back-arrow"
+                    onClick={goBackButtonOnclick}
+                  ></i>
+                  {t("City-branch-wise-service")}
+                  <span className="shift-sub-heading">
+                    {" "}
+                    {t("Saudi-arabia-riyadh")}
+                  </span>
+                </span>
+              </Col>
+              <Col lg={6} md={6} sm={6} className="d-flex justify-content-end">
+                <span className="shift-sub-heading-right">
+                  {t("Olaya-street-branch")}
+                </span>
+              </Col>
+            </Row>
+            <Row className="mt-3">
+              <Col lg={12} md={12} sm={12}>
+                <Paper className="CityBranchWise-Admin-paper">
+                  <Row>
+                    <Col
+                      lg={12}
+                      md={12}
+                      sm={12}
+                      className="btn-col-class-CityBranchWise"
+                    >
+                      <Button
+                        icon={<i className="icon-save icon-space"></i>}
+                        text={t("Save")}
+                        onClick={handleSaveCityBranchWise}
+                        className="save-btn-CityBranchWise"
+                      />
+                      <Button
+                        icon={<i className="icon-repeat icon-space"></i>}
+                        text={t("Revert")}
+                        onClick={revertHandler}
+                        className="revert-btn-CityBranchWise"
+                      />
+                    </Col>
+                  </Row>
+                  <Row className="mt-2">
+                    <Col lg={12} md={12} sm={12}>
+                      <Table
+                        rows={cityBranchRows}
+                        column={cityWiseColumns}
+                        pagination={false}
+                      />
+                    </Col>
+                  </Row>
+                </Paper>
+              </Col>
+            </Row>
+          </>
+        ) : isCountryCityWiseCounter === true ? (
+          <>
+            <Row>
+              <Col
+                lg={12}
+                md={12}
+                sm={12}
+                className="d-flex justify-content-start"
+              >
+                <span className="shift-heading">
+                  <i
+                    className="icon-back go-back-arrow"
+                    onClick={goBackCountryCounter}
+                  ></i>
+                  {t("Country-level-shift-and-counter-details")}
+                  <span className="shift-sub-heading">
+                    {" "}
+                    {t("Saudi-arabia-riyadh")}
+                  </span>
+                </span>
+              </Col>
+            </Row>
+            <Row className="mt-3">
+              <Col lg={12} md={12} sm={12}>
+                <Paper className="CountryCityWise-paper">
+                  <Row className="mx-auto d-flex align-items-center justify-content-center">
+                    <Col lg={4} md={4} sm={12}>
+                      <span className="d-flex flex-column w-100">
+                        <label className="text-labels">{t("City")}</label>
+                        <Select
+                          isSearchable={true}
+                          className="select-dropdown-all"
+                        />
+                      </span>
+                    </Col>
+                    <Col lg={4} md={4} sm={12}>
+                      <span className="d-flex flex-column w-100">
+                        <label className="text-labels">{t("Branch")}</label>
+                        <Select
+                          isSearchable={true}
+                          className="select-dropdown-all"
+                        />
+                      </span>
+                    </Col>
+                    <Col lg={2} md={2} sm={12} className="mt-3">
+                      <Button
+                        icon={<i className="icon-search city-icon-space"></i>}
+                        text={t("Search")}
+                        className="Search-Icon-Btn"
+                      />
+                    </Col>
+                  </Row>
 
-              <Row className="mt-3">
-                <Col lg={2} md={2} sm={2} className="mt-4">
-                  <Checkbox
-                    checked={Branch.IsBranchActive}
-                    onChange={handleChange}
-                    classNameDiv="CityAdmin-checkbox"
-                    label={
-                      <span className="checkbox-label">{t("Active")}</span>
-                    }
-                  />
-                </Col>
+                  <Row className="mt-2">
+                    <Col lg={12} md={12} sm={12}>
+                      <Collapse
+                        bordered={false}
+                        className="collapse-Country-Wise-disable-bg"
+                        expandIcon={false}
+                      >
+                        <Panel
+                          header={
+                            <div
+                              className={`Country-Wise-collapse-bg-color ${
+                                isPanelOpen ? "open" : ""
+                              }`}
+                              onClick={togglePanel}
+                            >
+                              <span className="toggle-tiles">
+                                {t("Riyadh")}
+                              </span>
+                              {isPanelOpen ? (
+                                <i
+                                  className={
+                                    "icon-arrow-up Country-wise-collapse"
+                                  }
+                                ></i>
+                              ) : (
+                                <i
+                                  className={
+                                    "icon-arrow-down Country-wise-collapse"
+                                  }
+                                ></i>
+                              )}
+                            </div>
+                          }
+                          key="1"
+                        >
+                          <Table
+                            column={countryCityWiseColumn}
+                            rows={countryCityWiseData}
+                            pagination={false}
+                            className="div-table-country-wise"
+                          />
+                        </Panel>
+                      </Collapse>
+                    </Col>
+                  </Row>
 
-                <Col
-                  lg={5}
-                  md={5}
-                  sm={5}
-                  className="col-for-date-timepicker-cityad"
-                >
-                  <label className="text-labels">
-                    {t("Branch-start-time")}
-                  </label>
-                  <DatePicker
-                    arrowClassName="arrowClass"
-                    containerClassName="containerClassTimePicker"
-                    disableDayPicker
-                    format="hh:mm A"
-                    plugins={[<TimePicker hideSeconds />]}
-                    value={Branch.BranchStartTime}
-                    calendar={calendarValue}
-                    locale={localValue}
-                    onChange={(value) =>
-                      handleTimeChange("BranchStartTime", value)
-                    }
-                  />
-                </Col>
+                  <Row>
+                    <Col lg={12} md={12} sm={12}>
+                      <Collapse
+                        bordered={false}
+                        className="collapse-Country-Wise-disable-bg"
+                        expandIcon={false}
+                      >
+                        <Panel
+                          header={
+                            <div
+                              className={`Country-Wise-collapse-bg-color ${
+                                isPanelOpenCountry ? "open" : ""
+                              }`}
+                              onClick={togglePanelCountry}
+                            >
+                              <span className="toggle-tiles">
+                                {t("Dammam")}
+                              </span>
+                              {isPanelOpenCountry ? (
+                                <i
+                                  className={
+                                    "icon-arrow-up Country-wise-collapse"
+                                  }
+                                ></i>
+                              ) : (
+                                <i
+                                  className={
+                                    "icon-arrow-down Country-wise-collapse"
+                                  }
+                                ></i>
+                              )}
+                            </div>
+                          }
+                          key="1"
+                        >
+                          <Table
+                            column={countryCityWiseColumn}
+                            rows={countryCityWiseData}
+                            pagination={false}
+                            className="div-table-country-wise"
+                          />
+                        </Panel>
+                      </Collapse>
+                    </Col>
+                  </Row>
+                </Paper>
+              </Col>
+            </Row>
+          </>
+        ) : (
+          <>
+            <Row>
+              <Col
+                lg={12}
+                md={12}
+                sm={12}
+                className="d-flex justify-content-start"
+              >
+                <span className="shift-heading">
+                  {t("Branch")}
+                  <span className="shift-sub-heading">
+                    {" "}
+                    {currentLanguage === "en"
+                      ? "(" +
+                        localStorage.getItem("countryName") +
+                        " " +
+                        "-" +
+                        " " +
+                        localStorage.getItem("cityName") +
+                        ")"
+                      : "(" +
+                        localStorage.getItem("countryNameArabic") +
+                        " " +
+                        "-" +
+                        " " +
+                        localStorage.getItem("cityNameArabic") +
+                        ")"}
+                  </span>
+                </span>
+              </Col>
+            </Row>
+            <Row className="mt-3">
+              <Col lg={12} md={12} sm={12}>
+                <Paper className="CityAdmin-paper">
+                  <Row>
+                    <Col lg={6} md={6} sm={6}>
+                      <span className="text-labels">{t("Branch-name")}</span>
+                      <TextField
+                        name="BranchNameEnglish"
+                        placeholder={t("Branch-admin")}
+                        labelClass="d-none"
+                        className="text-fiels-cityAdmin"
+                        value={Branch.BranchNameEnglish}
+                        onChange={handleChange}
+                      />
+                    </Col>
+                    <Col lg={6} md={6} sm={6} className="text-end">
+                      <span className="text-labels">اسم الفرع</span>
+                      <TextField
+                        name="BranchNameArabic"
+                        placeholder={"اسم الفرع"}
+                        labelClass="d-none"
+                        className="text-fiels-cityAdmin-arabic"
+                        value={Branch.BranchNameArabic}
+                        onChange={handleChange}
+                      />
+                    </Col>
+                  </Row>
 
-                <Col
-                  lg={5}
-                  md={5}
-                  sm={5}
-                  className="col-for-date-timepicker-cityad"
-                >
-                  <label className="text-labels">{t("Branch-end-time")}</label>
-                  <DatePicker
-                    arrowClassName="arrowClass"
-                    containerClassName="containerClassTimePicker"
-                    disableDayPicker
-                    format="hh:mm A"
-                    plugins={[<TimePicker hideSeconds />]}
-                    value={Branch.BranchEndTime}
-                    calendar={calendarValue}
-                    locale={localValue}
-                    onChange={(value) =>
-                      handleTimeChange("BranchEndTime", value)
-                    }
-                  />
-                </Col>
-              </Row>
+                  <Row className="mt-3">
+                    <Col lg={2} md={2} sm={2} className="mt-4">
+                      <Checkbox
+                        checked={Branch.IsBranchActive}
+                        onChange={handleChange}
+                        classNameDiv="CityAdmin-checkbox"
+                        label={
+                          <span className="checkbox-label">{t("Active")}</span>
+                        }
+                      />
+                    </Col>
 
-              <Row className="my-3">
-                <Col lg={12} md={12} sm={12} className="btn-class-CityAdmin">
-                  <Button
-                    icon={<i className="icon-add-circle icon-space"></i>}
-                    text={addUpdateCheckFlag ? t("Update") : t("Add")}
-                    className="Add-btn-CityAdmin"
-                    onClick={handleAdd}
-                  />
-                  <Button
-                    icon={<i className="icon-refresh icon-space"></i>}
-                    text={t("Reset")}
-                    className="Reset-btn-CityAdmin"
-                    onClick={handleRest}
-                  />
-                </Col>
-              </Row>
+                    <Col
+                      lg={5}
+                      md={5}
+                      sm={5}
+                      className="col-for-date-timepicker-cityad"
+                    >
+                      <label className="text-labels">
+                        {t("Branch-start-time")}
+                      </label>
+                      <DatePicker
+                        arrowClassName="arrowClass"
+                        containerClassName="containerClassTimePicker"
+                        disableDayPicker
+                        format="hh:mm A"
+                        plugins={[<TimePicker hideSeconds />]}
+                        value={Branch.BranchStartTime}
+                        calendar={calendarValue}
+                        locale={localValue}
+                        onChange={(value) =>
+                          handleTimeChange("BranchStartTime", value)
+                        }
+                      />
+                    </Col>
 
-              <Row className="mt-3">
-                <Col lg={12} md={12} sm={12}>
-                  <Table rows={rows} column={columns} pagination={false} />
-                </Col>
-              </Row>
-            </Paper>
-          </Col>
-        </Row>
+                    <Col
+                      lg={5}
+                      md={5}
+                      sm={5}
+                      className="col-for-date-timepicker-cityad"
+                    >
+                      <label className="text-labels">
+                        {t("Branch-end-time")}
+                      </label>
+                      <DatePicker
+                        arrowClassName="arrowClass"
+                        containerClassName="containerClassTimePicker"
+                        disableDayPicker
+                        format="hh:mm A"
+                        plugins={[<TimePicker hideSeconds />]}
+                        value={Branch.BranchEndTime}
+                        calendar={calendarValue}
+                        locale={localValue}
+                        onChange={(value) =>
+                          handleTimeChange("BranchEndTime", value)
+                        }
+                      />
+                    </Col>
+                  </Row>
+
+                  <Row className="my-3">
+                    <Col
+                      lg={12}
+                      md={12}
+                      sm={12}
+                      className="btn-class-CityAdmin"
+                    >
+                      <Button
+                        icon={<i className="icon-add-circle icon-space"></i>}
+                        text={addUpdateCheckFlag ? t("Update") : t("Add")}
+                        className="Add-btn-CityAdmin"
+                        onClick={handleAdd}
+                      />
+                      <Button
+                        icon={<i className="icon-refresh icon-space"></i>}
+                        text={t("Reset")}
+                        className="Reset-btn-CityAdmin"
+                        onClick={handleRest}
+                      />
+                    </Col>
+                  </Row>
+
+                  <Row className="mt-3">
+                    <Col lg={12} md={12} sm={12}>
+                      <Table rows={rows} column={columns} pagination={false} />
+                    </Col>
+                  </Row>
+                </Paper>
+              </Col>
+            </Row>
+          </>
+        )}
       </section>
       <DeleteEmployeeModal
         setDeleteModal={setDeleteModal}

@@ -39,7 +39,7 @@
 }
 
 body[dir="rtl"] .Heading-Rer {
-  font-family: "Times New Roman", Times, serif !important;
+  font-family: "NeoSansArabic" !important;
 }
 
 .login-btn {
@@ -56,7 +56,7 @@ body[dir="rtl"] .Heading-Rer {
 }
 
 body[dir="rtl"] .login-btn {
-  font-family: "Times New Roman", Times, serif !important;
+  font-family: "NeoSansArabic" !important;
 }
 
 .login-btn:is(:hover, ) {
@@ -111,8 +111,10 @@ body[dir="rtl"] .Icon-Field-class {
 }
 
 body[dir="rtl"] .form-comtrol-textfield {
+  font-family: "NeoSansArabic" !important;
+  border-top-right-radius: 0px !important;
+  border-bottom-right-radius: 0px !important;
   height: 37px !important;
-  font-family: "Times New Roman", Times, serif !important;
   font-weight: 500;
   background: rgba(255, 255, 255, 0.5) !important;
   font-size: 14px !important;
@@ -120,8 +122,6 @@ body[dir="rtl"] .form-comtrol-textfield {
   color: #002650 !important;
   box-shadow: none !important;
   border: 1px solid #ced4da !important;
-  border-top-right-radius: 0px !important;
-  border-bottom-right-radius: 0px !important;
 }
 
 .signIn-Signup-btn-col {
@@ -139,7 +139,7 @@ body[dir="rtl"] .form-comtrol-textfield {
 }
 
 body[dir="rtl"] .forget-lablel-text {
-  font-family: "Times New Roman", Times, serif !important;
+  font-family: "NeoSansArabic" !important;
 }
 
 .forget-lablel-text:hover {
@@ -161,7 +161,7 @@ body[dir="rtl"] .forget-lablel-text {
 }
 
 body[dir="rtl"] .errorMessageLogin {
-  font-family: "Times New Roman", Times, serif !important;
+  font-family: "NeoSansArabic" !important;
 }
 
 .errorMessageLogin_hidden {
@@ -182,7 +182,7 @@ body[dir="rtl"] .errorMessageLogin {
 }
 
 body[dir="rtl"] .errorPasswordSignInMessage {
-  font-family: "Times New Roman", Times, serif !important;
+  font-family: "NeoSansArabic" !important;
 }
 
 .errorPasswordSignInMessage_hidden {

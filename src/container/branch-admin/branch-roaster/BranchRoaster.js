@@ -575,6 +575,7 @@ const BranchRoaster = () => {
                       onChange={handleChangeShift}
                       options={optionsShift}
                       isSearchable={false}
+                      className="select-dropdown-all"
                     />
                   </span>
                   <Row className="mt-4">
@@ -586,6 +587,7 @@ const BranchRoaster = () => {
                           onChange={handleChangeServices}
                           options={optionsServices}
                           isSearchable={false}
+                          className="select-dropdown-all"
                         />
                       </span>
                     </Col>
@@ -621,6 +623,7 @@ const BranchRoaster = () => {
                       onChange={handleChangeCounter}
                       options={optionsCounter}
                       isSearchable={false}
+                      className="select-dropdown-all"
                     />
                   </span>
                 </Col>

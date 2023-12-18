@@ -31,7 +31,7 @@
 }
 
 body[dir="rtl"] .AddEdit-btn-Employee {
-  font-family: "Times New Roman", Times, serif !important;
+  font-family: "NeoSansArabic" !important;
 }
 
 .AddEdit-btn-Employee:hover {
@@ -54,7 +54,7 @@ body[dir="rtl"] .AddEdit-btn-Employee {
 }
 
 body[dir="rtl"] .Cancel-btn-Employee {
-  font-family: "Times New Roman", Times, serif !important;
+  font-family: "NeoSansArabic" !important;
 }
 
 .Cancel-btn-Employee:hover {
