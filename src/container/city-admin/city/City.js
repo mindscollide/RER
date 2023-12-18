@@ -630,6 +630,10 @@ const CityAdmin = () => {
                 className="d-flex justify-content-start"
               >
                 <span className="shift-heading">
+                  <i
+                    className="icon-back go-back-arrow"
+                    onClick={goBackButtonOnclick}
+                  ></i>
                   {t("City-branch-wise-service")}
                   <span className="shift-sub-heading">
                     {" "}
@@ -647,17 +651,10 @@ const CityAdmin = () => {
               <Col lg={12} md={12} sm={12}>
                 <Paper className="CityBranchWise-Admin-paper">
                   <Row>
-                    <Col lg={4} md={4} sm={4}>
-                      <Button
-                        text="Go Back"
-                        onClick={goBackButtonOnclick}
-                        className="goback-button"
-                      />
-                    </Col>
                     <Col
-                      lg={8}
-                      md={8}
-                      sm={8}
+                      lg={12}
+                      md={12}
+                      sm={12}
                       className="btn-col-class-CityBranchWise"
                     >
                       <Button
@@ -691,25 +688,22 @@ const CityAdmin = () => {
           <>
             <Row>
               <Col
-                lg={10}
-                md={10}
-                sm={10}
+                lg={12}
+                md={12}
+                sm={12}
                 className="d-flex justify-content-start"
               >
                 <span className="shift-heading">
+                  <i
+                    className="icon-back go-back-arrow"
+                    onClick={goBackCountryCounter}
+                  ></i>
                   {t("Country-level-shift-and-counter-details")}
                   <span className="shift-sub-heading">
                     {" "}
                     {t("Saudi-arabia-riyadh")}
                   </span>
                 </span>
-              </Col>
-              <Col lg={2} md={2} sm={2} className="d-flex justify-content-end">
-                <Button
-                  text="Go Back"
-                  onClick={goBackCountryCounter}
-                  className="goback-button"
-                />
               </Col>
             </Row>
             <Row className="mt-3">

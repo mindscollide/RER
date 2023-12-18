@@ -393,6 +393,7 @@ const getAllShiftsOfBranchFail = (message) => {
 
 const getAllShiftsOfBranch = (t, navigate, loadingFlag) => {
   let data = { BranchID: Number(localStorage.getItem("branchID")) };
+  console.log(data, "datadata");
   return async (dispatch) => {
     if (!loadingFlag) {
       dispatch(loader_Actions(true));

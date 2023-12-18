@@ -1,14 +1,61 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Row, Col } from "react-bootstrap";
 import "./CityBranchShiftNew.css";
 import { Paper, Table, Button } from "../../../components/elements";
 import Select from "react-select";
+import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router";
 import { Switch } from "antd";
+import {
+  getCityBranchListApi,
+  getAllShiftsOfBranch,
+} from "../../../store/actions/Admin_action";
 import { useTranslation } from "react-i18next";
 
 const CityBranchShiftNew = () => {
   const { t } = useTranslation();
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const Loading = useSelector((state) => state.Loader.Loading);
+
   const currentLanguage = localStorage.getItem("i18nextLng");
+
+  const cityShiftsBranchDropdown = useSelector(
+    (state) => state.admin.cityBranchListData
+  );
+
+  // reducer for table rendering
+  const branchesList = useSelector((state) => state.admin.branchesList);
+
+  console.log(branchesList, "cityShiftsBranchDropdowncityShiftsBranchDropdown");
+
+  // state of city branch Wise shift
+  const [cityShiftRows, setCityShiftRows] = useState([]);
+
+  // states for city branch shift in dropdown
+  const [cityShiftOption, setCityShiftOption] = useState([]);
+  const [cityShiftOptionValue, setCityShiftOptionValue] = useState(null);
+
+  // onchange handler for branch dropdown
+  const onChangeBranchHandler = (cityShiftOptionValue) => {
+    setCityShiftOptionValue(cityShiftOptionValue);
+  };
+
+  // updating data in table
+  useEffect(() => {
+    if (branchesList !== null) {
+      setCityShiftRows(branchesList);
+    } else {
+      setCityShiftRows([]);
+    }
+  }, [branchesList]);
+
+  // calling branch data api
+  useEffect(() => {
+    dispatch(getCityBranchListApi(t, navigate, Loading));
+    // for table rendering api branch shift
+    dispatch(getAllShiftsOfBranch(t, navigate, Loading));
+  }, []);
 
   const dataSource = [
     {
@@ -28,24 +75,51 @@ const CityBranchShiftNew = () => {
   const columns = [
     {
       title: <span className="table-text">{t("Shifts")}</span>,
-      dataIndex: "shiftName",
-      key: "shiftName",
-      width: "400px",
+      dataIndex:
+        currentLanguage === "en" ? "shiftNameEnglish" : "shiftNameArabic",
+      key: currentLanguage === "en" ? "shiftNameEnglish" : "shiftNameArabic",
+      render: (text, record) => (
+        <span className="table-inside-text">{text}</span>
+      ),
     },
 
     {
       title: <span className="table-text">{t("Availability")}</span>,
-      dataIndex: "column6",
-      key: "column6",
+      dataIndex: "isShiftActive",
+      key: "isShiftActive",
       width: "200px",
       align: "center",
       render: (text, record) => (
         <span>
-          <Switch />
+          <Switch checked={text} />
         </span>
       ),
     },
   ];
+
+  useEffect(() => {
+    if (
+      cityShiftsBranchDropdown !== null &&
+      cityShiftsBranchDropdown !== undefined &&
+      cityShiftsBranchDropdown.length !== 0
+    ) {
+      if (currentLanguage === "en") {
+        setCityShiftOption(
+          cityShiftsBranchDropdown.map((item) => ({
+            value: item.branchID,
+            label: item.branchNameEnglish,
+          }))
+        );
+      } else {
+        setCityShiftOption(
+          cityShiftsBranchDropdown.map((item) => ({
+            value: item.branchID,
+            label: item.branchNameArabic,
+          }))
+        );
+      }
+    }
+  }, [cityShiftsBranchDropdown, currentLanguage]);
 
   return (
     <>
@@ -86,6 +160,9 @@ const CityBranchShiftNew = () => {
                       {t("Branch")}
                     </label>
                     <Select
+                      options={cityShiftOption}
+                      value={cityShiftOptionValue}
+                      onChange={onChangeBranchHandler}
                       isSearchable={true}
                       className="select-dropdown-all"
                     />
@@ -103,7 +180,7 @@ const CityBranchShiftNew = () => {
               <Row className="mt-2">
                 <Col lg={12} md={12} sm={12}>
                   <Table
-                    rows={dataSource}
+                    rows={cityShiftRows}
                     column={columns}
                     pagination={false}
                   />
