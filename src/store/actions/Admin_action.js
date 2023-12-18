@@ -393,7 +393,6 @@ const getAllShiftsOfBranchFail = (message) => {
 
 const getAllShiftsOfBranch = (t, navigate, loadingFlag) => {
   let data = { BranchID: Number(localStorage.getItem("branchID")) };
-  console.log(data, "datadata");
   return async (dispatch) => {
     if (!loadingFlag) {
       dispatch(loader_Actions(true));
@@ -446,6 +445,7 @@ const getAllShiftsOfBranch = (t, navigate, loadingFlag) => {
               await dispatch(loader_Actions(false));
             } else {
               dispatch(getLastSelectedLanguageFail(t("something_went_wrong")));
+              await dispatch(loader_Actions(false));
             }
           } else {
             await dispatch(getAllShiftsOfBranchFail(t("something_went_wrong")));

@@ -38,11 +38,14 @@ import { loader_Actions } from "../../../store/actions/Loader_action";
 import { Collapse, Switch } from "antd";
 import Select from "react-select";
 import { capitalizeKeysInArray } from "../../../commen/functions/utils.js";
+import {
+  setIsCityWiseBranchService,
+  setIsCountryCityWiseCounter,
+} from "../../../store/actions/global_action";
 
 const CityAdmin = () => {
   const { t } = useTranslation();
   const { Panel } = Collapse;
-
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const Loading = useSelector((state) => state.Loader.Loading);
@@ -63,23 +66,12 @@ const CityAdmin = () => {
   const cityBranchWiseData = useSelector(
     (state) => state.admin.cityBranchWiseData
   );
-
-  console.log(cityBranchWiseData, "cityBranchRowscityBranchRows");
-
-  if (cityBranchWiseData && cityBranchWiseData.length > 0) {
-    const firstItem = cityBranchWiseData[0];
-
-    if (
-      firstItem &&
-      firstItem.branchService &&
-      firstItem.branchService.serviceID
-    ) {
-      const serviceID = firstItem.branchService.serviceID;
-      console.log("Service ID:", serviceID);
-
-      // Now you can use the 'serviceID' variable as needed
-    }
-  }
+  const isCountryCityWiseCounter = useSelector(
+    (state) => state.global.isCountryCityWiseCounter
+  );
+  const isCityWiseBranchService = useSelector(
+    (state) => state.global.isCityWiseBranchService
+  );
 
   const currentLanguage = localStorage.getItem("i18nextLng");
   const local = currentLanguage === "en" ? "en-US" : "ar-SA";
@@ -89,11 +81,8 @@ const CityAdmin = () => {
   const [deleteID, setDeleteID] = useState(null);
   const [deleteModal, setDeleteModal] = useState(false);
   const [rows, setRows] = useState([]);
-
   // rows for get city branch services
   const [cityBranchRows, setCityBranchRows] = useState(false);
-  // console.log(cityBranchRows, "cityBranchRowscityBranchRows");
-
   const [Branch, setBranch] = useState({
     BranchNameEnglish: "",
     BranchNameArabic: "",
@@ -103,14 +92,6 @@ const CityAdmin = () => {
     BranchID: 0,
     CityID: Number(localStorage.getItem("cityID")),
   });
-
-  // state to open cityWiseBranchService
-  const [isCityWiseBranchService, setIsCityWiseBranchService] = useState(false);
-
-  // state to open countryCityWiseCounter
-  const [isCountryCityWiseCounter, setIsCountryCityWiseCounter] =
-    useState(false);
-
   const [isPanelOpen, setIsPanelOpen] = useState(false);
   const [isPanelOpenCountry, setIsPanelOpenCountry] = useState(false);
 
@@ -149,6 +130,20 @@ const CityAdmin = () => {
     }
   }, [cityBranchListData]);
 
+  useEffect(() => {
+    if (cityBranchWiseData != null) {
+      const firstItem = cityBranchWiseData[0];
+
+      if (
+        firstItem &&
+        firstItem.branchService &&
+        firstItem.branchService.serviceID
+      ) {
+        const serviceID = firstItem.branchService.serviceID;
+        // Now you can use the 'serviceID' variable as needed
+      }
+    }
+  }, [cityBranchWiseData]);
   // use for when new data add its add it in table row with calling get api and then get loader false and cleare its state
   useEffect(() => {
     if (addedCityBranchData !== null) {
@@ -207,6 +202,7 @@ const CityAdmin = () => {
       }
     } catch {}
   };
+
   const revertHandler = () => {
     try {
       if (cityBranchWiseData !== null) {
@@ -228,7 +224,6 @@ const CityAdmin = () => {
         ServiceID: serviceID,
         IsServiceAvailableAtBranch: item.IsServiceAvailableAtBranch,
       }));
-      console.log(newArray, "newArraynewArray");
       let newData = {
         CityID: Number(localStorage.getItem("cityID")),
         CityBranchServices: newArray,
@@ -241,29 +236,32 @@ const CityAdmin = () => {
   //to navigate on cityWiseBranchService page by click on service Icon
   const onClickServiceIcon = () => {
     dispatch(getCityBranchServiceListApi(t, navigate, Loading));
-    setIsCityWiseBranchService(true);
+    dispatch(setIsCityWiseBranchService(true));
   };
 
   //to navigate on countryCityWiseCounter  page by click on counter Icon
   const onClickCounterIcon = () => {
-    setIsCountryCityWiseCounter(true);
+    dispatch(setIsCountryCityWiseCounter(true));
   };
 
   const goBackButtonOnclick = () => {
-    setIsCityWiseBranchService(false);
+    dispatch(setIsCityWiseBranchService(false));
   };
 
   const goBackCountryCounter = () => {
-    setIsCountryCityWiseCounter(false);
+    dispatch(setIsCountryCityWiseCounter(false));
   };
 
   //to navigate on shift page by click on service Icon
-  const onClickShiftIcon = () => {
+  const onClickShiftIcon = (record) => {
+    localStorage.setItem("branchID", record.branchID);
+    localStorage.setItem("selectedKeys", ["7"]);
     navigate("/CityAdmin/Shifts");
   };
 
   //to navigate on Employee page by click on service Icon
   const onClickEmployeeIcon = () => {
+    localStorage.setItem("selectedKeys", ["9"]);
     navigate("/CityAdmin/Employee");
   };
 
@@ -342,43 +340,23 @@ const CityAdmin = () => {
             ></i>
             <i
               className="icon-settings icon-EDT-DLT-color"
-              onClick={onClickServiceIcon}
+              onClick={() => onClickServiceIcon(record)}
             ></i>
             <i
               className="icon-counter icon-EDT-DLT-color"
-              onClick={onClickCounterIcon}
+              onClick={() => onClickCounterIcon(record)}
             ></i>
             <i
               className="icon-repeat icon-EDT-DLT-color"
-              onClick={onClickShiftIcon}
+              onClick={() => onClickShiftIcon(record)}
             ></i>
             <i
               className="icon-user icon-EDT-DLT-color"
-              onClick={onClickEmployeeIcon}
+              onClick={() => onClickEmployeeIcon(record)}
             ></i>
           </span>
         </>
       ),
-    },
-  ];
-
-  // data and columns for cityWiseBranchService start
-  const cityWiseData = [
-    {
-      id: 1,
-      shiftName: <span className="table-inside-text">First Registry</span>,
-    },
-    {
-      id: 2,
-      shiftName: (
-        <span className="table-inside-text">
-          Subsequence Transaction Service Before First Registry
-        </span>
-      ),
-    },
-    {
-      id: 3,
-      shiftName: <span className="table-inside-text">Change Ownership</span>,
     },
   ];
 
@@ -420,6 +398,7 @@ const CityAdmin = () => {
       ),
     },
   ];
+  
   // data and columns for cityWiseBranchService end
 
   // data and columns for countryCityWiseCounter start
