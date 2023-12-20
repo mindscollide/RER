@@ -65,6 +65,7 @@ export const router = createHashRouter(
           <Route path="Counter" element={<CounterMain />} />
           <Route path="Services" element={<BranchService />} />
           <Route path="BranchRoaster" element={<BranchRoaster />} />
+          <Route path="AppoinmentReport" element={<AppoinmentReportBranch />} />
         </Route>
       </Route>
       {/* Branch Admin Routes End */}
@@ -79,7 +80,6 @@ export const router = createHashRouter(
           <Route path="Counters" element={<CityWiseCounter />} />
           <Route path="Employee" element={<EmployeeMain />} />
           <Route path="CityWiseBranchService" element={<CityBranchService />} />
-          <Route path="AppoinmentReport" element={<AppoinmentReportBranch />} />
         </Route>
       </Route>
       {/* City Admin Routes End */}

@@ -1,13 +1,36 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Row, Col } from "react-bootstrap";
 import "./AppoinmentReportBranch.css";
 import { Paper, Table, Button, TextField } from "../../../components/elements";
 import { Switch } from "antd";
 import { useTranslation } from "react-i18next";
 import Select from "react-select";
+import { useNavigate } from "react-router";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  getAllCountersOfBranch,
+  getAllShiftsOfBranch,
+  getBranchServicesApi,
+} from "../../../store/actions/Admin_action";
 
 const AppoinmentReportBranch = () => {
   const { t } = useTranslation();
+
+  const navigate = useNavigate();
+
+  const dispatch = useDispatch();
+
+  const Loading = useSelector((state) => state.Loader.Loading);
+
+  const globalShiftOptions = useSelector((state) => state.admin.branchesList);
+
+  const globalCounterOptions = useSelector(
+    (state) => state.admin.allCountersOfBranchList
+  );
+
+  const globalBranchServicesOptions = useSelector(
+    (state) => state.admin.branchServicesData
+  );
 
   const dataSource = [
     {
@@ -77,6 +100,12 @@ const AppoinmentReportBranch = () => {
       width: "200px",
     },
   ];
+
+  useEffect(() => {
+    dispatch(getAllShiftsOfBranch(t, navigate, Loading));
+    dispatch(getAllCountersOfBranch(t, navigate, Loading));
+    dispatch(getBranchServicesApi(t, navigate, Loading));
+  }, []);
 
   return (
     <>

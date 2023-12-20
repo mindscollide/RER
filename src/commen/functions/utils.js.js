@@ -93,7 +93,6 @@ export function generateMenuItems(roleID, t) {
         getItem(t("Branch-wise-reports"), "14"),
         getItem(t("Employee-wise-reports"), "15"),
         getItem(t("Service-wise-reports"), "16"),
-        getItem(t("Appoinment-report"), "28"),
       ],
       "menu-item-sub"
     ),
@@ -121,6 +120,7 @@ export function generateMenuItems(roleID, t) {
         getItem(t("Branch-wise-reports"), "14"),
         getItem(t("Employee-wise-reports"), "15"),
         getItem(t("Service-wise-reports"), "16"),
+        getItem(t("Appoinment-report"), "28"),
       ],
       "menu-item-sub"
     ),
