@@ -36,33 +36,27 @@ const AppointmentReportCity = () => {
 
   const Loading = useSelector((state) => state.Loader.Loading);
 
-  const globalShiftOptions = useSelector((state) => state.admin.branchesList);
-
-  const globalCounterOptions = useSelector(
-    (state) => state.admin.allCountersOfBranchList
+  const cityServiceListData = useSelector(
+    (state) => state.admin.cityServiceListData
   );
 
-  const globalBranchServicesOptions = useSelector(
-    (state) => state.admin.branchServicesData
+  const cityBranchListDataDropdown = useSelector(
+    (state) => state.admin.cityBranchListData
   );
 
   const getAppointmentData = useSelector(
     (state) => state.admin.getAppointmentBranchReportData
   );
 
-  const branchesList = useSelector((state) => state.admin.branchesList);
+  const getbranchesListData = useSelector((state) => state.admin.branchesList);
 
   //Appointment Report states
-  const [apppointmentOptionsShift, setApppointmentOptionsShift] = useState([]);
-  const [apppointmentOptionsCounter, setApppointmentOptionsCounter] = useState(
-    []
-  );
+
   const [apppointmentOptionsServices, setApppointmentOptionsServices] =
     useState([]);
-
+  const [selectedBranhOptions, setSelectedBranhOptions] = useState(null);
   const [appointmentReportData, setAppointmentReportData] = useState([]);
-  const [cityShiftOption, setCityShiftOption] = useState([]);
-  const [selectedOptionsShift, setSelectedOptionsShift] = useState(null);
+  const [cityBranchOption, setCityBranchOption] = useState([]);
   const [selectedOptionsCounter, setSelectedOptionsCounter] = useState(null);
   const [selectedOptionsSerives, setSelectedOptionsSerives] = useState(null);
   const [fromDate, setFromDate] = useState(new Date());
@@ -167,88 +161,65 @@ const AppointmentReportCity = () => {
     dispatch(getCityBranchListApi(t, navigate, Loading));
   }, []);
 
-  useEffect(() => {
-    if (
-      globalShiftOptions !== null &&
-      globalShiftOptions !== undefined &&
-      globalShiftOptions.length !== 0
-    ) {
-      if (currentLanguage === "en") {
-        setApppointmentOptionsShift(
-          globalShiftOptions.map((item) => ({
-            value: item.shiftID,
-            label: item.shiftNameEnglish,
-          }))
-        );
-      } else {
-        setApppointmentOptionsShift(
-          globalShiftOptions.map((item) => ({
-            value: item.shiftID,
-            label: item.shiftNameArabic,
-          }))
-        );
-      }
-    }
-  }, [globalShiftOptions, currentLanguage]);
+  console.log(
+    cityBranchListDataDropdown,
+    "cityServiceListDatacityServiceListData"
+  );
 
   useEffect(() => {
     if (
-      globalCounterOptions !== null &&
-      globalCounterOptions !== undefined &&
-      globalCounterOptions.length !== 0
-    ) {
-      if (currentLanguage === "en") {
-        setApppointmentOptionsCounter(
-          globalCounterOptions.map((item) => ({
-            value: item.counterID,
-            label: item.counterNameEnglish,
-          }))
-        );
-      } else {
-        setApppointmentOptionsCounter(
-          globalCounterOptions.map((item) => ({
-            value: item.counterID,
-            label: item.counterNameArabic,
-          }))
-        );
-      }
-    }
-  }, [globalCounterOptions, currentLanguage]);
-
-  useEffect(() => {
-    if (
-      globalBranchServicesOptions !== null &&
-      globalBranchServicesOptions !== undefined &&
-      globalBranchServicesOptions.length !== 0
+      cityServiceListData !== null &&
+      cityServiceListData !== undefined &&
+      cityServiceListData.length !== 0
     ) {
       if (currentLanguage === "en") {
         setApppointmentOptionsServices(
-          globalBranchServicesOptions.map((item) => ({
-            value: item.branchServiceID,
-            label: item.branchService.serviceNameEnglish,
+          cityServiceListData.map((item) => ({
+            value: item.citySM.serviceID,
+            label: item.citySM.serviceNameEnglish,
           }))
         );
       } else {
         setApppointmentOptionsServices(
-          globalBranchServicesOptions.map((item) => ({
-            value: item.branchServiceID,
-            label: item.branchService.serviceNameArabic,
+          cityServiceListData.map((item) => ({
+            value: item.citySM.serviceID,
+            label: item.citySM.serviceNameArabic,
           }))
         );
       }
     }
-  }, [globalBranchServicesOptions, currentLanguage]);
+  }, [cityServiceListData, currentLanguage]);
+
+  useEffect(() => {
+    if (
+      cityBranchListDataDropdown !== null &&
+      cityBranchListDataDropdown !== undefined &&
+      cityBranchListDataDropdown.length !== 0
+    ) {
+      if (currentLanguage === "en") {
+        setCityBranchOption(
+          cityBranchListDataDropdown.map((item) => ({
+            value: item.branchID,
+            label: item.branchNameEnglish,
+          }))
+        );
+      } else {
+        setCityBranchOption(
+          cityBranchListDataDropdown.map((item) => ({
+            value: item.branchID,
+            label: item.branchNameArabic,
+          }))
+        );
+      }
+    }
+  }, [getbranchesListData, currentLanguage]);
 
   const handleServiceOnChange = (servicesSelectedOption) => {
     setSelectedOptionsSerives(servicesSelectedOption);
   };
 
-  const handleShiftOnChange = (shiftSelectedOption) => {
-    setSelectedOptionsShift(shiftSelectedOption);
-  };
-
-  const handleCounteronChange = (counterSelectedOptions) => {
-    setSelectedOptionsCounter(counterSelectedOptions);
+  const handleCityBranchOptions = (branchSelectedOptions) => {
+    setSelectedBranhOptions(branchSelectedOptions);
   };
 
   const handleStartDateChange = (date) => {
@@ -269,14 +240,9 @@ const AppointmentReportCity = () => {
         selectedOptionsSerives && selectedOptionsSerives.value
           ? selectedOptionsSerives.value
           : 1,
-      ShiftID:
-        selectedOptionsShift && selectedOptionsShift.value
-          ? selectedOptionsShift.value
-          : 1,
-      CounterID:
-        selectedOptionsCounter && selectedOptionsCounter.value
-          ? selectedOptionsCounter.value
-          : 1,
+      ShiftID: 1,
+
+      CounterID: 1,
       StartDate: multiDatePickerDateChangIntoUTC(fromDate),
       EndDate: multiDatePickerDateChangIntoUTC(toDate),
       PageNumber: 1,
@@ -288,7 +254,7 @@ const AppointmentReportCity = () => {
 
   const handleResetAppointment = () => {
     setSelectedOptionsSerives(null);
-    setSelectedOptionsShift(null);
+    selectedBranhOptions(null);
     setSelectedOptionsCounter(null);
     setFromDate(new Date());
     setToDate(() => {
@@ -368,7 +334,6 @@ const AppointmentReportCity = () => {
                     options={apppointmentOptionsServices}
                     isSearchable={false}
                     onChange={handleServiceOnChange}
-                    // className="Branch-Screen-Select"
                   />
                 </span>
               </Col>
@@ -377,8 +342,11 @@ const AppointmentReportCity = () => {
                   <label className="text-labels">{t("Branch")}</label>
                   <Select
                     isSearchable={false}
+                    value={selectedBranhOptions}
                     className="select-dropdown-all"
                     placeholder={t("Select-an-option")}
+                    options={cityBranchOption}
+                    onChange={handleCityBranchOptions}
                   />
                 </span>
               </Col>
@@ -387,11 +355,8 @@ const AppointmentReportCity = () => {
                   <label className="text-labels">{t("Shift")}</label>
                   <Select
                     isSearchable={false}
-                    value={selectedOptionsShift}
                     placeholder={t("Select-an-option")}
                     className="select-dropdown-all"
-                    options={apppointmentOptionsShift}
-                    onChange={handleShiftOnChange}
                     // className="Branch-Screen-Select"
                   />
                 </span>
@@ -403,9 +368,6 @@ const AppointmentReportCity = () => {
                     isSearchable={false}
                     className="select-dropdown-all"
                     placeholder={t("Select-an-option")}
-                    value={selectedOptionsCounter}
-                    options={apppointmentOptionsCounter}
-                    onChange={handleCounteronChange}
                     // className="Branch-Screen-Select"
                   />
                 </span>
