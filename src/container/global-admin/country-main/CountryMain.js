@@ -12,6 +12,8 @@ import { useTranslation } from "react-i18next";
 
 const CountryMain = () => {
   const { t } = useTranslation();
+  const currentLanguage = localStorage.getItem("i18nextLng");
+  const local = currentLanguage === "en" ? "en-US" : "ar-SA";
   const [isCheckboxSelected, setIsCheckboxSelected] = useState(false);
 
   const handleCheckboxChange = (e) => {
@@ -38,19 +40,22 @@ const CountryMain = () => {
       title: <span className="table-text">#</span>,
       dataIndex: "id",
       key: "id",
+      render: (text, record, index) => (
+        <span className="table-inside-text">
+          {(index + 1).toLocaleString(local)}
+        </span>
+      ),
     },
     {
       title: <span className="table-text">{t("Shift-name")}</span>,
       dataIndex: "shiftName",
       key: "shiftName",
-      align: "left",
     },
 
     {
       title: <span className="table-text">{t("Active")}</span>,
       dataIndex: "active",
       key: "active",
-      align: "center",
       render: (text, record) => (
         <>
           <span>

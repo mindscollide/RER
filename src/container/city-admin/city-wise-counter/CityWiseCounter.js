@@ -7,12 +7,13 @@ import { useTranslation } from "react-i18next";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router";
 import {
+  getBranchShiftCounterClear,
   getBranchShiftCounterMainApi,
   getCityBranchListApi,
 } from "../../../store/actions/Admin_action";
 import DatePicker from "react-multi-date-picker";
 import TimePicker from "react-multi-date-picker/plugins/time_picker";
-import { useLocation } from "react-router";
+import { useLocation } from "react-router-dom";
 import { getCurrentDateUTC } from "../../../commen/functions/Date_time_formatter";
 
 const CityWiseCounter = () => {
@@ -20,6 +21,8 @@ const CityWiseCounter = () => {
   const location = useLocation();
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const searchParams = new URLSearchParams(location.search);
+  const urldBranchID = searchParams.get("branchId");
   const loadingFlag = useSelector((state) => state.Loader.Loading);
   const getBranchShiftWiseCounter = useSelector(
     (state) => state.admin.getBranchShiftWiseCounter
@@ -42,15 +45,28 @@ const CityWiseCounter = () => {
 
   // Get current date
   const [roasterDate, setRoasterDate] = useState(new Date());
-
-  // get branch Shift Counter Api table and select calling
-  useEffect(() => {
-    dispatch(getCityBranchListApi(t, navigate, loadingFlag));
-
+  const callApi = async () => {
+    await dispatch(getCityBranchListApi(t, navigate, loadingFlag));
     let newData = {
       RoasterDate: getCurrentDateUTC(roasterDate),
+      BranchID:
+        urldBranchID !== null && urldBranchID !== undefined ? Number(urldBranchID) : 0,
     };
-    dispatch(getBranchShiftCounterMainApi(t, navigate, loadingFlag, newData));
+    await dispatch(
+      getBranchShiftCounterMainApi(t, navigate, loadingFlag, newData)
+    );
+  };
+  // get branch Shift Counter Api table and select calling
+  useEffect(() => {
+    callApi();
+    return () => {
+      localStorage.removeItem("branchID");
+      dispatch(getBranchShiftCounterClear());
+      setCityCounterRow([]);
+      setCityWiseCounter([]);
+      setCityWiseCounterValue([]);
+      setRoasterDate(new Date());
+    };
   }, []);
 
   // updating data in table
@@ -96,19 +112,28 @@ const CityWiseCounter = () => {
     setCityWiseCounterValue(cityWiseCounterValue);
   };
 
-  // Get selectedShift from location.state
-  const selectedShift =
-    location && location.state && location.state.selectedShift
-      ? location.state.selectedShift
-      : null;
-
-  // this will show the selected branch name in dropdown
   useEffect(() => {
-    if (selectedShift) {
-      setCityWiseCounterValue(selectedShift);
+    if (urldBranchID != null && cityWiseCounter.length > 0) {
+      const value = cityWiseCounter.find(
+        (branch) => branch.value === Number(urldBranchID)
+      );
+      if (value) {
+        setCityWiseCounterValue(value);
+      } else {
+        console.log("location Branch with ID 3 not found");
+      }
     }
-  }, [selectedShift]);
+  }, [cityWiseCounter]);
 
+  const handleSearch = async () => {
+    let newData = {
+      RoasterDate: getCurrentDateUTC(roasterDate),
+      BranchID: Number(cityWiseCounterValue.value),
+    };
+    await dispatch(
+      getBranchShiftCounterMainApi(t, navigate, loadingFlag, newData)
+    );
+  };
   const columns = [
     {
       title: (
@@ -197,6 +222,7 @@ const CityWiseCounter = () => {
                     icon={<i className="icon-search city-icon-space"></i>}
                     text={t("Search")}
                     className="Search-Icon-Btn"
+                    onClick={handleSearch}
                   />
                 </Col>
               </Row>

@@ -1,5 +1,5 @@
 .NationalHoliday-Admin-paper {
-  border-radius: 4px;
+  border-radius: 4px !important;
   padding: 1.5rem 1rem !important;
   width: 100% !important;
   overflow: hidden !important;
@@ -7,21 +7,21 @@
 }
 
 .btn-class-branch {
-  display: flex;
-  justify-content: end;
+  display: flex !important;
+  justify-content: end !important;
   gap: 10px !important;
 }
 
 .save-btn-NationalHoliday {
-  font-size: 14px;
-  font-weight: 500;
+  font-size: 14px !important;
+  font-weight: 500 !important;
   font-family: "Montserrat", sans-serif !important;
   padding: 6px 12px !important;
-  border-top-right-radius: 0px;
-  border-bottom-left-radius: 0px;
-  border-top-left-radius: 8px;
-  border-bottom-right-radius: 8px;
-  background: linear-gradient(to bottom, #77c0cb 0%, #2c9cc0 100%);
+  border-top-right-radius: 0px !important;
+  border-bottom-left-radius: 0px !important;
+  border-top-left-radius: 8px !important;
+  border-bottom-right-radius: 8px !important;
+  background: linear-gradient(to bottom, #77c0cb 0%, #2c9cc0 100%) !important;
   border-color: #77c0cb !important;
 }
 
@@ -30,20 +30,20 @@ body[dir="rtl"] .save-btn-NationalHoliday {
 }
 
 .save-btn-NationalHoliday:hover {
-  background: linear-gradient(to bottom, #7484b7 0%, #536395 100%);
+  background: linear-gradient(to bottom, #7484b7 0%, #536395 100%) !important;
   border-color: #7484b7 !important;
 }
 
 .revert-btn-NationalHoliday {
-  font-size: 14px;
-  font-weight: 500;
+  font-size: 14px !important;
+  font-weight: 500 !important;
   font-family: "Montserrat", sans-serif !important;
   padding: 6px 18px !important;
-  border-top-right-radius: 0px;
-  border-bottom-left-radius: 0px;
-  border-top-left-radius: 8px;
-  border-bottom-right-radius: 8px;
-  background: linear-gradient(to bottom, #7484b7 0%, #536395 100%);
+  border-top-right-radius: 0px !important;
+  border-bottom-left-radius: 0px !important;
+  border-top-left-radius: 8px !important;
+  border-bottom-right-radius: 8px !important;
+  background: linear-gradient(to bottom, #7484b7 0%, #536395 100%) !important;
   border-color: #7484b7 !important;
 }
 
@@ -52,33 +52,34 @@ body[dir="rtl"] .revert-btn-NationalHoliday {
 }
 
 .revert-btn-NationalHoliday:hover {
-  background: linear-gradient(to bottom, #77c0cb 0%, #2c9cc0 100%);
+  background: linear-gradient(to bottom, #77c0cb 0%, #2c9cc0 100%) !important;
   border-color: #77c0cb !important;
 }
 
 .icon-space {
   margin-right: 5px !important;
-  font-size: 15px;
+  font-size: 15px !important;
   align-items: center !important;
 }
 
 .btn-col-class-NationalHoliday {
-  display: flex;
+  display: flex !important;
   justify-content: center !important;
-  align-items: center;
-  gap: 5px;
+  align-items: center !important;
+  gap: 5px !important;
 }
 
 .icon-close-style-delete {
-  font-size: 18px;
-  font-weight: 500;
-  cursor: pointer;
+  font-size: 18px !important;
+  font-weight: 500 !important;
+  cursor: pointer !important;
   color: #cf5b5b !important;
 }
 
 .icon-close-style:hover {
   color: #77c0cb !important;
 }
+
 
 .nationalHolidaydatepicekr .rmdp-input {
   border: 1px solid #c0c4d6 !important;

@@ -44,7 +44,6 @@ const CountryWiseCity = () => {
       dataIndex: "branchAvailability",
       key: "branchAvailability",
       width: "200px",
-      align: "center",
       render: (text, record) => (
         <span>
           <Switch
@@ -61,7 +60,6 @@ const CountryWiseCity = () => {
       dataIndex: "homeAvailability",
       key: "homeAvailability",
       width: "200px",
-      align: "center",
       render: (text, record) => (
         <span>
           <Switch

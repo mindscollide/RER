@@ -54,7 +54,6 @@ const CityScreen = () => {
       dataIndex: "active",
       key: "active",
       width: "200px",
-      align: "center",
       render: (text, record) => (
         <span>
           <Switch />
@@ -66,7 +65,6 @@ const CityScreen = () => {
       dataIndex: "column6",
       key: "column6",
       width: "200px",
-      align: "center",
       render: (text, record) => (
         <span>
           <Switch />

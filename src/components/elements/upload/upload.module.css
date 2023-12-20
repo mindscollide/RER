@@ -30,36 +30,38 @@
   text-transform: none !important;
   padding: 0px 16px !important;
 }
+
 .UploadFileButton {
   cursor: pointer !important;
 }
+
 .upload-btn {
-  font-size: 14px;
+  font-size: 14px !important;
   width: 200px !important;
   height: 39px !important;
-  font-weight: 600;
-  border-top-right-radius: 0px;
-  border-bottom-left-radius: 0px;
-  border-top-left-radius: 8px;
-  border-bottom-right-radius: 8px;
+  font-weight: 600 !important;
+  border-top-right-radius: 0px !important;
+  border-bottom-left-radius: 0px !important;
+  border-top-left-radius: 8px !important;
+  border-bottom-right-radius: 8px !important;
   /* padding: 6px 6px !important; */
   background-color: #6873a9 !important;
   border-color: #6873a9 !important;
 }
 
 .ButtonForUpload {
-  font-size: 14px;
+  font-size: 14px !important;
   width: 200px !important;
   height: 39px !important;
-  color: #fff;
+  color: #fff !important;
   display: flex !important;
   justify-content: center !important;
   align-items: center !important;
-  font-weight: 600;
-  border-top-right-radius: 0px;
-  border-bottom-left-radius: 0px;
-  border-top-left-radius: 8px;
-  border-bottom-right-radius: 8px;
+  font-weight: 600 !important;
+  border-top-right-radius: 0px !important;
+  border-bottom-left-radius: 0px !important;
+  border-top-left-radius: 8px !important;
+  border-bottom-right-radius: 8px !important;
   /* padding: 2px 2px !important; */
   background-color: #6873a9 !important;
   border-color: #6873a9 !important;

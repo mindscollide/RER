@@ -20,10 +20,10 @@ const CountryAdminMain = () => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const Loading = useSelector((state) => state.Loader.Loading);
-
-  const [isCheckboxSelected, setIsCheckboxSelected] = useState(false);
   const currentLanguage = localStorage.getItem("i18nextLng");
+  const local = currentLanguage === "en" ? "en-US" : "ar-SA";
+  const Loading = useSelector((state) => state.Loader.Loading);
+  const [isCheckboxSelected, setIsCheckboxSelected] = useState(false);
   const [rows, setRows] = useState([]);
 
   const cityServiceListData = useSelector(
@@ -73,19 +73,19 @@ const CountryAdminMain = () => {
   const dataSource = [
     {
       id: <span className="table-inside-text">1</span>,
-      shiftName: <span className="table-inside-text">Morning Shift</span>,
+      shiftName: <span className="table-inside-text">Riyadh</span>,
       startTime: <span className="table-inside-text">08:00 AM</span>,
       endTime: <span className="table-inside-text">04:00 PM</span>,
     },
     {
       id: <span className="table-inside-text">1</span>,
-      shiftName: <span className="table-inside-text">Morning Shift</span>,
+      shiftName: <span className="table-inside-text">Taif</span>,
       startTime: <span className="table-inside-text">08:00 AM</span>,
       endTime: <span className="table-inside-text">04:00 PM</span>,
     },
     {
       id: <span className="table-inside-text">1</span>,
-      shiftName: <span className="table-inside-text">Morning Shift</span>,
+      shiftName: <span className="table-inside-text">Dammam</span>,
       startTime: <span className="table-inside-text">08:00 AM</span>,
       endTime: <span className="table-inside-text">04:00 PM</span>,
     },
@@ -96,30 +96,34 @@ const CountryAdminMain = () => {
       title: <span className="table-text">#</span>,
       dataIndex: "id",
       key: "id",
+      render: (text, record, index) => (
+        <span className="table-inside-text">
+          {(index + 1).toLocaleString(local)}
+        </span>
+      ),
     },
     {
-      title: <span className="table-text">{t("Shift-name")}</span>,
+      title: <span className="table-text">{t("City-name")}</span>,
       dataIndex: "shiftName",
       key: "shiftName",
       align: "left",
     },
-    {
-      title: <span className="table-text">{t("Start-time")}</span>,
-      dataIndex: "startTime",
-      key: "startTime",
-      align: "center",
-    },
-    {
-      title: <span className="table-text">{t("End-time")}</span>,
-      dataIndex: "endTime",
-      key: "endTime",
-      align: "center",
-    },
+    // {
+    //   title: <span className="table-text">{t("Start-time")}</span>,
+    //   dataIndex: "startTime",
+    //   key: "startTime",
+    //   align: "center",
+    // },
+    // {
+    //   title: <span className="table-text">{t("End-time")}</span>,
+    //   dataIndex: "endTime",
+    //   key: "endTime",
+    //   align: "center",
+    // },
     {
       title: <span className="table-text">{t("Active")}</span>,
       dataIndex: "active",
       key: "active",
-      align: "center",
       render: (text, record) => (
         <>
           <span>
@@ -356,20 +360,8 @@ const CountryAdminMain = () => {
                   <span className="shift-sub-heading">
                     {" "}
                     {currentLanguage === "en"
-                      ? "(" +
-                        localStorage.getItem("countryName") +
-                        " " +
-                        "-" +
-                        " " +
-                        localStorage.getItem("cityName") +
-                        ")"
-                      : "(" +
-                        localStorage.getItem("countryNameArabic") +
-                        " " +
-                        "-" +
-                        " " +
-                        localStorage.getItem("cityNameArabic") +
-                        ")"}
+                      ? "(" + localStorage.getItem("countryName") + ")"
+                      : "(" + localStorage.getItem("countryNameArabic") + ")"}
                     {/* {t("Saudi-arabia-riyadh")} */}
                   </span>
                 </span>
@@ -383,7 +375,7 @@ const CountryAdminMain = () => {
                       <span className="text-labels">{t("City-name")}</span>
                       <TextField
                         name="Branch Name"
-                        placeholder={t("Branch-admin")}
+                        placeholder={t("City-name")}
                         labelClass="d-none"
                         className="text-fiels-CountryAdmin"
                       />

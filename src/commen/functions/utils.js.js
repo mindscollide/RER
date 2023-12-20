@@ -52,7 +52,7 @@ export function generateMenuItems(roleID, t) {
         getItem(t("Counters"), "16"),
         getItem(t("Employee"), "17"),
         getItem(t("Holidays"), "19"),
-        getItem(t("Country Working"), "29"),
+        getItem(t("Working-days"), "29"),
       ],
       "menu-item-sub"
     ),
@@ -106,7 +106,7 @@ export function generateMenuItems(roleID, t) {
       [
         getItem(t("Shifts"), "2"),
         getItem(t("Counters"), "3"),
-        getItem(t("Branch-service-countryadmin"), "4"),
+        getItem(t("Services"), "4"),
         getItem(t("Branch-roaster"), "18"),
       ],
       "menu-item-sub"

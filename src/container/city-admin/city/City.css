@@ -1,5 +1,5 @@
 .CityAdmin-paper {
-  border-radius: 4px;
+  border-radius: 4px !important;
   padding: 1.5rem 1rem !important;
   width: 100% !important;
   overflow: hidden !important;
@@ -7,26 +7,26 @@
 }
 
 .CityAdmin-checkbox {
-  display: flex;
+  display: flex !important;
   align-items: center !important;
 }
 
 .btn-class-CityAdmin {
-  display: flex;
+  display: flex !important;
   justify-content: center !important;
   gap: 10px !important;
 }
 
 .Add-btn-CityAdmin {
-  font-size: 14px;
-  font-weight: 500;
+  font-size: 14px !important;
+  font-weight: 500 !important;
   font-family: "Montserrat", sans-serif !important;
   padding: 6px 12px !important;
-  border-top-right-radius: 0px;
-  border-bottom-left-radius: 0px;
-  border-top-left-radius: 8px;
-  border-bottom-right-radius: 8px;
-  background: linear-gradient(to bottom, #7484b7 0%, #536395 100%);
+  border-top-right-radius: 0px !important;
+  border-bottom-left-radius: 0px !important;
+  border-top-left-radius: 8px !important;
+  border-bottom-right-radius: 8px !important;
+  background: linear-gradient(to bottom, #7484b7 0%, #536395 100%) !important;
   border-color: #7484b7 !important;
 }
 
@@ -35,20 +35,20 @@ body[dir="rtl"] .Add-btn-CityAdmin {
 }
 
 .Add-btn-CityAdmin:hover {
-  background: linear-gradient(to bottom, #77c0cb 0%, #2c9cc0 100%);
+  background: linear-gradient(to bottom, #77c0cb 0%, #2c9cc0 100%) !important;
   border-color: #77c0cb !important;
 }
 
 .Reset-btn-CityAdmin {
-  font-size: 14px;
-  font-weight: 500;
+  font-size: 14px !important;
+  font-weight: 500 !important;
   font-family: "Montserrat", sans-serif !important;
   padding: 6px 12px !important;
-  border-top-right-radius: 0px;
-  border-bottom-left-radius: 0px;
-  border-top-left-radius: 8px;
-  border-bottom-right-radius: 8px;
-  background: linear-gradient(to bottom, #77c0cb 0%, #2c9cc0 100%);
+  border-top-right-radius: 0px !important;
+  border-bottom-left-radius: 0px !important;
+  border-top-left-radius: 8px !important;
+  border-bottom-right-radius: 8px !important;
+  background: linear-gradient(to bottom, #77c0cb 0%, #2c9cc0 100%) !important;
   border-color: #77c0cb !important;
 }
 
@@ -57,20 +57,20 @@ body[dir="rtl"] .Reset-btn-CityAdmin {
 }
 
 .Reset-btn-CityAdmin:hover {
-  background: linear-gradient(to bottom, #7484b7 0%, #536395 100%);
+  background: linear-gradient(to bottom, #7484b7 0%, #536395 100%) !important;
   border-color: #7484b7 !important;
 }
 
 .goback-button {
-  font-size: 14px;
-  font-weight: 500;
+  font-size: 14px !important;
+  font-weight: 500 !important;
   font-family: "Montserrat", sans-serif !important;
   padding: 6px 12px !important;
-  border-top-right-radius: 0px;
-  border-bottom-left-radius: 0px;
-  border-top-left-radius: 8px;
-  border-bottom-right-radius: 8px;
-  color: #212529;
+  border-top-right-radius: 0px !important;
+  border-bottom-left-radius: 0px !important;
+  border-top-left-radius: 8px !important;
+  border-bottom-right-radius: 8px !important;
+  color: #212529 !important;
   background: #b0b7c0 !important;
   border-color: #b0b7c0 !important;
 }
@@ -81,7 +81,7 @@ body[dir="rtl"] .goback-button {
 
 .icon-space {
   margin-right: 5px !important;
-  font-size: 15px;
+  font-size: 15px !important;
   align-items: center !important;
 }
 
@@ -97,7 +97,7 @@ body[dir="rtl"] .goback-button {
 }
 
 .icon-spaceing-dlt-edit {
-  display: flex;
+  display: flex !important;
   justify-content: end !important;
   gap: 15px !important;
 }
@@ -105,7 +105,7 @@ body[dir="rtl"] .goback-button {
 .icon-EDT-DLT-color {
   color: #7a7e8b !important;
   font-size: 18px !important;
-  cursor: pointer;
+  cursor: pointer !important;
 }
 
 .icon-EDT-DLT-color:hover {
@@ -113,14 +113,14 @@ body[dir="rtl"] .goback-button {
 }
 
 .col-for-date-timepicker-cityad {
-  display: flex;
-  flex-direction: column;
+  display: flex !important;
+  flex-direction: column !important;
 }
 
 .text-fiels-cityAdmin {
   font-size: 13px !important;
   font-family: "Montserrat", sans-serif !important;
-  height: 37px;
+  height: 37px !important;
   color: #212529 !important;
   font-weight: 500 !important;
 }
@@ -132,7 +132,7 @@ body[dir="rtl"] .text-fiels-cityAdmin {
 .text-fiels-cityAdmin-arabic {
   font-size: 13px !important;
   font-family: "Montserrat", sans-serif !important;
-  height: 37px;
+  height: 37px !important;
   color: #212529 !important;
   font-weight: 500 !important;
   text-align: end !important;
@@ -141,7 +141,7 @@ body[dir="rtl"] .text-fiels-cityAdmin {
 body[dir="rtl"] .text-fiels-cityAdmin-arabic {
   font-size: 13px !important;
   font-family: "NeoSansArabic" !important;
-  height: 37px;
+  height: 37px !important;
   color: #212529 !important;
   font-weight: 500 !important;
   text-align: start !important;

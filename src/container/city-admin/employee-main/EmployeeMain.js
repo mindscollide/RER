@@ -17,10 +17,11 @@ import {
   getCityEmployeeMainApi,
   getCityBranchListApi,
   addEditFlagModal,
+  getCityEmployeeClear,
 } from "../../../store/actions/Admin_action";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router";
-import { useLocation } from "react-router";
+import { useLocation } from "react-router-dom";
 
 import {
   containsOnlyAlphabets,
@@ -32,6 +33,10 @@ const EmployeeMain = () => {
   const dispatch = useDispatch();
   const location = useLocation();
   const navigate = useNavigate();
+  const currentLanguage = localStorage.getItem("i18nextLng");
+  const local = currentLanguage === "en" ? "en-US" : "ar-SA";
+  const searchParams = new URLSearchParams(location.search);
+  const urldBranchID = searchParams.get("branchId");
   const [isCheckboxSelected, setIsCheckboxSelected] = useState(false);
   const [branchEmployeeOption, setBranchEmployeeOption] = useState(null);
   const [branchEmployeeOptionTwo, setBranchEmployeeOptionTwo] = useState(null);
@@ -40,11 +45,6 @@ const EmployeeMain = () => {
     (state) => state.admin.cityBranchListData
   );
   const cityEmployeeMain = useSelector((state) => state.admin.cityEmployeeMain);
-  console.log(cityEmployeeMain, "cityEmployeeMaincityEmployeeMain");
-  const currentLanguage = localStorage.getItem("i18nextLng");
-
-  // edit flag states in employee main
-  const [updateEmployeeFlag, setUpdateEmployeeFlag] = useState(false);
 
   // states for employee Main in dropdown
   const [employeeMainOption, setEmployeeMainOption] = useState([]);
@@ -72,11 +72,37 @@ const EmployeeMain = () => {
     isHomeVisit: false,
   });
 
-  useEffect(() => {
-    dispatch(getCityBranchListApi(t, navigate, loadingFlag));
-    dispatch(getCityEmployeeMainApi(t, navigate, loadingFlag));
-  }, []);
+  const callApi = async () => {
+    await dispatch(getCityBranchListApi(t, navigate, loadingFlag));
+    await dispatch(getCityEmployeeMainApi(t, navigate, loadingFlag));
+  };
 
+  useEffect(() => {
+    callApi();
+    return () => {
+      localStorage.removeItem("branchID");
+      dispatch(getCityEmployeeClear());
+      setEmployeeIDToDelete(null);
+      setAddEditModal(false);
+      setSelectedEmployee(null);
+      setRows([]);
+      setEmployeeMainOption([]);
+      setEmployeeMainOptionValue([]);
+      setEmployeeMainState({
+        EmployeeEnglishName: "",
+        EmployeeArabicName: "",
+        EmployeeId: 0,
+        EmployeeEmail: "",
+        isActive: false,
+        isBranchEmployee: false,
+        isHomeVisit: false,
+      });
+      setIsCheckboxSelected(false);
+      setBranchEmployeeOption(null);
+      setBranchEmployeeOptionTwo(null);
+    };
+  }, []);
+  
   useEffect(() => {
     // Update cityShiftOption with the correct structure based on your data
     if (employeeMainBranchDropdown && employeeMainBranchDropdown.length !== 0) {
@@ -98,19 +124,18 @@ const EmployeeMain = () => {
     }
   }, [employeeMainBranchDropdown, currentLanguage]);
 
-  // Get selectedShift from location.state
-  const selectedShift =
-    location && location.state && location.state.selectedShift
-      ? location.state.selectedShift
-      : null;
-
-  // this will show the selected branch name in dropdown
   useEffect(() => {
-    if (selectedShift) {
-      setEmployeeMainOptionValue(selectedShift);
+    if (urldBranchID != null && employeeMainOption.length > 0) {
+      const value = employeeMainOption.find(
+        (branch) => branch.value === Number(urldBranchID)
+      );
+      if (value) {
+        setEmployeeMainOptionValue(value);
+      } else {
+        console.log("location Branch with ID 3 not found");
+      }
     }
-  }, [selectedShift]);
-
+  }, [employeeMainOption]);
   // onchange handler for branch dropdown
   const onChangeEmployeeBranch = (employeeMainOptionValue) => {
     setEmployeeMainOptionValue(employeeMainOptionValue);
@@ -232,7 +257,9 @@ const EmployeeMain = () => {
       title: <span className="table-text">#</span>,
       dataIndex: "employeeCity",
       key: "employeeCity",
-      render: (text, record, index) => <span>{index + 1}</span>,
+      render: (text, record, index) => (
+        <span className="table-inside-text">{(index + 1).toLocaleString(local)}</span>
+      ),
     },
     {
       title: <span className="table-text">{t("Name")}</span>,
@@ -261,7 +288,6 @@ const EmployeeMain = () => {
     {
       title: <span className="table-text">{t("Employee-id")}</span>,
       dataIndex: "employeeID",
-      align: "center",
       key: "employeeID",
       render: (text, record) => <span>{text}</span>,
     },
@@ -269,7 +295,6 @@ const EmployeeMain = () => {
       title: <span className="table-text">{t("Active")}</span>,
       dataIndex: "isEmployeeActive",
       key: "isEmployeeActive",
-      align: "center",
       render: (text, record) => (
         <>
           {text ? (

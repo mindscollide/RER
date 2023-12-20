@@ -1,5 +1,5 @@
 .add-edit-modal .modal-content {
-  position: relative;
+  position: relative !important;
   height: 400px !important;
   width: 600px !important;
   background-color: #ffffff !important;
@@ -7,26 +7,26 @@
   display: flex !important;
   /* align-items: center !important; */
   justify-content: center !important;
-  border: 1px solid #dcdde6;
-  padding: 10px 10px;
-  box-shadow: 10px 10px 40px rgb(0 0 0 / 10%);
+  border: 1px solid #dcdde6 !important;
+  padding: 10px 10px !important;
+  box-shadow: 10px 10px 40px rgb(0 0 0 / 10%) !important;
 }
 
 .modal-bank-footer {
   width: 100% !important;
-  display: contents;
+  display: contents !important;
 }
 
 .AddEdit-btn-Employee {
-  font-size: 14px;
+  font-size: 14px !important;
   font-family: "Montserrat", sans-serif !important;
-  font-weight: 500;
+  font-weight: 500 !important;
   padding: 6px 12px !important;
-  border-top-right-radius: 0px;
-  border-bottom-left-radius: 0px;
-  border-top-left-radius: 8px;
-  border-bottom-right-radius: 8px;
-  background: linear-gradient(to bottom, #7484b7 0%, #536395 100%);
+  border-top-right-radius: 0px !important;
+  border-bottom-left-radius: 0px !important;
+  border-top-left-radius: 8px !important;
+  border-bottom-right-radius: 8px !important;
+  background: linear-gradient(to bottom, #7484b7 0%, #536395 100%) !important;
   border-color: #7484b7 !important;
 }
 
@@ -35,21 +35,21 @@ body[dir="rtl"] .AddEdit-btn-Employee {
 }
 
 .AddEdit-btn-Employee:hover {
-  background: linear-gradient(to bottom, #77c0cb 0%, #2c9cc0 100%);
+  background: linear-gradient(to bottom, #77c0cb 0%, #2c9cc0 100%) !important;
   border-color: #77c0cb !important;
 }
 
 .Cancel-btn-Employee {
-  font-size: 14px;
+  font-size: 14px !important;
   font-family: "Montserrat", sans-serif !important;
-  font-weight: 500;
-  color: #212529;
+  font-weight: 500 !important;
+  color: #212529 !important;
   padding: 6px 12px !important;
-  border-top-right-radius: 0px;
-  border-bottom-left-radius: 0px;
-  border-top-left-radius: 8px;
-  border-bottom-right-radius: 8px;
-  background: #f7f8ff;
+  border-top-right-radius: 0px !important;
+  border-bottom-left-radius: 0px !important;
+  border-top-left-radius: 8px !important;
+  border-bottom-right-radius: 8px !important;
+  background: #f7f8ff !important;
   border-color: #f7f8ff !important;
 }
 
@@ -58,50 +58,50 @@ body[dir="rtl"] .Cancel-btn-Employee {
 }
 
 .Cancel-btn-Employee:hover {
-  color: #212529;
+  color: #212529 !important;
   background: #e5e6f1 !important;
   border-color: #e5e6f1 !important;
 }
 
 .add-edit-cancel-modal-btn-col {
-  display: flex;
-  justify-content: end;
-  gap: 5px;
+  display: flex !important;
+  justify-content: end !important;
+  gap: 5px !important;
 }
 
 .checkbox-textfield-col {
-  display: flex;
+  display: flex !important;
   flex-direction: row !important;
 }
 
 .chechbox-align-label {
-  display: flex;
+  display: flex !important;
   align-items: center !important;
-  margin-top: 2px;
+  margin-top: 2px !important;
 }
 
 .checkbox-div {
-  background-color: #e9ecef;
-  border: 1px solid #ced4da;
+  background-color: #e9ecef !important;
+  border: 1px solid #ced4da !important;
   border-top-right-radius: 0px !important;
   border-bottom-right-radius: 0px !important;
-  border-radius: 4px;
-  margin-top: 5px;
+  border-radius: 4px !important;
+  margin-top: 5px !important;
   height: 38px !important;
-  width: 80px;
-  padding: 4px 6px;
+  width: 80px !important;
+  padding: 4px 6px !important;
 }
 
 .Radio-Btn-div-For-Select {
-  background-color: #e9ecef;
-  border: 1px solid #ced4da;
+  background-color: #e9ecef !important;
+  border: 1px solid #ced4da !important;
   border-top-right-radius: 0px !important;
   border-bottom-right-radius: 0px !important;
-  border-radius: 4px;
-  margin-top: 4px;
+  border-radius: 4px !important;
+  margin-top: 4px !important;
   height: 38px !important;
-  width: 158px;
-  padding: 5px 3px;
+  width: 158px !important;
+  padding: 5px 3px !important;
 }
 
 .textfield-with-checkbox {
@@ -112,7 +112,7 @@ body[dir="rtl"] .Cancel-btn-Employee {
 .text-fields-addEdit {
   font-size: 13px !important;
   font-family: "Montserrat", sans-serif !important;
-  height: 37px;
+  height: 37px !important;
   color: #212529 !important;
   font-weight: 500 !important;
 }
@@ -124,7 +124,7 @@ body[dir="rtl"] .text-fiels-addEdit {
 .text-fiels-addEdit-arabic {
   font-size: 13px !important;
   font-family: "Montserrat", sans-serif !important;
-  height: 37px;
+  height: 37px !important;
   color: #212529 !important;
   font-weight: 500 !important;
   text-align: end !important;
@@ -133,7 +133,7 @@ body[dir="rtl"] .text-fiels-addEdit {
 body[dir="rtl"] .text-fiels-addEdit-arabic {
   font-size: 13px !important;
   font-family: "NeoSansArabic" !important;
-  height: 37px;
+  height: 37px !important;
   color: #212529 !important;
   font-weight: 500 !important;
   text-align: start !important;

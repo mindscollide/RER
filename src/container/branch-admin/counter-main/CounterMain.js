@@ -31,6 +31,7 @@ const CounterMain = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const currentLanguage = localStorage.getItem("i18nextLng");
+  const local = currentLanguage === "en" ? "en-US" : "ar-SA";
   const allCountersOfBranchList = useSelector(
     (state) => state.admin.allCountersOfBranchList
   );
@@ -111,8 +112,8 @@ const CounterMain = () => {
       title: <span className="table-text">#</span>,
       dataIndex: "counterID",
       key: "counterID",
-      render: (text, record) => (
-        <span className="table-inside-text">{text}</span>
+      render: (text, record, index) => (
+        <span className="table-inside-text">{(index + 1).toLocaleString(local)}</span>
       ),
     },
     {
