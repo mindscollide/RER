@@ -254,8 +254,6 @@ const AppoinmentReportBranch = () => {
     setToDate(date);
   };
 
-  console.log(fromDate, toDate, "getAppointmentReportBranchAPI");
-
   //function For Search
   const handleSearchAppointment = () => {
     let data = {

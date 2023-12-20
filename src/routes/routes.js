@@ -18,6 +18,7 @@ import {
   CityWiseCounter,
   CountryWiseCity,
   CityBranchShiftNew,
+  AppointmentReportCity,
 } from "../container/city-admin";
 
 import {
@@ -81,6 +82,10 @@ export const router = createHashRouter(
           <Route path="Counters" element={<CityWiseCounter />} />
           <Route path="Employee" element={<EmployeeMain />} />
           <Route path="CityWiseBranchService" element={<CityBranchService />} />
+          <Route
+            path="AppointmentReportCity"
+            element={<AppointmentReportCity />}
+          />
         </Route>
       </Route>
       {/* City Admin Routes End */}

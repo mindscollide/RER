@@ -7,4 +7,5 @@ export { default as CityBranchShiftNew } from "./cit-branch-shift-new/CityBranch
 // This two component is using inside the main component also these two are separate Child component Start
 export { default as CityBranchServiceComponent } from "./city-branch-service-component/CityBranchServiceComponent";
 export { default as CountryCityCounterComponent } from "./country-city-counter-component/CountryCityCounterComponent";
+export { default as AppointmentReportCity } from "./appointment-report-city/AppointmentReportCity";
 //Child separate component End
