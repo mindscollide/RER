@@ -14,8 +14,9 @@ import { useNavigate } from "react-router";
 
 const GlobalService = () => {
   const navigate = useNavigate();
-
   const { t } = useTranslation();
+  const currentLanguage = localStorage.getItem("i18nextLng");
+  const local = currentLanguage === "en" ? "en-US" : "ar-SA";
   const [isCheckboxSelected, setIsCheckboxSelected] = useState(false);
   const [isCheckboxSelectedTwo, setIsCheckboxSelectedTwo] = useState(false);
   const [isCheckboxSelectedThree, setIsCheckboxSelectedThree] = useState(false);
@@ -79,6 +80,11 @@ const GlobalService = () => {
       title: <span className="table-text">#</span>,
       dataIndex: "id",
       key: "id",
+      render: (text, record, index) => (
+        <span className="table-inside-text">
+          {(index + 1).toLocaleString(local)}
+        </span>
+      ),
     },
     {
       title: <span className="table-text">{t("Name")}</span>,
