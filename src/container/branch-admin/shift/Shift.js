@@ -158,7 +158,7 @@ const BranchAdmin = () => {
       dataIndex: "shiftID",
       key: "shiftID",
       render: (text, record, index) => (
-        <span className="table-inside-text">{index + 1}</span>
+        <span className="table-inside-text">{(index + 1).toLocaleString(local)}</span>
       ),
     },
     {
