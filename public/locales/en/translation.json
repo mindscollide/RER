@@ -199,5 +199,6 @@
   "From-date": "From Date",
   "to-date": "To date",
   "Deed-number": "Deed Number",
-  "Service-location": "Service Location"
+  "Service-location": "Service Location",
+  "Customer-location": "Customer Location"
 }

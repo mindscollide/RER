@@ -83,9 +83,17 @@ const AppoinmentReportBranch = () => {
     },
     {
       title: <span className="table-text">{t("Service")}</span>,
-      dataIndex: "Service",
-      key: "Service",
+      dataIndex: "service",
+      key: "service",
       width: "200px",
+      render: (text, record) => {
+        console.log(record, "classNameclassName");
+        return (
+          <>
+            <span>{record.service.serviceNameEnglish}</span>
+          </>
+        );
+      },
     },
     {
       title: <span className="table-text">{t("Date")}</span>,
@@ -134,10 +142,10 @@ const AppoinmentReportBranch = () => {
       width: "200px",
       render: (text, record) => {
         return record.isAtCustomerLocation === false ? (
-          <span>Branch</span>
+          <span>{t("Branch")}</span>
         ) : (
           <>
-            <span>Location</span>
+            <span>{t("Customer-location")}</span>
           </>
         );
       },
@@ -250,9 +258,18 @@ const AppoinmentReportBranch = () => {
       CountryID: Number(localStorage.getItem("countryID")),
       CityID: Number(localStorage.getItem("branchID")),
       BranchID: Number(localStorage.getItem("cityID")),
-      ServiceID: selectedOptionsSerives.value,
-      ShiftID: selectedOptionsShift.value,
-      CounterID: selectedOptionsCounter.value,
+      ServiceID:
+        selectedOptionsSerives && selectedOptionsSerives.value
+          ? selectedOptionsSerives.value
+          : 1,
+      ShiftID:
+        selectedOptionsShift && selectedOptionsShift.value
+          ? selectedOptionsShift.value
+          : 1,
+      CounterID:
+        selectedOptionsCounter && selectedOptionsCounter.value
+          ? selectedOptionsCounter.value
+          : 1,
       StartDate: multiDatePickerDateChangIntoUTC(fromDate),
       EndDate: multiDatePickerDateChangIntoUTC(toDate),
       PageNumber: 1,
