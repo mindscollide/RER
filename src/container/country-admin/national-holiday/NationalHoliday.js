@@ -6,12 +6,14 @@ import { useTranslation } from "react-i18next";
 import {
   getNationalHolidayMainApi,
   deleteNationalHolidayMainApi,
+  addNationalHolidayMainApi,
 } from "../../../store/actions/Admin_action";
 import Select from "react-select";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router";
 import DatePicker, { DateObject } from "react-multi-date-picker";
 import { formatDate } from "../../../commen/functions/Date_time_formatter";
+import { generateDateRange } from "../../../commen/functions/Date_time_formatter";
 
 const NationalHoliday = () => {
   const { t } = useTranslation();
@@ -49,16 +51,38 @@ const NationalHoliday = () => {
     }
   }, [countryNationalHoliday]);
 
+  // this is my delete function
   const onDeleteIcon = (record) => {
-    const { nationalHolidayList } = record;
-    let newDate = JSON.stringify(nationalHolidayList);
     let deleteData = {
       CountryID: Number(localStorage.getItem("countryID")),
-      HolidayToRemove: newDate,
+      HolidayToRemove: record, // Use the record directly
     };
     dispatch(
       deleteNationalHolidayMainApi(t, navigate, loadingFlag, deleteData)
     );
+  };
+
+  // this is my add function
+  const onAddHandler = () => {
+    if (
+      values &&
+      values[0] &&
+      values[0].value &&
+      values[1] &&
+      values[1].value
+    ) {
+      const startDate = values[0].value;
+      const endDate = values[1].value;
+
+      let data = {
+        CountryID: Number(localStorage.getItem("countryID")),
+        HolidayListToAdd: generateDateRange(startDate, endDate),
+      };
+      dispatch(addNationalHolidayMainApi(t, navigate, loadingFlag, data));
+    } else {
+      // Handle case where start or end date is not selected
+      console.error("Please select both start and end dates");
+    }
   };
 
   const columns = [
@@ -115,7 +139,13 @@ const NationalHoliday = () => {
                   sm={12}
                   className="btn-col-class-NationalHoliday"
                 >
-                  <DatePicker value={values} onChange={setValues} range />
+                  <DatePicker
+                    containerClassName="nationalHolidaydatepicekr"
+                    value={values}
+                    onChange={setValues}
+                    range
+                    multiple
+                  />
 
                   <Button
                     icon={<i className="icon-repeat icon-space"></i>}
@@ -125,6 +155,7 @@ const NationalHoliday = () => {
                   <Button
                     icon={<i className="icon-save icon-space"></i>}
                     text={t("Save")}
+                    onClick={onAddHandler}
                     className="save-btn-NationalHoliday"
                   />
                 </Col>

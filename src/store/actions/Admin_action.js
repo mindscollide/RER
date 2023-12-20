@@ -37,6 +37,8 @@ import {
   getCountryNationalHoliday,
   addCountryNationalHoliday,
   deleteCountryNationalHoliday,
+  getAllBranchServices,
+  getAppointmentBranchReport,
 } from "../../commen/apis/Api_config";
 import { adminURL } from "../../commen/apis/Api_ends_points";
 import moment from "moment";
@@ -3361,14 +3363,14 @@ const addNationalHolidayFail = (message) => {
   };
 };
 
-const addNationalHolidayMainApi = (t, navigate, loadingFlag) => {
+const addNationalHolidayMainApi = (t, navigate, loadingFlag, data) => {
   return async (dispatch) => {
     if (!loadingFlag) {
       dispatch(loader_Actions(true));
     }
     let form = new FormData();
     form.append("RequestMethod", addCountryNationalHoliday.RequestMethod);
-    form.append("RequestData", JSON.stringify());
+    form.append("RequestData", JSON.stringify(data));
     await axios({
       method: "post",
       url: adminURL,
@@ -3380,7 +3382,7 @@ const addNationalHolidayMainApi = (t, navigate, loadingFlag) => {
       .then(async (response) => {
         if (response.data.responseCode === 200) {
           if (response.data.responseCode === 417) {
-            dispatch(addNationalHolidayMainApi(t, navigate, loadingFlag));
+            dispatch(addNationalHolidayMainApi(t, navigate, loadingFlag, data));
           } else if (response.data.responseResult.isExecuted === true) {
             if (
               response.data.responseResult.responseMessage ===
@@ -3392,6 +3394,7 @@ const addNationalHolidayMainApi = (t, navigate, loadingFlag) => {
                   t("Admin_AdminServiceManager_AddCountryNationalHoliday_01")
                 )
               );
+              await dispatch(loader_Actions(false));
             } else if (
               response.data.responseResult.responseMessage ===
               "Admin_AdminServiceManager_AddCountryNationalHoliday_02"
@@ -3488,6 +3491,9 @@ const deleteNationalHolidayMainApi = (t, navigate, loadingFlag, deleteData) => {
                   t("Admin_AdminServiceManager_DeleteCountryNationalHoliday_01")
                 )
               );
+              await dispatch(
+                getNationalHolidayMainApi(t, navigate, loadingFlag)
+              );
               await dispatch(loader_Actions(false));
             } else if (
               response.data.responseResult.responseMessage ===
@@ -3551,6 +3557,105 @@ const deleteNationalHolidayMainApi = (t, navigate, loadingFlag, deleteData) => {
 
 // ===================================COUNTRY ADMIN END==========================================//
 
+//GET APPOINTMENT REPORT BRANCH
+
+const getAppointmentBranchReportSuccess = (response, message) => {
+  return {
+    type: actions.GET_APPOINTMENT_BRANCH_REPORT_SUCCESS,
+    response: response,
+    message: message,
+  };
+};
+
+const getAppointmentBranchReportFail = (message) => {
+  return {
+    type: actions.GET_APPOINTMENT_BRANCH_REPORT_FAIL,
+    message: message,
+  };
+};
+
+const getAppointmentReportBranchAPI = (data, t, navigate, loadingFlag) => {
+  return async (dispatch) => {
+    if (!loadingFlag) {
+      dispatch(loader_Actions(true));
+    }
+    let form = new FormData();
+    form.append("RequestMethod", getAppointmentBranchReport.RequestMethod);
+    form.append("RequestData", JSON.stringify(data));
+    await axios({
+      method: "post",
+      url: adminURL,
+      data: form,
+      headers: {
+        _token: JSON.parse(localStorage.getItem("token")),
+      },
+    })
+      .then(async (response) => {
+        if (response.data.responseCode === 200) {
+          if (response.data.responseCode === 417) {
+            dispatch(
+              getAppointmentReportBranchAPI(data, t, navigate, loadingFlag)
+            );
+          } else if (response.data.responseResult.isExecuted === true) {
+            if (
+              response.data.responseResult.responseMessage ===
+              "Admin_AdminServiceManager_GetAppointmentReportBranchAdmin_01"
+            ) {
+              await dispatch(
+                getAppointmentBranchReportSuccess(
+                  response.data.responseResult.appointmentList,
+                  t(
+                    "Admin_AdminServiceManager_GetAppointmentReportBranchAdmin_01"
+                  )
+                )
+              );
+              await dispatch(loader_Actions(false));
+            } else if (
+              response.data.responseResult.responseMessage ===
+              "Admin_AdminServiceManager_GetAppointmentReportBranchAdmin_02"
+            ) {
+              await dispatch(
+                getAppointmentBranchReportFail(
+                  t(
+                    "Admin_AdminServiceManager_GetAppointmentReportBranchAdmin_02"
+                  )
+                )
+              );
+              await dispatch(loader_Actions(false));
+            } else if (
+              response.data.responseResult.responseMessage ===
+              "Admin_AdminServiceManager_GetAppointmentReportBranchAdmin_03"
+            ) {
+              await dispatch(
+                getAppointmentBranchReportFail(t("something_went_wrong"))
+              );
+              await dispatch(loader_Actions(false));
+            } else {
+              dispatch(
+                getAppointmentBranchReportFail(t("something_went_wrong"))
+              );
+              await dispatch(loader_Actions(false));
+            }
+          } else {
+            await dispatch(
+              getAppointmentBranchReportFail(t("something_went_wrong"))
+            );
+            await dispatch(loader_Actions(false));
+          }
+        } else {
+          await dispatch(
+            getAppointmentBranchReportFail(t("something_went_wrong"))
+          );
+          await dispatch(loader_Actions(false));
+        }
+      })
+      .catch((response) => {
+        dispatch(getAppointmentBranchReportFail(t("something_went_wrong")));
+        dispatch(loader_Actions(false));
+      });
+  };
+};
+
 export {
   clearResponseMessageAdmin,
   AdminCleareState,
@@ -3607,4 +3712,5 @@ export {
   getNationalHolidayMainApi,
   addNationalHolidayMainApi,
   deleteNationalHolidayMainApi,
+  getAppointmentReportBranchAPI,
 };

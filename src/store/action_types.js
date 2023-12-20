@@ -192,3 +192,13 @@ export const DELETE_NATIONAL_HOLIDAY_SUCCESS =
 export const DELETE_NATIONAL_HOLIDAY_FAIL = "DELETE_NATIONAL_HOLIDAY_FAIL";
 
 // ===================================COUNTRY ADMIN END ==========================================//
+
+//====================================BRANCH WISE APPOINTMENT=====================================//
+
+//GET APPOINTMENT REPORT BRANCH
+
+export const GET_APPOINTMENT_BRANCH_REPORT_SUCCESS =
+  "GET_APPOINTMENT_BRANCH_REPORT_SUCCESS";
+
+export const GET_APPOINTMENT_BRANCH_REPORT_FAIL =
+  "GET_APPOINTMENT_BRANCH_REPORT_FAIL";

@@ -35,6 +35,8 @@ const initialState = {
   addCountryNationalData: null,
   deleteCountryNational: null,
   isEditEmployeeFlag: false,
+  servicesList: null,
+  getAppointmentBranchReportData: null,
 };
 
 const adminReducer = (state = initialState, action) => {
@@ -565,6 +567,21 @@ const adminReducer = (state = initialState, action) => {
       return {
         ...state,
         deleteCountryNational: null,
+        admin_ResponseMessage: action.message,
+      };
+
+    //GET APPOINTMENT REPORT BRANCH
+    case actions.GET_APPOINTMENT_BRANCH_REPORT_SUCCESS:
+      return {
+        ...state,
+        getAppointmentBranchReportData: action.response,
+        admin_ResponseMessage: action.message,
+      };
+
+    case actions.GET_APPOINTMENT_BRANCH_REPORT_FAIL:
+      return {
+        ...state,
+        getAppointmentBranchReportData: null,
         admin_ResponseMessage: action.message,
       };
 
