@@ -90,7 +90,11 @@ const AppoinmentReportBranch = () => {
         console.log(record, "classNameclassName");
         return (
           <>
-            <span>{record.service.serviceNameEnglish}</span>
+            <span>
+              {currentLanguage === "en"
+                ? record.service.serviceNameEnglish
+                : record.service.serviceNameArabic}
+            </span>
           </>
         );
       },
@@ -309,7 +313,7 @@ const AppoinmentReportBranch = () => {
         <Row>
           <Col lg={12} md={12} sm={12} className="d-flex justify-content-start">
             <span className="shift-heading">
-              {t("Branch-wise-appoinment")}
+              {t("Branch-wise-appoinment")}{" "}
               <span className="shift-sub-heading">
                 {t("Saudi-arabia-riyadh")}
               </span>
@@ -358,6 +362,7 @@ const AppoinmentReportBranch = () => {
                     <label className="text-labels">{t("Service")}</label>
                     <Select
                       value={selectedOptionsSerives}
+                      placeholder={t("Select-an-option")}
                       className="select-dropdown-all"
                       options={apppointmentOptionsServices}
                       isSearchable={false}
@@ -372,6 +377,7 @@ const AppoinmentReportBranch = () => {
                     <Select
                       isSearchable={false}
                       value={selectedOptionsShift}
+                      placeholder={t("Select-an-option")}
                       className="select-dropdown-all"
                       options={apppointmentOptionsShift}
                       onChange={handleShiftOnChange}
@@ -386,6 +392,7 @@ const AppoinmentReportBranch = () => {
                     <Select
                       isSearchable={false}
                       className="select-dropdown-all"
+                      placeholder={t("Select-an-option")}
                       value={selectedOptionsCounter}
                       options={apppointmentOptionsCounter}
                       onChange={handleCounteronChange}
