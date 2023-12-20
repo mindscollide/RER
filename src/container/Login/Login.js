@@ -11,7 +11,7 @@ const Login = () => {
   const { auth } = useSelector((state) => state);
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
 
   const [errorBar, setErrorBar] = useState("");
 
@@ -58,7 +58,7 @@ const Login = () => {
         Device: "browser",
       };
       setErrorBar(false);
-      dispatch(setLogIn(t, navigate, data));
+      dispatch(setLogIn(t, navigate, data, i18n));
     } else {
       setErrorBar(true);
       setOpen({
@@ -95,7 +95,7 @@ const Login = () => {
                   </Row>
                   <Row>
                     <Col sm={12} md={12} lg={12} className="mt-1">
-                      <span className="Heading-js">{t("Login")}</span>
+                      <span className="Heading-Rer">{t("Login")}</span>
                     </Col>
                     <Col sm={12} md={12} lg={12} className="mt-3">
                       <div className="textfield-padding">

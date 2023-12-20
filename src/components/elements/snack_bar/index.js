@@ -13,17 +13,17 @@ const Message = {
 function Alert(props) {
   return <MuiAlert elevation={6} variant="filled" {...props} />;
 }
-const Notification = ({ setOpen, open, message }) => {
+const Notification = ({ hide, show, message, severity, notificationClass }) => {
+  const currentLanguage = localStorage.getItem("i18nextLng");
   const state = useSelector((state) => state);
   const classes = useStyles();
   const vertical = "top";
-  const horizontal = "right";
+  const horizontal = currentLanguage === "ar" ? "left" : "right";
   const handleClose = (event, reason) => {
     if (reason === "clickaway") {
       return;
     }
-    // setOpen(!open);
-    setOpen({
+    hide({
       flag: false,
       message: "",
     });
@@ -33,17 +33,17 @@ const Notification = ({ setOpen, open, message }) => {
       {message !== "" ? (
         <div className={classes.root}>
           <Snackbar
-            autoHideDuration={4000}
+            autoHideDuration={3000}
             anchorOrigin={{ vertical, horizontal }}
-            open={open}
+            open={show}
             onClose={handleClose}
             message={message}
             key={vertical + horizontal}
           >
             <Alert
               onClose={handleClose}
-              severity={"error"}
-              className={classes.BackGroundSucces}
+              severity={severity}
+              className={notificationClass}
             >
               {message}
             </Alert>

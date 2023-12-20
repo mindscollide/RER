@@ -8,6 +8,7 @@ import {
   Button,
   Table,
   Loader,
+  Notification,
 } from "../../../components/elements";
 import { useTranslation } from "react-i18next";
 import {
@@ -17,6 +18,7 @@ import {
   getAllCountersOfBranch,
   updateBranchCounterApi,
   updateBranchCounterFail,
+  clearResponseMessageAdmin,
 } from "../../../store/actions/Admin_action";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router";
@@ -41,6 +43,10 @@ const CounterMain = () => {
   const deleteBranchCounterData = useSelector(
     (state) => state.admin.deleteBranchCounterData
   );
+  //Response Message Reducer
+  const responseMessage = useSelector(
+    (state) => state.admin.admin_ResponseMessage
+  );
   const Loading = useSelector((state) => state.Loader.Loading);
   const [rows, setRows] = useState([]);
   const [addUpdateCheckFlag, setAddUpdateCheckFlag] = useState(false);
@@ -52,6 +58,12 @@ const CounterMain = () => {
     IsCounterActive: false,
     BranchID: Number(localStorage.getItem("branchID")),
     CounterID: 0,
+  });
+  //Notification States
+  const [notification, setNotification] = useState({
+    notificationFlag: false,
+    notificationMessage: null,
+    severity: "none",
   });
 
   useEffect(() => {
@@ -252,6 +264,129 @@ const CounterMain = () => {
     } catch {}
   };
 
+  useEffect(() => {
+    if (
+      responseMessage !== null &&
+      responseMessage !== undefined &&
+      responseMessage !== ""
+    ) {
+      if (
+        responseMessage === t("Admin_AdminServiceManager_AddBranchShift_01")
+      ) {
+        setTimeout(
+          setNotification({
+            ...notification,
+            notificationFlag: true,
+            notificationMessage: t(
+              "Admin_AdminServiceManager_AddBranchShift_01"
+            ),
+            severity: "success",
+          }),
+          3000
+        );
+      } else if (
+        responseMessage === t("Admin_AdminServiceManager_AddBranchShift_02")
+      ) {
+        setTimeout(
+          setNotification({
+            ...notification,
+            notificationFlag: true,
+            notificationMessage: t(
+              "Admin_AdminServiceManager_AddBranchShift_02"
+            ),
+            severity: "error",
+          }),
+          3000
+        );
+      } else if (responseMessage === t("something_went_wrong")) {
+        setTimeout(
+          setNotification({
+            ...notification,
+            notificationFlag: true,
+            notificationMessage: t("something_went_wrong"),
+            severity: "error",
+          }),
+          3000
+        );
+      } else if (
+        responseMessage ===
+        t("Admin_AdminServiceManager_UpdateBranchCounter_01")
+      ) {
+        setTimeout(
+          setNotification({
+            ...notification,
+            notificationFlag: true,
+            notificationMessage: t(
+              "Admin_AdminServiceManager_UpdateBranchCounter_01"
+            ),
+            severity: "success",
+          }),
+          3000
+        );
+      } else if (
+        responseMessage ===
+        t("Admin_AdminServiceManager_UpdateBranchCounter_02")
+      ) {
+        setTimeout(
+          setNotification({
+            ...notification,
+            notificationFlag: true,
+            notificationMessage: t(
+              "Admin_AdminServiceManager_UpdateBranchCounter_02"
+            ),
+            severity: "error",
+          }),
+          3000
+        );
+      } else if (
+        responseMessage === t("Admin_AdminServiceManager_GetBranchServices_03")
+      ) {
+        setTimeout(
+          setNotification({
+            ...notification,
+            notificationFlag: true,
+            notificationMessage: t(
+              "Admin_AdminServiceManager_GetBranchServices_03"
+            ),
+            severity: "error",
+          }),
+          3000
+        );
+      } else if (
+        responseMessage ===
+        t("Admin_AdminServiceManager_DeleteBranchCounter_01")
+      ) {
+        setTimeout(
+          setNotification({
+            ...notification,
+            notificationFlag: true,
+            notificationMessage: t(
+              "Admin_AdminServiceManager_DeleteBranchCounter_01"
+            ),
+            severity: "success",
+          }),
+          3000
+        );
+      } else if (
+        responseMessage ===
+        t("Admin_AdminServiceManager_DeleteBranchCounter_02")
+      ) {
+        setTimeout(
+          setNotification({
+            ...notification,
+            notificationFlag: true,
+            notificationMessage: t(
+              "Admin_AdminServiceManager_DeleteBranchCounter_02"
+            ),
+            severity: "error",
+          }),
+          3000
+        );
+      }
+    }
+    dispatch(clearResponseMessageAdmin(null));
+  }, [responseMessage]);
+
   return (
     <>
       <section>
@@ -336,7 +471,7 @@ const CounterMain = () => {
                   <Button
                     icon={<i className="icon-refresh icon-space"></i>}
                     text={t("Reset")}
-                    className="Reset-btn-Branch"
+                    className="Reset-btn-Counter"
                     onClick={handleRestCounter}
                   />
                 </Col>
@@ -355,6 +490,17 @@ const CounterMain = () => {
         deleteModal={deleteModal}
         deleteID={deleteID}
         route={"BranchAdminCounterMain"}
+      />
+      <Notification
+        show={notification.notificationFlag}
+        hide={setNotification}
+        message={notification.notificationMessage}
+        severity={notification.severity}
+        notificationClass={
+          notification.severity === "error"
+            ? "notification-error"
+            : "notification-success"
+        }
       />
     </>
   );

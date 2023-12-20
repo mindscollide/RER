@@ -20,12 +20,8 @@ const Header = ({ isLoginScreen }) => {
   const location = useLocation();
   const { t, i18n } = useTranslation();
   const loading = useSelector((state) => state.Loader.Loading);
-  const supportedLanguage = useSelector(
-    (state) => state.admin.supportedLanguage
-  );
-  // const dropdownRef = useRef(null);
   let currentUserID = Number(localStorage.getItem("userID"));
-  // const [dropdownVisible, setDropdownVisible] = useState(false);
+  let languageData = JSON.parse(localStorage.getItem("languageData"));
   const [selectedLanguage, setSelectedLanguage] = useState({
     systemSupportedLanguageID:
       localStorage.getItem("i18nextLng") === null
@@ -42,15 +38,19 @@ const Header = ({ isLoginScreen }) => {
     code:
       localStorage.getItem("i18nextLng") === null
         ? "en"
-        : localStorage.getItem("i18nextLng"),
+        : localStorage.getItem("i18nextLng") === "en"
+        ? "en"
+        : "ar",
   });
 
   // Assuming "en" is the default language
   const callAPIOnPageLoad = async () => {
     if (location.pathname === "/" || location.pathname === "/Forgot") {
-      await dispatch(getSystemSupportedLanguage(t, i18n, navigate, "login"));
+      if (languageData !== null && languageData !== undefined) {
+      } else {
+        await dispatch(getSystemSupportedLanguage(t, i18n, navigate, "login"));
+      }
       setTimeout(() => {
-        // window.location.reload()
         i18n.changeLanguage(localStorage.getItem("i18nextLng"));
       }, 100);
       document.body.dir =
@@ -58,17 +58,22 @@ const Header = ({ isLoginScreen }) => {
       moment.locale(localStorage.getItem("i18nextLng"));
     } else {
       let data = { UserID: Number(currentUserID) };
-      await dispatch(
-        getSystemSupportedLanguage(t, i18n, navigate, "main", data)
-      );
+      if (languageData !== null && languageData !== undefined) {
+      } else {
+        await dispatch(
+          getSystemSupportedLanguage(t, i18n, navigate, "main", data)
+        );
+      }
     }
   };
 
   useEffect(() => {
     if (localStorage.getItem("i18nextLng") === null) {
       if (location.pathname === "/" || location.pathname === "/Forgot") {
-        console.log("i18nextLng head", localStorage.getItem("i18nextLng"));
-        dispatch(getSystemSupportedLanguage(t, i18n, navigate, "login"));
+        if (languageData !== null && languageData !== undefined) {
+        } else {
+          dispatch(getSystemSupportedLanguage(t, i18n, navigate, "login"));
+        }
         setTimeout(() => {
           i18n.changeLanguage("en");
         }, 100);
@@ -76,13 +81,6 @@ const Header = ({ isLoginScreen }) => {
         document.body.dir = "ltr";
         moment.locale("en");
       } else {
-        dispatch(getSystemSupportedLanguage(t, i18n, navigate, "BranchAdmin"));
-        setTimeout(() => {
-          i18n.changeLanguage("en");
-        }, 100);
-        localStorage.setItem("i18nextLng", "en");
-        document.body.dir = "ltr";
-        moment.locale("en");
       }
     } else {
       callAPIOnPageLoad();
@@ -100,7 +98,6 @@ const Header = ({ isLoginScreen }) => {
       const newLanguage = lang === 2 ? "ar" : "en";
       // Change the language using i18next instance directly
       setTimeout(() => {
-        // window.location.reload()
         i18n.changeLanguage(newLanguage);
       }, 100);
       console.log("i18nextLng", newLanguage);
@@ -155,7 +152,9 @@ const Header = ({ isLoginScreen }) => {
                 <div className="language-dd d-flex align-items-center ps-2">
                   <span className="user-name text-truncate">
                     {" "}
-                    {selectedLanguage.code === "en" ? "English" : "عربى"}
+                    {localStorage.getItem("i18nextLng") === "en"
+                      ? "English"
+                      : "عربى"}
                   </span>
                   <span
                     className="user-thumb-globe"
@@ -174,8 +173,9 @@ const Header = ({ isLoginScreen }) => {
               menuVariant="light"
               className="ms-md-2" // Margin added to separate dropdowns on larger screens
             >
-              {supportedLanguage != null &&
-                supportedLanguage.map((LangData, index) => {
+              {languageData !== null &&
+                languageData !== undefined &&
+                languageData.map((LangData, index) => {
                   return (
                     <NavDropdown.Item
                       key={Number(LangData.systemSupportedLanguageID)}
@@ -203,7 +203,7 @@ const Header = ({ isLoginScreen }) => {
                             : { marginLeft: "5px" }
                         }
                       >
-                        {selectedLanguage.code === "en"
+                        {localStorage.getItem("i18nextLng") === "en"
                           ? localStorage.getItem("name")
                           : localStorage.getItem("nameArabic")}
                       </span>

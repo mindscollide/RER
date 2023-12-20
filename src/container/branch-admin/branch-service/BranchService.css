@@ -26,7 +26,7 @@
 }
 
 body[dir="rtl"] .save-btn-BranchService {
-  font-family: "Times New Roman", Times, serif !important;
+  font-family: "NeoSansArabic" !important;
 }
 
 .save-btn-BranchService:hover {
@@ -48,7 +48,7 @@ body[dir="rtl"] .save-btn-BranchService {
 }
 
 body[dir="rtl"] .revert-btn-BranchService {
-  font-family: "Times New Roman", Times, serif !important;
+  font-family: "NeoSansArabic" !important;
 }
 
 .revert-btn-BranchService:hover {

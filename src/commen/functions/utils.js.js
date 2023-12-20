@@ -15,13 +15,13 @@ export function generateMenuItems(roleID, t) {
       "sub1",
       <i className="icon-settings side-bar-icons"></i>,
       [
-        getItem(t("Global-service"), "21"),
-        getItem(t("Countery-main"), "22"),
-        getItem(t("City-screen"), "23"),
-        getItem(t("Branch-screen"), "24"),
-        getItem(t("Employee-screen"), "25"),
-        getItem(t("Shift-screen"), "26"),
-        getItem(t("Branch-service-counter"), "27"),
+        getItem(t("Services"), "21"),
+        getItem(t("Country"), "22"),
+        getItem(t("City"), "23"),
+        getItem(t("Branch"), "24"),
+        getItem(t("Employee"), "25"),
+        getItem(t("Shifts"), "26"),
+        getItem(t("Counters"), "27"),
       ],
       "menu-item-sub"
     ),
@@ -45,13 +45,13 @@ export function generateMenuItems(roleID, t) {
       "sub1",
       <i className="icon-settings side-bar-icons"></i>,
       [
-        getItem(t("Country-admin-main"), "12"),
-        getItem(t("Service-country-screen"), "13"),
-        getItem(t("Country-city-wise-branch"), "14"),
-        getItem(t("Country-city-branch-wise-shift"), "15"),
-        getItem(t("Country-city-wise-counter"), "16"),
-        getItem(t("Country-city-wise-employees"), "17"),
-        getItem(t("National-holiday"), "19"),
+        getItem(t("City"), "12"),
+        getItem(t("Services"), "13"),
+        getItem(t("Branch"), "14"),
+        getItem(t("Shifts"), "15"),
+        getItem(t("Counters"), "16"),
+        getItem(t("Employee"), "17"),
+        getItem(t("Holidays"), "19"),
       ],
       "menu-item-sub"
     ),
@@ -93,6 +93,7 @@ export function generateMenuItems(roleID, t) {
         getItem(t("Branch-wise-reports"), "14"),
         getItem(t("Employee-wise-reports"), "15"),
         getItem(t("Service-wise-reports"), "16"),
+        getItem(t("Appoinment-report"), "28"),
       ],
       "menu-item-sub"
     ),
@@ -103,9 +104,9 @@ export function generateMenuItems(roleID, t) {
       "sub1",
       <i className="icon-settings side-bar-icons"></i>,
       [
-        getItem(t("Shift"), "2"),
-        getItem(t("Counter-admin"), "3"),
-        getItem(t("Branch-service"), "4"),
+        getItem(t("Shifts"), "2"),
+        getItem(t("Counters"), "3"),
+        getItem(t("Branch-service-countryadmin"), "4"),
         getItem(t("Branch-roaster"), "18"),
       ],
       "menu-item-sub"
@@ -183,3 +184,28 @@ export function generateMenuItems(roleID, t) {
     // ...
   ];
 }
+// ================== This is used for covert json all key values first charactor itno capitle =========//
+const capitalizeFirstLetter = (str) => {
+  return str.charAt(0).toUpperCase() + str.slice(1);
+};
+
+// Recursively capitalize keys in an object
+const capitalizeObjectKeys = (obj) => {
+  const newObj = {};
+  for (const key in obj) {
+    if (Object.prototype.hasOwnProperty.call(obj, key)) {
+      const newKey = capitalizeFirstLetter(key);
+      newObj[newKey] =
+        typeof obj[key] === "object"
+          ? capitalizeObjectKeys(obj[key])
+          : obj[key];
+    }
+  }
+  return newObj;
+};
+
+// Capitalize keys in an array of objects
+export function capitalizeKeysInArray(arr) {
+  return arr.map((item) => capitalizeObjectKeys(item));
+}
+// ================== End This is used for covert json all key values first charactor itno capitle =========//

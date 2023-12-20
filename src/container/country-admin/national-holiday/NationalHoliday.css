@@ -25,6 +25,10 @@
   border-color: #77c0cb !important;
 }
 
+body[dir="rtl"] .save-btn-NationalHoliday {
+  font-family: "NeoSansArabic" !important;
+}
+
 .save-btn-NationalHoliday:hover {
   background: linear-gradient(to bottom, #7484b7 0%, #536395 100%);
   border-color: #7484b7 !important;
@@ -41,6 +45,10 @@
   border-bottom-right-radius: 8px;
   background: linear-gradient(to bottom, #7484b7 0%, #536395 100%);
   border-color: #7484b7 !important;
+}
+
+body[dir="rtl"] .revert-btn-NationalHoliday {
+  font-family: "NeoSansArabic" !important;
 }
 
 .revert-btn-NationalHoliday:hover {

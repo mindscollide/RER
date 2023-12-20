@@ -124,3 +124,7 @@
   font-size: 18px !important;
   font-family: "Montserrat", sans-serif;
 }
+
+body[dir="rtl"] .collapse-top-heading {
+  font-family: "NeoSansArabic" !important;
+}

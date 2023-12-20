@@ -15,6 +15,9 @@ export const LOG_IN_FAIL = "LOG_IN_FAIL";
 // for cleare states of admin reducer
 export const ADMIN_CLEARE_STATE = "ADMIN_CLEARE_STATE";
 
+//Clear Response Message Admin
+export const CLEAR_RESPONSEMESSAGE_ADMIN = "CLEAR_RESPONSEMESSAGE_ADMIN";
+
 // for GET_SYSTEM_SUPPORTED_LANGUAGE Api
 export const GET_SYSTEM_SUPPORTED_LANGUAGE_SUCCESS =
   "GET_SYSTEM_SUPPORTED_LANGUAGE_SUCCESS";
@@ -115,3 +118,73 @@ export const DELETE_CITY_BRANCH_FAIL = "DELETE_CITY_BRANCH_FAIL";
 //for UPDAT Shifts Of Branch Api (City Admin for update existing branch in the city)
 export const UPDATE_CITY_BRANCH_SUCCESS = "UPDATE_CITY_BRANCH_SUCCESS";
 export const UPDATE_CITY_BRANCH_FAIL = "UPDATE_CITY_BRANCH_FAIL";
+
+//Get  Country Wise City for listing down existing services in city
+export const GET_CITY_SERVICE_LIST_SUCCESS = "GET_CITY_SERVICE_LIST_SUCCESS";
+export const GET_CITY_SERVICE_LIST_FAIL = "GET_CITY_SERVICE_LIST_FAIL";
+
+///Country Wise City for updating all existing services in a city in a single request
+export const UPDATE_CITY_SERVICE_LIST_SUCCESS =
+  "UPDATE_CITY_SERVICE_LIST_SUCCESS";
+export const UPDATE_CITY_SERVICE_LIST_FAIL = "UPDATE_CITY_SERVICE_LIST_FAIL";
+
+// get city Branch services Api (City Admin for GetCityBranchServices in the City)
+export const GET_CITY_BRANCH_SERVICE_SUCCESS =
+  "GET_CITY_BRANCH_SERVICE_SUCCESS";
+export const GET_CITY_BRANCH_SERVICE_FAIL = "GET_CITY_BRANCH_SERVICE_FAIL";
+
+// update city Branch service Api (City Admin for GetCityBranchServices in the City)
+export const UPDATE_CITY_BRANCH_SERVICE_SUCCESS =
+  "UPDATE_CITY_BRANCH_SERVICE_SUCCESS";
+export const UPDATE_CITY_BRANCH_SERVICE_FAIL =
+  "UPDATE_CITY_BRANCH_SERVICE_FAIL";
+
+// action Types For Global Action
+export const SET_COUNTRY_CITY_WISE_COUNTER = "SET_COUNTRY_CITY_WISE_COUNTER";
+export const SET_CITY_WISE_BRANCH_SERVICE = "SET_CITY_WISE_BRANCH_SERVICE";
+
+// GetBranchShiftWiseCounter action Types for city admin Api
+export const GET_BRANCH_SHIFT_COUNTER_SUCCESS =
+  "GET_BRANCH_SHIFT_COUNTER_SUCCESS";
+export const GET_BRANCH_SHIFT_COUNTER_FAIL = "GET_BRANCH_SHIFT_COUNTER_FAIL";
+
+// Get City Employee Main action types for city admin api
+export const GET_CITY_EMPLOYEE_SUCCESS = "GET_CITY_EMPLOYEE_SUCCESS";
+export const GET_CITY_EMPLOYEE_FAIL = "GET_CITY_EMPLOYEE_FAIL";
+
+//add new Employee city action types for city admin
+export const ADD_NEW_EMPLOYEE_CITY_SUCCESS = "ADD_NEW_EMPLOYEE_CITY_SUCCESS";
+export const ADD_NEW_EMPLOYEE_CITY_FAIL = "ADD_NEW_EMPLOYEE_CITY_FAIL";
+
+// update Existing Employee city action types for city admin
+export const UPDATE_EXISTING_EMPLOYEE_CITY_SUCCESS =
+  "UPDATE_EXISTING_EMPLOYEE_CITY_SUCCESS";
+export const UPDATE_EXISTING_EMPLOYEE_CITY_FAIL =
+  "UPDATE_EXISTING_EMPLOYEE_CITY_FAIL";
+
+export const ADD_EDIT_MODAL_EMPLOYEE = "ADD_EDIT_MODAL_EMPLOYEE";
+
+// delete Existing Employee city action types for city admin
+export const DELETE_EXISTING_EMPLOYEE_CITY_SUCCESS =
+  "DELETE_EXISTING_EMPLOYEE_CITY_SUCCESS";
+export const DELETE_EXISTING_EMPLOYEE_CITY_FAIL =
+  "DELETE_EXISTING_EMPLOYEE_CITY_FAIL";
+
+// ===================================CITY ADMIN END ==========================================//
+
+// ===================================COUNTRY ADMIN START ==========================================//
+
+// For get country national holiday action types for country admin
+export const GET_NATIONAL_HOLIDAY_SUCCESS = "GET_NATIONAL_HOLIDAY_SUCCESS";
+export const GET_NATIONAL_HOLIDAY_FAIL = "GET_NATIONAL_HOLIDAY_FAIL";
+
+// For add country national holiday action types for country admin
+export const ADD_NATIONAL_HOLIDAY_SUCCESS = "ADD_NATIONAL_HOLIDAY_SUCCESS";
+export const ADD_NATIONAL_HOLIDAY_FAIL = "ADD_NATIONAL_HOLIDAY_FAIL";
+
+// For delete Country national holiday action types for country admin
+export const DELETE_NATIONAL_HOLIDAY_SUCCESS =
+  "DELETE_NATIONAL_HOLIDAY_SUCCESS";
+export const DELETE_NATIONAL_HOLIDAY_FAIL = "DELETE_NATIONAL_HOLIDAY_FAIL";
+
+// ===================================COUNTRY ADMIN END ==========================================//

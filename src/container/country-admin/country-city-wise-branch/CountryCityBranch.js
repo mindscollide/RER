@@ -58,7 +58,6 @@ const CountryCityBranch = () => {
       dataIndex: "shiftName",
       key: "shiftName",
       width: "400px",
-      align: "left",
     },
 
     {
@@ -102,7 +101,7 @@ const CountryCityBranch = () => {
                       onChange={setSelectedOption}
                       options={options}
                       isSearchable={true}
-                      className="countrycitywisebranchwiseselector"
+                      className="select-dropdown-all"
                     />
                   </span>
                 </Col>

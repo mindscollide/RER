@@ -59,7 +59,6 @@ const CityBranchShift = () => {
       dataIndex: "shiftName",
       key: "shiftName",
       width: "400px",
-      align: "left",
     },
 
     {
@@ -105,7 +104,7 @@ const CityBranchShift = () => {
                       onChange={setSelectedOption}
                       options={options}
                       isSearchable={true}
-                      className="citywisebranchwiseselector"
+                      className="select-dropdown-all"
                     />
                   </span>
                 </Col>

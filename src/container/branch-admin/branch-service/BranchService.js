@@ -3,10 +3,17 @@ import { Row, Col } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router";
 import "./BranchService.css";
-import { Paper, TextField, Button, Table } from "../../../components/elements";
+import {
+  Paper,
+  TextField,
+  Button,
+  Table,
+  Notification,
+} from "../../../components/elements";
 import { Switch } from "antd";
 import { useTranslation } from "react-i18next";
 import {
+  clearResponseMessageAdmin,
   getBranchServicesApi,
   //Commented Because Using Update All
   // updateBranchServicesApi,
@@ -26,11 +33,22 @@ const BranchService = () => {
     (state) => state.admin.branchServicesData
   );
 
+  //Response MEssage Reducer
+  const responseMessage = useSelector(
+    (state) => state.admin.admin_ResponseMessage
+  );
+
   const navigate = useNavigate();
 
   const dispatch = useDispatch();
 
   const [branchServices, setBranchServices] = useState([]);
+
+  const [notification, setNotification] = useState({
+    notificationFlag: false,
+    notificationMessage: null,
+    severity: "none",
+  });
 
   const [initialBranchServicesData, setInitialBranchServicesData] = useState(
     []
@@ -275,6 +293,73 @@ const BranchService = () => {
     }
   };
 
+  useEffect(() => {
+    if (
+      responseMessage !== null &&
+      responseMessage !== undefined &&
+      responseMessage !== ""
+    ) {
+      if (
+        responseMessage ===
+        t("Admin_AdminServiceManager_UpdateBranchServices_01")
+      ) {
+        setTimeout(
+          setNotification({
+            ...notification,
+            notificationFlag: true,
+            notificationMessage: t(
+              "Admin_AdminServiceManager_UpdateBranchServices_01"
+            ),
+            severity: "success",
+          }),
+          3000
+        );
+      } else if (
+        responseMessage ===
+        t("Admin_AdminServiceManager_UpdateBranchServices_02")
+      ) {
+        setTimeout(
+          setNotification({
+            ...notification,
+            notificationFlag: true,
+            notificationMessage: t(
+              "Admin_AdminServiceManager_UpdateBranchServices_02"
+            ),
+            severity: "error",
+          }),
+          3000
+        );
+      } else if (
+        responseMessage === t("Admin_AdminServiceManager_GetBranchServices_03")
+      ) {
+        setTimeout(
+          setNotification({
+            ...notification,
+            notificationFlag: true,
+            notificationMessage: t(
+              "Admin_AdminServiceManager_GetBranchServices_03"
+            ),
+            severity: "error",
+          }),
+          3000
+        );
+      } else if (responseMessage === t("something_went_wrong")) {
+        setTimeout(
+          setNotification({
+            ...notification,
+            notificationFlag: true,
+            notificationMessage: t("something_went_wrong"),
+            severity: "error",
+          }),
+          3000
+        );
+      }
+    }
+    dispatch(clearResponseMessageAdmin(null));
+  }, [responseMessage]);
+
+  console.log("responseMessageresponseMessage", responseMessage);
+
   return (
     <>
       <section className="SectionBranchService-Admin">
@@ -340,6 +425,17 @@ const BranchService = () => {
           </Col>
         </Row>
       </section>
+      <Notification
+        show={notification.notificationFlag}
+        hide={setNotification}
+        message={notification.notificationMessage}
+        severity={notification.severity}
+        notificationClass={
+          notification.severity === "error"
+            ? "notification-error"
+            : "notification-success"
+        }
+      />
     </>
   );
 };

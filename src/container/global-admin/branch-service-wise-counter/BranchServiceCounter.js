@@ -74,29 +74,36 @@ const BranchServiceCounter = () => {
 
   const columns = [
     {
-      title: <span>{t("Branch-name")}</span>,
+      title: (
+        <span className="table-inside-header-text-new">{t("Branch-name")}</span>
+      ),
       dataIndex: "branchName",
       key: "branchName",
       width: "250px",
-      align: "left",
     },
     {
-      title: <span>{t("Counter-name")}</span>,
+      title: (
+        <span className="table-inside-header-text-new">
+          {t("Counter-name")}
+        </span>
+      ),
       dataIndex: "counterName",
+      align: "center",
       key: "counterName",
-      align: "center",
     },
     {
-      title: <span>{t("Shift")}</span>,
+      title: <span className="table-inside-header-text-new">{t("Shift")}</span>,
       dataIndex: "shift",
-      key: "shift",
       align: "center",
+      key: "shift",
     },
     {
-      title: <span>{t("Service")}</span>,
+      title: (
+        <span className="table-inside-header-text-new">{t("Service")}</span>
+      ),
       dataIndex: "service",
-      key: "service",
       align: "center",
+      key: "service",
     },
   ];
 
@@ -122,7 +129,7 @@ const BranchServiceCounter = () => {
                       onChange={setSelectedOption}
                       options={options}
                       isSearchable={true}
-                      className="BranchServiceCounter"
+                      className="select-dropdown-all"
                     />
                   </span>
                 </Col>
@@ -134,7 +141,7 @@ const BranchServiceCounter = () => {
                       onChange={setSelectedOption}
                       options={options}
                       isSearchable={true}
-                      className="BranchServiceCounter"
+                      className="select-dropdown-all"
                     />
                   </span>
                 </Col>
@@ -146,7 +153,7 @@ const BranchServiceCounter = () => {
                       onChange={setSelectedOption}
                       options={options}
                       isSearchable={true}
-                      className="BranchServiceCounter"
+                      className="select-dropdown-all"
                     />
                   </span>
                 </Col>
@@ -158,7 +165,7 @@ const BranchServiceCounter = () => {
                       onChange={setSelectedOption}
                       options={options}
                       isSearchable={true}
-                      className="BranchServiceCounter"
+                      className="select-dropdown-all"
                     />
                   </span>
                 </Col>

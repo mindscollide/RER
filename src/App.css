@@ -1,3 +1,47 @@
+/* Arabic font start */
+
+@font-face {
+  font-family: "NeoSansArabic-Regular";
+  src: url(./assets/arabic-fonts/Neo\ Sans\ Arabic\ Regular.ttf);
+}
+
+@font-face {
+  font-family: "NeoSans-Medium";
+  src: url(./assets/arabic-fonts/Neo_Sans_Medium.ttf);
+}
+
+@font-face {
+  font-family: "NeoSansArabic";
+  src: url(./assets/arabic-fonts/NeoSansArabic.ttf);
+}
+
+@font-face {
+  font-family: "NeoSansArabic-Black";
+  src: url(./assets/arabic-fonts/NeoSansArabicBlack.ttf);
+}
+
+@font-face {
+  font-family: "NeoSansArabic-Bold";
+  src: url(./assets/arabic-fonts/NeoSansArabicBold.ttf);
+}
+
+@font-face {
+  font-family: "NeoSansArabic-Light";
+  src: url(./assets/arabic-fonts/NeoSansArabicLight.ttf);
+}
+
+@font-face {
+  font-family: "NeoSansArabic-Medium";
+  src: url(./assets/arabic-fonts/NeoSansArabicMedium.ttf);
+}
+
+@font-face {
+  font-family: "NeoSansArabic-Ultra";
+  src: url(./assets/arabic-fonts/NeoSansArabicUltra.ttf);
+}
+
+/* Arabic font End */
+
 /* this is for the whole body of project */
 body {
   background: #f4f4f4 !important;
@@ -34,7 +78,7 @@ body::-webkit-scrollbar-thumb {
 body[dir="rtl"] .shift-heading {
   font-size: 18px;
   color: #004990;
-  font-family: "Times New Roman", Times, serif !important;
+  font-family: "NeoSansArabic" !important;
   font-weight: 600;
 }
 
@@ -48,7 +92,7 @@ body[dir="rtl"] .shift-heading {
 body[dir="rtl"] .shift-sub-heading {
   font-size: 18px;
   color: #1ab4d0;
-  font-family: "Times New Roman", Times, serif !important;
+  font-family: "NeoSansArabic" !important;
   font-weight: 600;
 }
 
@@ -61,7 +105,7 @@ body[dir="rtl"] .shift-sub-heading {
 
 body[dir="rtl"] .shift-sub-heading-right {
   font-size: 18px;
-  font-family: "Times New Roman", Times, serif !important;
+  font-family: "NeoSansArabic" !important;
   color: #87b939 !important;
   font-weight: 600;
 }
@@ -80,7 +124,7 @@ body[dir="rtl"] .shift-sub-heading-right {
 body[dir="rtl"] .text-labels {
   font-size: 11px;
   font-weight: 700;
-  font-family: "Times New Roman", Times, serif !important;
+  font-family: "NeoSansArabic" !important;
   color: #45494d !important;
 }
 
@@ -98,7 +142,7 @@ body[dir="rtl"] .text-labels {
 body[dir="rtl"] .checkbox-label {
   margin-right: 10px;
   color: #45494d !important;
-  font-family: "Times New Roman", Times, serif !important;
+  font-family: "NeoSansArabic" !important;
   font-weight: 500;
 }
 
@@ -107,6 +151,24 @@ body[dir="rtl"] .checkbox-label {
   color: #21252d !important;
   font-family: "Montserrat", sans-serif;
   font-weight: 400;
+}
+
+body[dir="rtl"] .checkbox-label-Active-Employee-Modal {
+  margin-right: 3px;
+  font-family: "Times New Roman", Times, serif !important;
+}
+
+.branch-employee-checkbox {
+  margin-left: 2px;
+  font-size: 12px;
+  color: #21252d !important;
+  font-family: "Montserrat", sans-serif;
+  font-weight: 400;
+}
+
+body[dir="rtl"] .branch-employee-checkbox {
+  margin-right: 3px;
+  font-family: "NeoSansArabic" !important;
 }
 
 /* For checkbox labels End */
@@ -119,7 +181,7 @@ body[dir="rtl"] .checkbox-label {
 }
 
 body[dir="rtl"] .table-text {
-  font-family: "Times New Roman", Times, serif !important;
+  font-family: "NeoSansArabic" !important;
   font-size: 14px !important;
 }
 
@@ -132,9 +194,20 @@ body[dir="rtl"] .table-text {
 
 body[dir="rtl"] .table-inside-text {
   color: #212529 !important;
-  font-family: "Times New Roman", Times, serif !important;
+  font-family: "NeoSansArabic" !important;
   font-size: 14px !important;
   font-weight: 500;
+}
+
+.table-inside-header-text-new {
+  color: #002650 !important;
+  font-family: "Montserrat", sans-serif;
+  font-size: 14px !important;
+  font-weight: 700;
+}
+
+body[dir="rtl"] .table-inside-header-text-new {
+  font-family: "NeoSansArabic" !important;
 }
 
 /* For table Title Text and inside text End*/
@@ -225,11 +298,19 @@ body[dir="rtl"] .table-inside-text {
   color: #ffffff;
 }
 
+body[dir="rtl"] .toggle-tiles {
+  font-family: "NeoSansArabic" !important;
+}
+
 .toggle-insidetile-available {
   font-size: 14px;
   font-weight: 700;
   font-family: "Montserrat", sans-serif !important;
   color: #45494d;
+}
+
+body[dir="rtl"] .toggle-insidetile-available {
+  font-family: "NeoSansArabic" !important;
 }
 
 /* toggle title End*/
@@ -243,6 +324,10 @@ body[dir="rtl"] .table-inside-text {
   color: #4b5576;
 }
 
+body[dir="rtl"] .add-edit-heading-modal {
+  font-family: "NeoSansArabic" !important;
+}
+
 .confirm-delete-text {
   font-size: 14px;
   font-family: "Montserrat", sans-serif !important;
@@ -250,4 +335,52 @@ body[dir="rtl"] .table-inside-text {
   font-weight: 500;
 }
 
+body[dir="rtl"] .confirm-delete-text {
+  font-family: "NeoSansArabic" !important;
+}
+
 /* Labels For Modals End */
+
+/* Snackbar Notification CSS */
+.MuiAlert-filledError.notification-error {
+  width: 100% !important;
+  background: #cc0000 !important;
+  position: relative !important;
+  box-shadow: none !important;
+}
+
+.MuiAlert-filledSuccess.notification-success {
+  width: 100% !important;
+  background: #55c5d1 !important;
+  position: relative !important;
+  box-shadow: none !important;
+}
+
+.MuiSnackbar-anchorOriginTopLeft .MuiAlert-icon {
+  margin-right: auto !important;
+  margin-left: 12px !important;
+}
+
+.MuiSnackbar-anchorOriginTopLeft .MuiAlert-action {
+  display: flex;
+  align-items: center;
+  margin-left: -8px !important;
+  margin-right: auto !important;
+  padding-left: auto !important;
+  padding-right: 16px !important;
+}
+
+/* react select start */
+.select-dropdown-all {
+  color: #45494d !important;
+  font-family: "Montserrat", sans-serif !important;
+  font-size: 13px !important;
+  font-weight: 500 !important;
+  z-index: 5 !important;
+}
+
+body[dir="rtl"] .select-dropdown-all {
+  font-family: "NeoSansArabic" !important;
+}
+
+/* react select end */

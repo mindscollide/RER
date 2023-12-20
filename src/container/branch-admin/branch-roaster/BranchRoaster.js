@@ -1,7 +1,12 @@
 import React, { useState, useEffect } from "react";
 import { Row, Col } from "react-bootstrap";
 import "./BranchRoaster.css";
-import { Paper, Button, Table } from "../../../components/elements";
+import {
+  Paper,
+  Button,
+  Table,
+  Notification,
+} from "../../../components/elements";
 import { getCurrentDateUTC } from "../../../commen/functions/Date_time_formatter";
 import { useTranslation } from "react-i18next";
 import { useDispatch, useSelector } from "react-redux";
@@ -16,6 +21,7 @@ import {
   getBranchServicesApi,
   addBranchRoasterEntryApiFunction,
   removingBranchEntryRoasterApiFunction,
+  clearResponseMessageAdmin,
 } from "../../../store/actions/Admin_action";
 
 const BranchRoaster = () => {
@@ -39,7 +45,19 @@ const BranchRoaster = () => {
     (state) => state.admin.branchServicesData
   );
 
+  //Response Message Reducer
+  const responseMessage = useSelector(
+    (state) => state.admin.admin_ResponseMessage
+  );
+
   const currentLanguage = localStorage.getItem("i18nextLng");
+
+  //Notification States
+  const [notification, setNotification] = useState({
+    notificationFlag: false,
+    notificationMessage: null,
+    severity: "none",
+  });
 
   // Branch Roaster close Modal State
   const [roasterModal, setRoasterModal] = useState(false);
@@ -259,36 +277,48 @@ const BranchRoaster = () => {
   };
 
   const saveSingleRoaster = () => {
-    let Data = {
-      RoasterDate: selectedDate,
-      BranchID: Number(localStorage.getItem("branchID")),
-      ServiceID: selectedOptionServices.value,
-      ShiftID: selectedOptionShift.value,
-      CounterID: selectedOptionCounter.value,
-    };
-    console.log(
-      "Request Data Values",
-      Data,
-      selectedOptionServices,
-      selectedOptionShift,
-      selectedOptionCounter
-    );
-    let currentDate = getCurrentDateUTC();
-    if (Data.RoasterDate >= currentDate) {
-      dispatch(
-        addBranchRoasterEntryApiFunction(
-          Data,
-          t,
-          navigate,
-          Loading,
-          selectedDate
-        )
+    try {
+      let Data = {
+        RoasterDate: selectedDate,
+        BranchID: Number(localStorage.getItem("branchID")),
+        ServiceID: selectedOptionServices.value,
+        ShiftID: selectedOptionShift.value,
+        CounterID: selectedOptionCounter.value,
+      };
+      console.log(
+        "Request Data Values",
+        Data,
+        selectedOptionServices,
+        selectedOptionShift,
+        selectedOptionCounter
       );
-      setSelectedOptionCounter(null);
-      setSelectedOptionShift(null);
-      setSelectedOptionServices(null);
-    } else {
-      alert("Previous Dates Cannot be selected");
+      let currentDate = getCurrentDateUTC();
+      if (Data.RoasterDate >= currentDate) {
+        dispatch(
+          addBranchRoasterEntryApiFunction(
+            Data,
+            t,
+            navigate,
+            Loading,
+            selectedDate
+          )
+        );
+        setSelectedOptionCounter(null);
+        setSelectedOptionShift(null);
+        setSelectedOptionServices(null);
+      } else {
+        setTimeout(
+          setNotification({
+            ...notification,
+            notificationFlag: true,
+            notificationMessage: t("Previous-dates-cannot-be-selected"),
+            severity: "error",
+          }),
+          3000
+        );
+      }
+    } catch {
+      console.log("Error");
     }
   };
 
@@ -323,6 +353,161 @@ const BranchRoaster = () => {
   const cancelDeleteRecord = () => {
     setRoasterModal(false);
   };
+
+  useEffect(() => {
+    if (
+      responseMessage !== null &&
+      responseMessage !== undefined &&
+      responseMessage !== ""
+    ) {
+      if (
+        responseMessage ===
+        t("Admin_AdminServiceManager_AddBranchRoasterEntry_01")
+      ) {
+        setTimeout(
+          setNotification({
+            ...notification,
+            notificationFlag: true,
+            notificationMessage: t(
+              "Admin_AdminServiceManager_AddBranchRoasterEntry_01"
+            ),
+            severity: "success",
+          }),
+          3000
+        );
+      } else if (
+        responseMessage ===
+        t("Admin_AdminServiceManager_AddBranchRoasterEntry_02")
+      ) {
+        setTimeout(
+          setNotification({
+            ...notification,
+            notificationFlag: true,
+            notificationMessage: t(
+              "Admin_AdminServiceManager_AddBranchRoasterEntry_02"
+            ),
+            severity: "error",
+          }),
+          3000
+        );
+      } else if (
+        responseMessage ===
+        t("Admin_AdminServiceManager_AddBranchRoasterEntry_03")
+      ) {
+        setTimeout(
+          setNotification({
+            ...notification,
+            notificationFlag: true,
+            notificationMessage: t(
+              "Admin_AdminServiceManager_AddBranchRoasterEntry_03"
+            ),
+            severity: "error",
+          }),
+          3000
+        );
+      } else if (
+        responseMessage ===
+        t("Admin_AdminServiceManager_AddBranchRoasterEntry_04")
+      ) {
+        setTimeout(
+          setNotification({
+            ...notification,
+            notificationFlag: true,
+            notificationMessage: t(
+              "Admin_AdminServiceManager_AddBranchRoasterEntry_04"
+            ),
+            severity: "error",
+          }),
+          3000
+        );
+      } else if (
+        responseMessage === t("Admin_AdminServiceManager_GetBranchServices_03")
+      ) {
+        setTimeout(
+          setNotification({
+            ...notification,
+            notificationFlag: true,
+            notificationMessage: t(
+              "Admin_AdminServiceManager_GetBranchServices_03"
+            ),
+            severity: "error",
+          }),
+          3000
+        );
+      } else if (responseMessage === t("something_went_wrong")) {
+        setTimeout(
+          setNotification({
+            ...notification,
+            notificationFlag: true,
+            notificationMessage: t("something_went_wrong"),
+            severity: "error",
+          }),
+          3000
+        );
+      } else if (
+        responseMessage ===
+        t("Admin_AdminServiceManager_RemoveBranchRoasterEntry_01")
+      ) {
+        setTimeout(
+          setNotification({
+            ...notification,
+            notificationFlag: true,
+            notificationMessage: t(
+              "Admin_AdminServiceManager_RemoveBranchRoasterEntry_01"
+            ),
+            severity: "success",
+          }),
+          3000
+        );
+      } else if (
+        responseMessage ===
+        t("Admin_AdminServiceManager_RemoveBranchRoasterEntry_02")
+      ) {
+        setTimeout(
+          setNotification({
+            ...notification,
+            notificationFlag: true,
+            notificationMessage: t(
+              "Admin_AdminServiceManager_RemoveBranchRoasterEntry_02"
+            ),
+            severity: "error",
+          }),
+          3000
+        );
+      } else if (
+        responseMessage ===
+        t("Admin_AdminServiceManager_RemoveBranchRoasterEntry_03")
+      ) {
+        setTimeout(
+          setNotification({
+            ...notification,
+            notificationFlag: true,
+            notificationMessage: t(
+              "Admin_AdminServiceManager_RemoveBranchRoasterEntry_03"
+            ),
+            severity: "error",
+          }),
+          3000
+        );
+      } else if (
+        responseMessage ===
+        t("Admin_AdminServiceManager_RemoveBranchRoasterEntry_04")
+      ) {
+        setTimeout(
+          setNotification({
+            ...notification,
+            notificationFlag: true,
+            notificationMessage: t(
+              "Admin_AdminServiceManager_RemoveBranchRoasterEntry_04"
+            ),
+            severity: "error",
+          }),
+          3000
+        );
+      }
+    }
+    dispatch(clearResponseMessageAdmin(null));
+  }, [responseMessage]);
 
   return (
     <>
@@ -390,6 +575,7 @@ const BranchRoaster = () => {
                       onChange={handleChangeShift}
                       options={optionsShift}
                       isSearchable={false}
+                      className="select-dropdown-all"
                     />
                   </span>
                   <Row className="mt-4">
@@ -401,6 +587,7 @@ const BranchRoaster = () => {
                           onChange={handleChangeServices}
                           options={optionsServices}
                           isSearchable={false}
+                          className="select-dropdown-all"
                         />
                       </span>
                     </Col>
@@ -436,6 +623,7 @@ const BranchRoaster = () => {
                       onChange={handleChangeCounter}
                       options={optionsCounter}
                       isSearchable={false}
+                      className="select-dropdown-all"
                     />
                   </span>
                 </Col>
@@ -462,6 +650,17 @@ const BranchRoaster = () => {
           onNoModalHandler={cancelDeleteRecord}
         />
       ) : null}
+      <Notification
+        show={notification.notificationFlag}
+        hide={setNotification}
+        message={notification.notificationMessage}
+        severity={notification.severity}
+        notificationClass={
+          notification.severity === "error"
+            ? "notification-error"
+            : "notification-success"
+        }
+      />
     </>
   );
 };

@@ -80,7 +80,7 @@ const CountryWiseEmployee = () => {
                     <label className="text-labels text-left">{t("City")}</label>
                     <Select
                       isSearchable={true}
-                      className="countrywiseEmployeeselector"
+                      className="select-dropdown-all"
                     />
                   </span>
                 </Col>

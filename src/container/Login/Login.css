@@ -27,7 +27,7 @@
   box-shadow: rgba(100, 100, 111, 0.3) 0px 7px 29px 0px !important;
 }
 
-.Heading-js {
+.Heading-Rer {
   display: flex;
   justify-content: center;
   color: #76c641 !important;
@@ -36,6 +36,10 @@
   font-weight: 700 !important;
   text-align: center !important;
   /* margin-bottom: 10px; */
+}
+
+body[dir="rtl"] .Heading-Rer {
+  font-family: "NeoSansArabic" !important;
 }
 
 .login-btn {
@@ -49,6 +53,10 @@
   border-bottom-right-radius: 8px !important;
   background: linear-gradient(to bottom, #77c0cb 0%, #2c9cc0 100%) !important;
   border-color: #77c0cb !important;
+}
+
+body[dir="rtl"] .login-btn {
+  font-family: "NeoSansArabic" !important;
 }
 
 .login-btn:is(:hover, ) {
@@ -103,8 +111,10 @@ body[dir="rtl"] .Icon-Field-class {
 }
 
 body[dir="rtl"] .form-comtrol-textfield {
+  font-family: "NeoSansArabic" !important;
+  border-top-right-radius: 0px !important;
+  border-bottom-right-radius: 0px !important;
   height: 37px !important;
-  font-family: "Montserrat", sans-serif !important;
   font-weight: 500;
   background: rgba(255, 255, 255, 0.5) !important;
   font-size: 14px !important;
@@ -112,8 +122,6 @@ body[dir="rtl"] .form-comtrol-textfield {
   color: #002650 !important;
   box-shadow: none !important;
   border: 1px solid #ced4da !important;
-  border-top-right-radius: 0px !important;
-  border-bottom-right-radius: 0px !important;
 }
 
 .signIn-Signup-btn-col {
@@ -128,6 +136,10 @@ body[dir="rtl"] .form-comtrol-textfield {
   font-size: 14px !important;
   font-weight: 500;
   cursor: pointer !important;
+}
+
+body[dir="rtl"] .forget-lablel-text {
+  font-family: "NeoSansArabic" !important;
 }
 
 .forget-lablel-text:hover {
@@ -148,6 +160,10 @@ body[dir="rtl"] .form-comtrol-textfield {
   visibility: visible !important;
 }
 
+body[dir="rtl"] .errorMessageLogin {
+  font-family: "NeoSansArabic" !important;
+}
+
 .errorMessageLogin_hidden {
   visibility: hidden;
   margin: 0;
@@ -163,6 +179,10 @@ body[dir="rtl"] .form-comtrol-textfield {
   color: #f16b6b;
   font-family: "Montserrat", sans-serif !important;
   visibility: visible !important;
+}
+
+body[dir="rtl"] .errorPasswordSignInMessage {
+  font-family: "NeoSansArabic" !important;
 }
 
 .errorPasswordSignInMessage_hidden {

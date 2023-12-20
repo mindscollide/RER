@@ -25,15 +25,19 @@
   border-color: #7484b7 !important;
 }
 
+body[dir="rtl"] .Search-Icon-Btn {
+  font-family: "NeoSansArabic" !important;
+}
+
 .Search-Icon-Btn:hover {
   background: linear-gradient(to bottom, #77c0cb 0%, #2c9cc0 100%);
   border-color: #77c0cb !important;
 }
 
-.citywisebranchwiseselector {
+/* .citywisebranchwiseselector {
   width: 100% !important;
   max-width: 450px !important;
-}
+} */
 
 .city-icon-space {
   margin-right: 5px !important;

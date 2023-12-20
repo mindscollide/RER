@@ -3,7 +3,12 @@ import {
   combineReducers,
   configureStore,
 } from "@reduxjs/toolkit";
-import { loader_Reducers, authReducer, adminReducer } from "./reducers";
+import {
+  loader_Reducers,
+  authReducer,
+  adminReducer,
+  globalReducer,
+} from "./reducers";
 import thunk from "redux-thunk";
 import * as actions from "./action_types";
 import { composeWithDevTools } from "redux-devtools-extension";
@@ -14,6 +19,7 @@ const AppReducer = combineReducers({
   Loader: loader_Reducers,
   auth: authReducer,
   admin: adminReducer,
+  global: globalReducer,
 });
 // const rootReducer = (state, action) => {
 //   if (action.type === actions.SIGN_OUT) {

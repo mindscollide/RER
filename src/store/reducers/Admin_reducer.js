@@ -23,10 +23,30 @@ const initialState = {
   addedCityBranchData: null,
   deletedCityBranchData: null,
   updatedCityBranchData: null,
+  cityServiceListData: null,
+  cityBranchWiseData: null,
+  updateCityBranchWiseData: null,
+  getBranchShiftWiseCounter: null,
+  cityEmployeeMain: null,
+  addNewEmployeeData: null,
+  updateExistingEmployeeData: null,
+  deleteExistingEmployeeData: null,
+  countryNationalHoliday: null,
+  addCountryNationalData: null,
+  deleteCountryNational: null,
+  isEditEmployeeFlag: false,
 };
 
 const adminReducer = (state = initialState, action) => {
   switch (action.type) {
+    //Response Message Admin Clear
+    case actions.CLEAR_RESPONSEMESSAGE_ADMIN: {
+      return {
+        ...state,
+        admin_ResponseMessage: action.response,
+      };
+    }
+
     // For Admin Cleare State
     case actions.ADMIN_CLEARE_STATE:
       return {
@@ -341,6 +361,192 @@ const adminReducer = (state = initialState, action) => {
       return {
         ...state,
         updatedCityBranchData: null,
+        admin_ResponseMessage: action.message,
+      };
+
+    //Get  Country Wise City for listing down existing services in city
+    case actions.GET_CITY_SERVICE_LIST_SUCCESS:
+      return {
+        ...state,
+        cityServiceListData: action.response,
+        admin_ResponseMessage: action.message,
+      };
+
+    case actions.GET_CITY_SERVICE_LIST_FAIL:
+      return {
+        ...state,
+        cityServiceListData: null,
+        admin_ResponseMessage: action.message,
+      };
+
+    //Country Wise City for updating all existing services in a city in a single request
+    case actions.UPDATE_CITY_SERVICE_LIST_SUCCESS:
+      return {
+        ...state,
+        admin_ResponseMessage: action.message,
+      };
+
+    case actions.UPDATE_CITY_SERVICE_LIST_FAIL:
+      return {
+        ...state,
+        admin_ResponseMessage: action.message,
+      };
+
+    // Get City Branch Services in City Admin
+    case actions.GET_CITY_BRANCH_SERVICE_SUCCESS:
+      return {
+        ...state,
+        cityBranchWiseData: action.response,
+        admin_ResponseMessage: action.message,
+      };
+
+    case actions.GET_CITY_BRANCH_SERVICE_FAIL:
+      return {
+        ...state,
+        cityBranchWiseData: null,
+        admin_ResponseMessage: action.message,
+      };
+
+    // Update City Branch Services in City Admin
+    case actions.UPDATE_CITY_BRANCH_SERVICE_SUCCESS:
+      return {
+        ...state,
+        updateCityBranchWiseData: action.response,
+        admin_ResponseMessage: action.message,
+      };
+
+    case actions.UPDATE_CITY_BRANCH_SERVICE_FAIL:
+      return {
+        ...state,
+        updateCityBranchWiseData: null,
+        admin_ResponseMessage: action.message,
+      };
+
+    // Get Branch shift wise Counter in City Admin
+    case actions.GET_BRANCH_SHIFT_COUNTER_SUCCESS:
+      return {
+        ...state,
+        getBranchShiftWiseCounter: action.response,
+        admin_ResponseMessage: action.message,
+      };
+
+    case actions.GET_BRANCH_SHIFT_COUNTER_FAIL:
+      return {
+        ...state,
+        getBranchShiftWiseCounter: null,
+        admin_ResponseMessage: action.message,
+      };
+
+    // Get City Employee Main in City Admin
+    case actions.GET_CITY_EMPLOYEE_SUCCESS:
+      return {
+        ...state,
+        cityEmployeeMain: action.response,
+        admin_ResponseMessage: action.message,
+      };
+
+    case actions.GET_CITY_EMPLOYEE_FAIL:
+      return {
+        ...state,
+        cityEmployeeMain: null,
+        admin_ResponseMessage: action.message,
+      };
+
+    // Add New Employyee Data in City Admin
+    case actions.ADD_NEW_EMPLOYEE_CITY_SUCCESS:
+      return {
+        ...state,
+        addNewEmployeeData: action.response,
+        admin_ResponseMessage: action.message,
+      };
+
+    case actions.ADD_NEW_EMPLOYEE_CITY_FAIL:
+      return {
+        ...state,
+        addNewEmployeeData: null,
+        admin_ResponseMessage: action.message,
+      };
+
+    // Update Existing Employee Data in City Admin
+    case actions.UPDATE_EXISTING_EMPLOYEE_CITY_SUCCESS:
+      return {
+        ...state,
+        updateExistingEmployeeData: action.response,
+        admin_ResponseMessage: action.message,
+      };
+
+    case actions.UPDATE_EXISTING_EMPLOYEE_CITY_FAIL:
+      return {
+        ...state,
+        updateExistingEmployeeData: null,
+        admin_ResponseMessage: action.message,
+      };
+
+    case actions.ADD_EDIT_MODAL_EMPLOYEE:
+      return {
+        ...state,
+        isEditEmployeeFlag: action.response,
+      };
+
+    // Update Existing Employee Data in City Admin
+    case actions.DELETE_EXISTING_EMPLOYEE_CITY_SUCCESS:
+      return {
+        ...state,
+        deleteExistingEmployeeData: action.response,
+        admin_ResponseMessage: action.message,
+      };
+
+    case actions.DELETE_EXISTING_EMPLOYEE_CITY_FAIL:
+      return {
+        ...state,
+        deleteExistingEmployeeData: null,
+        admin_ResponseMessage: action.message,
+      };
+
+    // ===================================COUNTRY ADMIN==========================================//
+
+    // get Country National Holiday in Country admin
+    case actions.GET_NATIONAL_HOLIDAY_SUCCESS:
+      return {
+        ...state,
+        countryNationalHoliday: action.response,
+        admin_ResponseMessage: action.message,
+      };
+
+    case actions.GET_NATIONAL_HOLIDAY_FAIL:
+      return {
+        ...state,
+        countryNationalHoliday: null,
+        admin_ResponseMessage: action.message,
+      };
+
+    // add country National Holiday in Country admin
+    case actions.ADD_NATIONAL_HOLIDAY_SUCCESS:
+      return {
+        ...state,
+        addCountryNationalData: action.response,
+        admin_ResponseMessage: action.message,
+      };
+
+    case actions.ADD_NATIONAL_HOLIDAY_FAIL:
+      return {
+        ...state,
+        addCountryNationalData: null,
+        admin_ResponseMessage: action.message,
+      };
+
+    // delete country National Holiday in Country Admin
+    case actions.DELETE_NATIONAL_HOLIDAY_SUCCESS:
+      return {
+        ...state,
+        deleteCountryNational: action.response,
+        admin_ResponseMessage: action.message,
+      };
+
+    case actions.DELETE_NATIONAL_HOLIDAY_FAIL:
+      return {
+        ...state,
+        deleteCountryNational: null,
         admin_ResponseMessage: action.message,
       };
 

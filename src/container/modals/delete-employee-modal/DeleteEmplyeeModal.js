@@ -7,6 +7,7 @@ import {
   deleteBranchCounterApi,
   deleteBranchShiftApi,
   deleteCityBranchApi,
+  deleteExistingEmployeeMainApi,
 } from "../../../store/actions/Admin_action";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router";
@@ -16,6 +17,7 @@ const DeleteEmployeeModal = ({
   setDeleteModal,
   deleteID,
   route,
+  employeeIDToDelete,
 }) => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
@@ -50,6 +52,22 @@ const DeleteEmployeeModal = ({
       };
       await dispatch(
         deleteCityBranchApi(t, navigate, Loading, data, setDeleteModal)
+      );
+    } else if (route === "EmployeeMain") {
+      console.log("employeeIDToDelete", employeeIDToDelete);
+      let data = {
+        EmployeeID: employeeIDToDelete,
+        BranchID: Number(localStorage.getItem("branchID")),
+        CityID: Number(localStorage.getItem("cityID")),
+      };
+      await dispatch(
+        deleteExistingEmployeeMainApi(
+          t,
+          navigate,
+          Loading,
+          data,
+          setDeleteModal
+        )
       );
     }
   };

@@ -58,7 +58,6 @@ const CountryCityWiseShift = () => {
       dataIndex: "shiftName",
       key: "shiftName",
       width: "400px",
-      align: "left",
     },
 
     {
@@ -101,7 +100,7 @@ const CountryCityWiseShift = () => {
                       onChange={setSelectedOption}
                       options={options}
                       isSearchable={true}
-                      className="CountryCityShiftselector"
+                      className="select-dropdown-all"
                     />
                   </span>
                 </Col>
@@ -113,7 +112,7 @@ const CountryCityWiseShift = () => {
                       onChange={setSelectedOption}
                       options={options}
                       isSearchable={true}
-                      className="CountryCityShiftselector"
+                      className="select-dropdown-all"
                     />
                   </span>
                 </Col>
