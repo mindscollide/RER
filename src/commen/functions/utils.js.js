@@ -52,7 +52,7 @@ export function generateMenuItems(roleID, t) {
         getItem(t("Counters"), "16"),
         getItem(t("Employee"), "17"),
         getItem(t("Holidays"), "19"),
-        getItem(t("Country Working"), "29"),
+        getItem(t("Working-days"), "29"),
       ],
       "menu-item-sub"
     ),

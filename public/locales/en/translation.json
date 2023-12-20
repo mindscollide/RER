@@ -151,6 +151,7 @@
   "Admin_AdminServiceManager_DeleteBranchShift_02": "Shift Not Found",
   "Shifts": "Shifts",
   "Holidays": "Holidays",
+  "Working-days": "Working Days",
   "Admin_AdminServiceManager_AddCityBranch_01": "Branch Created Successfully",
   "Admin_AdminServiceManager_AddCityBranch_02": "Branch Creation Failed",
   "Admin_AdminServiceManager_UpdateCityBranch_01": "Branch Details Updated",

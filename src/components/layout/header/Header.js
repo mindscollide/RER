@@ -19,9 +19,10 @@ const Header = ({ isLoginScreen }) => {
   const navigate = useNavigate();
   const location = useLocation();
   const { t, i18n } = useTranslation();
-  const loading = useSelector((state) => state.Loader.Loading);
+  const baseRoute = location.pathname.split("/")[1];
   let currentUserID = Number(localStorage.getItem("userID"));
   let languageData = JSON.parse(localStorage.getItem("languageData"));
+  const loading = useSelector((state) => state.Loader.Loading);
   const [selectedLanguage, setSelectedLanguage] = useState({
     systemSupportedLanguageID:
       localStorage.getItem("i18nextLng") === null
@@ -118,28 +119,25 @@ const Header = ({ isLoginScreen }) => {
   };
 
   const handleSelectFromHeaderMenu = async (eventKey, event) => {
-    let lang = Number(eventKey);
-    if (lang === 3) {
+    let value = Number(eventKey);
+    if (value === 8) {
       await dispatch(signOut(navigate));
     }
   };
-
   return (
     <>
       {loading ? <Loader /> : null}
       <Navbar expand="lg" className="site-header">
         <Container fluid className="page-gutter">
-          <Navbar.Brand href="#">
-            {location.pathname !== "/" && location.pathname !== "/Forgot" ? (
-              <>
-                <img
-                  src={process.env.PUBLIC_URL + "/REM-Logo.svg"}
-                  width="110"
-                  alt="REM Logo"
-                />
-              </>
-            ) : null}
-          </Navbar.Brand>
+          {location.pathname !== "/" && location.pathname !== "/Forgot" ? (
+            <Navbar.Brand href={"/#/" + baseRoute}>
+              <img
+                src={process.env.PUBLIC_URL + "/REM-Logo.svg"}
+                width="110"
+                alt="REM Logo"
+              />
+            </Navbar.Brand>
+          ) : null}
           <Nav
             className="align-items-center flex-row flex-sm-row flex-xs-column 
           flex-md-row 
@@ -169,7 +167,7 @@ const Header = ({ isLoginScreen }) => {
                 </div>
               }
               onSelect={handleChangeLocale}
-              id="user-dropdown"
+              id="language-dropdown"
               menuVariant="light"
               className="ms-md-2" // Margin added to separate dropdowns on larger screens
             >
@@ -223,16 +221,16 @@ const Header = ({ isLoginScreen }) => {
                   <NavDropdown.Item
                     data-bs-toggle="modal"
                     data-bs-target="#UserSettingModal"
-                    eventKey={1}
+                    eventKey={6}
                   >
                     <i className="icon-settings me-1" />
                     <span>{t("Setting")}</span>
                   </NavDropdown.Item>
-                  <NavDropdown.Item eventKey={2}>
+                  <NavDropdown.Item eventKey={7}>
                     <i className="icon-lock me-1"></i>
                     <span>{t("Lock-screen")}</span>
                   </NavDropdown.Item>
-                  <NavDropdown.Item eventKey={3}>
+                  <NavDropdown.Item eventKey={8}>
                     <i className="icon-logout me-1"></i>
                     <span>{t("Logout")}</span>
                   </NavDropdown.Item>

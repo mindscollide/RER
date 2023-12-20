@@ -151,6 +151,7 @@
   "Admin_AdminServiceManager_DeleteBranchShift_02": "لم يتم العثور على التحول",
   "Shifts": "التحولات",
   "Holidays": "العطل",
+  "Working-days": "أيام العمل",
   "Admin_AdminServiceManager_AddCityBranch_01": "Branch Created Successfully",
   "Admin_AdminServiceManager_AddCityBranch_02": "Branch Creation Failed",
   "Admin_AdminServiceManager_UpdateCityBranch_01": "Branch Details Updated",
