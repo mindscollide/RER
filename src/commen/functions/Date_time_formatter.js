@@ -66,3 +66,17 @@ export const getCurrentDateUTC = () => {
   const day = currentDate.getUTCDate().toString().padStart(2, "0");
   return `${year}${month}${day}`;
 };
+
+// Function to generate a date range between start and end dates
+export const generateDateRange = (start, end) => {
+  const startDate = new Date(start);
+  const endDate = new Date(end);
+  const dateRange = [];
+  let currentDate = startDate;
+  while (currentDate <= endDate) {
+    dateRange.push(currentDate.toISOString().slice(0, 10).replace(/-/g, ""));
+    currentDate.setDate(currentDate.getDate() + 1);
+  }
+
+  return dateRange;
+};

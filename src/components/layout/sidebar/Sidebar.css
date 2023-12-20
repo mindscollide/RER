@@ -45,17 +45,17 @@ body[dir="rtl"] .ant-layout .ant-layout-sider-children {
 .menu-item {
   color: #4b5576 !important;
   font-weight: 600 !important;
-  font-family: "Montserrat", sans-serif !important;
-  font-size: 15px !important;
+  font-family: "Montserrat", sans-serif;
+  font-size: 15px;
 }
 
 .menu-item-two {
   color: #4b5576 !important;
   font-weight: 600 !important;
-  font-family: "Montserrat", sans-serif !important;
+  font-family: "Montserrat", sans-serif;
   font-size: 15px !important;
-  border-top: 1px solid #e2e6e9 !important;
-  border-bottom: 1px solid #e2e6e9 !important;
+  border-top: 1px solid #e2e6e9;
+  border-bottom: 1px solid #e2e6e9;
   border-radius: 0px !important;
 }
 
