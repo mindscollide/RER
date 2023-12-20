@@ -134,6 +134,50 @@ const updateCityBranchService = {
 };
 // =================== City Branch Service End =====================
 
+// for get Branch Shift Wise Counter
+const getBranchShiftWiseCounter = {
+  RequestMethod: "ServiceManager.GetBranchShiftWiseCounter",
+};
+
+//for get city Employees Main
+const getCityEmployee = {
+  RequestMethod: "ServiceManager.GetCityEmployees",
+};
+
+// for add New Employee of City
+const addNewEmployeeCity = {
+  RequestMethod: "ServiceManager.AddNewEmployeeOfCity",
+};
+
+// for update Existing Employee Of City
+const updateExistingEmployeeCity = {
+  RequestMethod: "ServiceManager.UpdateExistingEmployeeOfCity",
+};
+
+// for delete Existing Employee Of City
+const deleteExistingEmployeeCity = {
+  RequestMethod: "ServiceManager.DeleteExistingEmployeeOfCity",
+};
+
+// ===================================CITY ADMIN END ==========================================//
+
+// ===================================COUNTRY ADMIN START ==========================================//
+
+// for get country national holiday COUNTRY ADMIN
+const getCountryNationalHoliday = {
+  RequestMethod: "ServiceManager.GetCountryNationalHoliday",
+};
+
+//for add country National Holiday COUNTRY ADMIN
+const addCountryNationalHoliday = {
+  RequestMethod: "ServiceManager.AddCountryNationalHoliday",
+};
+
+//for delete country National Holiday COUNTRY ADMIN
+const deleteCountryNationalHoliday = {
+  RequestMethod: "ServiceManager.DeleteCountryNationalHoliday",
+};
+
 export {
   logIn,
   roleList,
@@ -162,8 +206,18 @@ export {
   updateCityBranch,
   getCityServiceList,
   updateCityServiceList,
-
-  // =================== City Branch Service Start =====================
   getCityBranchServices,
   updateCityBranchService,
+  getBranchShiftWiseCounter,
+  getCityEmployee,
+  addNewEmployeeCity,
+  updateExistingEmployeeCity,
+  deleteExistingEmployeeCity,
+  // ===================================CITY ADMIN END ==========================================//
+
+  // ===================================COUNTRY ADMIN START ==========================================//
+  getCountryNationalHoliday,
+  addCountryNationalHoliday,
+  deleteCountryNationalHoliday,
+  // ===================================COUNTRY ADMIN END ==========================================//
 };

@@ -146,13 +146,3 @@ body[dir="rtl"] .text-fiels-cityAdmin-arabic {
   font-weight: 500 !important;
   text-align: start !important;
 }
-
-.go-back-arrow {
-  font-size: 20px !important;
-  color: #000 !important;
-}
-
-.go-back-arrow:hover {
-  font-size: 20px !important;
-  color: rgb(82, 79, 79) !important;
-}

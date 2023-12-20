@@ -1,40 +1,71 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Row, Col } from "react-bootstrap";
 import "./NationalHoliday.css";
 import { Paper, Button, Table } from "../../../components/elements";
 import { useTranslation } from "react-i18next";
+import {
+  getNationalHolidayMainApi,
+  deleteNationalHolidayMainApi,
+  addNationalHolidayMainApi,
+} from "../../../store/actions/Admin_action";
 import Select from "react-select";
+import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router";
+import DatePicker, { DateObject } from "react-multi-date-picker";
 
 const NationalHoliday = () => {
   const { t } = useTranslation();
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const loadingFlag = useSelector((state) => state.Loader.Loading);
+  const countryNationalHoliday = useSelector(
+    (state) => state.admin.countryNationalHoliday
+  );
+  const [values, setValues] = useState([
+    new DateObject().subtract(4, "days"),
+    new DateObject().add(4, "days"),
+  ]);
+  const deleteCountryNational = useSelector(
+    (state) => state.admin.deleteCountryNational
+  );
+  console.log(deleteCountryNational, "deleteCountryNational");
 
-  const dataSource = [
-    {
-      id: 1,
-      shiftName: <span className="table-inside-text">10-Aug-23</span>,
-      Counter: <span className="table-inside-text">Counter 1</span>,
-      Service: <span className="table-inside-text">First Registry</span>,
-    },
-    {
-      id: 2,
-      shiftName: <span className="table-inside-text">9-Aug-23</span>,
-      Counter: <span className="table-inside-text">Counter 1</span>,
-      Service: <span className="table-inside-text">First Registry</span>,
-    },
-    {
-      id: 3,
-      shiftName: <span className="table-inside-text">8-Aug-23</span>,
-      Counter: <span className="table-inside-text">Counter 1</span>,
-      Service: <span className="table-inside-text">First Registry</span>,
-    },
-  ];
+  // state for table rendering
+  const [rows, setRows] = useState([]);
+
+  // for api calling
+  useEffect(() => {
+    dispatch(getNationalHolidayMainApi(t, navigate, loadingFlag));
+  }, []);
+
+  // for data rendering in table
+  useEffect(() => {
+    if (
+      countryNationalHoliday !== null &&
+      Array.isArray(countryNationalHoliday)
+    ) {
+      setRows(countryNationalHoliday);
+    } else {
+      setRows([]);
+    }
+  }, [countryNationalHoliday]);
+
+  const onDeleteIcon = (record) => {
+    const { nationalHolidayList } = record;
+    let newDate = JSON.stringify(nationalHolidayList);
+
+    dispatch(deleteNationalHolidayMainApi(t, navigate, loadingFlag, newDate));
+  };
 
   const columns = [
     {
       title: <span className="table-text">{t("Date")}</span>,
-      dataIndex: "shiftName",
-      key: "shiftName",
+      dataIndex: "nationalHolidayList",
+      key: "nationalHolidayList",
       width: "400px",
+      render: (text, record) => (
+        <span className="table-inside-text">{record}</span>
+      ),
     },
 
     {
@@ -46,7 +77,10 @@ const NationalHoliday = () => {
       render: (text, record) => (
         <>
           <span>
-            <i className="icon-trash icon-close-style-delete"></i>
+            <i
+              className="icon-trash icon-close-style-delete"
+              onClick={() => onDeleteIcon(record)}
+            ></i>
           </span>
         </>
       ),
@@ -77,6 +111,8 @@ const NationalHoliday = () => {
                   sm={12}
                   className="btn-col-class-NationalHoliday"
                 >
+                  <DatePicker value={values} onChange={setValues} range />
+
                   <Button
                     icon={<i className="icon-repeat icon-space"></i>}
                     text={t("Revert")}
@@ -91,11 +127,7 @@ const NationalHoliday = () => {
               </Row>
               <Row className="mt-2">
                 <Col lg={12} md={12} sm={12}>
-                  <Table
-                    rows={dataSource}
-                    column={columns}
-                    pagination={false}
-                  />
+                  <Table rows={rows} column={columns} pagination={false} />
                 </Col>
               </Row>
             </Paper>
