@@ -167,7 +167,11 @@ const BranchAdmin = () => {
           record?.shiftStartTime !== null &&
           record?.shiftStartTime !== null
         ) {
-          return convertToGMT(record?.shiftStartTime, local);
+          return (
+            <span className="table-inside-text">
+              {convertToGMT(record?.shiftStartTime, local)}
+            </span>
+          );
         }
       },
     },
@@ -177,7 +181,11 @@ const BranchAdmin = () => {
       key: "shiftEndTime",
       render: (text, record) => {
         if (record?.shiftEndTime !== null && record?.shiftEndTime !== null) {
-          return convertToGMT(record?.shiftEndTime, local);
+          return (
+            <span className="table-inside-text">
+              {convertToGMT(record?.shiftEndTime, local)}
+            </span>
+          );
         }
       },
     },
