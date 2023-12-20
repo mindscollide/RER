@@ -195,5 +195,7 @@
   "Employee-id": "Employee ID",
   "Employee-email": "Employee Email",
   "Admin_AdminServiceManager_GetAppointmentReportBranchAdmin_01": "Appointment Report Available",
-  "Admin_AdminServiceManager_GetAppointmentReportBranchAdmin_02": "No Report Found for given search criteria"
+  "Admin_AdminServiceManager_GetAppointmentReportBranchAdmin_02": "No Report Found for given search criteria",
+  "From-date": "From Date",
+  "to-date": "To date"
 }

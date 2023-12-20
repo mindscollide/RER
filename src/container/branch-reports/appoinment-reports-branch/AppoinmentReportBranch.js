@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Row, Col } from "react-bootstrap";
 import "./AppoinmentReportBranch.css";
 import { Paper, Table, Button, TextField } from "../../../components/elements";
+import DatePicker from "react-multi-date-picker";
 import { Switch } from "antd";
 import { useTranslation } from "react-i18next";
 import Select from "react-select";
@@ -41,6 +42,9 @@ const AppoinmentReportBranch = () => {
   );
   const [apppointmentOptionsServices, setApppointmentOptionsServices] =
     useState([]);
+
+  const [fromDate, setFromDate] = useState(new Date());
+  const [toDate, setToDate] = useState(new Date());
 
   const dataSource = [
     {
@@ -211,17 +215,31 @@ const AppoinmentReportBranch = () => {
                   lg={3}
                   md={3}
                   sm={3}
-                  className="d-flex justify-content-center"
+                  className="col-for-date-timepicker-cityad"
                 >
-                  <TextField placeholder={"From Date"} />
+                  <label className="text-labels">{t("From-date")}</label>
+                  <DatePicker
+                    arrowClassName="arrowClass"
+                    containerClassName="containerClassTimePicker"
+                    editable={false}
+                    value={fromDate}
+                    onChange={(value) => setFromDate(value)}
+                  />
                 </Col>
                 <Col
                   lg={3}
                   md={3}
                   sm={3}
-                  className="d-flex justify-content-center"
+                  className="col-for-date-timepicker-cityad"
                 >
-                  <TextField placeholder={"To Date"} />
+                  <label className="text-labels">{t("to-date")}</label>
+                  <DatePicker
+                    arrowClassName="arrowClass"
+                    containerClassName="containerClassTimePicker"
+                    editable={false}
+                    value={toDate}
+                    onChange={(value) => setToDate(value)}
+                  />
                 </Col>
               </Row>
               <Row className="mx-auto d-flex align-items-center justify-content-center mt-4">
