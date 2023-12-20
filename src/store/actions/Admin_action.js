@@ -3589,6 +3589,7 @@ const getAppointmentReportBranchAPI = (data, t, navigate, loadingFlag) => {
                   )
                 )
               );
+              await dispatch(loader_Actions(false));
             } else if (
               response.data.responseResult.responseMessage ===
               "Admin_AdminServiceManager_GetAppointmentReportBranchAdmin_02"

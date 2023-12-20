@@ -14,6 +14,13 @@ import {
   getAppointmentReportBranchAPI,
   getBranchServicesApi,
 } from "../../../store/actions/Admin_action";
+import {
+  convertDateforInputUTC,
+  convertToGMT,
+  convertToUTC,
+  getCurrentDateUTC,
+  multiDatePickerDateChangIntoUTC,
+} from "../../../commen/functions/Date_time_formatter";
 
 const AppoinmentReportBranch = () => {
   const { t } = useTranslation();
@@ -36,6 +43,10 @@ const AppoinmentReportBranch = () => {
     (state) => state.admin.branchServicesData
   );
 
+  const getAppointmentData = useSelector(
+    (state) => state.admin.getAppointmentBranchReportData
+  );
+
   //Appointment Report states
   const [apppointmentOptionsShift, setApppointmentOptionsShift] = useState([]);
   const [apppointmentOptionsCounter, setApppointmentOptionsCounter] = useState(
@@ -44,6 +55,10 @@ const AppoinmentReportBranch = () => {
   const [apppointmentOptionsServices, setApppointmentOptionsServices] =
     useState([]);
 
+  const [appointmentReportData, setAppointmentReportData] = useState([]);
+  const [selectedOptionsShift, setSelectedOptionsShift] = useState(null);
+  const [selectedOptionsCounter, setSelectedOptionsCounter] = useState(null);
+  const [selectedOptionsSerives, setSelectedOptionsSerives] = useState(null);
   const [fromDate, setFromDate] = useState(new Date());
   const [toDate, setToDate] = useState(() => {
     const today = new Date();
@@ -51,47 +66,19 @@ const AppoinmentReportBranch = () => {
     return futureDate;
   });
 
-  const dataSource = [
-    {
-      id: 1,
-      visitor: <span className="table-inside-text">Huzeifah Jahangir</span>,
-      mobile: <span className="table-inside-text">2356165415</span>,
-      Service: <span className="table-inside-text">First Registry</span>,
-      Date: <span className="table-inside-text">15-Dec-2023</span>,
-      Time: <span className="table-inside-text">9:30 pm</span>,
-      Email: <span className="table-inside-text">test@gmail.com</span>,
-    },
-    {
-      id: 2,
-      visitor: <span className="table-inside-text">Ahmed</span>,
-      mobile: <span className="table-inside-text">2356165415</span>,
-      Service: <span className="table-inside-text">First Registry</span>,
-      Date: <span className="table-inside-text">14-Dec-2023</span>,
-      Time: <span className="table-inside-text">9:30 pm</span>,
-      Email: <span className="table-inside-text">test@gmail.com</span>,
-    },
-    {
-      id: 3,
-      visitor: <span className="table-inside-text">Qasim</span>,
-      mobile: <span className="table-inside-text">2356165415</span>,
-      Service: <span className="table-inside-text">Change Ownership</span>,
-      Date: <span className="table-inside-text">13-Dec-2023</span>,
-      Time: <span className="table-inside-text">9:30 pm</span>,
-      Email: <span className="table-inside-text">test@gmail.com</span>,
-    },
-  ];
+  const local = currentLanguage === "en" ? "en-US" : "ar-SA";
 
   const columns = [
     {
       title: <span className="table-text">{t("Visitor-Name")}</span>,
-      dataIndex: "visitor",
-      key: "visitor",
-      width: "200px",
+      dataIndex: "visitorName",
+      key: "visitorName",
+      width: "230px",
     },
     {
       title: <span className="table-text">{t("Mobile")}</span>,
-      dataIndex: "mobile",
-      key: "mobile",
+      dataIndex: "mobileNumber",
+      key: "mobileNumber",
       width: "200px",
     },
     {
@@ -102,21 +89,58 @@ const AppoinmentReportBranch = () => {
     },
     {
       title: <span className="table-text">{t("Date")}</span>,
-      dataIndex: "Date",
-      key: "Date",
+      dataIndex: "appointmentDate",
+      key: "appointmentDate",
       width: "200px",
     },
     {
       title: <span className="table-text">{t("Time")}</span>,
-      dataIndex: "Time",
-      key: "Time",
+      dataIndex: "appointmentTime",
+      key: "appointmentTime",
       width: "200px",
+      render: (text, record) => {
+        return (
+          <>
+            <span>{convertToGMT(record?.appointmentTime, local)}</span>
+          </>
+        );
+      },
     },
     {
       title: <span className="table-text">{t("Email")}</span>,
-      dataIndex: "Email",
-      key: "Email",
+      dataIndex: "email",
+      key: "email",
       width: "200px",
+    },
+
+    {
+      title: <span className="table-text">{t("Deed-number")}</span>,
+      dataIndex: "deedNumber",
+      key: "deedNumber",
+      width: "200px",
+      render: (text, record) => {
+        return record.deedNumber === null ? (
+          ""
+        ) : (
+          <span>{record.deedNumber}</span>
+        );
+      },
+    },
+
+    {
+      title: <span className="table-text">{t("Service-location")}</span>,
+      dataIndex: "isAtCustomerLocation",
+      key: "isAtCustomerLocation",
+      width: "200px",
+      render: (text, record) => {
+        return record.isAtCustomerLocation === false ? (
+          <span>Branch</span>
+        ) : (
+          <>
+            <span>Location</span>
+          </>
+        );
+      },
     },
   ];
 
@@ -198,12 +222,69 @@ const AppoinmentReportBranch = () => {
     }
   }, [globalBranchServicesOptions, currentLanguage]);
 
-  //function For Search
+  const handleServiceOnChange = (servicesSelectedOption) => {
+    setSelectedOptionsSerives(servicesSelectedOption);
+  };
 
+  const handleShiftOnChange = (shiftSelectedOption) => {
+    setSelectedOptionsShift(shiftSelectedOption);
+  };
+
+  const handleCounteronChange = (counterSelectedOptions) => {
+    setSelectedOptionsCounter(counterSelectedOptions);
+  };
+
+  const handleStartDateChange = (date) => {
+    setFromDate(date);
+  };
+
+  const handleEndDateChange = (date) => {
+    setToDate(date);
+  };
+
+  console.log(fromDate, toDate, "getAppointmentReportBranchAPI");
+
+  //function For Search
   const handleSearchAppointment = () => {
-    let data = {};
+    let data = {
+      CountryID: Number(localStorage.getItem("countryID")),
+      CityID: Number(localStorage.getItem("branchID")),
+      BranchID: Number(localStorage.getItem("cityID")),
+      ServiceID: selectedOptionsSerives.value,
+      ShiftID: selectedOptionsShift.value,
+      CounterID: selectedOptionsCounter.value,
+      StartDate: multiDatePickerDateChangIntoUTC(fromDate),
+      EndDate: multiDatePickerDateChangIntoUTC(toDate),
+      PageNumber: 1,
+      Length: 50,
+    };
+    console.log(data, "getAppointmentReportBranchAPI");
     dispatch(getAppointmentReportBranchAPI(data, t, navigate, Loading));
   };
+
+  const handleResetAppointment = () => {
+    setSelectedOptionsSerives(null);
+    setSelectedOptionsShift(null);
+    setSelectedOptionsCounter(null);
+    setFromDate(new Date());
+    setToDate(() => {
+      const today = new Date();
+      const futureDate = new Date(today.getTime() + 10 * 24 * 60 * 60 * 1000);
+      return futureDate;
+    });
+  };
+
+  useEffect(() => {
+    if (
+      getAppointmentData !== null &&
+      getAppointmentData !== undefined &&
+      getAppointmentData.length !== 0
+    ) {
+      setAppointmentReportData(getAppointmentData);
+    } else {
+      setAppointmentReportData([]);
+    }
+  }, [getAppointmentData]);
 
   return (
     <>
@@ -235,7 +316,7 @@ const AppoinmentReportBranch = () => {
                     containerClassName="containerClassTimePicker"
                     editable={false}
                     value={fromDate}
-                    onChange={(value) => setFromDate(value)}
+                    onChange={handleStartDateChange}
                   />
                 </Col>
                 <Col
@@ -250,7 +331,7 @@ const AppoinmentReportBranch = () => {
                     containerClassName="containerClassTimePicker"
                     editable={false}
                     value={toDate}
-                    onChange={(value) => setToDate(value)}
+                    onChange={handleEndDateChange}
                   />
                 </Col>
               </Row>
@@ -259,9 +340,11 @@ const AppoinmentReportBranch = () => {
                   <span className="d-flex flex-column w-100">
                     <label className="text-labels">{t("Service")}</label>
                     <Select
-                      isSearchable={true}
+                      value={selectedOptionsSerives}
                       className="select-dropdown-all"
                       options={apppointmentOptionsServices}
+                      isSearchable={false}
+                      onChange={handleServiceOnChange}
                       // className="Branch-Screen-Select"
                     />
                   </span>
@@ -270,9 +353,11 @@ const AppoinmentReportBranch = () => {
                   <span className="d-flex flex-column w-100">
                     <label className="text-labels">{t("Shift")}</label>
                     <Select
-                      isSearchable={true}
+                      isSearchable={false}
+                      value={selectedOptionsShift}
                       className="select-dropdown-all"
                       options={apppointmentOptionsShift}
+                      onChange={handleShiftOnChange}
                       // className="Branch-Screen-Select"
                     />
                   </span>
@@ -282,9 +367,11 @@ const AppoinmentReportBranch = () => {
                   <span className="d-flex flex-column w-100">
                     <label className="text-labels">{t("Counter")}</label>
                     <Select
-                      isSearchable={true}
+                      isSearchable={false}
                       className="select-dropdown-all"
+                      value={selectedOptionsCounter}
                       options={apppointmentOptionsCounter}
+                      onChange={handleCounteronChange}
                       // className="Branch-Screen-Select"
                     />
                   </span>
@@ -308,7 +395,7 @@ const AppoinmentReportBranch = () => {
                     icon={<i className="icon-refresh icon-space"></i>}
                     text={t("Reset")}
                     className="Reset-btn-Counter"
-                    // onClick={handleResetAppointment}
+                    onClick={handleResetAppointment}
                   />
                 </Col>
               </Row>
@@ -316,7 +403,7 @@ const AppoinmentReportBranch = () => {
               <Row className="mt-4">
                 <Col lg={12} md={12} sm={12}>
                   <Table
-                    rows={dataSource}
+                    rows={appointmentReportData}
                     column={columns}
                     pagination={false}
                   />

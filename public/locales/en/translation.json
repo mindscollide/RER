@@ -197,5 +197,7 @@
   "Admin_AdminServiceManager_GetAppointmentReportBranchAdmin_01": "Appointment Report Available",
   "Admin_AdminServiceManager_GetAppointmentReportBranchAdmin_02": "No Report Found for given search criteria",
   "From-date": "From Date",
-  "to-date": "To date"
+  "to-date": "To date",
+  "Deed-number": "Deed Number",
+  "Service-location": "Service Location"
 }
