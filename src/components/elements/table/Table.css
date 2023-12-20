@@ -60,11 +60,11 @@
   .ant-table-thead
   > tr
   > td {
-  position: relative;
-  color: #ffffff;
+  position: relative !important;
+  color: #ffffff !important;
   font-weight: 700 !important;
-  text-align: start;
-  background: linear-gradient(to bottom, #7484b7 0%, #536395 100%);
+  text-align: start !important;
+  background: linear-gradient(to bottom, #7484b7 0%, #536395 100%) !important;
   border-bottom: 1px solid #dee2e6 !important;
 }
 
@@ -74,7 +74,7 @@
   > thead
   > tr:first-child
   > *:first-child {
-  border-start-start-radius: 0px;
+  border-start-start-radius: 0px !important;
 }
 
 :where(.css-dev-only-do-not-override-2q8sxy).ant-table-wrapper
@@ -83,7 +83,7 @@
   > thead
   > tr:first-child
   > *:last-child {
-  border-start-end-radius: 0px;
+  border-start-end-radius: 0px !important;
 }
 
 :where(.css-dev-only-do-not-override-2q8sxy).ant-table-wrapper .ant-table-cell,
@@ -101,9 +101,9 @@
   > td,
 :where(.css-dev-only-do-not-override-2q8sxy).ant-table-wrapper tfoot > tr > th,
 :where(.css-dev-only-do-not-override-2q8sxy).ant-table-wrapper tfoot > tr > td {
-  position: relative;
-  padding: 8px 16px;
-  overflow-wrap: break-word;
+  position: relative !important;
+  padding: 8px 16px !important;
+  overflow-wrap: break-word !important;
   border-bottom: 1px solid #dee2e6 !important;
 }
 

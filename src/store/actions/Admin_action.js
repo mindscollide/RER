@@ -3435,11 +3435,7 @@ const deleteNationalHolidayFail = (message) => {
   };
 };
 
-const deleteNationalHolidayMainApi = (t, navigate, loadingFlag, newDate) => {
-  let deleteData = {
-    CountryID: Number(localStorage.getItem("countryID")),
-    HolidayToRemove: newDate,
-  };
+const deleteNationalHolidayMainApi = (t, navigate, loadingFlag, deleteData) => {
   return async (dispatch) => {
     if (!loadingFlag) {
       dispatch(loader_Actions(true));
@@ -3468,7 +3464,7 @@ const deleteNationalHolidayMainApi = (t, navigate, loadingFlag, newDate) => {
             ) {
               await dispatch(
                 deleteNationalHolidaySuccess(
-                  response.data.responseResult.holidayRemoved,
+                  response.data.responseResult.responseMessage,
                   t("Admin_AdminServiceManager_DeleteCountryNationalHoliday_01")
                 )
               );
