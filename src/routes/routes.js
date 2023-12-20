@@ -28,6 +28,7 @@ import {
   CountryCityWiseCounter,
   CountryWiseEmployee,
   NationalHoliday,
+  CountryWorking,
 } from "../container/country-admin";
 
 import {
@@ -95,6 +96,7 @@ export const router = createHashRouter(
           <Route path="Counters" element={<CountryCityWiseCounter />} />
           <Route path="Employee" element={<CountryWiseEmployee />} />
           <Route path="Holidays" element={<NationalHoliday />} />
+          <Route path="CountryWorking" element={<CountryWorking />} />
         </Route>
       </Route>
       {/* Country Admin Routes End */}

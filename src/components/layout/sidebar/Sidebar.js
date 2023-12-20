@@ -104,6 +104,8 @@ const Sidebar = () => {
       navigate("Counters");
     } else if (e.key === "28") {
       navigate("AppoinmentReport");
+    } else if (e.key === "29") {
+      navigate("CountryWorking");
     } else {
       // Handle other keys or add more conditions as needed
     }
