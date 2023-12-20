@@ -13,6 +13,7 @@ import {
   multiDatePickerDateChangIntoUTC,
 } from "../../../commen/functions/Date_time_formatter";
 import {
+  getAllShiftsOfBranch,
   getAppointmentReportBranchAPI,
   getCityBranchListApi,
   getCityServiceListApi,
@@ -24,15 +25,7 @@ const AppointmentReportCity = () => {
 
   const dispatch = useDispatch();
 
-  const location = useLocation();
-
   const currentLanguage = localStorage.getItem("i18nextLng");
-
-  // const searchParams = new URLSearchParams(location.search);
-
-  // const urldBranchID = searchParams.get("branchId");
-
-  // console.log(urldBranchID, "urldBranchIDurldBranchIDurldBranchID");
 
   const Loading = useSelector((state) => state.Loader.Loading);
 
@@ -48,14 +41,15 @@ const AppointmentReportCity = () => {
     (state) => state.admin.getAppointmentBranchReportData
   );
 
-  const getbranchesListData = useSelector((state) => state.admin.branchesList);
-
   //Appointment Report states
 
   const [apppointmentOptionsServices, setApppointmentOptionsServices] =
     useState([]);
   const [selectedBranhOptions, setSelectedBranhOptions] = useState(null);
   const [appointmentReportData, setAppointmentReportData] = useState([]);
+  const [localBrachnID, setLocalBrachnID] = useState({
+    ID: 0,
+  });
   const [cityBranchOption, setCityBranchOption] = useState([]);
   const [selectedOptionsCounter, setSelectedOptionsCounter] = useState(null);
   const [selectedOptionsSerives, setSelectedOptionsSerives] = useState(null);
@@ -159,12 +153,8 @@ const AppointmentReportCity = () => {
   useEffect(() => {
     dispatch(getCityServiceListApi(t, navigate, Loading));
     dispatch(getCityBranchListApi(t, navigate, Loading));
+    dispatch(getAllShiftsOfBranch(t, navigate, Loading));
   }, []);
-
-  console.log(
-    cityBranchListDataDropdown,
-    "cityServiceListDatacityServiceListData"
-  );
 
   useEffect(() => {
     if (
@@ -212,7 +202,7 @@ const AppointmentReportCity = () => {
         );
       }
     }
-  }, [getbranchesListData, currentLanguage]);
+  }, [cityBranchListDataDropdown, currentLanguage]);
 
   const handleServiceOnChange = (servicesSelectedOption) => {
     setSelectedOptionsSerives(servicesSelectedOption);
@@ -275,6 +265,7 @@ const AppointmentReportCity = () => {
       setAppointmentReportData([]);
     }
   }, [getAppointmentData]);
+
   return (
     <section>
       <Row>
