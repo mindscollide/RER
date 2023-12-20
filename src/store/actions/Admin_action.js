@@ -3554,14 +3554,14 @@ const getAppointmentBranchReportFail = (message) => {
   };
 };
 
-const getAppointmentReportBranchAPI = (t, navigate, loadingFlag) => {
+const getAppointmentReportBranchAPI = (data, t, navigate, loadingFlag) => {
   return async (dispatch) => {
     if (!loadingFlag) {
       dispatch(loader_Actions(true));
     }
     let form = new FormData();
     form.append("RequestMethod", getAppointmentBranchReport.RequestMethod);
-    form.append("RequestData", JSON.stringify());
+    form.append("RequestData", JSON.stringify(data));
     await axios({
       method: "post",
       url: adminURL,
@@ -3573,7 +3573,9 @@ const getAppointmentReportBranchAPI = (t, navigate, loadingFlag) => {
       .then(async (response) => {
         if (response.data.responseCode === 200) {
           if (response.data.responseCode === 417) {
-            dispatch(getAppointmentReportBranchAPI(t, navigate, loadingFlag));
+            dispatch(
+              getAppointmentReportBranchAPI(data, t, navigate, loadingFlag)
+            );
           } else if (response.data.responseResult.isExecuted === true) {
             if (
               response.data.responseResult.responseMessage ===

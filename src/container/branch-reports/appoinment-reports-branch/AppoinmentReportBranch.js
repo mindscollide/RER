@@ -11,6 +11,7 @@ import { useDispatch, useSelector } from "react-redux";
 import {
   getAllCountersOfBranch,
   getAllShiftsOfBranch,
+  getAppointmentReportBranchAPI,
   getBranchServicesApi,
 } from "../../../store/actions/Admin_action";
 
@@ -47,7 +48,6 @@ const AppoinmentReportBranch = () => {
   const [toDate, setToDate] = useState(() => {
     const today = new Date();
     const futureDate = new Date(today.getTime() + 10 * 24 * 60 * 60 * 1000);
-
     return futureDate;
   });
 
@@ -198,6 +198,13 @@ const AppoinmentReportBranch = () => {
     }
   }, [globalBranchServicesOptions, currentLanguage]);
 
+  //function For Search
+
+  const handleSearchAppointment = () => {
+    let data = {};
+    dispatch(getAppointmentReportBranchAPI(data, t, navigate, Loading));
+  };
+
   return (
     <>
       <section>
@@ -295,7 +302,7 @@ const AppoinmentReportBranch = () => {
                     icon={<i className="icon-add-circle icon-space"></i>}
                     text={t("Search")}
                     className="Add-btn-Counter"
-                    // onClick={handleSearchAppointment}
+                    onClick={handleSearchAppointment}
                   />
                   <Button
                     icon={<i className="icon-refresh icon-space"></i>}
