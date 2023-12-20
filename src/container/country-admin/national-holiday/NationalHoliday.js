@@ -11,6 +11,7 @@ import Select from "react-select";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router";
 import DatePicker, { DateObject } from "react-multi-date-picker";
+import { formatDate } from "../../../commen/functions/Date_time_formatter";
 
 const NationalHoliday = () => {
   const { t } = useTranslation();
@@ -27,7 +28,6 @@ const NationalHoliday = () => {
   const deleteCountryNational = useSelector(
     (state) => state.admin.deleteCountryNational
   );
-  console.log(deleteCountryNational, "deleteCountryNational");
 
   // state for table rendering
   const [rows, setRows] = useState([]);
@@ -67,9 +67,9 @@ const NationalHoliday = () => {
       dataIndex: "nationalHolidayList",
       key: "nationalHolidayList",
       width: "400px",
-      render: (text, record) => (
-        <span className="table-inside-text">{record}</span>
-      ),
+      render: (text, record) =>
+        // console.log("text", record),
+        <span className="table-inside-text">{formatDate(record)}</span>
     },
 
     {
