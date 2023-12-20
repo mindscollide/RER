@@ -41,7 +41,7 @@ const ServiceCountryScreen = () => {
       width: "200px",
       render: (text, record) => (
         <span>
-          <Switch />
+          <Switch  checked={true}/>
         </span>
       ),
     },
@@ -52,7 +52,7 @@ const ServiceCountryScreen = () => {
       width: "200px",
       render: (text, record) => (
         <span>
-          <Switch />
+          <Switch checked={true}/>
         </span>
       ),
     },

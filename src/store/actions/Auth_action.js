@@ -152,7 +152,8 @@ const setLogIn = (t, navigate, data, i18n) => {
               } else if (response.data.responseResult.roleID === 2) {
                 if (i18nextLngFlag !== null && i18nextLngFlag !== undefined) {
                 } else {
-                  await dispatch(
+                await localStorage.setItem("selectedKeys", "12");
+                await dispatch(
                     getLastSelectedLanguage(t, i18n, navigate, data)
                   );
                 }

@@ -71,20 +71,21 @@ export const getCurrentDateUTC = () => {
 
 
 // for  holidays 
-export function formatDate(inputDate) {
+export function formatDate(inputDate, locale) {
   const year = inputDate.substring(0, 4);
   const month = inputDate.substring(4, 6);
   const day = inputDate.substring(6, 8);
 
   const dateObj = new Date(`${year}-${month}-${day}`);
-  const formattedDate = dateObj.toLocaleDateString('en-GB', {
+  const options = {
     day: '2-digit',
     month: 'short',
     year: 'numeric'
-  });
+  };
 
-  return formattedDate;
+  return dateObj.toLocaleDateString(locale, options);
 }
+
 //Convert To UTC format date
 
 export const multiDatePickerDateChangIntoUTC = (date) => {

@@ -19,6 +19,8 @@ const NationalHoliday = () => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const currentLanguage = localStorage.getItem("i18nextLng");
+  const local = currentLanguage === "en" ? "en-US" : "ar-SA";
   const loadingFlag = useSelector((state) => state.Loader.Loading);
   const countryNationalHoliday = useSelector(
     (state) => state.admin.countryNationalHoliday
@@ -93,7 +95,7 @@ const NationalHoliday = () => {
       width: "400px",
       render: (text, record) =>
         // console.log("text", record),
-        <span className="table-inside-text">{formatDate(record)}</span>
+        <span className="table-inside-text">{formatDate(record,local)}</span>
     },
 
     {

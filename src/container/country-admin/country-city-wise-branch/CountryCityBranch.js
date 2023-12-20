@@ -16,9 +16,9 @@ const CountryCityBranch = () => {
   const [isPanelOpenThree, setIsPanelOpenThree] = useState(false);
 
   const options = [
-    { value: "chocolate", label: "Chocolate" },
-    { value: "strawberry", label: "Strawberry" },
-    { value: "vanilla", label: "Vanilla" },
+    { value: "Riyadh", label: "Riyadh" },
+    { value: "Taif", label: "Taif" },
+    { value: "Dammam", label: "Dammam" },
   ];
 
   const togglePanel = () => {
@@ -57,18 +57,17 @@ const CountryCityBranch = () => {
       title: <span className="table-text">{t("Services")}</span>,
       dataIndex: "shiftName",
       key: "shiftName",
-      width: "400px",
+      width: "80%",
     },
 
     {
       title: <span className="table-text">{t("Branch-availability")}</span>,
       dataIndex: "active",
       key: "active",
-      width: "200px",
-      align: "center",
+      width: "20%",
       render: (text, record) => (
         <span>
-          <Switch />
+          <Switch checked={true} />
         </span>
       ),
     },
@@ -121,6 +120,7 @@ const CountryCityBranch = () => {
                     bordered={false}
                     className="collapse-disable-bg"
                     expandIcon={false}
+                    defaultActiveKey={["1"]}
                   >
                     <Panel
                       header={
@@ -130,7 +130,7 @@ const CountryCityBranch = () => {
                           }`}
                           onClick={togglePanel}
                         >
-                          <span className="toggle-tiles">{t("Name")}</span>
+                          <span className="toggle-tiles">{t("Riyadh")}</span>
 
                           {isPanelOpen ? (
                             <i
@@ -159,7 +159,7 @@ const CountryCityBranch = () => {
                           sm={6}
                           className="d-flex justify-content-end"
                         >
-                          <Switch />
+                          <Switch checked={true} />
                         </Col>
                       </Row>
                       <Table
@@ -188,7 +188,7 @@ const CountryCityBranch = () => {
                           }`}
                           onClick={togglePanelTwo}
                         >
-                          <span className="toggle-tiles">{t("Name")}</span>
+                          <span className="toggle-tiles">{t("Taif")}</span>
 
                           {isPanelOpenTwo ? (
                             <i
@@ -203,7 +203,7 @@ const CountryCityBranch = () => {
                           )}
                         </div>
                       }
-                      key="1"
+                      key="2"
                     >
                       <Row className="mb-3">
                         <Col lg={6} md={6} sm={6}>
@@ -217,7 +217,7 @@ const CountryCityBranch = () => {
                           sm={6}
                           className="d-flex justify-content-end"
                         >
-                          <Switch />
+                          <Switch checked={true} />
                         </Col>
                       </Row>
                       <Table
@@ -246,7 +246,7 @@ const CountryCityBranch = () => {
                           }`}
                           onClick={togglePanelThree}
                         >
-                          <span className="toggle-tiles">{t("Name")}</span>
+                          <span className="toggle-tiles">{t("Dammam")}</span>
 
                           {isPanelOpenThree ? (
                             <i
@@ -261,7 +261,7 @@ const CountryCityBranch = () => {
                           )}
                         </div>
                       }
-                      key="1"
+                      key="3"
                     >
                       <Row className="mb-3">
                         <Col lg={6} md={6} sm={6}>
@@ -275,7 +275,7 @@ const CountryCityBranch = () => {
                           sm={6}
                           className="d-flex justify-content-end"
                         >
-                          <Switch />
+                          <Switch checked={true} />
                         </Col>
                       </Row>
                       <Table
