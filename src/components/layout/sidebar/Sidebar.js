@@ -9,6 +9,10 @@ import {
   setIsCityWiseBranchService,
   setIsCountryCityWiseCounter,
 } from "../../../store/actions/global_action";
+import {
+  getCityBranchServiceFail,
+  getAllShiftsOfBranchFail,
+} from "../../../store/actions/Admin_action";
 import { useDispatch } from "react-redux";
 const { Sider } = Layout;
 
@@ -52,6 +56,8 @@ const Sidebar = () => {
       dispatch(setIsCityWiseBranchService(false));
       dispatch(setIsCountryCityWiseCounter(false));
       navigate("Branch");
+      dispatch(getCityBranchServiceFail(""));
+      dispatch(getAllShiftsOfBranchFail(""));
     } else if (e.key === "6") {
       navigate("CityBranchService");
     } else if (e.key === "7") {

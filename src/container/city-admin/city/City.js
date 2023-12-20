@@ -23,6 +23,8 @@ import {
   updateCityBranchFail,
   getCityBranchServiceListApi,
   updateCityBranchServiceListApi,
+  getCityBranchServiceFail,
+  getAllShiftsOfBranchFail,
 } from "../../../store/actions/Admin_action";
 
 import { useDispatch, useSelector } from "react-redux";
@@ -35,8 +37,7 @@ import {
 } from "../../../commen/functions/Date_time_formatter";
 import DeleteEmployeeModal from "../../modals/delete-employee-modal/DeleteEmplyeeModal";
 import { loader_Actions } from "../../../store/actions/Loader_action";
-import { Collapse, Switch } from "antd";
-import Select from "react-select";
+import { Switch } from "antd";
 import { capitalizeKeysInArray } from "../../../commen/functions/utils.js";
 import {
   setIsCityWiseBranchService,
@@ -47,7 +48,6 @@ import CountryCityCounterComponent from "../country-city-counter-component/Count
 
 const CityAdmin = () => {
   const { t } = useTranslation();
-  const { Panel } = Collapse;
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const Loading = useSelector((state) => state.Loader.Loading);
@@ -68,12 +68,18 @@ const CityAdmin = () => {
   const cityBranchWiseData = useSelector(
     (state) => state.admin.cityBranchWiseData
   );
+  console.log(cityBranchWiseData, "cityBranchWiseData");
+
   const isCountryCityWiseCounter = useSelector(
     (state) => state.global.isCountryCityWiseCounter
   );
   const isCityWiseBranchService = useSelector(
     (state) => state.global.isCityWiseBranchService
   );
+
+  const { admin } = useSelector((state) => state);
+
+  console.log("adminadminadmin", admin);
 
   const currentLanguage = localStorage.getItem("i18nextLng");
   const local = currentLanguage === "en" ? "en-US" : "ar-SA";
@@ -84,7 +90,8 @@ const CityAdmin = () => {
   const [deleteModal, setDeleteModal] = useState(false);
   const [rows, setRows] = useState([]);
   // rows for get city branch services
-  const [cityBranchRows, setCityBranchRows] = useState(false);
+  const [cityBranchRows, setCityBranchRows] = useState([]);
+  console.log(cityBranchRows, "cityBranchRowscityBranchRows");
   const [Branch, setBranch] = useState({
     BranchNameEnglish: "",
     BranchNameArabic: "",
@@ -205,25 +212,24 @@ const CityAdmin = () => {
   };
 
   const handleSaveCityBranchWise = () => {
-    let serviceID =
-      cityBranchWiseData && cityBranchWiseData.length > 0
-        ? cityBranchWiseData[0].branchService &&
-          cityBranchWiseData[0].branchService.serviceID
-        : null;
     try {
       let convertedData = capitalizeKeysInArray(cityBranchRows);
+      console.log("convertedData", convertedData);
       const newArray = convertedData.map((item) => ({
         BranchServiceID: item.BranchServiceID,
-        ServiceID: serviceID,
+        ServiceID: item.BranchService.ServiceID,
         IsServiceAvailableAtBranch: item.IsServiceAvailableAtBranch,
       }));
+
       let newData = {
         CityID: Number(localStorage.getItem("cityID")),
         CityBranchServices: newArray,
-        BranchID: 1,
+        BranchID: Number(localStorage.getItem("branchID")),
       };
       dispatch(updateCityBranchServiceListApi(t, navigate, Loading, newData));
-    } catch {}
+    } catch (error) {
+      console.log("Error", error);
+    }
   };
 
   //to navigate on cityWiseBranchService page by click on service Icon
@@ -237,12 +243,20 @@ const CityAdmin = () => {
   const onClickCounterIcon = (record) => {
     localStorage.setItem("branchID", record.branchID);
     localStorage.setItem("selectedKeys", ["8"]);
-    navigate("/CityAdmin/Counters");
+    const selectedShift = {
+      value: record.branchID, // Change this based on your shift ID or unique identifier
+      label:
+        currentLanguage === "en"
+          ? record.branchNameEnglish
+          : record.branchNameArabic,
+    };
+    navigate("/CityAdmin/Counters", { state: { selectedShift } });
   };
 
   const goBackButtonOnclick = (record) => {
     localStorage.removeItem("branchID", record.branchID);
     dispatch(setIsCityWiseBranchService(false));
+    dispatch(getCityBranchServiceFail(""));
   };
 
   const goBackCountryCounter = () => {
@@ -253,13 +267,28 @@ const CityAdmin = () => {
   const onClickShiftIcon = (record) => {
     localStorage.setItem("branchID", record.branchID);
     localStorage.setItem("selectedKeys", ["7"]);
-    navigate("/CityAdmin/Shifts");
+    const selectedShift = {
+      value: record.branchID, // Change this based on your shift ID or unique identifier
+      label:
+        currentLanguage === "en"
+          ? record.branchNameEnglish
+          : record.branchNameArabic,
+    };
+    navigate("/CityAdmin/Shifts", { state: { selectedShift } });
   };
 
   //to navigate on Employee page by click on service Icon
-  const onClickEmployeeIcon = () => {
+  const onClickEmployeeIcon = (record) => {
+    localStorage.setItem("branchID", record.branchID);
     localStorage.setItem("selectedKeys", ["9"]);
-    navigate("/CityAdmin/Employee");
+    const selectedShift = {
+      value: record.branchID, // Change this based on your shift ID or unique identifier
+      label:
+        currentLanguage === "en"
+          ? record.branchNameEnglish
+          : record.branchNameArabic,
+    };
+    navigate("/CityAdmin/Employee", { state: { selectedShift } });
   };
 
   const columns = [
@@ -599,6 +628,7 @@ const CityAdmin = () => {
           <>
             <CityBranchServiceComponent
               cityBranchRows={cityBranchRows}
+              setCityBranchRows={setCityBranchRows}
               cityWiseColumns={cityWiseColumns}
               revertHandler={revertHandler}
               handleSaveCityBranchWise={handleSaveCityBranchWise}

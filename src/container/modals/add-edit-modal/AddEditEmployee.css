@@ -1,7 +1,7 @@
 .add-edit-modal .modal-content {
   position: relative;
-  height: 376px !important;
-  width: 500px !important;
+  height: 400px !important;
+  width: 600px !important;
   background-color: #ffffff !important;
   border-radius: 8px !important;
   display: flex !important;

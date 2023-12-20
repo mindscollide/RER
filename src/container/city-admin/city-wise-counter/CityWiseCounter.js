@@ -12,9 +12,12 @@ import {
 } from "../../../store/actions/Admin_action";
 import DatePicker from "react-multi-date-picker";
 import TimePicker from "react-multi-date-picker/plugins/time_picker";
+import { useLocation } from "react-router";
+import { getCurrentDateUTC } from "../../../commen/functions/Date_time_formatter";
 
 const CityWiseCounter = () => {
   const { t } = useTranslation();
+  const location = useLocation();
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const loadingFlag = useSelector((state) => state.Loader.Loading);
@@ -37,11 +40,17 @@ const CityWiseCounter = () => {
   const [cityWiseCounter, setCityWiseCounter] = useState([]);
   const [cityWiseCounterValue, setCityWiseCounterValue] = useState(null);
 
+  // Get current date
+  const [roasterDate, setRoasterDate] = useState(new Date());
+
   // get branch Shift Counter Api table and select calling
   useEffect(() => {
     dispatch(getCityBranchListApi(t, navigate, loadingFlag));
 
-    dispatch(getBranchShiftCounterMainApi(t, navigate, loadingFlag));
+    let newData = {
+      RoasterDate: getCurrentDateUTC(roasterDate),
+    };
+    dispatch(getBranchShiftCounterMainApi(t, navigate, loadingFlag, newData));
   }, []);
 
   // updating data in table
@@ -86,6 +95,19 @@ const CityWiseCounter = () => {
   const onChangeBranchHandler = (cityWiseCounterValue) => {
     setCityWiseCounterValue(cityWiseCounterValue);
   };
+
+  // Get selectedShift from location.state
+  const selectedShift =
+    location && location.state && location.state.selectedShift
+      ? location.state.selectedShift
+      : null;
+
+  // this will show the selected branch name in dropdown
+  useEffect(() => {
+    if (selectedShift) {
+      setCityWiseCounterValue(selectedShift);
+    }
+  }, [selectedShift]);
 
   const columns = [
     {
@@ -151,10 +173,9 @@ const CityWiseCounter = () => {
                   <DatePicker
                     arrowClassName="arrowClass"
                     containerClassName="containerClassTimePicker"
-                    disableDayPicker
-                    format="hh:mm A"
-                    plugins={[<TimePicker hideSeconds />]}
                     editable={false}
+                    value={roasterDate}
+                    onChange={(value) => setRoasterDate(value)}
                   />
                 </Col>
                 <Col lg={4} md={4} sm={12}>

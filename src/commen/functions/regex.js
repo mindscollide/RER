@@ -46,3 +46,15 @@ export const containsStringandNumericCharacters = (value) => {
   // Return the cleaned value
   return cleanedValue;
 };
+
+// for only number input
+export const forNumbersOnly = (value) => {
+  let numberValue = value.replace(/[^\d]/g, "");
+  return numberValue;
+};
+
+// for only aplhabets input
+export const containsOnlyAlphabets = (value) => {
+  let aplhabetsValue = value.replace(/[^a-zA-Z]/g, "");
+  return aplhabetsValue;
+};

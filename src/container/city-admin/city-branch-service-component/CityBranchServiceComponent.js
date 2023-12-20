@@ -6,12 +6,15 @@ import "./CityBranchServiceComponent.css";
 
 const CityBranchServiceComponent = ({
   cityBranchRows,
+  setCityBranchRows,
   cityWiseColumns,
   revertHandler,
   handleSaveCityBranchWise,
   goBackButtonOnclick,
 }) => {
   const { t } = useTranslation();
+
+  console.log("cityBranchRowscityBranchRows", cityBranchRows);
 
   return (
     <>

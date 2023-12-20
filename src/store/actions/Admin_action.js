@@ -2648,9 +2648,9 @@ const getBranchShiftCounterFail = (message) => {
   };
 };
 
-const getBranchShiftCounterMainApi = (t, navigate, loadingFlag) => {
+const getBranchShiftCounterMainApi = (t, navigate, loadingFlag, newData) => {
   let data = {
-    RoasterDate: "20230115",
+    ...newData,
     BranchID: Number(localStorage.getItem("branchID")),
   };
   return async (dispatch) => {
@@ -2912,6 +2912,11 @@ const addCityEmployeeMainApi = (
                   t("Admin_AdminServiceManager_AddNewEmployeeOfCity_01")
                 )
               );
+              localStorage.setItem(
+                "branchID",
+                response.data.responseResult.employeeAddedUpdated.employeeBranch
+                  .branchID
+              );
             } else if (
               response.data.responseResult.responseMessage ===
               "Admin_AdminServiceManager_AddNewEmployeeOfCity_02"
@@ -2976,14 +2981,21 @@ const updateExistingEmployeeFail = (message) => {
   };
 };
 
-const updateExistingEmployeeMainApi = (t, navigate, loadingFlag) => {
+const updateExistingEmployeeMainApi = (
+  t,
+  navigate,
+  loadingFlag,
+  Data,
+  setEmployeeMain,
+  setAddEditModal
+) => {
   return async (dispatch) => {
     if (!loadingFlag) {
       dispatch(loader_Actions(true));
     }
     let form = new FormData();
     form.append("RequestMethod", updateExistingEmployeeCity.RequestMethod);
-    form.append("RequestData", JSON.stringify());
+    form.append("RequestData", JSON.stringify(Data));
     await axios({
       method: "post",
       url: adminURL,
@@ -2995,17 +3007,29 @@ const updateExistingEmployeeMainApi = (t, navigate, loadingFlag) => {
       .then(async (response) => {
         if (response.data.responseCode === 200) {
           if (response.data.responseCode === 417) {
-            dispatch(updateExistingEmployeeMainApi(t, navigate, loadingFlag));
+            dispatch(
+              updateExistingEmployeeMainApi(
+                t,
+                navigate,
+                loadingFlag,
+                Data,
+                setEmployeeMain,
+                setAddEditModal
+              )
+            );
           } else if (response.data.responseResult.isExecuted === true) {
             if (
               response.data.responseResult.responseMessage ===
               "Admin_AdminServiceManager_UpdateExistingEmployeeOfCity_01"
             ) {
+              setAddEditModal(false);
               await dispatch(
                 updateExistingEmployeeSuccess(
                   t("Admin_AdminServiceManager_UpdateExistingEmployeeOfCity_01")
                 )
               );
+              dispatch(getCityEmployeeMainApi(t, navigate, loadingFlag));
+              await dispatch(loader_Actions(false));
             } else if (
               response.data.responseResult.responseMessage ===
               "Admin_AdminServiceManager_UpdateExistingEmployeeOfCity_02"
@@ -3068,6 +3092,13 @@ const updateExistingEmployeeMainApi = (t, navigate, loadingFlag) => {
   };
 };
 
+const addEditFlagModal = (response) => {
+  return {
+    type: actions.ADD_EDIT_MODAL_EMPLOYEE,
+    response: response,
+  };
+};
+
 // UPDATE Existing EMPLOYEE CITY MAIN API END
 
 // DELETE EXISTING EMPLOYEE CITY MAIN API START
@@ -3086,14 +3117,20 @@ const deleteExistingEmployeeFail = (message) => {
   };
 };
 
-const deleteExistingEmployeeMainApi = (t, navigate, loadingFlag) => {
+const deleteExistingEmployeeMainApi = (
+  t,
+  navigate,
+  Loading,
+  data,
+  setModalFlag
+) => {
   return async (dispatch) => {
-    if (!loadingFlag) {
+    if (!Loading) {
       dispatch(loader_Actions(true));
     }
     let form = new FormData();
     form.append("RequestMethod", deleteExistingEmployeeCity.RequestMethod);
-    form.append("RequestData", JSON.stringify());
+    form.append("RequestData", JSON.stringify(data));
     await axios({
       method: "post",
       url: adminURL,
@@ -3105,15 +3142,25 @@ const deleteExistingEmployeeMainApi = (t, navigate, loadingFlag) => {
       .then(async (response) => {
         if (response.data.responseCode === 200) {
           if (response.data.responseCode === 417) {
-            dispatch(deleteExistingEmployeeMainApi(t, navigate, loadingFlag));
+            dispatch(
+              deleteExistingEmployeeMainApi(
+                t,
+                navigate,
+                Loading,
+                data,
+                setModalFlag
+              )
+            );
           } else if (response.data.responseResult.isExecuted === true) {
             if (
               response.data.responseResult.responseMessage ===
               "Admin_AdminServiceManager_DeleteExistingEmployeeOfCity_01"
             ) {
+              await setModalFlag(false);
+              dispatch(getCityEmployeeMainApi(t, navigate, Loading));
               await dispatch(
                 deleteExistingEmployeeSuccess(
-                  response.data.responseResult.employeeAddedUpdated.employeeID,
+                  response.data.responseResult.employeeAddedUpdated,
                   t("Admin_AdminServiceManager_DeleteExistingEmployeeOfCity_01")
                 )
               );
@@ -3188,13 +3235,14 @@ const getNationalHolidayFail = (message) => {
 };
 
 const getNationalHolidayMainApi = (t, navigate, loadingFlag) => {
+  let data = { CountryID: Number(localStorage.getItem("countryID")) };
   return async (dispatch) => {
     if (!loadingFlag) {
       dispatch(loader_Actions(true));
     }
     let form = new FormData();
     form.append("RequestMethod", getCountryNationalHoliday.RequestMethod);
-    form.append("RequestData", JSON.stringify());
+    form.append("RequestData", JSON.stringify(data));
     await axios({
       method: "post",
       url: adminURL,
@@ -3206,7 +3254,7 @@ const getNationalHolidayMainApi = (t, navigate, loadingFlag) => {
       .then(async (response) => {
         if (response.data.responseCode === 200) {
           if (response.data.responseCode === 417) {
-            dispatch(getNationalHolidayMainApi(t, navigate, loadingFlag));
+            dispatch(getNationalHolidayMainApi(t, navigate, loadingFlag, data));
           } else if (response.data.responseResult.isExecuted === true) {
             if (
               response.data.responseResult.responseMessage ===
@@ -3214,7 +3262,7 @@ const getNationalHolidayMainApi = (t, navigate, loadingFlag) => {
             ) {
               await dispatch(
                 getNationalHolidaySuccess(
-                  response.data.responseResult.responseMessage,
+                  response.data.responseResult.nationalHolidayList,
                   t("Admin_AdminServiceManager_GetCountryNationalHoliday_01")
                 )
               );
@@ -3387,14 +3435,18 @@ const deleteNationalHolidayFail = (message) => {
   };
 };
 
-const deleteNationalHolidayMainApi = (t, navigate, loadingFlag) => {
+const deleteNationalHolidayMainApi = (t, navigate, loadingFlag, newDate) => {
+  let deleteData = {
+    CountryID: Number(localStorage.getItem("countryID")),
+    HolidayToRemove: newDate,
+  };
   return async (dispatch) => {
     if (!loadingFlag) {
       dispatch(loader_Actions(true));
     }
     let form = new FormData();
     form.append("RequestMethod", deleteCountryNationalHoliday.RequestMethod);
-    form.append("RequestData", JSON.stringify());
+    form.append("RequestData", JSON.stringify(deleteData));
     await axios({
       method: "post",
       url: adminURL,
@@ -3406,7 +3458,9 @@ const deleteNationalHolidayMainApi = (t, navigate, loadingFlag) => {
       .then(async (response) => {
         if (response.data.responseCode === 200) {
           if (response.data.responseCode === 417) {
-            dispatch(deleteNationalHolidayMainApi(t, navigate, loadingFlag));
+            dispatch(
+              deleteNationalHolidayMainApi(t, navigate, loadingFlag, deleteData)
+            );
           } else if (response.data.responseResult.isExecuted === true) {
             if (
               response.data.responseResult.responseMessage ===
@@ -3414,10 +3468,11 @@ const deleteNationalHolidayMainApi = (t, navigate, loadingFlag) => {
             ) {
               await dispatch(
                 deleteNationalHolidaySuccess(
-                  response.data.responseResult.country,
+                  response.data.responseResult.holidayRemoved,
                   t("Admin_AdminServiceManager_DeleteCountryNationalHoliday_01")
                 )
               );
+              await dispatch(loader_Actions(false));
             } else if (
               response.data.responseResult.responseMessage ===
               "Admin_AdminServiceManager_DeleteCountryNationalHoliday_02"
@@ -3518,13 +3573,17 @@ export {
   getCityServiceListApi,
   updateCityServiceListApi,
   getCityBranchServiceListApi,
+  //for icon click when data is null
+  getCityBranchServiceFail,
+  //for icon click when data is null
+  getAllShiftsOfBranchFail,
   updateCityBranchServiceListApi,
   getBranchShiftCounterMainApi,
   getCityEmployeeMainApi,
   addCityEmployeeMainApi,
   updateExistingEmployeeMainApi,
   deleteExistingEmployeeMainApi,
-
+  addEditFlagModal,
   // ===================================COUNTRY ADMIN START==========================================//
   getNationalHolidayMainApi,
   addNationalHolidayMainApi,

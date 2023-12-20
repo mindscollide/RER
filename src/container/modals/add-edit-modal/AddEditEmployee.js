@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Col, Row } from "react-bootstrap";
 import {
   TextField,
@@ -13,20 +13,42 @@ import { useTranslation } from "react-i18next";
 import { regexOnlyForNumberNCharacters } from "../../../commen/functions/regex";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router";
-import { addCityEmployeeMainApi } from "../../../store/actions/Admin_action";
+import {
+  addCityEmployeeMainApi,
+  getCityBranchListApi,
+  updateExistingEmployeeMainApi,
+} from "../../../store/actions/Admin_action";
 
-const AddEditEmployee = ({ addEditModal, setAddEditModal }) => {
+const AddEditEmployee = ({
+  addEditModal,
+  setAddEditModal,
+  selectedEmployee,
+}) => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const loadingFlag = useSelector((state) => state.Loader.Loading);
+  const currentLanguage = localStorage.getItem("i18nextLng");
   const addNewEmployeeData = useSelector(
     (state) => state.admin.addNewEmployeeData
   );
 
+  const isEditFlag = useSelector((state) => state.admin.isEditEmployeeFlag);
+
+  const employeeAddEditDropdown = useSelector(
+    (state) => state.admin.cityBranchListData
+  );
+
+  console.log(addNewEmployeeData, "addNewEmployeeDataerrr");
+
   const [homeVisit, setHomeVisit] = useState(null);
   const [branchEmployee, setBranchEmployee] = useState(null);
   const [isCheckbox, setIsCheckbox] = useState(false);
+
+  // states for employee Main in dropdown
+  const [addEditEmployeeOption, setAddEditEmployeeOption] = useState([]);
+  const [addEditEmployeeOptionValue, setAddEditEmployeeOptionValue] =
+    useState(null);
 
   const [employeeMain, setEmployeeMain] = useState({
     EmployeeEnglishName: "",
@@ -34,9 +56,84 @@ const AddEditEmployee = ({ addEditModal, setAddEditModal }) => {
     EmployeeEmail: "",
     IsEmployeeActive: true,
     EmployeeBelongsToBranch: true,
-    BranchID: 0,
+    BranchID: Number(localStorage.getItem("branchID")),
     CityID: Number(localStorage.getItem("cityID")),
+    employeeID: 0,
   });
+
+  // onchange handler for branch dropdown
+  const onChangeEmployeeBranch = (addEditEmployeeOption) => {
+    setAddEditEmployeeOptionValue(addEditEmployeeOption);
+  };
+
+  // render dropdown value
+  useEffect(() => {
+    dispatch(getCityBranchListApi(t, navigate, loadingFlag));
+  }, []);
+
+  useEffect(() => {
+    if (addEditEmployeeOption) {
+      setAddEditEmployeeOptionValue(addEditEmployeeOption);
+    }
+  }, [addEditEmployeeOption]);
+
+  useEffect(() => {
+    // Update cityShiftOption with the correct structure based on your data
+    if (employeeAddEditDropdown && employeeAddEditDropdown.length !== 0) {
+      if (currentLanguage === "en") {
+        setAddEditEmployeeOption(
+          employeeAddEditDropdown.map((item) => ({
+            value: item.branchID, // Change this based on your shift ID or unique identifier
+            label: item.branchNameEnglish,
+          }))
+        );
+      } else {
+        setAddEditEmployeeOption(
+          employeeAddEditDropdown.map((item) => ({
+            value: item.branchID, // Change this based on your shift ID or unique identifier
+            label: item.branchNameArabic,
+          }))
+        );
+      }
+    }
+  }, [employeeAddEditDropdown, currentLanguage]);
+
+  // Use useEffect to update state when selectedEmployee changes
+  useEffect(() => {
+    if (selectedEmployee) {
+      setEmployeeMain({
+        EmployeeEnglishName: selectedEmployee.employeeEnglishName || "",
+        EmployeeNameArabic: selectedEmployee.employeeNameArabic || "",
+        EmployeeEmail: selectedEmployee.employeeEmail || "",
+        IsEmployeeActive: selectedEmployee.isEmployeeActive || false,
+        EmployeeBelongsToBranch: true,
+        BranchID: selectedEmployee.employeeBranch.branchID || 1,
+        CityID: Number(localStorage.getItem("cityID")),
+        employeeID: selectedEmployee.employeeID || 0,
+      });
+
+      const branchDetails = {
+        value: selectedEmployee.employeeBranch.branchID,
+        label:
+          currentLanguage === "en"
+            ? selectedEmployee.employeeBranch.branchNameEnglish
+            : selectedEmployee.employeeBranch.branchNameArabic,
+      };
+      setAddEditEmployeeOptionValue(branchDetails);
+    } else {
+      // Clear the state when selectedEmployee is null (i.e., when opening the modal for adding)
+      setEmployeeMain({
+        EmployeeEnglishName: "",
+        EmployeeNameArabic: "",
+        EmployeeEmail: "",
+        IsEmployeeActive: true,
+        EmployeeBelongsToBranch: true,
+        BranchID: 0,
+        CityID: Number(localStorage.getItem("cityID")),
+        employeeID: 0,
+      });
+    }
+  }, [selectedEmployee]);
 
   const handleChangeEmployee = (e) => {
     try {
@@ -97,11 +194,41 @@ const AddEditEmployee = ({ addEditModal, setAddEditModal }) => {
         EmployeeEmail: employeeMain.EmployeeEmail,
         IsEmployeeActive: employeeMain.IsEmployeeActive,
         EmployeeBelongsToBranch: true,
-        BranchID: 1,
-        CityID: Number(localStorage.getItem("cityID")),
+        BranchID: addEditEmployeeOptionValue?.value || 1,
+        CityID: employeeMain.CityID,
       };
       dispatch(
         addCityEmployeeMainApi(
+          t,
+          navigate,
+          loadingFlag,
+          Data,
+          setEmployeeMain,
+          setAddEditModal
+        )
+      );
+    }
+  };
+
+  const employeeeUpdateHandler = () => {
+    if (
+      employeeMain.EmployeeEnglishName !== "" &&
+      employeeMain.EmployeeNameArabic !== "" &&
+      employeeMain.EmployeeEmail !== "" &&
+      employeeMain.IsEmployeeActive !== false
+    ) {
+      let Data = {
+        EmployeeEnglishName: employeeMain.EmployeeEnglishName,
+        EmployeeNameArabic: employeeMain.EmployeeNameArabic,
+        EmployeeEmail: employeeMain.EmployeeEmail,
+        IsEmployeeActive: employeeMain.IsEmployeeActive,
+        EmployeeBelongsToBranch: true,
+        BranchID: addEditEmployeeOptionValue?.value || 1,
+        CityID: employeeMain.CityID,
+        EmployeeID: employeeMain.employeeID,
+      };
+      dispatch(
+        updateExistingEmployeeMainApi(
           t,
           navigate,
           loadingFlag,
@@ -121,7 +248,6 @@ const AddEditEmployee = ({ addEditModal, setAddEditModal }) => {
         className="modaldialog add-edit-modal"
         modalHeaderClassName="d-none"
         modalFooterClassName="modal-bank-footer"
-        // size="m"
         onHide={onCloseAddEditModal}
         ModalBody={
           <>
@@ -152,21 +278,26 @@ const AddEditEmployee = ({ addEditModal, setAddEditModal }) => {
                   onChange={handleChangeEmployee}
                   placeholder="اسم الموظف"
                   labelClass="d-none"
-                  className="text-fields-addEdit-arabic"
+                  className="text-fiels-employeeMain-arabic"
                 />
               </Col>
             </Row>
 
             <Row className="mt-3">
-              <Col lg={6} md={6} sm={6}>
-                <span className="text-labels">{t("Employee-id")}</span>
-                <TextField
-                  name="EmployeeName"
-                  placeholder={t("Employee-id")}
-                  labelClass="d-none"
-                  className="text-fields-addEdit"
-                />
-              </Col>
+              {isEditFlag === true ? (
+                <Col lg={6} md={6} sm={6}>
+                  <span className="text-labels">{t("Employee-id")}</span>
+                  <>
+                    <TextField
+                      name="employeeID"
+                      placeholder={t("Employee-id")}
+                      labelClass="d-none"
+                      className="text-fields-addEdit"
+                      value={employeeMain.employeeID}
+                    />
+                  </>
+                </Col>
+              ) : null}
               <Col lg={6} md={6} sm={6}>
                 <span className="text-labels">{t("Employee-email")}</span>
                 <TextField
@@ -183,25 +314,31 @@ const AddEditEmployee = ({ addEditModal, setAddEditModal }) => {
             <Row className="mt-3">
               <Col lg={4} md={4} sm={4}>
                 <div className="Radio-Btn-div-For-Select">
-                  <Radio.Group
-                    onChange={branchEmployeeRadioChange}
-                    value={branchEmployee}
-                  >
-                    <Radio className="branch-employee-checkbox" value="option1">
-                      {t("Branch-employee")}
-                    </Radio>
-                  </Radio.Group>
+                  <Checkbox
+                    onChange={handleChangeEmployee}
+                    checked={employeeMain.IsEmployeeActive}
+                    classNameDiv="chechbox-align-label"
+                    label={
+                      <span className="branch-employee-checkbox">
+                        {t("Branch-employee")}
+                      </span>
+                    }
+                  />
                 </div>
               </Col>
               <Col lg={8} md={8} sm={8} className="mt-1">
-                <Select placeholder="Branch Employee" />
+                <Select
+                  placeholder="Branch Employee"
+                  options={addEditEmployeeOption}
+                  value={addEditEmployeeOptionValue}
+                  onChange={onChangeEmployeeBranch}
+                />
               </Col>
             </Row>
             <Row>
-              <Col lg={3} md={3} sm={3} className="mt-3">
+              <Col lg={6} md={6} sm={6} className="mt-3">
                 <Checkbox
-                  onChange={handleChangeEmployee}
-                  checked={employeeMain.IsEmployeeActive}
+                  onChange={onChangeEmployeeBranch}
                   classNameDiv="chechbox-align-label"
                   label={
                     <span className="branch-employee-checkbox">
@@ -210,18 +347,11 @@ const AddEditEmployee = ({ addEditModal, setAddEditModal }) => {
                   }
                 />
               </Col>
-              <Col lg={5} md={5} sm={5} className="mt-3">
-                <Radio.Group onChange={homeVisitRadioChange} value={homeVisit}>
-                  <Radio value="option1" className="branch-employee-checkbox">
-                    {t("Branch-employee")}
-                  </Radio>
-                </Radio.Group>
-              </Col>
 
               <Col
-                lg={4}
-                md={4}
-                sm={5}
+                lg={6}
+                md={6}
+                sm={6}
                 className="d-flex justify-content-end mt-3"
               >
                 <Radio.Group onChange={homeVisitRadioChange} value={homeVisit}>
@@ -245,7 +375,11 @@ const AddEditEmployee = ({ addEditModal, setAddEditModal }) => {
                 <Button
                   text={t("Add-update")}
                   className="AddEdit-btn-Employee"
-                  onClick={employeeeAddHandler}
+                  onClick={
+                    isEditFlag === true
+                      ? employeeeUpdateHandler
+                      : employeeeAddHandler
+                  }
                 />
                 <Button
                   text={t("Cancel")}

@@ -11,9 +11,11 @@ import {
   getAllShiftsOfBranch,
 } from "../../../store/actions/Admin_action";
 import { useTranslation } from "react-i18next";
+import { useLocation } from "react-router";
 
 const CityBranchShiftNew = () => {
   const { t } = useTranslation();
+  const location = useLocation();
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const Loading = useSelector((state) => state.Loader.Loading);
@@ -37,9 +39,9 @@ const CityBranchShiftNew = () => {
   // calling branch data api
   useEffect(() => {
     callApi();
-    return()=>{
+    return () => {
       localStorage.removeItem("branchID");
-    }
+    };
   }, []);
 
   // updating data in table
@@ -57,6 +59,20 @@ const CityBranchShiftNew = () => {
     // for table rendering api branch shift
     await dispatch(getAllShiftsOfBranch(t, navigate, Loading));
   };
+
+  // Get selectedShift from location.state
+  const selectedShift =
+    location && location.state && location.state.selectedShift
+      ? location.state.selectedShift
+      : null;
+
+  // this will show the selected branch name in dropdown
+  useEffect(() => {
+    if (selectedShift) {
+      setCityShiftOptionValue(selectedShift);
+    }
+  }, [selectedShift]);
+
   // onchange handler for branch dropdown
   const onChangeBranchHandler = (cityShiftOptionValue) => {
     setCityShiftOptionValue(cityShiftOptionValue);
@@ -88,22 +104,19 @@ const CityBranchShiftNew = () => {
   ];
 
   useEffect(() => {
-    if (
-      cityShiftsBranchDropdown !== null &&
-      cityShiftsBranchDropdown !== undefined &&
-      cityShiftsBranchDropdown.length !== 0
-    ) {
+    // Update cityShiftOption with the correct structure based on your data
+    if (cityShiftsBranchDropdown && cityShiftsBranchDropdown.length !== 0) {
       if (currentLanguage === "en") {
         setCityShiftOption(
           cityShiftsBranchDropdown.map((item) => ({
-            value: item.branchID,
+            value: item.branchID, // Change this based on your shift ID or unique identifier
             label: item.branchNameEnglish,
           }))
         );
       } else {
         setCityShiftOption(
           cityShiftsBranchDropdown.map((item) => ({
-            value: item.branchID,
+            value: item.branchID, // Change this based on your shift ID or unique identifier
             label: item.branchNameArabic,
           }))
         );

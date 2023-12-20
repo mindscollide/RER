@@ -34,6 +34,7 @@ const initialState = {
   countryNationalHoliday: null,
   addCountryNationalData: null,
   deleteCountryNational: null,
+  isEditEmployeeFlag: false,
 };
 
 const adminReducer = (state = initialState, action) => {
@@ -479,6 +480,12 @@ const adminReducer = (state = initialState, action) => {
         ...state,
         updateExistingEmployeeData: null,
         admin_ResponseMessage: action.message,
+      };
+
+    case actions.ADD_EDIT_MODAL_EMPLOYEE:
+      return {
+        ...state,
+        isEditEmployeeFlag: action.response,
       };
 
     // Update Existing Employee Data in City Admin
