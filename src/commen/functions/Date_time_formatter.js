@@ -1,3 +1,5 @@
+import moment from "moment";
+
 // this is use in tables its get utc time convert it into current Gmt
 export const convertToGMT = (utcTimeString, locale) => {
   if (utcTimeString === "") {
@@ -65,6 +67,31 @@ export const getCurrentDateUTC = () => {
   const month = (currentDate.getUTCMonth() + 1).toString().padStart(2, "0");
   const day = currentDate.getUTCDate().toString().padStart(2, "0");
   return `${year}${month}${day}`;
+};
+
+//Convert To UTC format date
+
+export const multiDatePickerDateChangIntoUTC = (date) => {
+  // Ensure date is a valid Date object
+  const inputDate = new Date(date);
+
+  if (!(inputDate instanceof Date && !isNaN(inputDate))) {
+    // Handle invalid or null date case
+    return null;
+  }
+
+  // Get the UTC time
+  const utcTime = new Date(
+    inputDate.getTime() - inputDate.getTimezoneOffset() * 60000
+  );
+
+  // Extract the year, month, and day components from the UTC time
+  const year = utcTime.getUTCFullYear();
+  const month = String(utcTime.getUTCMonth() + 1).padStart(2, "0");
+  const day = String(utcTime.getUTCDate()).padStart(2, "0");
+  const utcFormatted = `${year}${month}${day}`;
+
+  return utcFormatted;
 };
 
 // Function to generate a date range between start and end dates
