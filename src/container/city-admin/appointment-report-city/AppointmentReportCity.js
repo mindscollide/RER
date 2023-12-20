@@ -13,10 +13,9 @@ import {
   multiDatePickerDateChangIntoUTC,
 } from "../../../commen/functions/Date_time_formatter";
 import {
-  getAllCountersOfBranch,
-  getAllShiftsOfBranch,
   getAppointmentReportBranchAPI,
-  getBranchServicesApi,
+  getCityBranchListApi,
+  getCityServiceListApi,
 } from "../../../store/actions/Admin_action";
 const AppointmentReportCity = () => {
   const { t } = useTranslation();
@@ -51,6 +50,8 @@ const AppointmentReportCity = () => {
     (state) => state.admin.getAppointmentBranchReportData
   );
 
+  const branchesList = useSelector((state) => state.admin.branchesList);
+
   //Appointment Report states
   const [apppointmentOptionsShift, setApppointmentOptionsShift] = useState([]);
   const [apppointmentOptionsCounter, setApppointmentOptionsCounter] = useState(
@@ -60,6 +61,7 @@ const AppointmentReportCity = () => {
     useState([]);
 
   const [appointmentReportData, setAppointmentReportData] = useState([]);
+  const [cityShiftOption, setCityShiftOption] = useState([]);
   const [selectedOptionsShift, setSelectedOptionsShift] = useState(null);
   const [selectedOptionsCounter, setSelectedOptionsCounter] = useState(null);
   const [selectedOptionsSerives, setSelectedOptionsSerives] = useState(null);
@@ -161,9 +163,8 @@ const AppointmentReportCity = () => {
   ];
 
   useEffect(() => {
-    dispatch(getAllShiftsOfBranch(t, navigate, Loading));
-    dispatch(getAllCountersOfBranch(t, navigate, Loading));
-    dispatch(getBranchServicesApi(t, navigate, Loading));
+    dispatch(getCityServiceListApi(t, navigate, Loading));
+    dispatch(getCityBranchListApi(t, navigate, Loading));
   }, []);
 
   useEffect(() => {
@@ -373,6 +374,16 @@ const AppointmentReportCity = () => {
               </Col>
               <Col lg={3} md={3} sm={12}>
                 <span className="d-flex flex-column w-100">
+                  <label className="text-labels">{t("Branch")}</label>
+                  <Select
+                    isSearchable={false}
+                    className="select-dropdown-all"
+                    placeholder={t("Select-an-option")}
+                  />
+                </span>
+              </Col>
+              <Col lg={3} md={3} sm={12}>
+                <span className="d-flex flex-column w-100">
                   <label className="text-labels">{t("Shift")}</label>
                   <Select
                     isSearchable={false}
@@ -396,17 +407,6 @@ const AppointmentReportCity = () => {
                     options={apppointmentOptionsCounter}
                     onChange={handleCounteronChange}
                     // className="Branch-Screen-Select"
-                  />
-                </span>
-              </Col>
-
-              <Col lg={3} md={3} sm={12}>
-                <span className="d-flex flex-column w-100">
-                  <label className="text-labels">{t("Branch")}</label>
-                  <Select
-                    isSearchable={false}
-                    className="select-dropdown-all"
-                    placeholder={t("Select-an-option")}
                   />
                 </span>
               </Col>
