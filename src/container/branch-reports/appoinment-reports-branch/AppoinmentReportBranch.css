@@ -1,5 +1,5 @@
 .AppoinmentReportBranch-paper {
-  border-radius: 4px;
+  border-radius: 4px!important;
   padding: 1.5rem 1rem !important;
   width: 100% !important;
   overflow: hidden !important;
@@ -7,10 +7,10 @@
 }
 
 .btn-col-class {
-  display: flex;
-  justify-content: start;
-  align-items: center;
-  gap: 5px;
+  display: flex!important;
+  justify-content: start!important;
+  align-items: center!important;
+  gap: 5px!important;
 }
 
 .AppoinmentReportBranch-Select {
