@@ -6,7 +6,6 @@ import { useTranslation } from "react-i18next";
 import {
   getNationalHolidayMainApi,
   deleteNationalHolidayMainApi,
-  addNationalHolidayMainApi,
 } from "../../../store/actions/Admin_action";
 import Select from "react-select";
 import { useDispatch, useSelector } from "react-redux";
@@ -53,8 +52,13 @@ const NationalHoliday = () => {
   const onDeleteIcon = (record) => {
     const { nationalHolidayList } = record;
     let newDate = JSON.stringify(nationalHolidayList);
-
-    dispatch(deleteNationalHolidayMainApi(t, navigate, loadingFlag, newDate));
+    let deleteData = {
+      CountryID: Number(localStorage.getItem("countryID")),
+      HolidayToRemove: newDate,
+    };
+    dispatch(
+      deleteNationalHolidayMainApi(t, navigate, loadingFlag, deleteData)
+    );
   };
 
   const columns = [
@@ -70,8 +74,8 @@ const NationalHoliday = () => {
 
     {
       title: "",
-      dataIndex: "close",
-      key: "close",
+      dataIndex: "holidayRemoved",
+      key: "holidayRemoved",
       width: "200px",
       align: "center",
       render: (text, record) => (
