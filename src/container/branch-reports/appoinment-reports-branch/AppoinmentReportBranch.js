@@ -279,6 +279,28 @@ const AppoinmentReportBranch = () => {
                 </Col>
               </Row>
 
+              <Row className="mt-3">
+                <Col
+                  lg={12}
+                  md={12}
+                  sm={12}
+                  className="d-flex justify-content-center gap-3"
+                >
+                  <Button
+                    icon={<i className="icon-add-circle icon-space"></i>}
+                    text={t("Search")}
+                    className="Add-btn-Counter"
+                    // onClick={handleSearchAppointment}
+                  />
+                  <Button
+                    icon={<i className="icon-refresh icon-space"></i>}
+                    text={t("Reset")}
+                    className="Reset-btn-Counter"
+                    // onClick={handleResetAppointment}
+                  />
+                </Col>
+              </Row>
+
               <Row className="mt-4">
                 <Col lg={12} md={12} sm={12}>
                   <Table
