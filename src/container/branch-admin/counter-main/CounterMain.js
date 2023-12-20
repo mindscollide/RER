@@ -111,8 +111,8 @@ const CounterMain = () => {
       title: <span className="table-text">#</span>,
       dataIndex: "counterID",
       key: "counterID",
-      render: (text, record) => (
-        <span className="table-inside-text">{text}</span>
+      render: (text, record, index) => (
+        <span className="table-inside-text">{index + 1}</span>
       ),
     },
     {

@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { useLocation } from "react-router-dom";
 import { Row, Col } from "react-bootstrap";
 import "./CityBranchShiftNew.css";
 import { Paper, Table, Button } from "../../../components/elements";
@@ -9,15 +10,17 @@ import { Switch } from "antd";
 import {
   getCityBranchListApi,
   getAllShiftsOfBranch,
+  getAllShiftsOfBranchCleare,
 } from "../../../store/actions/Admin_action";
 import { useTranslation } from "react-i18next";
-import { useLocation } from "react-router";
 
 const CityBranchShiftNew = () => {
   const { t } = useTranslation();
   const location = useLocation();
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const searchParams = new URLSearchParams(location.search);
+  const urldBranchID = searchParams.get("branchId");
   const Loading = useSelector((state) => state.Loader.Loading);
 
   const currentLanguage = localStorage.getItem("i18nextLng");
@@ -36,13 +39,43 @@ const CityBranchShiftNew = () => {
   const [cityShiftOption, setCityShiftOption] = useState([]);
   const [cityShiftOptionValue, setCityShiftOptionValue] = useState(null);
 
+  const callApi = async () => {
+    await dispatch(getCityBranchListApi(t, navigate, Loading));
+    // for table rendering api branch shift
+    await dispatch(getAllShiftsOfBranch(t, navigate, Loading, urldBranchID));
+  };
   // calling branch data api
   useEffect(() => {
     callApi();
     return () => {
       localStorage.removeItem("branchID");
+      dispatch(getAllShiftsOfBranchCleare());
+      setCityShiftRows([])
+      setCityShiftOption([])
+      setCityShiftOptionValue([])
     };
   }, []);
+
+  useEffect(() => {
+    // Update cityShiftOption with the correct structure based on your data
+    if (cityShiftsBranchDropdown && cityShiftsBranchDropdown.length !== 0) {
+      if (currentLanguage === "en") {
+        setCityShiftOption(
+          cityShiftsBranchDropdown.map((item) => ({
+            value: item.branchID, // Change this based on your shift ID or unique identifier
+            label: item.branchNameEnglish,
+          }))
+        );
+      } else {
+        setCityShiftOption(
+          cityShiftsBranchDropdown.map((item) => ({
+            value: item.branchID, // Change this based on your shift ID or unique identifier
+            label: item.branchNameArabic,
+          }))
+        );
+      }
+    }
+  }, [cityShiftsBranchDropdown, currentLanguage]);
 
   // updating data in table
   useEffect(() => {
@@ -53,29 +86,28 @@ const CityBranchShiftNew = () => {
     }
   }, [branchesList]);
 
-  // onchange handler for branch dropdown
-  const callApi = async () => {
-    await dispatch(getCityBranchListApi(t, navigate, Loading));
-    // for table rendering api branch shift
-    await dispatch(getAllShiftsOfBranch(t, navigate, Loading));
-  };
-
-  // Get selectedShift from location.state
-  const selectedShift =
-    location && location.state && location.state.selectedShift
-      ? location.state.selectedShift
-      : null;
-
   // this will show the selected branch name in dropdown
   useEffect(() => {
-    if (selectedShift) {
-      setCityShiftOptionValue(selectedShift);
+    if (urldBranchID != null && cityShiftOption.length > 0) {
+      const value = cityShiftOption.find(
+        (branch) => branch.value === Number(urldBranchID)
+      );
+      if (value) {
+        setCityShiftOptionValue(value);
+      } else {
+        console.log("location Branch with ID 3 not found");
+      }
     }
-  }, [selectedShift]);
+  }, [cityShiftOption]);
 
   // onchange handler for branch dropdown
   const onChangeBranchHandler = (cityShiftOptionValue) => {
     setCityShiftOptionValue(cityShiftOptionValue);
+  };
+  const handleSearch = async () => {
+    await dispatch(
+      getAllShiftsOfBranch(t, navigate, Loading, cityShiftOptionValue.value)
+    );
   };
 
   const columns = [
@@ -102,27 +134,6 @@ const CityBranchShiftNew = () => {
       ),
     },
   ];
-
-  useEffect(() => {
-    // Update cityShiftOption with the correct structure based on your data
-    if (cityShiftsBranchDropdown && cityShiftsBranchDropdown.length !== 0) {
-      if (currentLanguage === "en") {
-        setCityShiftOption(
-          cityShiftsBranchDropdown.map((item) => ({
-            value: item.branchID, // Change this based on your shift ID or unique identifier
-            label: item.branchNameEnglish,
-          }))
-        );
-      } else {
-        setCityShiftOption(
-          cityShiftsBranchDropdown.map((item) => ({
-            value: item.branchID, // Change this based on your shift ID or unique identifier
-            label: item.branchNameArabic,
-          }))
-        );
-      }
-    }
-  }, [cityShiftsBranchDropdown, currentLanguage]);
 
   return (
     <>
@@ -176,6 +187,7 @@ const CityBranchShiftNew = () => {
                     icon={<i className="icon-search city-icon-space"></i>}
                     text={t("Search")}
                     className="Search-Icon-Btn"
+                    onClick={handleSearch}
                   />
                 </Col>
                 <Col lg={2} md={2} sm={12} />

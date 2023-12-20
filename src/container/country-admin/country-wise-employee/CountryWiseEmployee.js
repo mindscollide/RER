@@ -39,14 +39,12 @@ const CountryWiseEmployee = () => {
       dataIndex: "Capacity",
       key: "Capacity",
       width: "200px",
-      align: "center",
     },
     {
       title: <span className="table-text">{t("Enabled")}</span>,
       dataIndex: "column6",
       key: "column6",
       width: "200px",
-      align: "center",
       render: (text, record) => (
         <span>
           <Switch />

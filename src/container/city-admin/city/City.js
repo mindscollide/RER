@@ -68,7 +68,6 @@ const CityAdmin = () => {
   const cityBranchWiseData = useSelector(
     (state) => state.admin.cityBranchWiseData
   );
-  console.log(cityBranchWiseData, "cityBranchWiseData");
 
   const isCountryCityWiseCounter = useSelector(
     (state) => state.global.isCountryCityWiseCounter
@@ -78,8 +77,6 @@ const CityAdmin = () => {
   );
 
   const { admin } = useSelector((state) => state);
-
-  console.log("adminadminadmin", admin);
 
   const currentLanguage = localStorage.getItem("i18nextLng");
   const local = currentLanguage === "en" ? "en-US" : "ar-SA";
@@ -91,7 +88,6 @@ const CityAdmin = () => {
   const [rows, setRows] = useState([]);
   // rows for get city branch services
   const [cityBranchRows, setCityBranchRows] = useState([]);
-  console.log(cityBranchRows, "cityBranchRowscityBranchRows");
   const [Branch, setBranch] = useState({
     BranchNameEnglish: "",
     BranchNameArabic: "",
@@ -128,21 +124,6 @@ const CityAdmin = () => {
       setRows([]);
     }
   }, [cityBranchListData]);
-
-  // useEffect(() => {
-  //   if (cityBranchWiseData !== null) {
-  //     const firstItem = cityBranchWiseData[0];
-
-  //     if (
-  //       firstItem &&
-  //       firstItem.branchService &&
-  //       firstItem.branchService.serviceID
-  //     ) {
-  //       const serviceID = firstItem.branchService.serviceID;
-  //       // Now you can use the 'serviceID' variable as needed
-  //     }
-  //   }
-  // }, [cityBranchWiseData]);
 
   // use for when new data add its add it in table row with calling get api and then get loader false and cleare its state
   useEffect(() => {
@@ -243,14 +224,7 @@ const CityAdmin = () => {
   const onClickCounterIcon = (record) => {
     localStorage.setItem("branchID", record.branchID);
     localStorage.setItem("selectedKeys", ["8"]);
-    const selectedShift = {
-      value: record.branchID, // Change this based on your shift ID or unique identifier
-      label:
-        currentLanguage === "en"
-          ? record.branchNameEnglish
-          : record.branchNameArabic,
-    };
-    navigate("/CityAdmin/Counters", { state: { selectedShift } });
+    navigate(`/CityAdmin/Counters?branchId=${record.branchID}`);
   };
 
   const goBackButtonOnclick = (record) => {
@@ -267,28 +241,14 @@ const CityAdmin = () => {
   const onClickShiftIcon = (record) => {
     localStorage.setItem("branchID", record.branchID);
     localStorage.setItem("selectedKeys", ["7"]);
-    const selectedShift = {
-      value: record.branchID, // Change this based on your shift ID or unique identifier
-      label:
-        currentLanguage === "en"
-          ? record.branchNameEnglish
-          : record.branchNameArabic,
-    };
-    navigate("/CityAdmin/Shifts", { state: { selectedShift } });
+    navigate(`/CityAdmin/Shifts?branchId=${record.branchID}`);
   };
 
   //to navigate on Employee page by click on service Icon
   const onClickEmployeeIcon = (record) => {
     localStorage.setItem("branchID", record.branchID);
     localStorage.setItem("selectedKeys", ["9"]);
-    const selectedShift = {
-      value: record.branchID, // Change this based on your shift ID or unique identifier
-      label:
-        currentLanguage === "en"
-          ? record.branchNameEnglish
-          : record.branchNameArabic,
-    };
-    navigate("/CityAdmin/Employee", { state: { selectedShift } });
+    navigate(`/CityAdmin/Employee?branchId=${record.branchID}`);
   };
 
   const columns = [
@@ -315,7 +275,11 @@ const CityAdmin = () => {
           record?.branchStartTime !== null &&
           record?.branchStartTime !== null
         ) {
-          return convertToGMT(record?.branchStartTime, local);
+          return (
+            <span className="table-inside-text">
+              {convertToGMT(record?.branchStartTime, local)}
+            </span>
+          );
         }
       },
     },
@@ -325,7 +289,11 @@ const CityAdmin = () => {
       key: "branchEndTime",
       render: (text, record) => {
         if (record?.branchEndTime !== null && record?.branchEndTime !== null) {
-          return convertToGMT(record?.branchEndTime, local);
+          return (
+            <span className="table-inside-text">
+              {convertToGMT(record?.branchEndTime, local)}
+            </span>
+          );
         }
       },
     },
@@ -333,7 +301,6 @@ const CityAdmin = () => {
       title: <span className="table-text">{t("Active")}</span>,
       dataIndex: "isBranchActive",
       key: "isBranchActive",
-      align: "center",
       render: (text, record) => (
         <>
           {text ? (
@@ -406,7 +373,6 @@ const CityAdmin = () => {
       dataIndex: "isServiceAvailableAtBranch",
       key: "isServiceAvailableAtBranch",
       width: "200px",
-      align: "center",
       render: (text, record) => (
         <span>
           <Switch

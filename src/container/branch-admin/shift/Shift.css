@@ -1,5 +1,5 @@
 .Branch-Admin-paper {
-  border-radius: 4px;
+  border-radius: 4px!important;
   padding: 1.5rem 1rem !important;
   width: 100% !important;
   overflow: hidden !important;
@@ -7,12 +7,12 @@
 }
 
 .Branch-checkbox {
-  display: flex;
+  display: flex!important;
   align-items: center !important;
 }
 
 .btn-class-branch {
-  display: flex;
+  display: flex!important;
   justify-content: center !important;
   gap: 5px !important;
 }
@@ -26,12 +26,12 @@
   border-bottom-left-radius: 0px !important;
   border-top-left-radius: 8px !important;
   border-bottom-right-radius: 8px !important;
-  background: linear-gradient(to bottom, #7484b7 0%, #536395 100%);
+  background: linear-gradient(to bottom, #7484b7 0%, #536395 100%)!important;
   border-color: #7484b7 !important;
 }
 
 .Add-btn-Branch:hover {
-  background: linear-gradient(to bottom, #77c0cb 0%, #2c9cc0 100%);
+  background: linear-gradient(to bottom, #77c0cb 0%, #2c9cc0 100%)!important;
   border-color: #77c0cb !important;
 }
 
@@ -48,7 +48,7 @@ body[dir="rtl"] .Add-btn-Branch {
   border-bottom-left-radius: 0px !important;
   border-top-left-radius: 8px !important;
   border-bottom-right-radius: 8px !important;
-  background: linear-gradient(to bottom, #77c0cb 0%, #2c9cc0 100%);
+  background: linear-gradient(to bottom, #77c0cb 0%, #2c9cc0 100%)!important;
   border-color: #77c0cb !important;
 }
 
@@ -57,13 +57,19 @@ body[dir="rtl"] .Reset-btn-Branch {
 }
 
 .Reset-btn-Branch:hover {
-  background: linear-gradient(to bottom, #7484b7 0%, #536395 100%);
+  background: linear-gradient(to bottom, #7484b7 0%, #536395 100%)!important;
   border-color: #7484b7 !important;
 }
 
 .icon-space {
   margin-right: 5px !important;
-  font-size: 15px;
+  font-size: 15px!important;
+  align-items: center !important;
+}
+
+body[dir="rtl"] .icon-space {
+  margin-left: 5px !important;
+  font-size: 15px!important;
   align-items: center !important;
 }
 
@@ -75,11 +81,11 @@ body[dir="rtl"] .Reset-btn-Branch {
 .icon-check-close-color {
   color: #cf5b5b !important;
   font-size: 18px !important;
-  font-weight: 600;
+  font-weight: 600!important;
 }
 
 .icon-spaceing-dlt-edit {
-  display: flex;
+  display: flex!important;
   justify-content: center !important;
   gap: 10px !important;
 }
@@ -87,7 +93,7 @@ body[dir="rtl"] .Reset-btn-Branch {
 .icon-EDT-DLT-color {
   color: #7a7e8b !important;
   font-size: 18px !important;
-  cursor: pointer;
+  cursor: pointer!important;
 }
 
 .icon-EDT-DLT-color:hover {
@@ -97,7 +103,7 @@ body[dir="rtl"] .Reset-btn-Branch {
 .text-fiels-Branch {
   font-size: 13px !important;
   font-family: "Montserrat", sans-serif !important;
-  height: 37px;
+  height: 37px!important;
   color: #212529 !important;
   font-weight: 500 !important;
 }
@@ -105,7 +111,7 @@ body[dir="rtl"] .Reset-btn-Branch {
 body[dir="rtl"] .text-fiels-Branch {
   font-size: 13px !important;
   font-family: "NeoSansArabic" !important;
-  height: 37px;
+  height: 37px!important;
   color: #212529 !important;
   font-weight: 500 !important;
 }
@@ -113,7 +119,7 @@ body[dir="rtl"] .text-fiels-Branch {
 .text-fields-Branch-arabic {
   font-size: 13px !important;
   font-family: "Montserrat", sans-serif !important;
-  height: 37px;
+  height: 37px!important;
   color: #212529 !important;
   font-weight: 500 !important;
   text-align: end !important;
@@ -122,13 +128,13 @@ body[dir="rtl"] .text-fiels-Branch {
 body[dir="rtl"] .text-fields-Branch-arabic {
   font-size: 13px !important;
   font-family: "NeoSansArabic" !important;
-  height: 37px;
+  height: 37px!important;
   color: #212529 !important;
   text-align: start !important;
   font-weight: 500 !important;
 }
 
 .col-for-date-timepicker {
-  display: flex;
-  flex-direction: column;
+  display: flex!important;
+  flex-direction: column!important;
 }

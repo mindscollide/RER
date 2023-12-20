@@ -1,5 +1,5 @@
 .CityWiseCounter-paper {
-  border-radius: 4px;
+  border-radius: 4px !important;
   padding: 1.5rem 2rem !important;
   width: 100% !important;
   overflow: hidden !important;
@@ -7,26 +7,26 @@
 }
 
 .CityWiseCounter-col {
-  display: flex;
-  justify-content: center;
-  gap: 5px;
+  display: flex !important;
+  justify-content: center !important;
+  gap: 5px !important;
 }
 
 .Search-Icon-Btn {
-  font-size: 14px;
-  font-weight: 500;
+  font-size: 14px !important;
+  font-weight: 500 !important;
   font-family: "Montserrat", sans-serif !important;
   padding: 6px 12px !important;
-  border-top-right-radius: 0px;
-  border-bottom-left-radius: 0px;
-  border-top-left-radius: 8px;
-  border-bottom-right-radius: 8px;
-  background: linear-gradient(to bottom, #7484b7 0%, #536395 100%);
+  border-top-right-radius: 0px !important;
+  border-bottom-left-radius: 0px !important;
+  border-top-left-radius: 8px !important;
+  border-bottom-right-radius: 8px !important;
+  background: linear-gradient(to bottom, #7484b7 0%, #536395 100%) !important;
   border-color: #7484b7 !important;
 }
 
 .Search-Icon-Btn:hover {
-  background: linear-gradient(to bottom, #77c0cb 0%, #2c9cc0 100%);
+  background: linear-gradient(to bottom, #77c0cb 0%, #2c9cc0 100%) !important;
   border-color: #77c0cb !important;
 }
 
@@ -37,17 +37,17 @@
 
 .city-icon-space {
   margin-right: 5px !important;
-  font-size: 15px;
+  font-size: 15px !important;
   align-items: center !important;
 }
 
 .CitywiseCounter-div-row {
-  padding: 8px 15px;
-  font-size: 16px;
-  font-family: "Montserrat", sans-serif;
-  font-weight: 600;
-  background: #f1f7ec;
-  color: #76c641;
+  padding: 8px 15px !important;
+  font-size: 16px !important;
+  font-family: "Montserrat", sans-serif !important;
+  font-weight: 600 !important;
+  background: #f1f7ec !important;
+  color: #76c641 !important;
 }
 
 body[dir="rtl"] .CitywiseCounter-div-row {
@@ -56,8 +56,8 @@ body[dir="rtl"] .CitywiseCounter-div-row {
 
 .div-table-counter {
   max-height: 32vh !important;
-  max-width: 77vw;
-  width: 100%;
+  max-width: 77vw !important;
+  width: 100% !important;
   box-sizing: border-box !important;
   overflow-x: auto !important;
   border-radius: 0px !important;
@@ -67,24 +67,24 @@ body[dir="rtl"] .CitywiseCounter-div-row {
   color: #002650 !important;
   border-radius: 0% !important;
   position: sticky !important;
-  font-family: "Montserrat", sans-serif;
+  font-family: "Montserrat", sans-serif !important;
   white-space: nowrap !important;
   overflow: hidden !important;
   text-overflow: ellipsis !important;
   top: 0 !important;
-  z-index: 1;
+  z-index: 1 !important;
   background: #ffffff !important;
 }
 
 .div-table-counter::-webkit-scrollbar {
-  width: 0.5rem;
-  height: 0.5rem;
-  border-radius: 20px;
-  background-color: #ffffff;
+  width: 0.5rem !important;
+  height: 0.5rem !important;
+  border-radius: 20px !important;
+  background-color: #ffffff !important;
 }
 
 .div-table-counter::-webkit-scrollbar-thumb {
-  border-radius: 20px;
-  background: #ccc;
-  margin-left: -15px;
+  border-radius: 20px !important;
+  background: #ccc !important;
+  margin-left: -15px !important;
 }

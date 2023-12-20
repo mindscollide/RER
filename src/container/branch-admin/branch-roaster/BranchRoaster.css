@@ -1,5 +1,5 @@
 .BranchRoaster-Admin-paper {
-  border-radius: 4px;
+  border-radius: 4px!important;
   padding: 1.5rem 1rem !important;
   width: 100% !important;
   overflow: hidden !important;
@@ -7,21 +7,21 @@
 }
 
 .btn-class-branch {
-  display: flex;
-  justify-content: end;
+  display: flex!important;
+  justify-content: end!important;
   gap: 10px !important;
 }
 
 .save-btn-BranchRoaster {
-  font-size: 14px;
-  font-weight: 500;
+  font-size: 14px!important;
+  font-weight: 500!important;
   font-family: "Montserrat", sans-serif !important;
   padding: 6px 12px !important;
-  border-top-right-radius: 0px;
-  border-bottom-left-radius: 0px;
-  border-top-left-radius: 8px;
-  border-bottom-right-radius: 8px;
-  background: linear-gradient(to bottom, #7484b7 0%, #536395 100%);
+  border-top-right-radius: 0px!important;
+  border-bottom-left-radius: 0px!important;
+  border-top-left-radius: 8px!important;
+  border-bottom-right-radius: 8px!important;
+  background: linear-gradient(to bottom, #7484b7 0%, #536395 100%)!important;
   border-color: #7484b7 !important;
 }
 
@@ -30,20 +30,20 @@ body[dir="rtl"] .save-btn-BranchRoaster {
 }
 
 .save-btn-BranchRoaster:hover {
-  background: linear-gradient(to bottom, #77c0cb 0%, #2c9cc0 100%);
+  background: linear-gradient(to bottom, #77c0cb 0%, #2c9cc0 100%)!important;
   border-color: #77c0cb !important;
 }
 
 .revert-btn-BranchRoaster {
-  font-size: 14px;
-  font-weight: 500;
+  font-size: 14px!important;
+  font-weight: 500!important;
   font-family: "Montserrat", sans-serif !important;
   padding: 6px 18px !important;
-  border-top-right-radius: 0px;
-  border-bottom-left-radius: 0px;
-  border-top-left-radius: 8px;
-  border-bottom-right-radius: 8px;
-  background: linear-gradient(to bottom, #77c0cb 0%, #2c9cc0 100%);
+  border-top-right-radius: 0px!important;
+  border-bottom-left-radius: 0px!important;
+  border-top-left-radius: 8px!important;
+  border-bottom-right-radius: 8px!important;
+  background: linear-gradient(to bottom, #77c0cb 0%, #2c9cc0 100%)!important;
   border-color: #77c0cb !important;
 }
 
@@ -52,27 +52,27 @@ body[dir="rtl"] .revert-btn-BranchRoaster {
 }
 
 .revert-btn-BranchRoaster:hover {
-  background: linear-gradient(to bottom, #7484b7 0%, #536395 100%);
+  background: linear-gradient(to bottom, #7484b7 0%, #536395 100%)!important;
   border-color: #7484b7 !important;
 }
 
 .icon-space {
   margin-right: 5px !important;
-  font-size: 15px;
+  font-size: 15px!important;
   align-items: center !important;
 }
 
 .btn-col-class-BranchRoaster {
-  display: flex;
+  display: flex!important;
   justify-content: end !important;
-  align-items: center;
-  gap: 5px;
+  align-items: center!important;
+  gap: 5px!important;
 }
 
 .icon-close-style {
-  font-size: 18px;
-  font-weight: 600;
-  cursor: pointer;
+  font-size: 18px!important;
+  font-weight: 600!important;
+  cursor: pointer!important;
   color: #cf5b5b !important;
 }
 
@@ -90,62 +90,62 @@ body[dir="rtl"] .revert-btn-BranchRoaster {
 
 /* .calendar-background-style .rmdp-day.rmdp-today span {
   background-color: #2e3cb2 !important;
-  color: #fff;
+  color: #fff!important;
   border-radius: 4px !important;
 } */
 .calendar-background-style .rmdp-day span {
-  border-radius: 0%;
-  bottom: 3px;
-  font-size: 14px;
-  font-weight: 500;
-  left: 3px;
-  position: absolute;
-  right: 3px;
-  top: 3px;
+  border-radius: 0%!important;
+  bottom: 3px!important;
+  font-size: 14px!important;
+  font-weight: 500!important;
+  left: 3px!important;
+  position: absolute!important;
+  right: 3px!important;
+  top: 3px!important;
 }
 
 .calendar-background-style .rmdp-day span:hover {
   background-color: #eee !important;
-  border-radius: 4px;
-  color: #000;
+  border-radius: 4px!important;
+  color: #000!important;
 }
 
 .calendar-background-style .rmdp-week-day {
-  color: #45494d;
-  cursor: default;
-  font-size: 13px;
-  font-weight: 700;
+  color: #45494d!important;
+  cursor: default!important;
+  font-size: 13px!important;
+  font-weight: 700!important;
 }
 
 .calendar-background-style .rmdp-header-values {
   font-size: 14px !important;
   font-weight: 700 !important;
-  color: #49454d;
-  margin: auto;
+  color: #49454d!important;
+  margin: auto!important;
 }
 
 .calendar-background-style .rmdp-arrow {
-  border: solid #49454d;
-  border-width: 0 2px 2px 0;
-  display: inline-block;
-  height: 3px;
-  margin-top: 5px;
-  padding: 2px;
-  width: 3px;
+  border: solid #49454d!important;
+  border-width: 0 2px 2px 0!important;
+  display: inline-block!important;
+  height: 3px!important;
+  margin-top: 5px!important;
+  padding: 2px!important;
+  width: 3px!important;
 }
 
 .calendar-above-arrow {
-  background-color: transparent;
-  border: none;
-  font-weight: 600;
+  background-color: transparent!important;
+  border: none!important;
+  font-weight: 600!important;
 }
 
 .calendar-background-style .rmdp-day,
 .rmdp-week-day {
-  cursor: pointer;
+  cursor: pointer!important;
   height: 28px !important;
-  position: relative;
-  width: 34px;
+  position: relative!important;
+  width: 34px!important;
 }
 
 .calendar-background-style .rmdp-day-picker {
