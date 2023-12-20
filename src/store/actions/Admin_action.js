@@ -396,9 +396,19 @@ const getAllShiftsOfBranchFail = (message) => {
     message: message,
   };
 };
-
-const getAllShiftsOfBranch = (t, navigate, loadingFlag) => {
-  let data = { BranchID: Number(localStorage.getItem("branchID")) };
+const getAllShiftsOfBranchCleare = (message) => {
+  return {
+    type: actions.GET_ALL_SHIFTS_OF_BRANCH_CLEARE,
+    message: message,
+  };
+};
+const getAllShiftsOfBranch = (t, navigate, loadingFlag, id) => {
+  let data = {};
+  if (id !== undefined && id !== null) {
+    data = { BranchID: Number(id) };
+  } else {
+    data = { BranchID: Number(localStorage.getItem("branchID")) };
+  }
   return async (dispatch) => {
     if (!loadingFlag) {
       dispatch(loader_Actions(true));
@@ -2648,11 +2658,14 @@ const getBranchShiftCounterFail = (message) => {
   };
 };
 
-const getBranchShiftCounterMainApi = (t, navigate, loadingFlag, newData) => {
-  let data = {
-    ...newData,
-    BranchID: Number(localStorage.getItem("branchID")),
+const getBranchShiftCounterClear = (message) => {
+  return {
+    type: actions.GET_BRANCH_SHIFT_COUNTER_CLEAR,
+    message: message,
   };
+};
+
+const getBranchShiftCounterMainApi = (t, navigate, loadingFlag, data) => {
   return async (dispatch) => {
     if (!loadingFlag) {
       dispatch(loader_Actions(true));
@@ -2671,7 +2684,9 @@ const getBranchShiftCounterMainApi = (t, navigate, loadingFlag, newData) => {
       .then(async (response) => {
         if (response.data.responseCode === 200) {
           if (response.data.responseCode === 417) {
-            dispatch(getBranchShiftCounterMainApi(t, navigate, loadingFlag));
+            dispatch(
+              getBranchShiftCounterMainApi(t, navigate, loadingFlag, data)
+            );
           } else if (response.data.responseResult.isExecuted === true) {
             if (
               response.data.responseResult.responseMessage ===
@@ -2753,7 +2768,12 @@ const getCityEmployeeFail = (message) => {
     message: message,
   };
 };
-
+const getCityEmployeeClear = (message) => {
+  return {
+    type: actions.GET_CITY_EMPLOYEE_CLEAR,
+    message: message,
+  };
+};
 const getCityEmployeeMainApi = (t, navigate, loadingFlag) => {
   let data = { CityID: Number(localStorage.getItem("cityID")) };
 
@@ -3573,9 +3593,12 @@ export {
   getCityBranchServiceFail,
   //for icon click when data is null
   getAllShiftsOfBranchFail,
+  getAllShiftsOfBranchCleare,
   updateCityBranchServiceListApi,
   getBranchShiftCounterMainApi,
+  getBranchShiftCounterClear,
   getCityEmployeeMainApi,
+  getCityEmployeeClear,
   addCityEmployeeMainApi,
   updateExistingEmployeeMainApi,
   deleteExistingEmployeeMainApi,

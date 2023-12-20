@@ -111,6 +111,12 @@ const adminReducer = (state = initialState, action) => {
         admin_ResponseMessage: action.message,
       };
 
+    case actions.GET_ALL_SHIFTS_OF_BRANCH_CLEARE:
+      return {
+        ...state,
+        branchesList: null,
+      };
+
     //for ALL COUNTERS OF BRANCH Api fot(CounterMain for listing of all branches && Branch Roaster for Counter drop down)
     case actions.ALL_COUNTERS_OF_BRANCH_SUCCESS:
       return {
@@ -437,6 +443,12 @@ const adminReducer = (state = initialState, action) => {
         admin_ResponseMessage: action.message,
       };
 
+    case actions.GET_BRANCH_SHIFT_COUNTER_CLEAR:
+      return {
+        ...state,
+        getBranchShiftWiseCounter: null,
+      };
+
     // Get City Employee Main in City Admin
     case actions.GET_CITY_EMPLOYEE_SUCCESS:
       return {
@@ -450,6 +462,12 @@ const adminReducer = (state = initialState, action) => {
         ...state,
         cityEmployeeMain: null,
         admin_ResponseMessage: action.message,
+      };
+
+    case actions.GET_CITY_EMPLOYEE_CLEAR:
+      return {
+        ...state,
+        cityEmployeeMain: null,
       };
 
     // Add New Employyee Data in City Admin

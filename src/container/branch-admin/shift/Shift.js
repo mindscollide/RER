@@ -98,6 +98,18 @@ const BranchAdmin = () => {
   // calling  data api
   useEffect(() => {
     dispatch(getAllShiftsOfBranch(t, navigate, Loading));
+    return () => {
+      setRows([]);
+      setNewShift({
+        ShiftNameEnglish: "",
+        ShiftNameArabic: "",
+        IsShiftActive: false,
+        ShiftStartTime: "",
+        ShiftEndTime: "",
+        BranchID: Number(localStorage.getItem("branchID")),
+        ShiftID: 0,
+      });
+    };
   }, []);
 
   // updating data in table
@@ -146,8 +158,8 @@ const BranchAdmin = () => {
       dataIndex: "shiftID",
       key: "shiftID",
       render: (text, record, index) => (
-      <span className="table-inside-text">{index + 1}</span>
-    ),
+        <span className="table-inside-text">{index + 1}</span>
+      ),
     },
     {
       title: <span className="table-text">{t("Shift-name")}</span>,
