@@ -6,3 +6,4 @@ export { default as CountryCityWiseCounter } from "./country-city-wise-counter/C
 export { default as CountryWiseEmployee } from "./country-wise-employee/CountryWiseEmployee";
 export { default as NationalHoliday } from "./national-holiday/NationalHoliday";
 export { default as CountryWorking } from "./country-working-days/COuntry-Working";
+export { default as CountryWiseCityComponent } from "./country-wise-city-component/CountryWiseCityComponent";

@@ -202,3 +202,11 @@ export const GET_APPOINTMENT_BRANCH_REPORT_SUCCESS =
 
 export const GET_APPOINTMENT_BRANCH_REPORT_FAIL =
   "GET_APPOINTMENT_BRANCH_REPORT_FAIL";
+
+// ===================================GLOBAL ADMIN START ==========================================//
+// Action Type For Global Action
+export const SET_COUNTRY_WISE_CITY_COMPONENT =
+  "SET_COUNTRY_WISE_CITY_COMPONENT";
+
+export const SET_COUNTRY_SERVICE_SCREEN_COMPONENT =
+  "SET_COUNTRY_SERVICE_SCREEN_COMPONENT";

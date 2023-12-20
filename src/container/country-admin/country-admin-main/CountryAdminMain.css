@@ -125,3 +125,14 @@ body[dir="rtl"] .text-fields-CountryAdmin-arabic {
   font-family: "NeoSansArabic" !important;
   text-align: start !important;
 }
+
+.btn-col-class-city-service {
+  display: flex !important;
+  justify-content: center !important;
+  gap: 10px !important;
+}
+
+.for-inside-table-textfields {
+  width: 75px !important;
+  height: 35px !important;
+}

@@ -29,7 +29,7 @@ const CountryWiseEmployee = () => {
 
   const columns = [
     {
-      title: <span className="table-text">{t("Service")}</span>,
+      title: <span className="table-text">{t("Employee-name")}</span>,
       dataIndex: "shiftName",
       key: "shiftName",
       width: "400px",

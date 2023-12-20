@@ -12,4 +12,28 @@ const setIsCityWiseBranchService = (response) => {
     response: response,
   };
 };
-export { setIsCountryCityWiseCounter, setIsCityWiseBranchService };
+
+const setIsCountryWiseCityComponent = (response) => {
+  return {
+    type: actions.SET_COUNTRY_WISE_CITY_COMPONENT,
+    response: response,
+  };
+};
+
+// ===================================GLOBAL ADMIN START ==========================================//
+
+const setIsCountryServiceScreenComponent = (response) => {
+  return {
+    type: actions.SET_COUNTRY_SERVICE_SCREEN_COMPONENT,
+    response: response,
+  };
+};
+
+// ===================================GLOBAL ADMIN END ==========================================//
+
+export {
+  setIsCountryCityWiseCounter,
+  setIsCityWiseBranchService,
+  setIsCountryWiseCityComponent,
+  setIsCountryServiceScreenComponent,
+};

@@ -80,9 +80,6 @@ const CityScreen = () => {
           <Col lg={12} md={12} sm={12} className="d-flex justify-content-start">
             <span className="shift-heading">
               {t("City-wise-service-availability")}
-              <span className="shift-sub-heading">
-                {t("Saudi-arabia-riyadh")}
-              </span>
             </span>
           </Col>
         </Row>
