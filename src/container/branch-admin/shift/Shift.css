@@ -67,6 +67,12 @@ body[dir="rtl"] .Reset-btn-Branch {
   align-items: center !important;
 }
 
+body[dir="rtl"] .icon-space {
+  margin-left: 5px !important;
+  font-size: 15px!important;
+  align-items: center !important;
+}
+
 .icon-check-color {
   color: #87b939 !important;
   font-size: 18px !important;

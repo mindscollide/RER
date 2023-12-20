@@ -1,5 +1,5 @@
 .BranchService-Admin-paper {
-  border-radius: 4px!important;
+  border-radius: 4px !important;
   padding: 1.5rem 1rem !important;
   width: 100% !important;
   overflow: hidden !important;
@@ -7,21 +7,21 @@
 }
 
 .btn-class-branch {
-  display: flex!important;
-  justify-content: end!important;
+  display: flex !important;
+  justify-content: end !important;
   gap: 10px !important;
 }
 
 .save-btn-BranchService {
-  font-size: 14px!important;
-  font-weight: 500!important;
+  font-size: 14px !important;
+  font-weight: 500 !important;
   font-family: "Montserrat", sans-serif !important;
   padding: 6px 12px !important;
-  border-top-right-radius: 0px!important;
-  border-bottom-left-radius: 0px!important;
-  border-top-left-radius: 8px!important;
-  border-bottom-right-radius: 8px!important;
-  background: linear-gradient(to bottom, #7484b7 0%, #536395 100%)!important;
+  border-top-right-radius: 0px !important;
+  border-bottom-left-radius: 0px !important;
+  border-top-left-radius: 8px !important;
+  border-bottom-right-radius: 8px !important;
+  background: linear-gradient(to bottom, #7484b7 0%, #536395 100%) !important;
   border-color: #7484b7 !important;
 }
 
@@ -30,20 +30,20 @@ body[dir="rtl"] .save-btn-BranchService {
 }
 
 .save-btn-BranchService:hover {
-  background: linear-gradient(to bottom, #77c0cb 0%, #2c9cc0 100%)!important;
+  background: linear-gradient(to bottom, #77c0cb 0%, #2c9cc0 100%) !important;
   border-color: #77c0cb !important;
 }
 
 .revert-btn-BranchService {
-  font-size: 14px!important;
-  font-weight: 500!important;
+  font-size: 14px !important;
+  font-weight: 500 !important;
   font-family: "Montserrat", sans-serif !important;
   padding: 6px 18px !important;
-  border-top-right-radius: 0px!important;
-  border-bottom-left-radius: 0px!important;
-  border-top-left-radius: 8px!important;
-  border-bottom-right-radius: 8px!important;
-  background: linear-gradient(to bottom, #77c0cb 0%, #2c9cc0 100%)!important;
+  border-top-right-radius: 0px !important;
+  border-bottom-left-radius: 0px !important;
+  border-top-left-radius: 8px !important;
+  border-bottom-right-radius: 8px !important;
+  background: linear-gradient(to bottom, #77c0cb 0%, #2c9cc0 100%) !important;
   border-color: #77c0cb !important;
 }
 
@@ -52,21 +52,21 @@ body[dir="rtl"] .revert-btn-BranchService {
 }
 
 .revert-btn-BranchService:hover {
-  background: linear-gradient(to bottom, #7484b7 0%, #536395 100%)!important;
+  background: linear-gradient(to bottom, #7484b7 0%, #536395 100%) !important;
   border-color: #7484b7 !important;
 }
 
 .icon-space {
   margin-right: 5px !important;
-  font-size: 15px!important;
+  font-size: 15px !important;
   align-items: center !important;
 }
 
 .btn-col-class {
-  display: flex!important;
+  display: flex !important;
   justify-content: end !important;
-  align-items: center!important;
-  gap: 5px!important;
+  align-items: center !important;
+  gap: 5px !important;
 }
 
 .For-table-textfield {

@@ -78,7 +78,6 @@ const ShiftScreen = () => {
       dataIndex: "active",
       key: "active",
       width: "200px",
-      align: "center",
       render: (text, record) => (
         <span>
           <Switch />

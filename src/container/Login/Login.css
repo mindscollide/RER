@@ -9,33 +9,33 @@
 
 .login-container {
   min-height: 60vh !important;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  display: flex !important;
+  justify-content: center !important;
+  align-items: center !important;
 }
 
 .center-div {
-  display: flex;
+  display: flex !important;
   justify-content: center !important;
   margin: 0 auto !important;
   width: 400px !important;
   height: 350px !important;
   background: #f5f6f9 !important;
   align-items: center !important;
-  border-radius: 12px;
-  padding: 10px 20px;
+  border-radius: 12px !important;
+  padding: 10px 20px !important;
   box-shadow: rgba(100, 100, 111, 0.3) 0px 7px 29px 0px !important;
 }
 
 .Heading-Rer {
-  display: flex;
-  justify-content: center;
+  display: flex !important;
+  justify-content: center !important;
   color: #76c641 !important;
   font-size: 1.75rem !important;
   font-family: "Montserrat", sans-serif !important;
   font-weight: 700 !important;
   text-align: center !important;
-  /* margin-bottom: 10px; */
+  /* margin-bottom: 10px!important; */
 }
 
 body[dir="rtl"] .Heading-Rer {
@@ -68,10 +68,10 @@ body[dir="rtl"] .login-btn {
   width: 101px !important;
   height: 39px !important;
   background: linear-gradient(to bottom, #5b67cd 0%, #2a38af 100%) !important;
-  border-top-right-radius: 0px;
-  border-bottom-left-radius: 0px;
-  border-top-left-radius: 8px;
-  border-bottom-right-radius: 8px;
+  border-top-right-radius: 0px !important;
+  border-bottom-left-radius: 0px !important;
+  border-top-left-radius: 8px !important;
+  border-bottom-right-radius: 8px !important;
   border: none !important;
 }
 
@@ -82,7 +82,7 @@ body[dir="rtl"] .login-btn {
 .form-comtrol-textfield {
   height: 37px !important;
   font-family: "Montserrat", sans-serif !important;
-  font-weight: 500;
+  font-weight: 500 !important;
   background: rgba(255, 255, 255, 0.5) !important;
   font-size: 14px !important;
   outline: none !important;
@@ -115,7 +115,7 @@ body[dir="rtl"] .form-comtrol-textfield {
   border-top-right-radius: 0px !important;
   border-bottom-right-radius: 0px !important;
   height: 37px !important;
-  font-weight: 500;
+  font-weight: 500 !important;
   background: rgba(255, 255, 255, 0.5) !important;
   font-size: 14px !important;
   outline: none !important;
@@ -125,7 +125,7 @@ body[dir="rtl"] .form-comtrol-textfield {
 }
 
 .signIn-Signup-btn-col {
-  display: flex;
+  display: flex !important;
   justify-content: center !important;
   gap: 5px !important;
 }
@@ -134,7 +134,7 @@ body[dir="rtl"] .form-comtrol-textfield {
   color: #002650 !important;
   font-family: "Montserrat", sans-serif !important;
   font-size: 14px !important;
-  font-weight: 500;
+  font-weight: 500 !important;
   cursor: pointer !important;
 }
 
@@ -151,12 +151,12 @@ body[dir="rtl"] .forget-lablel-text {
 }
 
 .errorMessageLogin {
-  height: 12px;
+  height: 12px !important;
   margin-top: -14px !important;
   font-size: 13px !important;
-  font-weight: 500;
+  font-weight: 500 !important;
   font-family: "Montserrat", sans-serif !important;
-  color: #f16b6b;
+  color: #f16b6b !important;
   visibility: visible !important;
 }
 
@@ -165,18 +165,18 @@ body[dir="rtl"] .errorMessageLogin {
 }
 
 .errorMessageLogin_hidden {
-  visibility: hidden;
-  margin: 0;
-  height: 14px;
+  visibility: hidden !important;
+  margin: 0 !important;
+  height: 14px !important;
   color: #f16b6b !important;
 }
 
 .errorPasswordSignInMessage {
-  height: 0px;
+  height: 0px !important;
   margin-top: 0px !important;
   font-size: 13px !important;
-  font-weight: 500;
-  color: #f16b6b;
+  font-weight: 500 !important;
+  color: #f16b6b !important;
   font-family: "Montserrat", sans-serif !important;
   visibility: visible !important;
 }
@@ -186,8 +186,8 @@ body[dir="rtl"] .errorPasswordSignInMessage {
 }
 
 .errorPasswordSignInMessage_hidden {
-  visibility: hidden;
-  margin: 0;
-  height: 16px;
+  visibility: hidden !important;
+  margin: 0 !important;
+  height: 16px !important;
   color: #f16b6b !important;
 }

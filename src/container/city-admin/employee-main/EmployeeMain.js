@@ -261,7 +261,6 @@ const EmployeeMain = () => {
     {
       title: <span className="table-text">{t("Employee-id")}</span>,
       dataIndex: "employeeID",
-      align: "center",
       key: "employeeID",
       render: (text, record) => <span>{text}</span>,
     },
@@ -269,7 +268,6 @@ const EmployeeMain = () => {
       title: <span className="table-text">{t("Active")}</span>,
       dataIndex: "isEmployeeActive",
       key: "isEmployeeActive",
-      align: "center",
       render: (text, record) => (
         <>
           {text ? (

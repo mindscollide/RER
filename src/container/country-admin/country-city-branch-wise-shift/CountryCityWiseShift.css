@@ -1,5 +1,5 @@
 .CountryCityShift-paper {
-  border-radius: 4px;
+  border-radius: 4px !important;
   padding: 1.5rem 1rem !important;
   width: 100% !important;
   overflow: hidden !important;
@@ -7,26 +7,26 @@
 }
 
 .CityBranchShift-col {
-  display: flex;
-  justify-content: center;
-  gap: 5px;
+  display: flex !important;
+  justify-content: center !important;
+  gap: 5px !important;
 }
 
 .Search-Icon-Btn {
-  font-size: 14px;
-  font-weight: 500;
+  font-size: 14px !important;
+  font-weight: 500 !important;
   font-family: "Montserrat", sans-serif !important;
   padding: 6px 12px !important;
-  border-top-right-radius: 0px;
-  border-bottom-left-radius: 0px;
-  border-top-left-radius: 8px;
-  border-bottom-right-radius: 8px;
-  background: linear-gradient(to bottom, #7484b7 0%, #536395 100%);
+  border-top-right-radius: 0px !important;
+  border-bottom-left-radius: 0px !important;
+  border-top-left-radius: 8px !important;
+  border-bottom-right-radius: 8px !important;
+  background: linear-gradient(to bottom, #7484b7 0%, #536395 100%) !important;
   border-color: #7484b7 !important;
 }
 
 .Search-Icon-Btn:hover {
-  background: linear-gradient(to bottom, #77c0cb 0%, #2c9cc0 100%);
+  background: linear-gradient(to bottom, #77c0cb 0%, #2c9cc0 100%) !important;
   border-color: #77c0cb !important;
 }
 
@@ -37,7 +37,7 @@
 
 .city-icon-space {
   margin-right: 5px !important;
-  font-size: 15px;
+  font-size: 15px !important;
   align-items: center !important;
 }
 
@@ -47,35 +47,28 @@
   color: #ffffff !important;
   padding: 10px !important;
   display: flex !important;
-  justify-content: space-between;
+  justify-content: space-between !important;
 }
 
 .collapse-disable-bg {
   background-color: transparent !important;
 }
 
-:where(.css-dev-only-do-not-override-2q8sxy).ant-collapse
-  .ant-collapse-content
-  > .ant-collapse-content-box {
-  padding: 16px 25px;
+.ant-collapse .ant-collapse-content>.ant-collapse-content-box {
+  padding: 16px 25px !important;
 }
 
 /* for not showing icon beside the header */
-:where(.css-dev-only-do-not-override-2q8sxy).ant-collapse
-  > .ant-collapse-item
-  > .ant-collapse-header
-  .ant-collapse-expand-icon {
-  display: none;
+.ant-collapse>.ant-collapse-item>.ant-collapse-header .ant-collapse-expand-icon {
+  display: none !important;
 }
 
-:where(.css-dev-only-do-not-override-2q8sxy).ant-collapse
-  > .ant-collapse-item
-  > .ant-collapse-header {
-  padding: 3px 16px;
+.ant-collapse>.ant-collapse-item>.ant-collapse-header {
+  padding: 3px 16px !important;
 }
 
 .icon-size-of-collapse {
   font-size: 24px !important;
   font-weight: 500 !important;
-  color: #ffffff;
+  color: #ffffff !important;
 }

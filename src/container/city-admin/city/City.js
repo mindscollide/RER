@@ -315,7 +315,11 @@ const CityAdmin = () => {
           record?.branchStartTime !== null &&
           record?.branchStartTime !== null
         ) {
-          return convertToGMT(record?.branchStartTime, local);
+          return (
+            <span className="table-inside-text">
+              {convertToGMT(record?.branchStartTime, local)}
+            </span>
+          );
         }
       },
     },
@@ -325,7 +329,11 @@ const CityAdmin = () => {
       key: "branchEndTime",
       render: (text, record) => {
         if (record?.branchEndTime !== null && record?.branchEndTime !== null) {
-          return convertToGMT(record?.branchEndTime, local);
+          return (
+            <span className="table-inside-text">
+              {convertToGMT(record?.branchEndTime, local)}
+            </span>
+          );
         }
       },
     },
@@ -333,7 +341,6 @@ const CityAdmin = () => {
       title: <span className="table-text">{t("Active")}</span>,
       dataIndex: "isBranchActive",
       key: "isBranchActive",
-      align: "center",
       render: (text, record) => (
         <>
           {text ? (
@@ -406,7 +413,6 @@ const CityAdmin = () => {
       dataIndex: "isServiceAvailableAtBranch",
       key: "isServiceAvailableAtBranch",
       width: "200px",
-      align: "center",
       render: (text, record) => (
         <span>
           <Switch

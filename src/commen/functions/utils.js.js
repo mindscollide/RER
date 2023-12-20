@@ -106,7 +106,7 @@ export function generateMenuItems(roleID, t) {
       [
         getItem(t("Shifts"), "2"),
         getItem(t("Counters"), "3"),
-        getItem(t("Branch-service-countryadmin"), "4"),
+        getItem(t("Services"), "4"),
         getItem(t("Branch-roaster"), "18"),
       ],
       "menu-item-sub"

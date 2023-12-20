@@ -84,13 +84,11 @@ const GlobalService = () => {
       title: <span className="table-text">{t("Name")}</span>,
       dataIndex: "name",
       key: "name",
-      align: "left",
     },
     {
       title: <span className="table-text">{t("Branch-availability")}</span>,
       dataIndex: "branchAvailability",
       key: "branchAvailability",
-      align: "center",
       render: (text, record) => (
         <>
           <span>
@@ -103,7 +101,6 @@ const GlobalService = () => {
       title: <span className="table-text">{t("Home-availability")}</span>,
       dataIndex: "homeAvailability",
       key: "homeAvailability",
-      align: "center",
       render: (text, record) => (
         <>
           <span>
@@ -116,7 +113,6 @@ const GlobalService = () => {
       title: <span className="table-text">{t("Active")}</span>,
       dataIndex: "active",
       key: "active",
-      align: "center",
       render: (text, record) => (
         <>
           <span>

@@ -101,25 +101,21 @@ const CountryAdminMain = () => {
       title: <span className="table-text">{t("Shift-name")}</span>,
       dataIndex: "shiftName",
       key: "shiftName",
-      align: "left",
     },
     {
       title: <span className="table-text">{t("Start-time")}</span>,
       dataIndex: "startTime",
       key: "startTime",
-      align: "center",
     },
     {
       title: <span className="table-text">{t("End-time")}</span>,
       dataIndex: "endTime",
       key: "endTime",
-      align: "center",
     },
     {
       title: <span className="table-text">{t("Active")}</span>,
       dataIndex: "active",
       key: "active",
-      align: "center",
       render: (text, record) => (
         <>
           <span>
