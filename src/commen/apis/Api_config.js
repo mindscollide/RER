@@ -178,6 +178,12 @@ const deleteCountryNationalHoliday = {
   RequestMethod: "ServiceManager.DeleteCountryNationalHoliday",
 };
 
+//GET APPOINTMENT REPORT BRANCH
+
+const getAppointmentBranchReport = {
+  RequestMethod: "ServiceManager.GetAppointmentReportBranchAdmin",
+};
+
 export {
   logIn,
   roleList,
@@ -220,4 +226,5 @@ export {
   addCountryNationalHoliday,
   deleteCountryNationalHoliday,
   // ===================================COUNTRY ADMIN END ==========================================//
+  getAppointmentBranchReport,
 };

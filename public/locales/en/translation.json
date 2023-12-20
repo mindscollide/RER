@@ -193,5 +193,7 @@
   "Admin_AdminServiceManager_DeleteCountryNationalHoliday_02": "National Holidays Not Found For Deletion",
   "Admin_AdminServiceManager_DeleteCountryNationalHoliday_03": "Holiday List Empty",
   "Employee-id": "Employee ID",
-  "Employee-email": "Employee Email"
+  "Employee-email": "Employee Email",
+  "Admin_AdminServiceManager_GetAppointmentReportBranchAdmin_01": "Appointment Report Available",
+  "Admin_AdminServiceManager_GetAppointmentReportBranchAdmin_02": "No Report Found for given search criteria"
 }
