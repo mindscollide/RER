@@ -20,6 +20,8 @@ const AppoinmentReportBranch = () => {
 
   const dispatch = useDispatch();
 
+  const currentLanguage = localStorage.getItem("i18nextLng");
+
   const Loading = useSelector((state) => state.Loader.Loading);
 
   const globalShiftOptions = useSelector((state) => state.admin.branchesList);
@@ -31,6 +33,14 @@ const AppoinmentReportBranch = () => {
   const globalBranchServicesOptions = useSelector(
     (state) => state.admin.branchServicesData
   );
+
+  //Appointment Report states
+  const [apppointmentOptionsShift, setApppointmentOptionsShift] = useState([]);
+  const [apppointmentOptionsCounter, setApppointmentOptionsCounter] = useState(
+    []
+  );
+  const [apppointmentOptionsServices, setApppointmentOptionsServices] =
+    useState([]);
 
   const dataSource = [
     {
@@ -107,6 +117,78 @@ const AppoinmentReportBranch = () => {
     dispatch(getBranchServicesApi(t, navigate, Loading));
   }, []);
 
+  useEffect(() => {
+    if (
+      globalShiftOptions !== null &&
+      globalShiftOptions !== undefined &&
+      globalShiftOptions.length !== 0
+    ) {
+      if (currentLanguage === "en") {
+        setApppointmentOptionsShift(
+          globalShiftOptions.map((item) => ({
+            value: item.shiftID,
+            label: item.shiftNameEnglish,
+          }))
+        );
+      } else {
+        setApppointmentOptionsShift(
+          globalShiftOptions.map((item) => ({
+            value: item.shiftID,
+            label: item.shiftNameArabic,
+          }))
+        );
+      }
+    }
+  }, [globalShiftOptions, currentLanguage]);
+
+  useEffect(() => {
+    if (
+      globalCounterOptions !== null &&
+      globalCounterOptions !== undefined &&
+      globalCounterOptions.length !== 0
+    ) {
+      if (currentLanguage === "en") {
+        setApppointmentOptionsCounter(
+          globalCounterOptions.map((item) => ({
+            value: item.counterID,
+            label: item.counterNameEnglish,
+          }))
+        );
+      } else {
+        setApppointmentOptionsCounter(
+          globalCounterOptions.map((item) => ({
+            value: item.counterID,
+            label: item.counterNameArabic,
+          }))
+        );
+      }
+    }
+  }, [globalCounterOptions, currentLanguage]);
+
+  useEffect(() => {
+    if (
+      globalBranchServicesOptions !== null &&
+      globalBranchServicesOptions !== undefined &&
+      globalBranchServicesOptions.length !== 0
+    ) {
+      if (currentLanguage === "en") {
+        setApppointmentOptionsServices(
+          globalBranchServicesOptions.map((item) => ({
+            value: item.branchServiceID,
+            label: item.branchService.serviceNameEnglish,
+          }))
+        );
+      } else {
+        setApppointmentOptionsServices(
+          globalBranchServicesOptions.map((item) => ({
+            value: item.branchServiceID,
+            label: item.branchService.serviceNameArabic,
+          }))
+        );
+      }
+    }
+  }, [globalBranchServicesOptions, currentLanguage]);
+
   return (
     <>
       <section>
@@ -149,6 +231,7 @@ const AppoinmentReportBranch = () => {
                     <Select
                       isSearchable={true}
                       className="select-dropdown-all"
+                      options={apppointmentOptionsServices}
                       // className="Branch-Screen-Select"
                     />
                   </span>
@@ -159,7 +242,7 @@ const AppoinmentReportBranch = () => {
                     <Select
                       isSearchable={true}
                       className="select-dropdown-all"
-
+                      options={apppointmentOptionsShift}
                       // className="Branch-Screen-Select"
                     />
                   </span>
@@ -171,7 +254,7 @@ const AppoinmentReportBranch = () => {
                     <Select
                       isSearchable={true}
                       className="select-dropdown-all"
-
+                      options={apppointmentOptionsCounter}
                       // className="Branch-Screen-Select"
                     />
                   </span>
