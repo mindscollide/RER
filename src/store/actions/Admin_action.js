@@ -39,6 +39,8 @@ import {
   deleteCountryNationalHoliday,
   getAllBranchServices,
   getAppointmentBranchReport,
+  getCountryWorkingDays,
+  updateCountryWorkingDays,
 } from "../../commen/apis/Api_config";
 import { adminURL } from "../../commen/apis/Api_ends_points";
 import moment from "moment";
@@ -3661,6 +3663,216 @@ const getAppointmentReportBranchAPI = (data, t, navigate, loadingFlag) => {
   };
 };
 
+// Get country working days in country admin main api start
+const getWorkingDaysSuccess = (response, message) => {
+  return {
+    type: actions.GET_COUNTRY_WORKING_DAYS_SUCCESS,
+    response: response,
+    message: message,
+  };
+};
+
+const getWorkingDaysFail = (message) => {
+  return {
+    type: actions.GET_COUNTRY_WORKING_DAYS_FAIL,
+    message: message,
+  };
+};
+
+const getCountryWorkingDaysApi = (t, navigate, loadingFlag) => {
+  let data = { CountryID: Number(localStorage.getItem("countryID")) };
+  return async (dispatch) => {
+    if (!loadingFlag) {
+      dispatch(loader_Actions(true));
+    }
+    let form = new FormData();
+    form.append("RequestMethod", getCountryWorkingDays.RequestMethod);
+    form.append("RequestData", JSON.stringify(data));
+    await axios({
+      method: "post",
+      url: adminURL,
+      data: form,
+      headers: {
+        _token: JSON.parse(localStorage.getItem("token")),
+      },
+    })
+      .then(async (response) => {
+        if (response.data.responseCode === 200) {
+          if (response.data.responseCode === 417) {
+            dispatch(getCountryWorkingDaysApi(t, navigate, loadingFlag, data));
+          } else if (response.data.responseResult.isExecuted === true) {
+            if (
+              response.data.responseResult.responseMessage ===
+              "Admin_AdminServiceManager_GetCountryWorkingDays_01"
+            ) {
+              await dispatch(
+                getWorkingDaysSuccess(
+                  response.data.responseResult.countryWorkingDaylist,
+                  t("Admin_AdminServiceManager_GetCountryWorkingDays_01")
+                )
+              );
+              await dispatch(loader_Actions(false));
+            } else if (
+              response.data.responseResult.responseMessage ===
+              "Admin_AdminServiceManager_GetCountryWorkingDays_02"
+            ) {
+              await dispatch(
+                getWorkingDaysFail(
+                  t("Admin_AdminServiceManager_GetCountryWorkingDays_02")
+                )
+              );
+              await dispatch(loader_Actions(false));
+            } else if (
+              response.data.responseResult.responseMessage ===
+              "Admin_AdminServiceManager_GetCountryWorkingDays_03"
+            ) {
+              await dispatch(
+                getWorkingDaysFail(
+                  t("Admin_AdminServiceManager_GetCountryWorkingDays_03")
+                )
+              );
+              await dispatch(loader_Actions(false));
+            } else if (
+              response.data.responseResult.responseMessage ===
+              "Admin_AdminServiceManager_GetCountryWorkingDays_04"
+            ) {
+              await dispatch(
+                getWorkingDaysFail(
+                  t("Admin_AdminServiceManager_GetCountryNationalHoliday_04")
+                )
+              );
+              await dispatch(loader_Actions(false));
+            } else if (
+              response.data.responseResult.responseMessage ===
+              "Admin_AdminServiceManager_GetCountryWorkingDays_05"
+            ) {
+              await dispatch(getWorkingDaysFail(t("something_went_wrong")));
+              await dispatch(loader_Actions(false));
+            } else {
+              await dispatch(getWorkingDaysFail(t("something_went_wrong")));
+              await dispatch(loader_Actions(false));
+            }
+          } else {
+            await dispatch(getWorkingDaysFail(t("something_went_wrong")));
+            await dispatch(loader_Actions(false));
+          }
+        } else {
+          await dispatch(getWorkingDaysFail(t("something_went_wrong")));
+          await dispatch(loader_Actions(false));
+        }
+      })
+      .catch((response) => {
+        dispatch(getWorkingDaysFail(t("something_went_wrong")));
+        dispatch(loader_Actions(false));
+      });
+  };
+};
+// Get country working days in country admin main api End
+
+// Update country working days in country admin main api start
+const updateWorkingDaysSuccess = (response, message) => {
+  return {
+    type: actions.UPDATE_COUNTRY_WORKING_DAYS_SUCCESS,
+    response: response,
+    message: message,
+  };
+};
+
+const updateWorkingDaysFail = (message) => {
+  return {
+    type: actions.UPDATE_COUNTRY_WORKING_DAYS_FAIL,
+    message: message,
+  };
+};
+const updateWorkingDaysApi = (t, navigate, loadingFlag, data) => {
+  return async (dispatch) => {
+    if (!loadingFlag) {
+      dispatch(loader_Actions(true));
+    }
+    let form = new FormData();
+    form.append("RequestMethod", updateCountryWorkingDays.RequestMethod);
+    form.append("RequestData", JSON.stringify(data));
+    await axios({
+      method: "post",
+      url: adminURL,
+      data: form,
+      headers: {
+        _token: JSON.parse(localStorage.getItem("token")),
+      },
+    })
+      .then(async (response) => {
+        if (response.data.responseCode === 200) {
+          if (response.data.responseCode === 417) {
+            dispatch(updateWorkingDaysApi(t, navigate, loadingFlag, data));
+          } else if (response.data.responseResult.isExecuted === true) {
+            if (
+              response.data.responseResult.responseMessage ===
+              "Admin_AdminServiceManager_UpdateCountryWorkingDays_01"
+            ) {
+              await dispatch(
+                updateWorkingDaysSuccess(
+                  t("Admin_AdminServiceManager_GetCountryWorkingDays_01")
+                )
+              );
+              dispatch(getCountryWorkingDaysApi(t, navigate, loadingFlag));
+            } else if (
+              response.data.responseResult.responseMessage ===
+              "Admin_AdminServiceManager_UpdateCountryWorkingDays_02"
+            ) {
+              await dispatch(
+                updateWorkingDaysFail(
+                  t("Admin_AdminServiceManager_GetCountryWorkingDays_02")
+                )
+              );
+              await dispatch(loader_Actions(false));
+            } else if (
+              response.data.responseResult.responseMessage ===
+              "Admin_AdminServiceManager_UpdateCountryWorkingDays_03"
+            ) {
+              await dispatch(
+                updateWorkingDaysFail(
+                  t("Admin_AdminServiceManager_GetCountryWorkingDays_03")
+                )
+              );
+              await dispatch(loader_Actions(false));
+            } else if (
+              response.data.responseResult.responseMessage ===
+              "Admin_AdminServiceManager_UpdateCountryWorkingDays_04"
+            ) {
+              await dispatch(
+                updateWorkingDaysFail(
+                  t("Admin_AdminServiceManager_GetCountryNationalHoliday_04")
+                )
+              );
+              await dispatch(loader_Actions(false));
+            } else if (
+              response.data.responseResult.responseMessage ===
+              "Admin_AdminServiceManager_UpdateCountryWorkingDays_05"
+            ) {
+              await dispatch(updateWorkingDaysFail(t("something_went_wrong")));
+              await dispatch(loader_Actions(false));
+            } else {
+              dispatch(updateWorkingDaysFail(t("something_went_wrong")));
+              await dispatch(loader_Actions(false));
+            }
+          } else {
+            await dispatch(updateWorkingDaysFail(t("something_went_wrong")));
+            await dispatch(loader_Actions(false));
+          }
+        } else {
+          await dispatch(updateWorkingDaysFail(t("something_went_wrong")));
+          await dispatch(loader_Actions(false));
+        }
+      })
+      .catch((response) => {
+        dispatch(updateWorkingDaysFail(t("something_went_wrong")));
+        dispatch(loader_Actions(false));
+      });
+  };
+};
+
+// Update country working days in country admin main api End
+
 export {
   clearResponseMessageAdmin,
   AdminCleareState,
@@ -3718,4 +3930,6 @@ export {
   addNationalHolidayMainApi,
   deleteNationalHolidayMainApi,
   getAppointmentReportBranchAPI,
+  getCountryWorkingDaysApi,
+  updateWorkingDaysApi,
 };

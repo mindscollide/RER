@@ -211,5 +211,15 @@
   "First-registry-service": "First Registry Service",
   "Country-working-days": "Country Working Days",
   "Appointment-report-city": "Appointment Report City",
-  "City-wise-appoinment": "City Wise Appoinment"
+  "City-wise-appoinment": "City Wise Appoinment",
+  "Admin_AdminServiceManager_GetCountryWorkingDays_01": "Working Days Found For Country",
+  "Admin_AdminServiceManager_GetCountryWorkingDays_02": "No Working Day Available for the Country yet",
+  "Admin_AdminServiceManager_GetCountryWorkingDays_03": "Country Working Day List not Found",
+  "Sunday": "Sunday",
+  "Monday": "Monday",
+  "Tuesday": "Tuesday",
+  "Wednesday": "Wednesday",
+  "Thursday": "Thursday",
+  "Friday": "Friday",
+  "Saturday": "Saturday"
 }

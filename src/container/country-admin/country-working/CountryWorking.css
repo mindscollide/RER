@@ -57,7 +57,7 @@ body[dir="rtl"] .revert-btn-Country-working {
   border-color: #7484b7 !important;
 }
 
-.save-revert-col-Country-working {
+.col-Country-working {
   display: flex !important;
   justify-items: center !important;
   align-items: center !important;

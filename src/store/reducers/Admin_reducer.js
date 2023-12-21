@@ -37,6 +37,8 @@ const initialState = {
   isEditEmployeeFlag: false,
   servicesList: null,
   getAppointmentBranchReportData: null,
+  getWorkingDaysCountry: null,
+  updateWorkingDaysCountry: null,
 };
 
 const adminReducer = (state = initialState, action) => {
@@ -582,6 +584,34 @@ const adminReducer = (state = initialState, action) => {
       return {
         ...state,
         getAppointmentBranchReportData: null,
+        admin_ResponseMessage: action.message,
+      };
+
+    case actions.GET_COUNTRY_WORKING_DAYS_SUCCESS:
+      return {
+        ...state,
+        getWorkingDaysCountry: action.response,
+        admin_ResponseMessage: action.message,
+      };
+
+    case actions.GET_COUNTRY_WORKING_DAYS_FAIL:
+      return {
+        ...state,
+        getWorkingDaysCountry: null,
+        admin_ResponseMessage: action.message,
+      };
+
+    case actions.UPDATE_COUNTRY_WORKING_DAYS_SUCCESS:
+      return {
+        ...state,
+        updateWorkingDaysCountry: action.response,
+        admin_ResponseMessage: action.message,
+      };
+
+    case actions.UPDATE_COUNTRY_WORKING_DAYS_FAIL:
+      return {
+        ...state,
+        updateWorkingDaysCountry: null,
         admin_ResponseMessage: action.message,
       };
 
