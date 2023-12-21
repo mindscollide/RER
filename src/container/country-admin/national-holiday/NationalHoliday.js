@@ -13,7 +13,6 @@ import { useNavigate } from "react-router";
 import DatePicker from "react-multi-date-picker";
 import {
   formatDate,
-  generateDateRange,
   multiDatePickerDateChangIntoUTC,
 } from "../../../commen/functions/Date_time_formatter";
 
@@ -28,28 +27,14 @@ const NationalHoliday = () => {
     (state) => state.admin.countryNationalHoliday
   );
 
-  console.log(
-    countryNationalHoliday,
-    "countryNationalHolidaycountryNationalHoliday"
-  );
-
   // Calculate the date one day after the current date
   const currentDate = new Date();
   const nextDay = new Date(currentDate);
   nextDay.setDate(currentDate.getDate() + 1);
 
-  //For disabling the dates before the Current Dates
-  const disabledDatesBeforeCurrent = {
-    before: currentDate, // Disable dates before the current date
-  };
-
   // Set the default start date in the initial state
   const [startDate, setStartDate] = useState(nextDay);
   const [endDate, setEndDate] = useState(nextDay);
-
-  const deleteCountryNational = useSelector(
-    (state) => state.admin.deleteCountryNational
-  );
 
   // state for table rendering
   const [rows, setRows] = useState([]);
