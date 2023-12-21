@@ -50,7 +50,7 @@ const BranchScreen = () => {
       width: "200px",
     },
     {
-      title: <span className="table-text">{t("Branch-availability")}</span>,
+      title: <span className="table-text">{t("Branch-name")}</span>,
       dataIndex: "active",
       key: "active",
       width: "200px",
@@ -61,7 +61,7 @@ const BranchScreen = () => {
       ),
     },
     {
-      title: <span className="table-text">{t("Home-availability")}</span>,
+      title: <span className="table-text">{t("Availability")}</span>,
       dataIndex: "column6",
       key: "column6",
       width: "200px",
@@ -80,9 +80,6 @@ const BranchScreen = () => {
           <Col lg={12} md={12} sm={12} className="d-flex justify-content-start">
             <span className="shift-heading">
               {t("Branch-wise-service-availability")}
-              <span className="shift-sub-heading">
-                {t("Saudi-arabia-riyadh")}
-              </span>
             </span>
           </Col>
         </Row>

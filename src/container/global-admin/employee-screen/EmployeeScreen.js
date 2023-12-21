@@ -77,12 +77,7 @@ const EmployeeScreen = () => {
       <section>
         <Row>
           <Col lg={12} md={12} sm={12} className="d-flex justify-content-start">
-            <span className="shift-heading">
-              {t("Employee-availability")}
-              <span className="shift-sub-heading">
-                {t("Saudi-arabia-riyadh")}
-              </span>
-            </span>
+            <span className="shift-heading">{t("Employee-availability")}</span>
           </Col>
         </Row>
         <Row className="mt-3">

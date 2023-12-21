@@ -11,21 +11,40 @@ import {
 import { useTranslation } from "react-i18next";
 import GlobalDeleteModal from "../../modals/global-delete-modal/GlobalDeleteModal";
 import { useNavigate } from "react-router";
+import { setIsCountryServiceScreenComponent } from "../../../store/actions/global_action";
+import { useDispatch, useSelector } from "react-redux";
+import CountryServiceScreenComponent from "../country-service-screen-component/CountryServiceScreenComponent";
 
 const GlobalService = () => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+
   const { t } = useTranslation();
   const currentLanguage = localStorage.getItem("i18nextLng");
   const local = currentLanguage === "en" ? "en-US" : "ar-SA";
   const [isCheckboxSelected, setIsCheckboxSelected] = useState(false);
   const [isCheckboxSelectedTwo, setIsCheckboxSelectedTwo] = useState(false);
   const [isCheckboxSelectedThree, setIsCheckboxSelectedThree] = useState(false);
-
   const [globalModal, setGlobalModal] = useState(false);
+
+  // state for country city admin main
+  const isCountryServiceComponentReducer = useSelector(
+    (state) => state.global.isCountryServiceComponentReducer
+  );
 
   // open delete modal
   const openDeleteGlobalModal = () => {
     setGlobalModal(true);
+  };
+
+  // open service country screen component
+  const openServiceCountryScreenComponent = () => {
+    dispatch(setIsCountryServiceScreenComponent(true));
+  };
+
+  // close service country screen component
+  const goBackServiceCountryButton = () => {
+    dispatch(setIsCountryServiceScreenComponent(false));
   };
 
   //open city screen page
@@ -140,7 +159,10 @@ const GlobalService = () => {
               className="icon-close icon-EDT-DLT-color"
               onClick={openDeleteGlobalModal}
             ></i>
-            <i className="icon-settings icon-EDT-DLT-color"></i>
+            <i
+              className="icon-globe icon-EDT-DLT-color"
+              onClick={openServiceCountryScreenComponent}
+            ></i>
             <i
               className="icon-location icon-EDT-DLT-color"
               onClick={openClickCityScreen}
@@ -166,122 +188,137 @@ const GlobalService = () => {
   return (
     <>
       <section>
-        <Row>
-          <Col lg={12} md={12} sm={12} className="d-flex justify-content-start">
-            <span className="shift-heading">
-              {t("Service")}
-              <span className="shift-sub-heading">
-                {" "}
-                {t("Saudi-arabia-riyadh")}
-              </span>
-            </span>
-          </Col>
-        </Row>
-        <Row className="mt-3">
-          <Col lg={12} md={12} sm={12}>
-            <Paper className="GlobalService-paper">
-              <Row>
-                <Col lg={6} md={6} sm={6}>
-                  <span className="text-labels">{t("Service-name")}</span>
-                  <TextField
-                    name="Service Name"
-                    placeholder={t("Service-name")}
-                    labelClass="d-none"
-                    className="text-fiels-GlobalService"
-                  />
-                </Col>
-                <Col lg={6} md={6} sm={6} className="text-end">
-                  <span className="text-labels">اسم الخدمة</span>
-                  <TextField
-                    name="Service Name"
-                    placeholder={"اسم الخدمة"}
-                    labelClass="d-none"
-                    className="text-fiels-GlobalService-arabic"
-                  />
-                </Col>
-              </Row>
+        {isCountryServiceComponentReducer === true ? (
+          <>
+            <CountryServiceScreenComponent
+              goBackServiceCountryButton={goBackServiceCountryButton}
+            />
+          </>
+        ) : (
+          <>
+            <Row>
+              <Col
+                lg={12}
+                md={12}
+                sm={12}
+                className="d-flex justify-content-start"
+              >
+                <span className="shift-heading">
+                  {t("Service")}
+                  <span className="shift-sub-heading">
+                    {" "}
+                    {t("Saudi-arabia-riyadh")}
+                  </span>
+                </span>
+              </Col>
+            </Row>
+            <Row className="mt-3">
+              <Col lg={12} md={12} sm={12}>
+                <Paper className="GlobalService-paper">
+                  <Row>
+                    <Col lg={6} md={6} sm={6}>
+                      <span className="text-labels">{t("Service-name")}</span>
+                      <TextField
+                        name="Service Name"
+                        placeholder={t("Service-name")}
+                        labelClass="d-none"
+                        className="text-fiels-GlobalService"
+                      />
+                    </Col>
+                    <Col lg={6} md={6} sm={6} className="text-end">
+                      <span className="text-labels">اسم الخدمة</span>
+                      <TextField
+                        name="Service Name"
+                        placeholder={"اسم الخدمة"}
+                        labelClass="d-none"
+                        className="text-fiels-GlobalService-arabic"
+                      />
+                    </Col>
+                  </Row>
 
-              <Row className="mt-3">
-                <Col lg={4} md={4} sm={4} className="mt-4">
-                  <Checkbox
-                    checked={isCheckboxSelected}
-                    onChange={handleCheckboxChange}
-                    classNameDiv="GlobalService-checkbox"
-                    label={
-                      <span className="checkbox-label">
-                        {t("Available-at-branch")}
-                      </span>
-                    }
-                  />
-                </Col>
+                  <Row className="mt-3">
+                    <Col lg={4} md={4} sm={4} className="mt-4">
+                      <Checkbox
+                        checked={isCheckboxSelected}
+                        onChange={handleCheckboxChange}
+                        classNameDiv="GlobalService-checkbox"
+                        label={
+                          <span className="checkbox-label">
+                            {t("Available-at-branch")}
+                          </span>
+                        }
+                      />
+                    </Col>
 
-                <Col
-                  lg={4}
-                  md={4}
-                  sm={4}
-                  className="d-flex justify-content-center mt-4"
-                >
-                  <Checkbox
-                    checked={isCheckboxSelectedTwo}
-                    onChange={handleCheckboxChangeTwo}
-                    classNameDiv="GlobalService-checkbox"
-                    label={
-                      <span className="checkbox-label">
-                        {t("Home-service-available")}
-                      </span>
-                    }
-                  />
-                </Col>
+                    <Col
+                      lg={4}
+                      md={4}
+                      sm={4}
+                      className="d-flex justify-content-center mt-4"
+                    >
+                      <Checkbox
+                        checked={isCheckboxSelectedTwo}
+                        onChange={handleCheckboxChangeTwo}
+                        classNameDiv="GlobalService-checkbox"
+                        label={
+                          <span className="checkbox-label">
+                            {t("Home-service-available")}
+                          </span>
+                        }
+                      />
+                    </Col>
 
-                <Col
-                  lg={4}
-                  md={4}
-                  sm={4}
-                  className="d-flex justify-content-end mt-4"
-                >
-                  <Checkbox
-                    checked={isCheckboxSelectedThree}
-                    onChange={handleCheckboxChangeThree}
-                    classNameDiv="GlobalService-checkbox"
-                    label={
-                      <span className="checkbox-label">{t("Active")}</span>
-                    }
-                  />
-                </Col>
-              </Row>
+                    <Col
+                      lg={4}
+                      md={4}
+                      sm={4}
+                      className="d-flex justify-content-end mt-4"
+                    >
+                      <Checkbox
+                        checked={isCheckboxSelectedThree}
+                        onChange={handleCheckboxChangeThree}
+                        classNameDiv="GlobalService-checkbox"
+                        label={
+                          <span className="checkbox-label">{t("Active")}</span>
+                        }
+                      />
+                    </Col>
+                  </Row>
 
-              <Row className="my-3">
-                <Col
-                  lg={12}
-                  md={12}
-                  sm={12}
-                  className="btn-class-GlobalService"
-                >
-                  <Button
-                    icon={<i className="icon-add-circle icon-space"></i>}
-                    text={t("Add")}
-                    className="Add-btn-GlobalService"
-                  />
-                  <Button
-                    icon={<i className="icon-refresh icon-space"></i>}
-                    text={t("Reset")}
-                    className="Reset-btn-GlobalService"
-                  />
-                </Col>
-              </Row>
+                  <Row className="my-3">
+                    <Col
+                      lg={12}
+                      md={12}
+                      sm={12}
+                      className="btn-class-GlobalService"
+                    >
+                      <Button
+                        icon={<i className="icon-add-circle icon-space"></i>}
+                        text={t("Add")}
+                        className="Add-btn-GlobalService"
+                      />
+                      <Button
+                        icon={<i className="icon-refresh icon-space"></i>}
+                        text={t("Reset")}
+                        className="Reset-btn-GlobalService"
+                      />
+                    </Col>
+                  </Row>
 
-              <Row className="mt-3">
-                <Col lg={12} md={12} sm={12}>
-                  <Table
-                    rows={dataSource}
-                    column={columns}
-                    pagination={false}
-                  />
-                </Col>
-              </Row>
-            </Paper>
-          </Col>
-        </Row>
+                  <Row className="mt-3">
+                    <Col lg={12} md={12} sm={12}>
+                      <Table
+                        rows={dataSource}
+                        column={columns}
+                        pagination={false}
+                      />
+                    </Col>
+                  </Row>
+                </Paper>
+              </Col>
+            </Row>
+          </>
+        )}
       </section>
 
       {globalModal ? (

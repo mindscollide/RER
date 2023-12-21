@@ -1,4 +1,4 @@
-.Service-Country-paper {
+.Country-Service-Screen-paper {
   border-radius: 4px !important;
   padding: 1.5rem 1rem !important;
   width: 100% !important;
@@ -6,14 +6,14 @@
   background-color: #ffffff !important;
 }
 
-.btn-col-class {
+.btn-col-class-Country-Service-Screen {
   display: flex !important;
-  justify-content: start !important;
+  justify-content: end !important;
   align-items: center !important;
   gap: 5px !important;
 }
 
-.save-btn-Service-Country {
+.save-btn-Country-Service-Screen {
   font-size: 14px !important;
   font-weight: 500 !important;
   font-family: "Montserrat", sans-serif !important;
@@ -26,16 +26,16 @@
   border-color: #7484b7 !important;
 }
 
-body[dir="rtl"] .save-btn-Service-Country {
+body[dir="rtl"] .save-btn-Country-Service-Screen {
   font-family: "NeoSansArabic" !important;
 }
 
-.save-btn-Service-Country:hover {
+.save-btn-Country-Service-Screen:hover {
   background: linear-gradient(to bottom, #77c0cb 0%, #2c9cc0 100%) !important;
   border-color: #77c0cb !important;
 }
 
-.revert-btn-Service-Country {
+.revert-btn-Country-Service-Screen {
   font-size: 14px !important;
   font-weight: 500 !important;
   font-family: "Montserrat", sans-serif !important;
@@ -48,11 +48,11 @@ body[dir="rtl"] .save-btn-Service-Country {
   border-color: #77c0cb !important;
 }
 
-body[dir="rtl"] .revert-btn-Service-Country {
+body[dir="rtl"] .revert-btn-Country-Service-Screen {
   font-family: "NeoSansArabic" !important;
 }
 
-.revert-btn-Service-Country:hover {
+.revert-btn-Country-Service-Screen:hover {
   background: linear-gradient(to bottom, #7484b7 0%, #536395 100%) !important;
   border-color: #7484b7 !important;
 }

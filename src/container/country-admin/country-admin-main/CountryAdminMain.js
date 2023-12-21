@@ -12,9 +12,11 @@ import { useTranslation } from "react-i18next";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router";
 import CountryAdminModal from "../../modals/country-delete-modal/CountryAdminModal";
+import { setIsCountryWiseCityComponent } from "../../../store/actions/global_action";
 import { updateCityServiceListApi } from "../../../store/actions/Admin_action";
 import { capitalizeKeysInArray } from "../../../commen/functions/utils.js";
 import { Switch } from "antd";
+import CountryWiseCityComponent from "../country-wise-city-component/CountryWiseCityComponent";
 
 const CountryAdminMain = () => {
   const { t } = useTranslation();
@@ -30,12 +32,17 @@ const CountryAdminMain = () => {
     (state) => state.admin.cityServiceListData
   );
 
+  // state for country city admin main
+  const isCountryWiseCityComponentReducer = useSelector(
+    (state) => state.global.isCountryWiseCityComponentReducer
+  );
+
   // to open country wise city state
   const [isCountryWiseCity, setIsCountryWiseCity] = useState(false);
 
   // to open country wise city in onClick button
   const openCountryWiseCity = () => {
-    setIsCountryWiseCity(true);
+    dispatch(setIsCountryWiseCityComponent(true));
   };
 
   //to open country city wise branch onClick button
@@ -68,6 +75,10 @@ const CountryAdminMain = () => {
 
   const handleCheckboxChange = (e) => {
     setIsCheckboxSelected(e.target.checked);
+  };
+
+  const goBackButtonCountryOnclick = (record) => {
+    dispatch(setIsCountryWiseCityComponent(false));
   };
 
   const dataSource = [
@@ -108,18 +119,6 @@ const CountryAdminMain = () => {
       key: "shiftName",
       align: "left",
     },
-    // {
-    //   title: <span className="table-text">{t("Start-time")}</span>,
-    //   dataIndex: "startTime",
-    //   key: "startTime",
-    //   align: "center",
-    // },
-    // {
-    //   title: <span className="table-text">{t("End-time")}</span>,
-    //   dataIndex: "endTime",
-    //   key: "endTime",
-    //   align: "center",
-    // },
     {
       title: <span className="table-text">{t("Active")}</span>,
       dataIndex: "active",
@@ -140,30 +139,46 @@ const CountryAdminMain = () => {
       render: (text, record) => (
         <>
           <span className="icon-spaceing-dlt-edit">
-            <i className="icon-text-edit icon-EDT-DLT-color"></i>
+            <i
+              className="icon-text-edit icon-EDT-DLT-color"
+              title="Edit"
+              aria-label="Edit"
+            ></i>
             <i
               className="icon-close icon-EDT-DLT-color"
+              title="Delete"
               onClick={openDeleteModal}
+              aria-label="Delete"
             ></i>
             <i
               className="icon-settings icon-EDT-DLT-color"
               onClick={openCountryWiseCity}
+              title="Service"
+              aria-label="Service"
             ></i>
             <i
               className="icon-branch icon-EDT-DLT-color"
               onClick={openCountryCityWiseBranch}
+              title="Branch"
+              aria-label="Branch"
             ></i>
             <i
               className="icon-counter icon-EDT-DLT-color"
               onClick={openCountryCityWiseCounter}
+              title="Counter"
+              aria-label="Counter"
             ></i>
             <i
               className="icon-repeat icon-EDT-DLT-color"
               onClick={openCountryCityBranchShift}
+              title="Shifts"
+              aria-label="Shifts"
             ></i>
             <i
               className="icon-user icon-EDT-DLT-color"
               onClick={openCountryWiseEmployee}
+              title="Employee"
+              aria-label="Employee"
             ></i>
           </span>
         </>
@@ -171,180 +186,16 @@ const CountryAdminMain = () => {
     },
   ];
 
-  // country wise city start
-  const handleSwitch = (name, value, record) => {
-    try {
-      if (name === "homeAvailability") {
-        setRows(
-          rows.map((service) => {
-            if (service.cityServiceID === record.cityServiceID) {
-              return {
-                ...service,
-                homeAvailability: value,
-              };
-            }
-            return service;
-          })
-        );
-      } else if (name === "branchAvailability") {
-        setRows(
-          rows.map((service) => {
-            if (service.cityServiceID === record.cityServiceID) {
-              return {
-                ...service,
-                branchAvailability: value,
-              };
-            }
-            return service;
-          })
-        );
-      }
-    } catch {}
-  };
-
-  const columnsCityWise = [
-    {
-      title: <span className="table-text">{t("Service")}</span>,
-      width: "400px",
-      dataIndex: "citySM",
-      key: "citySM",
-
-      render: (text, record) => (
-        <span className="table-inside-text">
-          {currentLanguage === "en"
-            ? record.citySM.serviceNameEnglish
-            : record.citySM.serviceNameArabic}
-        </span>
-      ),
-    },
-    {
-      title: <span className="table-text">{t("Branch-availability")}</span>,
-      dataIndex: "branchAvailability",
-      key: "branchAvailability",
-      width: "200px",
-      align: "center",
-      render: (text, record) => (
-        <span>
-          <Switch
-            checked={text}
-            onChange={(value) =>
-              handleSwitch("branchAvailability", value, record)
-            }
-          />
-        </span>
-      ),
-    },
-    {
-      title: <span className="table-text">{t("Home-availability")}</span>,
-      dataIndex: "homeAvailability",
-      key: "homeAvailability",
-      width: "200px",
-      align: "center",
-      render: (text, record) => (
-        <span>
-          <Switch
-            checked={text}
-            onChange={(value) =>
-              handleSwitch("homeAvailability", value, record)
-            }
-          />
-        </span>
-      ),
-    },
-  ];
-
-  const handleRevert = () => {
-    try {
-      if (cityServiceListData !== null) {
-        setRows(cityServiceListData);
-      }
-    } catch {}
-  };
-
-  const handleSave = () => {
-    try {
-      let convertedData = capitalizeKeysInArray(rows);
-      const newArray = convertedData.map((item) => ({
-        BranchAvailability: item.BranchAvailability,
-        CityServiceID: item.CityServiceID,
-        HomeAvailability: item.HomeAvailability,
-        HomeVisitCharges: item.HomeVisitCharges,
-      }));
-      let data = {
-        CityID: Number(localStorage.getItem("cityID")),
-        CityServices: newArray,
-      };
-      dispatch(updateCityServiceListApi(t, navigate, Loading, data));
-    } catch {}
-  };
   // country wise city end
 
   return (
     <>
       <section>
-        {isCountryWiseCity === true ? (
+        {isCountryWiseCityComponentReducer === true ? (
           <>
-            <Row>
-              <Col
-                lg={12}
-                md={12}
-                sm={12}
-                className="d-flex justify-content-start"
-              >
-                <span className="shift-heading">
-                  {t("City-wise-service-availability")}
-                  <span className="shift-sub-heading">
-                    {" "}
-                    {currentLanguage === "en"
-                      ? "(" +
-                        localStorage.getItem("countryName") +
-                        " " +
-                        "-" +
-                        " " +
-                        localStorage.getItem("cityName") +
-                        ")"
-                      : "(" +
-                        localStorage.getItem("countryNameArabic") +
-                        " " +
-                        "-" +
-                        " " +
-                        localStorage.getItem("cityNameArabic") +
-                        ")"}
-                  </span>
-                </span>
-              </Col>
-            </Row>
-            <Row className="mt-3">
-              <Col lg={12} md={12} sm={12}>
-                <Paper className="Country-City-Wise-paper">
-                  <Row>
-                    <Col lg={12} md={12} sm={12} className="btn-col-class">
-                      <Button
-                        icon={<i className="icon-save icon-space"></i>}
-                        text={t("Save")}
-                        className="save-btn-Country-City-Wise"
-                        onClick={handleSave}
-                      />
-                      <Button
-                        icon={<i className="icon-repeat icon-space"></i>}
-                        text={t("Revert")}
-                        className="revert-btn-Country-City-Wise"
-                        onClick={handleRevert}
-                      />
-                    </Col>
-                  </Row>
-                  <Row className="mt-2">
-                    <Col lg={12} md={12} sm={12}>
-                      <Table
-                        rows={rows}
-                        column={columnsCityWise}
-                        pagination={false}
-                      />
-                    </Col>
-                  </Row>
-                </Paper>
-              </Col>
-            </Row>
+            <CountryWiseCityComponent
+              goBackButtonCountryOnclick={goBackButtonCountryOnclick}
+            />
           </>
         ) : (
           <>

@@ -204,6 +204,12 @@
   "Service-location": "Service Location",
   "Customer-location": "Customer Location",
   "Select-an-option": "Select an Option",
+  "Home-Visit-Charges": "Home Visit Charges (Riyal)",
+  "Country-wise-service-availability": "Country Wise Service Availability",
+  "Availability": "Availability",
+  "Branch-shift-wise-service-availability": "Branch Shift Wise Service Availability",
+  "First-registry-service": "First Registry Service",
+  "Country-working-days": "Country Working Days",
   "Appointment-report-city": "Appointment Report City",
   "City-wise-appoinment": "City Wise Appoinment"
 }
