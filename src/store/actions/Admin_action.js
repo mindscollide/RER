@@ -3399,6 +3399,9 @@ const addNationalHolidayMainApi = (t, navigate, loadingFlag, data) => {
                   t("Admin_AdminServiceManager_AddCountryNationalHoliday_01")
                 )
               );
+              await dispatch(
+                getNationalHolidayMainApi(t, navigate, loadingFlag)
+              );
               await dispatch(loader_Actions(false));
             } else if (
               response.data.responseResult.responseMessage ===

@@ -8,12 +8,13 @@ import {
   deleteNationalHolidayMainApi,
   addNationalHolidayMainApi,
 } from "../../../store/actions/Admin_action";
-import Select from "react-select";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router";
-import DatePicker, { DateObject } from "react-multi-date-picker";
-import { formatDate } from "../../../commen/functions/Date_time_formatter";
-import { generateDateRange } from "../../../commen/functions/Date_time_formatter";
+import DatePicker from "react-multi-date-picker";
+import {
+  formatDate,
+  multiDatePickerDateChangIntoUTC,
+} from "../../../commen/functions/Date_time_formatter";
 
 const NationalHoliday = () => {
   const { t } = useTranslation();
@@ -25,13 +26,15 @@ const NationalHoliday = () => {
   const countryNationalHoliday = useSelector(
     (state) => state.admin.countryNationalHoliday
   );
-  const [values, setValues] = useState([
-    new DateObject().subtract(4, "days"),
-    new DateObject().add(4, "days"),
-  ]);
-  const deleteCountryNational = useSelector(
-    (state) => state.admin.deleteCountryNational
-  );
+
+  // Calculate the date one day after the current date
+  const currentDate = new Date();
+  const nextDay = new Date(currentDate);
+  nextDay.setDate(currentDate.getDate() + 1);
+
+  // Set the default start date in the initial state
+  const [startDate, setStartDate] = useState(nextDay);
+  const [endDate, setEndDate] = useState(nextDay);
 
   // state for table rendering
   const [rows, setRows] = useState([]);
@@ -41,61 +44,16 @@ const NationalHoliday = () => {
     dispatch(getNationalHolidayMainApi(t, navigate, loadingFlag));
   }, []);
 
-  // for data rendering in table
-  useEffect(() => {
-    if (
-      countryNationalHoliday !== null &&
-      Array.isArray(countryNationalHoliday)
-    ) {
-      setRows(countryNationalHoliday);
-    } else {
-      setRows([]);
-    }
-  }, [countryNationalHoliday]);
-
-  // this is my delete function
-  const onDeleteIcon = (record) => {
-    let deleteData = {
-      CountryID: Number(localStorage.getItem("countryID")),
-      HolidayToRemove: record, // Use the record directly
-    };
-    dispatch(
-      deleteNationalHolidayMainApi(t, navigate, loadingFlag, deleteData)
-    );
-  };
-
-  // this is my add function
-  const onAddHandler = () => {
-    if (
-      values &&
-      values[0] &&
-      values[0].value &&
-      values[1] &&
-      values[1].value
-    ) {
-      const startDate = values[0].value;
-      const endDate = values[1].value;
-
-      let data = {
-        CountryID: Number(localStorage.getItem("countryID")),
-        HolidayListToAdd: generateDateRange(startDate, endDate),
-      };
-      dispatch(addNationalHolidayMainApi(t, navigate, loadingFlag, data));
-    } else {
-      // Handle case where start or end date is not selected
-      console.error("Please select both start and end dates");
-    }
-  };
-
   const columns = [
     {
       title: <span className="table-text">{t("Date")}</span>,
       dataIndex: "nationalHolidayList",
       key: "nationalHolidayList",
       width: "400px",
-      render: (text, record) =>
-        // console.log("text", record),
-        <span className="table-inside-text">{formatDate(record,local)}</span>
+      render: (text, record) => (
+        console.log("text", record),
+        (<span className="table-inside-text">{formatDate(record, local)}</span>)
+      ),
     },
 
     {
@@ -117,6 +75,64 @@ const NationalHoliday = () => {
     },
   ];
 
+  // for data rendering in table
+  useEffect(() => {
+    if (
+      countryNationalHoliday !== null &&
+      Array.isArray(countryNationalHoliday)
+    ) {
+      setRows(countryNationalHoliday);
+    } else {
+      setRows([]);
+    }
+  }, [countryNationalHoliday]);
+
+  const handleStartDateChange = (date) => {
+    setStartDate(date);
+  };
+
+  const handleEndDateChange = (date) => {
+    setEndDate(date);
+  };
+
+  // this is my delete function
+  const onDeleteIcon = (record) => {
+    let deleteData = {
+      CountryID: Number(localStorage.getItem("countryID")),
+      HolidayToRemove: record, // Use the record directly
+    };
+    dispatch(
+      deleteNationalHolidayMainApi(t, navigate, loadingFlag, deleteData)
+    );
+  };
+
+  //Function For Formatting Date As Required
+  const convertDatesToUTC = (startDate, endDate) => {
+    const formattedStartDate = multiDatePickerDateChangIntoUTC(startDate);
+    const formattedEndDate = multiDatePickerDateChangIntoUTC(endDate);
+    return [formattedStartDate, formattedEndDate];
+  };
+
+  //Function  For saving the Dates
+  const saveDates = () => {
+    if (startDate <= endDate) {
+      let data = {
+        CountryID: Number(localStorage.getItem("countryID")),
+        HolidayListToAdd: convertDatesToUTC(startDate, endDate),
+      };
+      console.log(data, "HolidayListToAddHolidayListToAdd");
+      dispatch(addNationalHolidayMainApi(t, navigate, loadingFlag, data));
+    } else {
+      alert("Start Date Should Be Less Then End Date");
+    }
+  };
+
+  //handling Revert Function
+  const handleRevertFunction = () => {
+    setEndDate(nextDay);
+    setStartDate(nextDay);
+  };
+
   return (
     <>
       <section>
@@ -135,29 +151,58 @@ const NationalHoliday = () => {
           <Col lg={12} md={12} sm={12}>
             <Paper className="NationalHoliday-Admin-paper">
               <Row>
+                <Col lg={3} md={3} sm={3}></Col>
+                <Col
+                  lg={3}
+                  md={3}
+                  sm={3}
+                  className="col-for-date-timepicker-cityad"
+                >
+                  <label className="text-labels">{t("From-date")}</label>
+                  <DatePicker
+                    arrowClassName="arrowClass"
+                    containerClassName="containerClassTimePicker"
+                    editable={false}
+                    minDate={nextDay}
+                    value={startDate}
+                    onChange={handleStartDateChange}
+                  />
+                </Col>
+                <Col
+                  lg={3}
+                  md={3}
+                  sm={3}
+                  className="col-for-date-timepicker-cityad"
+                >
+                  <label className="text-labels">{t("to-date")}</label>
+                  <DatePicker
+                    arrowClassName="arrowClass"
+                    containerClassName="containerClassTimePicker"
+                    editable={false}
+                    minDate={nextDay}
+                    value={endDate}
+                    onChange={handleEndDateChange}
+                  />
+                </Col>
+                <Col lg={3} md={3} sm={3}></Col>
+              </Row>
+              <Row className="mt-3">
                 <Col
                   lg={12}
                   md={12}
                   sm={12}
                   className="btn-col-class-NationalHoliday"
                 >
-                  <DatePicker
-                    containerClassName="nationalHolidaydatepicekr"
-                    value={values}
-                    onChange={setValues}
-                    range
-                    multiple
-                  />
-
                   <Button
                     icon={<i className="icon-repeat icon-space"></i>}
                     text={t("Revert")}
+                    onClick={handleRevertFunction}
                     className="revert-btn-NationalHoliday"
                   />
                   <Button
                     icon={<i className="icon-save icon-space"></i>}
                     text={t("Save")}
-                    onClick={onAddHandler}
+                    onClick={saveDates}
                     className="save-btn-NationalHoliday"
                   />
                 </Col>
