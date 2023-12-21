@@ -127,6 +127,12 @@ const NationalHoliday = () => {
     }
   };
 
+  //handling Revert Function
+  const handleRevertFunction = () => {
+    setEndDate(nextDay);
+    setStartDate(nextDay);
+  };
+
   return (
     <>
       <section>
@@ -190,6 +196,7 @@ const NationalHoliday = () => {
                   <Button
                     icon={<i className="icon-repeat icon-space"></i>}
                     text={t("Revert")}
+                    onClick={handleRevertFunction}
                     className="revert-btn-NationalHoliday"
                   />
                   <Button
