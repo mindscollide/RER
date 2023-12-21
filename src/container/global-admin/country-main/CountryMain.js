@@ -18,6 +18,8 @@ const CountryMain = () => {
   const { t } = useTranslation();
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const currentLanguage = localStorage.getItem("i18nextLng");
+  const local = currentLanguage === "en" ? "en-US" : "ar-SA";
   const [isCheckboxSelected, setIsCheckboxSelected] = useState(false);
 
   // state for country service component admin main
@@ -84,6 +86,11 @@ const CountryMain = () => {
       title: <span className="table-text">#</span>,
       dataIndex: "id",
       key: "id",
+      render: (text, record, index) => (
+        <span className="table-inside-text">
+          {(index + 1).toLocaleString(local)}
+        </span>
+      ),
     },
     {
       title: <span className="table-text">{t("Shift-name")}</span>,

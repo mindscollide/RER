@@ -50,6 +50,8 @@ const CityAdmin = () => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const currentLanguage = localStorage.getItem("i18nextLng");
+  const local = currentLanguage === "en" ? "en-US" : "ar-SA";
   const Loading = useSelector((state) => state.Loader.Loading);
   const cityBranchListData = useSelector(
     (state) => state.admin.cityBranchListData
@@ -75,11 +77,6 @@ const CityAdmin = () => {
   const isCityWiseBranchService = useSelector(
     (state) => state.global.isCityWiseBranchService
   );
-
-  const { admin } = useSelector((state) => state);
-
-  const currentLanguage = localStorage.getItem("i18nextLng");
-  const local = currentLanguage === "en" ? "en-US" : "ar-SA";
   const [addUpdateCheckFlag, setAddUpdateCheckFlag] = useState(false);
   const [calendarValue, setCalendarValue] = useState(gregorian);
   const [localValue, setLocalValue] = useState(gregorian_en);
@@ -256,6 +253,11 @@ const CityAdmin = () => {
       title: <span className="table-text">#</span>,
       dataIndex: "branchID",
       key: "branchID",
+      render: (text, record, index) => (
+        <span className="table-inside-text">
+          {(index + 1).toLocaleString(local)}
+        </span>
+      ),
     },
     {
       title: <span className="table-text">{t("Shift-name")}</span>,

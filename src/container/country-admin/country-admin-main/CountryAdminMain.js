@@ -22,10 +22,10 @@ const CountryAdminMain = () => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const Loading = useSelector((state) => state.Loader.Loading);
-
-  const [isCheckboxSelected, setIsCheckboxSelected] = useState(false);
   const currentLanguage = localStorage.getItem("i18nextLng");
+  const local = currentLanguage === "en" ? "en-US" : "ar-SA";
+  const Loading = useSelector((state) => state.Loader.Loading);
+  const [isCheckboxSelected, setIsCheckboxSelected] = useState(false);
   const [rows, setRows] = useState([]);
 
   const cityServiceListData = useSelector(
@@ -108,7 +108,9 @@ const CountryAdminMain = () => {
       dataIndex: "id",
       key: "id",
       render: (text, record, index) => (
-        <span className="table-inside-text">{index + 1}</span>
+        <span className="table-inside-text">
+          {(index + 1).toLocaleString(local)}
+        </span>
       ),
     },
     {

@@ -29,11 +29,12 @@ import {
 } from "../../../commen/functions/regex";
 
 const EmployeeMain = () => {
-  const currentLanguage = localStorage.getItem("i18nextLng");
   const { t } = useTranslation();
   const dispatch = useDispatch();
   const location = useLocation();
   const navigate = useNavigate();
+  const currentLanguage = localStorage.getItem("i18nextLng");
+  const local = currentLanguage === "en" ? "en-US" : "ar-SA";
   const searchParams = new URLSearchParams(location.search);
   const urldBranchID = searchParams.get("branchId");
   const [isCheckboxSelected, setIsCheckboxSelected] = useState(false);
@@ -256,7 +257,9 @@ const EmployeeMain = () => {
       title: <span className="table-text">#</span>,
       dataIndex: "employeeCity",
       key: "employeeCity",
-      render: (text, record, index) => <span>{index + 1}</span>,
+      render: (text, record, index) => (
+        <span className="table-inside-text">{(index + 1).toLocaleString(local)}</span>
+      ),
     },
     {
       title: <span className="table-text">{t("Name")}</span>,

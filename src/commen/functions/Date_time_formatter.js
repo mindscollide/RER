@@ -1,5 +1,3 @@
-import moment from "moment";
-
 // this is use in tables its get utc time convert it into current Gmt
 export const convertToGMT = (utcTimeString, locale) => {
   if (utcTimeString === "") {
@@ -69,8 +67,7 @@ export const getCurrentDateUTC = () => {
   return `${year}${month}${day}`;
 };
 
-
-// for  holidays 
+// for  holidays
 export function formatDate(inputDate, locale) {
   const year = inputDate.substring(0, 4);
   const month = inputDate.substring(4, 6);
@@ -78,16 +75,15 @@ export function formatDate(inputDate, locale) {
 
   const dateObj = new Date(`${year}-${month}-${day}`);
   const options = {
-    day: '2-digit',
-    month: 'short',
-    year: 'numeric'
+    day: "2-digit",
+    month: "short",
+    year: "numeric",
   };
 
   return dateObj.toLocaleDateString(locale, options);
 }
 
 //Convert To UTC format date
-
 export const multiDatePickerDateChangIntoUTC = (date) => {
   // Ensure date is a valid Date object
   const inputDate = new Date(date);

@@ -97,6 +97,7 @@ export function generateMenuItems(roleID, t) {
         getItem(t("Branch-wise-reports"), "14"),
         getItem(t("Employee-wise-reports"), "15"),
         getItem(t("Service-wise-reports"), "16"),
+        getItem(t("Appointment-report-city"), "30"),
       ],
       "menu-item-sub"
     ),
