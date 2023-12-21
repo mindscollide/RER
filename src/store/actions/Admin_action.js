@@ -497,8 +497,13 @@ const allCountersOfBranchFail = (message) => {
   };
 };
 
-const getAllCountersOfBranch = (t, navigate, loadingFlag) => {
-  let data = { BranchID: Number(localStorage.getItem("branchID")) };
+const getAllCountersOfBranch = (t, navigate, loadingFlag, id) => {
+  let data = {};
+  if (id !== undefined && id !== null) {
+    data = { BranchID: Number(id) };
+  } else {
+    data = { BranchID: Number(localStorage.getItem("branchID")) };
+  }
   return async (dispatch) => {
     if (!loadingFlag) {
       dispatch(loader_Actions(true));

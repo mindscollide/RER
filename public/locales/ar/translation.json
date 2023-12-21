@@ -204,5 +204,7 @@
   "Service-location": "موقع الخدمة",
   "Customer-location": "موقع العميل",
   "Reports": "التقارير",
-  "Select-an-option": "حدد اختيارا"
+  "Select-an-option": "حدد اختيارا",
+  "Appointment-report-city": "مدينة تقرير التعيين",
+  "City-wise-appoinment": "تعيين المدينة الحكيمة"
 }

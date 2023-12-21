@@ -203,5 +203,7 @@
   "Deed-number": "Deed Number",
   "Service-location": "Service Location",
   "Customer-location": "Customer Location",
-  "Select-an-option": "Select an Option"
+  "Select-an-option": "Select an Option",
+  "Appointment-report-city": "Appointment Report City",
+  "City-wise-appoinment": "City Wise Appoinment"
 }
