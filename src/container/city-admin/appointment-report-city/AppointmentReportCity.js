@@ -13,6 +13,7 @@ import {
   multiDatePickerDateChangIntoUTC,
 } from "../../../commen/functions/Date_time_formatter";
 import {
+  getAllCountersOfBranch,
   getAllShiftsOfBranch,
   getAppointmentReportBranchAPI,
   getCityBranchListApi,
@@ -41,15 +42,23 @@ const AppointmentReportCity = () => {
     (state) => state.admin.getAppointmentBranchReportData
   );
 
+  const globalCounterOptions = useSelector(
+    (state) => state.admin.allCountersOfBranchList
+  );
+
+  const globalShiftOptions = useSelector((state) => state.admin.branchesList);
+
   //Appointment Report states
 
   const [apppointmentOptionsServices, setApppointmentOptionsServices] =
     useState([]);
   const [selectedBranhOptions, setSelectedBranhOptions] = useState(null);
   const [appointmentReportData, setAppointmentReportData] = useState([]);
-  const [localBrachnID, setLocalBrachnID] = useState({
-    ID: 0,
-  });
+  const [apppointmentOptionsCounter, setApppointmentOptionsCounter] = useState(
+    []
+  );
+  const [apppointmentOptionsShift, setApppointmentOptionsShift] = useState([]);
+  const [selectedBranchID, setSelectedBranchID] = useState(null);
   const [cityBranchOption, setCityBranchOption] = useState([]);
   const [selectedOptionsCounter, setSelectedOptionsCounter] = useState(null);
   const [selectedOptionsSerives, setSelectedOptionsSerives] = useState(null);
@@ -153,7 +162,6 @@ const AppointmentReportCity = () => {
   useEffect(() => {
     dispatch(getCityServiceListApi(t, navigate, Loading));
     dispatch(getCityBranchListApi(t, navigate, Loading));
-    dispatch(getAllShiftsOfBranch(t, navigate, Loading));
   }, []);
 
   useEffect(() => {
@@ -209,8 +217,12 @@ const AppointmentReportCity = () => {
   };
 
   const handleCityBranchOptions = (branchSelectedOptions) => {
+    console.log(branchSelectedOptions, "branchSelectedOptions");
     setSelectedBranhOptions(branchSelectedOptions);
+    setSelectedBranchID(branchSelectedOptions.value);
   };
+
+  console.log(selectedBranchID, "selectedBranchIDselectedBranchID");
 
   const handleStartDateChange = (date) => {
     setFromDate(date);
@@ -253,6 +265,61 @@ const AppointmentReportCity = () => {
       return futureDate;
     });
   };
+
+  useEffect(() => {
+    if (selectedBranchID !== null) {
+      dispatch(getAllShiftsOfBranch(t, navigate, Loading, selectedBranchID));
+      dispatch(getAllCountersOfBranch(t, navigate, Loading, selectedBranchID));
+    }
+  }, [selectedBranchID]);
+
+  useEffect(() => {
+    if (
+      globalCounterOptions !== null &&
+      globalCounterOptions !== undefined &&
+      globalCounterOptions.length !== 0
+    ) {
+      if (currentLanguage === "en") {
+        setApppointmentOptionsCounter(
+          globalCounterOptions.map((item) => ({
+            value: item.counterID,
+            label: item.counterNameEnglish,
+          }))
+        );
+      } else {
+        setApppointmentOptionsCounter(
+          globalCounterOptions.map((item) => ({
+            value: item.counterID,
+            label: item.counterNameArabic,
+          }))
+        );
+      }
+    }
+  }, [globalCounterOptions, currentLanguage]);
+
+  useEffect(() => {
+    if (
+      globalShiftOptions !== null &&
+      globalShiftOptions !== undefined &&
+      globalShiftOptions.length !== 0
+    ) {
+      if (currentLanguage === "en") {
+        setApppointmentOptionsShift(
+          globalShiftOptions.map((item) => ({
+            value: item.shiftID,
+            label: item.shiftNameEnglish,
+          }))
+        );
+      } else {
+        setApppointmentOptionsShift(
+          globalShiftOptions.map((item) => ({
+            value: item.shiftID,
+            label: item.shiftNameArabic,
+          }))
+        );
+      }
+    }
+  }, [globalShiftOptions, currentLanguage]);
 
   useEffect(() => {
     if (
@@ -348,7 +415,8 @@ const AppointmentReportCity = () => {
                     isSearchable={false}
                     placeholder={t("Select-an-option")}
                     className="select-dropdown-all"
-                    // className="Branch-Screen-Select"
+                    options={apppointmentOptionsShift}
+                    isDisabled={selectedBranchID === null ? true : false}
                   />
                 </span>
               </Col>
@@ -359,7 +427,8 @@ const AppointmentReportCity = () => {
                     isSearchable={false}
                     className="select-dropdown-all"
                     placeholder={t("Select-an-option")}
-                    // className="Branch-Screen-Select"
+                    options={apppointmentOptionsCounter}
+                    isDisabled={selectedBranchID === null ? true : false}
                   />
                 </span>
               </Col>
