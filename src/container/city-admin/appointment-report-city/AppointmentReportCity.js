@@ -61,6 +61,7 @@ const AppointmentReportCity = () => {
   const [selectedBranchID, setSelectedBranchID] = useState(null);
   const [cityBranchOption, setCityBranchOption] = useState([]);
   const [selectedOptionsCounter, setSelectedOptionsCounter] = useState(null);
+  const [selectedOptionsShift, setSelectedOptionsShift] = useState(null);
   const [selectedOptionsSerives, setSelectedOptionsSerives] = useState(null);
   const [fromDate, setFromDate] = useState(new Date());
   const [toDate, setToDate] = useState(() => {
@@ -212,60 +213,6 @@ const AppointmentReportCity = () => {
     }
   }, [cityBranchListDataDropdown, currentLanguage]);
 
-  const handleServiceOnChange = (servicesSelectedOption) => {
-    setSelectedOptionsSerives(servicesSelectedOption);
-  };
-
-  const handleCityBranchOptions = (branchSelectedOptions) => {
-    console.log(branchSelectedOptions, "branchSelectedOptions");
-    setSelectedBranhOptions(branchSelectedOptions);
-    setSelectedBranchID(branchSelectedOptions.value);
-  };
-
-  console.log(selectedBranchID, "selectedBranchIDselectedBranchID");
-
-  const handleStartDateChange = (date) => {
-    setFromDate(date);
-  };
-
-  const handleEndDateChange = (date) => {
-    setToDate(date);
-  };
-
-  //function For Search
-  const handleSearchAppointment = () => {
-    let data = {
-      CountryID: Number(localStorage.getItem("countryID")),
-      CityID: Number(localStorage.getItem("branchID")),
-      BranchID: Number(localStorage.getItem("cityID")),
-      ServiceID:
-        selectedOptionsSerives && selectedOptionsSerives.value
-          ? selectedOptionsSerives.value
-          : 1,
-      ShiftID: 1,
-
-      CounterID: 1,
-      StartDate: multiDatePickerDateChangIntoUTC(fromDate),
-      EndDate: multiDatePickerDateChangIntoUTC(toDate),
-      PageNumber: 1,
-      Length: 50,
-    };
-    console.log(data, "getAppointmentReportBranchAPI");
-    dispatch(getAppointmentReportBranchAPI(data, t, navigate, Loading));
-  };
-
-  const handleResetAppointment = () => {
-    setSelectedOptionsSerives(null);
-    selectedBranhOptions(null);
-    setSelectedOptionsCounter(null);
-    setFromDate(new Date());
-    setToDate(() => {
-      const today = new Date();
-      const futureDate = new Date(today.getTime() + 10 * 24 * 60 * 60 * 1000);
-      return futureDate;
-    });
-  };
-
   useEffect(() => {
     if (selectedBranchID !== null) {
       dispatch(getAllShiftsOfBranch(t, navigate, Loading, selectedBranchID));
@@ -320,6 +267,75 @@ const AppointmentReportCity = () => {
       }
     }
   }, [globalShiftOptions, currentLanguage]);
+
+  const handleServiceOnChange = (servicesSelectedOption) => {
+    setSelectedOptionsSerives(servicesSelectedOption);
+  };
+
+  const handleCityBranchOptions = (branchSelectedOptions) => {
+    console.log(branchSelectedOptions, "branchSelectedOptions");
+    setSelectedBranhOptions(branchSelectedOptions);
+    setSelectedBranchID(branchSelectedOptions.value);
+  };
+
+  const handleShiftOnChange = (shiftSelectedOption) => {
+    setSelectedOptionsShift(shiftSelectedOption);
+  };
+
+  const handleCounteronChange = (counterSelectedOptions) => {
+    setSelectedOptionsCounter(counterSelectedOptions);
+  };
+
+  console.log(selectedBranchID, "selectedBranchIDselectedBranchID");
+
+  const handleStartDateChange = (date) => {
+    setFromDate(date);
+  };
+
+  const handleEndDateChange = (date) => {
+    setToDate(date);
+  };
+
+  //function For Search
+  const handleSearchAppointment = () => {
+    let data = {
+      CountryID: Number(localStorage.getItem("countryID")),
+      CityID: Number(localStorage.getItem("cityID")),
+      BranchID: Number(selectedBranchID),
+      ServiceID:
+        selectedOptionsSerives && selectedOptionsSerives.value
+          ? selectedOptionsSerives.value
+          : 1,
+      ShiftID:
+        selectedOptionsShift && selectedOptionsShift.value
+          ? selectedOptionsShift.value
+          : 1,
+
+      CounterID:
+        selectedOptionsCounter && selectedOptionsCounter.value
+          ? selectedOptionsCounter.value
+          : 1,
+      StartDate: multiDatePickerDateChangIntoUTC(fromDate),
+      EndDate: multiDatePickerDateChangIntoUTC(toDate),
+      PageNumber: 1,
+      Length: 50,
+    };
+    console.log(data, "getAppointmentReportBranchAPI");
+    dispatch(getAppointmentReportBranchAPI(data, t, navigate, Loading));
+  };
+
+  const handleResetAppointment = () => {
+    setFromDate(new Date());
+    setToDate(() => {
+      const today = new Date();
+      const futureDate = new Date(today.getTime() + 10 * 24 * 60 * 60 * 1000);
+      return futureDate;
+    });
+    setSelectedOptionsShift(null);
+    setSelectedOptionsCounter(null);
+    setSelectedOptionsSerives(null);
+    setSelectedBranhOptions(null);
+  };
 
   useEffect(() => {
     if (
@@ -413,10 +429,12 @@ const AppointmentReportCity = () => {
                   <label className="text-labels">{t("Shift")}</label>
                   <Select
                     isSearchable={false}
+                    value={selectedOptionsShift}
                     placeholder={t("Select-an-option")}
                     className="select-dropdown-all"
                     options={apppointmentOptionsShift}
                     isDisabled={selectedBranchID === null ? true : false}
+                    onChange={handleShiftOnChange}
                   />
                 </span>
               </Col>
@@ -425,10 +443,12 @@ const AppointmentReportCity = () => {
                   <label className="text-labels">{t("Counter")}</label>
                   <Select
                     isSearchable={false}
+                    value={selectedOptionsCounter}
                     className="select-dropdown-all"
                     placeholder={t("Select-an-option")}
                     options={apppointmentOptionsCounter}
                     isDisabled={selectedBranchID === null ? true : false}
+                    onChange={handleCounteronChange}
                   />
                 </span>
               </Col>

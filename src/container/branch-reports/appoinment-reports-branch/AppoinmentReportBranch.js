@@ -258,8 +258,8 @@ const AppoinmentReportBranch = () => {
   const handleSearchAppointment = () => {
     let data = {
       CountryID: Number(localStorage.getItem("countryID")),
-      CityID: Number(localStorage.getItem("branchID")),
-      BranchID: Number(localStorage.getItem("cityID")),
+      CityID: Number(localStorage.getItem("cityID")),
+      BranchID: Number(localStorage.getItem("branchID")),
       ServiceID:
         selectedOptionsSerives && selectedOptionsSerives.value
           ? selectedOptionsSerives.value
