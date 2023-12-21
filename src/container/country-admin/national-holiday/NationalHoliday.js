@@ -6,11 +6,16 @@ import { useTranslation } from "react-i18next";
 import {
   getNationalHolidayMainApi,
   deleteNationalHolidayMainApi,
+  addNationalHolidayMainApi,
 } from "../../../store/actions/Admin_action";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router";
 import DatePicker from "react-multi-date-picker";
-import { formatDate } from "../../../commen/functions/Date_time_formatter";
+import {
+  formatDate,
+  generateDateRange,
+  multiDatePickerDateChangIntoUTC,
+} from "../../../commen/functions/Date_time_formatter";
 
 const NationalHoliday = () => {
   const { t } = useTranslation();
@@ -21,6 +26,11 @@ const NationalHoliday = () => {
   const loadingFlag = useSelector((state) => state.Loader.Loading);
   const countryNationalHoliday = useSelector(
     (state) => state.admin.countryNationalHoliday
+  );
+
+  console.log(
+    countryNationalHoliday,
+    "countryNationalHolidaycountryNationalHoliday"
   );
 
   // Calculate the date one day after the current date
@@ -49,30 +59,6 @@ const NationalHoliday = () => {
     dispatch(getNationalHolidayMainApi(t, navigate, loadingFlag));
   }, []);
 
-  // for data rendering in table
-  useEffect(() => {
-    if (
-      countryNationalHoliday !== null &&
-      Array.isArray(countryNationalHoliday)
-    ) {
-      setRows(countryNationalHoliday);
-    } else {
-      setRows([]);
-    }
-  }, [countryNationalHoliday]);
-
-  // this is my delete function
-  const onDeleteIcon = (record) => {
-    let deleteData = {
-      CountryID: Number(localStorage.getItem("countryID")),
-      HolidayToRemove: record, // Use the record directly
-    };
-    dispatch(
-      deleteNationalHolidayMainApi(t, navigate, loadingFlag, deleteData)
-    );
-  };
-
-  // this is my add function
   const columns = [
     {
       title: <span className="table-text">{t("Date")}</span>,
@@ -80,8 +66,8 @@ const NationalHoliday = () => {
       key: "nationalHolidayList",
       width: "400px",
       render: (text, record) => (
-        // console.log("text", record),
-        <span className="table-inside-text">{formatDate(record, local)}</span>
+        console.log("text", record),
+        (<span className="table-inside-text">{formatDate(record, local)}</span>)
       ),
     },
 
@@ -104,14 +90,56 @@ const NationalHoliday = () => {
     },
   ];
 
-  //onChange for Start Date
+  // for data rendering in table
+  useEffect(() => {
+    if (
+      countryNationalHoliday !== null &&
+      Array.isArray(countryNationalHoliday)
+    ) {
+      setRows(countryNationalHoliday);
+    } else {
+      setRows([]);
+    }
+  }, [countryNationalHoliday]);
+
   const handleStartDateChange = (date) => {
     setStartDate(date);
   };
 
-  //onChange for End Date
   const handleEndDateChange = (date) => {
     setEndDate(date);
+  };
+
+  // this is my delete function
+  const onDeleteIcon = (record) => {
+    let deleteData = {
+      CountryID: Number(localStorage.getItem("countryID")),
+      HolidayToRemove: record, // Use the record directly
+    };
+    dispatch(
+      deleteNationalHolidayMainApi(t, navigate, loadingFlag, deleteData)
+    );
+  };
+
+  //Function For Formatting Date As Required
+  const convertDatesToUTC = (startDate, endDate) => {
+    const formattedStartDate = multiDatePickerDateChangIntoUTC(startDate);
+    const formattedEndDate = multiDatePickerDateChangIntoUTC(endDate);
+    return [formattedStartDate, formattedEndDate];
+  };
+
+  //Function  For saving the Dates
+  const saveDates = () => {
+    if (startDate <= endDate) {
+      let data = {
+        CountryID: Number(localStorage.getItem("countryID")),
+        HolidayListToAdd: convertDatesToUTC(startDate, endDate),
+      };
+      console.log(data, "HolidayListToAddHolidayListToAdd");
+      dispatch(addNationalHolidayMainApi(t, navigate, loadingFlag, data));
+    } else {
+      alert("Start Date Should Be Less Then End Date");
+    }
   };
 
   return (
@@ -182,7 +210,7 @@ const NationalHoliday = () => {
                   <Button
                     icon={<i className="icon-save icon-space"></i>}
                     text={t("Save")}
-                    // onClick={onAddHandler}
+                    onClick={saveDates}
                     className="save-btn-NationalHoliday"
                   />
                 </Col>
