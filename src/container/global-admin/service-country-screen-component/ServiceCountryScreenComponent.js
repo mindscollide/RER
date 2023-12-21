@@ -1,31 +1,35 @@
 import React, { useState } from "react";
 import { Row, Col } from "react-bootstrap";
-import "./CountryServiceScreenComponent.css";
+import "./ServiceCountryScreenComponent.css";
 import { Paper, Table, Button } from "../../../components/elements";
 import { Switch } from "antd";
 import { useTranslation } from "react-i18next";
 
-const CountryServiceScreenComponent = ({ goBackServiceCountryButton }) => {
+const ServiceCountryScreenComponent = ({ closeServiceCountryScreen }) => {
   const { t } = useTranslation();
 
   const dataSource = [
     {
       id: 1,
-      shiftName: <span className="table-inside-text">Saudi Arabia</span>,
+      shiftName: <span className="table-inside-text">First Registry</span>,
     },
     {
       id: 2,
-      shiftName: <span className="table-inside-text">Bahrain</span>,
+      shiftName: (
+        <span className="table-inside-text">
+          Subsequence Transaction Service Before First Registry
+        </span>
+      ),
     },
     {
       id: 3,
-      shiftName: <span className="table-inside-text">Saudi Arabia</span>,
+      shiftName: <span className="table-inside-text">Change Ownership</span>,
     },
   ];
 
   const columns = [
     {
-      title: <span className="table-text">{t("Country-name")}</span>,
+      title: <span className="table-text">{t("Service-name")}</span>,
       dataIndex: "shiftName",
       key: "shiftName",
       width: "400px",
@@ -56,50 +60,40 @@ const CountryServiceScreenComponent = ({ goBackServiceCountryButton }) => {
 
   return (
     <>
-      <section>
+      <section className="SectionBranchService-Admin">
         <Row>
           <Col lg={12} md={12} sm={12} className="d-flex justify-content-start">
             <span className="shift-heading">
               <i
                 className="icon-back go-back-arrow"
-                onClick={goBackServiceCountryButton}
+                onClick={closeServiceCountryScreen}
               ></i>
               {t("Country-wise-service-availability")}
-            </span>
-          </Col>
-        </Row>
-
-        <Row>
-          <Col
-            lg={12}
-            md={12}
-            sm={12}
-            className="d-flex justify-content-start ms-4 mt-3"
-          >
-            <span className="shift-sub-heading">
-              {t("First-registry-service")}
+              <span className="shift-sub-heading ms-2">
+                {t("Saudi-arabia")}
+              </span>
             </span>
           </Col>
         </Row>
         <Row className="mt-3">
           <Col lg={12} md={12} sm={12}>
-            <Paper className="Country-Service-Screen-paper">
+            <Paper className="Service-Country-paper">
               <Row>
                 <Col
                   lg={12}
                   md={12}
                   sm={12}
-                  className="btn-col-class-Country-Service-Screen"
+                  className="btn-col-class-serviceCountry-screen"
                 >
                   <Button
                     icon={<i className="icon-repeat icon-space"></i>}
                     text={t("Revert")}
-                    className="revert-btn-Country-Service-Screen"
+                    className="revert-btn-Service-Country"
                   />
                   <Button
                     icon={<i className="icon-save icon-space"></i>}
                     text={t("Save")}
-                    className="save-btn-Country-Service-Screen"
+                    className="save-btn-Service-Country"
                   />
                 </Col>
               </Row>
@@ -120,4 +114,4 @@ const CountryServiceScreenComponent = ({ goBackServiceCountryButton }) => {
   );
 };
 
-export default CountryServiceScreenComponent;
+export default ServiceCountryScreenComponent;

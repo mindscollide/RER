@@ -22,9 +22,18 @@ const setIsCountryWiseCityComponent = (response) => {
 
 // ===================================GLOBAL ADMIN START ==========================================//
 
+// For country service screen component
 const setIsCountryServiceScreenComponent = (response) => {
   return {
     type: actions.SET_COUNTRY_SERVICE_SCREEN_COMPONENT,
+    response: response,
+  };
+};
+
+// For service country screen component
+const setIsServiceCountryScreenComponent = (response) => {
+  return {
+    type: actions.SET_SERVICE_COUNTRY_SCREEN_COMPONENT,
     response: response,
   };
 };
@@ -36,4 +45,5 @@ export {
   setIsCityWiseBranchService,
   setIsCountryWiseCityComponent,
   setIsCountryServiceScreenComponent,
+  setIsServiceCountryScreenComponent,
 };

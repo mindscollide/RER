@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Row, Col } from "react-bootstrap";
-import "./COuntry-Working.css";
+import "./CountryWorking.css";
 import { Paper, Table, Button } from "../../../components/elements";
 import { Switch } from "antd";
 import { useTranslation } from "react-i18next";
@@ -99,16 +99,16 @@ const CountryWorking = () => {
         <Row>
           <Col lg={12} md={12} sm={12} className="d-flex justify-content-start">
             <span className="shift-heading">
-              {t("Country Working Days")}
-              <span className="shift-sub-heading">
-                {t("Saudi-arabia-riyadh")}
+              {t("Country-working-days")}
+              <span className="shift-sub-heading ms-2">
+                {t("Saudi-arabia")}
               </span>
             </span>
           </Col>
         </Row>
         <Row className="mt-3">
           <Col lg={12} md={12} sm={12}>
-            <Paper className="Service-Country-paper">
+            <Paper className="Country-working-paper">
               <Row className="mt-2">
                 <Col lg={12} md={12} sm={12}>
                   <Table
@@ -128,12 +128,12 @@ const CountryWorking = () => {
                   <Button
                     icon={<i className="icon-save icon-space"></i>}
                     text={t("Save")}
-                    className="save-btn-Service-Country"
+                    className="save-btn-Country-working"
                   />
                   <Button
                     icon={<i className="icon-repeat icon-space"></i>}
                     text={t("Revert")}
-                    className="revert-btn-Service-Country"
+                    className="revert-btn-Country-working"
                   />
                 </Col>
               </Row>

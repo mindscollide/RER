@@ -5,6 +5,7 @@ const initialState = {
   isCityWiseBranchService: false,
   isCountryWiseCityComponentReducer: false,
   isCountryServiceComponentReducer: false,
+  isServiceCountryComponentReducer: false,
 };
 
 const globalReducer = (state = initialState, action) => {
@@ -30,10 +31,19 @@ const globalReducer = (state = initialState, action) => {
       };
     }
 
+    // For country service screen component
     case actions.SET_COUNTRY_SERVICE_SCREEN_COMPONENT: {
       return {
         ...state,
         isCountryServiceComponentReducer: action.response,
+      };
+    }
+
+    // For service country screen component
+    case actions.SET_SERVICE_COUNTRY_SCREEN_COMPONENT: {
+      return {
+        ...state,
+        isServiceCountryComponentReducer: action.response,
       };
     }
 

@@ -88,13 +88,11 @@ const BranchServiceCounter = () => {
         </span>
       ),
       dataIndex: "counterName",
-      align: "center",
       key: "counterName",
     },
     {
       title: <span className="table-inside-header-text-new">{t("Shift")}</span>,
       dataIndex: "shift",
-      align: "center",
       key: "shift",
     },
     {
@@ -102,7 +100,6 @@ const BranchServiceCounter = () => {
         <span className="table-inside-header-text-new">{t("Service")}</span>
       ),
       dataIndex: "service",
-      align: "center",
       key: "service",
     },
   ];
