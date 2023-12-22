@@ -39,6 +39,9 @@ import {
   deleteCountryNationalHoliday,
   getAllBranchServices,
   getAppointmentBranchReport,
+  getCountryWorkingDays,
+  updateCountryWorkingDays,
+  getCountryCities,
   getAppointmentCityReport,
 } from "../../commen/apis/Api_config";
 import { adminURL } from "../../commen/apis/Api_ends_points";
@@ -315,7 +318,9 @@ const setLastSelectedLanguage = (
               );
               setSelectedLanguage({
                 languageTitle:
-                  data.SystemSupportedLanguageID === 2 ? "Ø¹Ø±Ø¨Ù‰" : "English",
+                  data.SystemSupportedLanguageID === 2
+                    ? "Ã˜Â¹Ã˜Â±Ã˜Â¨Ã™â€°"
+                    : "English",
                 systemSupportedLanguageID: data.SystemSupportedLanguageID,
                 code: data.SystemSupportedLanguageID === 2 ? "ar" : "en",
               });
@@ -2782,8 +2787,13 @@ const getCityEmployeeClear = (message) => {
     message: message,
   };
 };
-const getCityEmployeeMainApi = (t, navigate, loadingFlag) => {
-  let data = { CityID: Number(localStorage.getItem("cityID")) };
+const getCityEmployeeMainApi = (t, navigate, loadingFlag, value) => {
+  let data;
+  if (value !== null && value !== undefined) {
+    data = { CityID: Number(value) };
+  } else {
+    data = { CityID: Number(localStorage.getItem("cityID")) };
+  }
 
   return async (dispatch) => {
     if (!loadingFlag) {
@@ -2803,7 +2813,7 @@ const getCityEmployeeMainApi = (t, navigate, loadingFlag) => {
       .then(async (response) => {
         if (response.data.responseCode === 200) {
           if (response.data.responseCode === 417) {
-            dispatch(getCityEmployeeMainApi(t, navigate, loadingFlag));
+            dispatch(getCityEmployeeMainApi(t, navigate, loadingFlag, value));
           } else if (response.data.responseResult.isExecuted === true) {
             if (
               response.data.responseResult.responseMessage ===
@@ -3240,6 +3250,103 @@ const deleteExistingEmployeeMainApi = (
   };
 };
 
+//GET APPOINTMENT CITY
+
+const getAppointmentCityReportSuccess = (response, message) => {
+  return {
+    type: actions.GET_APPOINTMENT_BRANCH_REPORT_SUCCESS,
+    response: response,
+    message: message,
+  };
+};
+
+const getAppointmentCityReportFail = (message) => {
+  return {
+    type: actions.GET_APPOINTMENT_BRANCH_REPORT_FAIL,
+    message: message,
+  };
+};
+
+const getAppointmentReportCityAPI = (data, t, navigate, loadingFlag) => {
+  return async (dispatch) => {
+    if (!loadingFlag) {
+      dispatch(loader_Actions(true));
+    }
+    let form = new FormData();
+    form.append("RequestMethod", getAppointmentCityReport.RequestMethod);
+    form.append("RequestData", JSON.stringify(data));
+    await axios({
+      method: "post",
+      url: adminURL,
+      data: form,
+      headers: {
+        _token: JSON.parse(localStorage.getItem("token")),
+      },
+    })
+      .then(async (response) => {
+        if (response.data.responseCode === 200) {
+          if (response.data.responseCode === 417) {
+            dispatch(
+              getAppointmentReportCityAPI(data, t, navigate, loadingFlag)
+            );
+          } else if (response.data.responseResult.isExecuted === true) {
+            if (
+              response.data.responseResult.responseMessage ===
+              "Admin_AdminServiceManager_GetAppointmentReportCityAdmin_01"
+            ) {
+              await dispatch(
+                getAppointmentCityReportSuccess(
+                  response.data.responseResult.appointmentList,
+                  t(
+                    "Admin_AdminServiceManager_GetAppointmentReportCityAdmin_01"
+                  )
+                )
+              );
+              await dispatch(loader_Actions(false));
+            } else if (
+              response.data.responseResult.responseMessage ===
+              "Admin_AdminServiceManager_GetAppointmentReportCityAdmin_02"
+            ) {
+              await dispatch(
+                getAppointmentCityReportFail(
+                  t(
+                    "Admin_AdminServiceManager_GetAppointmentReportCityAdmin_02"
+                  )
+                )
+              );
+              await dispatch(loader_Actions(false));
+            } else if (
+              response.data.responseResult.responseMessage ===
+              "Admin_AdminServiceManager_GetAppointmentReportBranchAdmin_03"
+            ) {
+              await dispatch(
+                getAppointmentCityReportFail(t("something_went_wrong"))
+              );
+              await dispatch(loader_Actions(false));
+            } else {
+              dispatch(getAppointmentCityReportFail(t("something_went_wrong")));
+              await dispatch(loader_Actions(false));
+            }
+          } else {
+            await dispatch(
+              getAppointmentCityReportFail(t("something_went_wrong"))
+            );
+            await dispatch(loader_Actions(false));
+          }
+        } else {
+          await dispatch(
+            getAppointmentCityReportFail(t("something_went_wrong"))
+          );
+          await dispatch(loader_Actions(false));
+        }
+      })
+      .catch((response) => {
+        dispatch(getAppointmentCityReportFail(t("something_went_wrong")));
+        dispatch(loader_Actions(false));
+      });
+  };
+};
+
 // ===================================CITY ADMIN==========================================//
 
 // ===================================COUNTRY ADMIN START==========================================//
@@ -3282,7 +3389,7 @@ const getNationalHolidayMainApi = (t, navigate, loadingFlag) => {
       .then(async (response) => {
         if (response.data.responseCode === 200) {
           if (response.data.responseCode === 417) {
-            dispatch(getNationalHolidayMainApi(t, navigate, loadingFlag, data));
+            dispatch(getNationalHolidayMainApi(t, navigate, loadingFlag));
           } else if (response.data.responseResult.isExecuted === true) {
             if (
               response.data.responseResult.responseMessage ===
@@ -3665,30 +3772,240 @@ const getAppointmentReportBranchAPI = (data, t, navigate, loadingFlag) => {
   };
 };
 
-//GET APPOINTMENT CITY
-
-const getAppointmentCityReportSuccess = (response, message) => {
+// Get country working days in country admin main api start
+const getWorkingDaysSuccess = (response, message) => {
   return {
-    type: actions.GET_APPOINTMENT_BRANCH_REPORT_SUCCESS,
+    type: actions.GET_COUNTRY_WORKING_DAYS_SUCCESS,
     response: response,
     message: message,
   };
 };
 
-const getAppointmentCityReportFail = (message) => {
+const getWorkingDaysFail = (message) => {
   return {
-    type: actions.GET_APPOINTMENT_BRANCH_REPORT_FAIL,
+    type: actions.GET_COUNTRY_WORKING_DAYS_FAIL,
     message: message,
   };
 };
 
-const getAppointmentReportCityAPI = (data, t, navigate, loadingFlag) => {
+const getCountryWorkingDaysApi = (t, navigate, loadingFlag) => {
+  let data = { CountryID: Number(localStorage.getItem("countryID")) };
   return async (dispatch) => {
     if (!loadingFlag) {
       dispatch(loader_Actions(true));
     }
     let form = new FormData();
-    form.append("RequestMethod", getAppointmentCityReport.RequestMethod);
+    form.append("RequestMethod", getCountryWorkingDays.RequestMethod);
+    form.append("RequestData", JSON.stringify(data));
+    await axios({
+      method: "post",
+      url: adminURL,
+      data: form,
+      headers: {
+        _token: JSON.parse(localStorage.getItem("token")),
+      },
+    })
+      .then(async (response) => {
+        if (response.data.responseCode === 200) {
+          if (response.data.responseCode === 417) {
+            dispatch(getCountryWorkingDaysApi(t, navigate, loadingFlag, data));
+          } else if (response.data.responseResult.isExecuted === true) {
+            if (
+              response.data.responseResult.responseMessage ===
+              "Admin_AdminServiceManager_GetCountryWorkingDays_01"
+            ) {
+              await dispatch(
+                getWorkingDaysSuccess(
+                  response.data.responseResult.countryWorkingDaylist,
+                  t("Admin_AdminServiceManager_GetCountryWorkingDays_01")
+                )
+              );
+              await dispatch(loader_Actions(false));
+            } else if (
+              response.data.responseResult.responseMessage ===
+              "Admin_AdminServiceManager_GetCountryWorkingDays_02"
+            ) {
+              await dispatch(
+                getWorkingDaysFail(
+                  t("Admin_AdminServiceManager_GetCountryWorkingDays_02")
+                )
+              );
+              await dispatch(loader_Actions(false));
+            } else if (
+              response.data.responseResult.responseMessage ===
+              "Admin_AdminServiceManager_GetCountryWorkingDays_03"
+            ) {
+              await dispatch(
+                getWorkingDaysFail(
+                  t("Admin_AdminServiceManager_GetCountryWorkingDays_03")
+                )
+              );
+              await dispatch(loader_Actions(false));
+            } else if (
+              response.data.responseResult.responseMessage ===
+              "Admin_AdminServiceManager_GetCountryWorkingDays_04"
+            ) {
+              await dispatch(
+                getWorkingDaysFail(
+                  t("Admin_AdminServiceManager_GetCountryNationalHoliday_04")
+                )
+              );
+              await dispatch(loader_Actions(false));
+            } else if (
+              response.data.responseResult.responseMessage ===
+              "Admin_AdminServiceManager_GetCountryWorkingDays_05"
+            ) {
+              await dispatch(getWorkingDaysFail(t("something_went_wrong")));
+              await dispatch(loader_Actions(false));
+            } else {
+              await dispatch(getWorkingDaysFail(t("something_went_wrong")));
+              await dispatch(loader_Actions(false));
+            }
+          } else {
+            await dispatch(getWorkingDaysFail(t("something_went_wrong")));
+            await dispatch(loader_Actions(false));
+          }
+        } else {
+          await dispatch(getWorkingDaysFail(t("something_went_wrong")));
+          await dispatch(loader_Actions(false));
+        }
+      })
+      .catch((response) => {
+        dispatch(getWorkingDaysFail(t("something_went_wrong")));
+        dispatch(loader_Actions(false));
+      });
+  };
+};
+// Get country working days in country admin main api End
+
+// Update country working days in country admin main api start
+const updateWorkingDaysSuccess = (response, message) => {
+  return {
+    type: actions.UPDATE_COUNTRY_WORKING_DAYS_SUCCESS,
+    response: response,
+    message: message,
+  };
+};
+
+const updateWorkingDaysFail = (message) => {
+  return {
+    type: actions.UPDATE_COUNTRY_WORKING_DAYS_FAIL,
+    message: message,
+  };
+};
+const updateWorkingDaysApi = (t, navigate, loadingFlag, data) => {
+  return async (dispatch) => {
+    if (!loadingFlag) {
+      dispatch(loader_Actions(true));
+    }
+    let form = new FormData();
+    form.append("RequestMethod", updateCountryWorkingDays.RequestMethod);
+    form.append("RequestData", JSON.stringify(data));
+    await axios({
+      method: "post",
+      url: adminURL,
+      data: form,
+      headers: {
+        _token: JSON.parse(localStorage.getItem("token")),
+      },
+    })
+      .then(async (response) => {
+        if (response.data.responseCode === 200) {
+          if (response.data.responseCode === 417) {
+            dispatch(updateWorkingDaysApi(t, navigate, loadingFlag, data));
+          } else if (response.data.responseResult.isExecuted === true) {
+            if (
+              response.data.responseResult.responseMessage ===
+              "Admin_AdminServiceManager_UpdateCountryWorkingDays_01"
+            ) {
+              await dispatch(
+                updateWorkingDaysSuccess(
+                  t("Admin_AdminServiceManager_GetCountryWorkingDays_01")
+                )
+              );
+              dispatch(getCountryWorkingDaysApi(t, navigate, loadingFlag));
+            } else if (
+              response.data.responseResult.responseMessage ===
+              "Admin_AdminServiceManager_UpdateCountryWorkingDays_02"
+            ) {
+              await dispatch(
+                updateWorkingDaysFail(
+                  t("Admin_AdminServiceManager_GetCountryWorkingDays_02")
+                )
+              );
+              await dispatch(loader_Actions(false));
+            } else if (
+              response.data.responseResult.responseMessage ===
+              "Admin_AdminServiceManager_UpdateCountryWorkingDays_03"
+            ) {
+              await dispatch(
+                updateWorkingDaysFail(
+                  t("Admin_AdminServiceManager_GetCountryWorkingDays_03")
+                )
+              );
+              await dispatch(loader_Actions(false));
+            } else if (
+              response.data.responseResult.responseMessage ===
+              "Admin_AdminServiceManager_UpdateCountryWorkingDays_04"
+            ) {
+              await dispatch(
+                updateWorkingDaysFail(
+                  t("Admin_AdminServiceManager_GetCountryNationalHoliday_04")
+                )
+              );
+              await dispatch(loader_Actions(false));
+            } else if (
+              response.data.responseResult.responseMessage ===
+              "Admin_AdminServiceManager_UpdateCountryWorkingDays_05"
+            ) {
+              await dispatch(updateWorkingDaysFail(t("something_went_wrong")));
+              await dispatch(loader_Actions(false));
+            } else {
+              dispatch(updateWorkingDaysFail(t("something_went_wrong")));
+              await dispatch(loader_Actions(false));
+            }
+          } else {
+            await dispatch(updateWorkingDaysFail(t("something_went_wrong")));
+            await dispatch(loader_Actions(false));
+          }
+        } else {
+          await dispatch(updateWorkingDaysFail(t("something_went_wrong")));
+          await dispatch(loader_Actions(false));
+        }
+      })
+      .catch((response) => {
+        dispatch(updateWorkingDaysFail(t("something_went_wrong")));
+        dispatch(loader_Actions(false));
+      });
+  };
+};
+
+// Get Country Cities CITY using in drope down of city in employess API
+const getCountryCitiesApiSuccess = (response, message) => {
+  return {
+    type: actions.GET_COUNTRY_CITIES_API_SUCCESS,
+    response: response,
+    message: message,
+  };
+};
+
+const getCountryCitiesApiFail = (message) => {
+  return {
+    type: actions.GET_COUNTRY_CITIES_API_FAIL,
+    message: message,
+  };
+};
+
+// apiCallFlag on which page and from which route its call so we call api on that responce
+// cityID is calling for that we pass it in request from city page to route it into employes
+const getCountryCitiesApi = (t, navigate, loadingFlag, apiCallFlag, cityID) => {
+  let data = { CountryID: Number(localStorage.getItem("countryID")) };
+  return async (dispatch) => {
+    if (!loadingFlag) {
+      dispatch(loader_Actions(true));
+    }
+    let form = new FormData();
+    form.append("RequestMethod", getCountryCities.RequestMethod);
     form.append("RequestData", JSON.stringify(data));
     await axios({
       method: "post",
@@ -3702,65 +4019,98 @@ const getAppointmentReportCityAPI = (data, t, navigate, loadingFlag) => {
         if (response.data.responseCode === 200) {
           if (response.data.responseCode === 417) {
             dispatch(
-              getAppointmentReportCityAPI(data, t, navigate, loadingFlag)
+              getCountryCitiesApi(t, navigate, loadingFlag, apiCallFlag, cityID)
             );
           } else if (response.data.responseResult.isExecuted === true) {
             if (
               response.data.responseResult.responseMessage ===
-              "Admin_AdminServiceManager_GetAppointmentReportCityAdmin_01"
+              "Admin_AdminServiceManager_GetCountryCities_01"
             ) {
               await dispatch(
-                getAppointmentCityReportSuccess(
-                  response.data.responseResult.appointmentList,
-                  t(
-                    "Admin_AdminServiceManager_GetAppointmentReportCityAdmin_01"
+                getCountryCitiesApiSuccess(
+                  response.data.responseResult,
+                  t("Admin_AdminServiceManager_GetCountryCities_01")
+                )
+              );
+              if (apiCallFlag === 2) {
+                await dispatch(
+                  getCityEmployeeMainApi(
+                    t,
+                    navigate,
+                    loadingFlag,
+                    response.data.responseResult?.cities[0]?.cityID
                   )
+                );
+              } else if (apiCallFlag === 3) {
+                await dispatch(
+                  getCityEmployeeMainApi(t, navigate, loadingFlag, cityID)
+                );
+              } else if (apiCallFlag === 1) {
+                await dispatch(loader_Actions(false));
+              }
+
+              // await dispatch(loader_Actions(false));
+            } else if (
+              response.data.responseResult.responseMessage ===
+              "Admin_AdminServiceManager_GetCountryCities_02"
+            ) {
+              await dispatch(
+                getCountryCitiesApiFail(
+                  t("Admin_AdminServiceManager_GetCountryCities_02")
                 )
               );
               await dispatch(loader_Actions(false));
             } else if (
               response.data.responseResult.responseMessage ===
-              "Admin_AdminServiceManager_GetAppointmentReportCityAdmin_02"
+              "Admin_AdminServiceManager_GetCountryCities_03"
             ) {
               await dispatch(
-                getAppointmentCityReportFail(
-                  t(
-                    "Admin_AdminServiceManager_GetAppointmentReportCityAdmin_02"
-                  )
+                getCountryCitiesApiFail(
+                  t("Admin_AdminServiceManager_GetCountryCities_03")
                 )
               );
               await dispatch(loader_Actions(false));
             } else if (
               response.data.responseResult.responseMessage ===
-              "Admin_AdminServiceManager_GetAppointmentReportBranchAdmin_03"
+              "Admin_AdminServiceManager_GetCountryCities_04"
             ) {
               await dispatch(
-                getAppointmentCityReportFail(t("something_went_wrong"))
+                getCountryCitiesApiFail(
+                  t("Admin_AdminServiceManager_GetCountryNationalHoliday_04")
+                )
+              );
+              await dispatch(loader_Actions(false));
+            } else if (
+              response.data.responseResult.responseMessage ===
+              "Admin_AdminServiceManager_GetCountryCities_05"
+            ) {
+              await dispatch(
+                getCountryCitiesApiFail(t("something_went_wrong"))
               );
               await dispatch(loader_Actions(false));
             } else {
-              dispatch(getAppointmentCityReportFail(t("something_went_wrong")));
+              await dispatch(
+                getCountryCitiesApiFail(t("something_went_wrong"))
+              );
               await dispatch(loader_Actions(false));
             }
           } else {
-            await dispatch(
-              getAppointmentCityReportFail(t("something_went_wrong"))
-            );
+            await dispatch(getCountryCitiesApiFail(t("something_went_wrong")));
             await dispatch(loader_Actions(false));
           }
         } else {
-          await dispatch(
-            getAppointmentCityReportFail(t("something_went_wrong"))
-          );
+          await dispatch(getCountryCitiesApiFail(t("something_went_wrong")));
           await dispatch(loader_Actions(false));
         }
       })
       .catch((response) => {
-        dispatch(getAppointmentCityReportFail(t("something_went_wrong")));
+        dispatch(getCountryCitiesApiFail(t("something_went_wrong")));
         dispatch(loader_Actions(false));
       });
   };
 };
+
+// Update country working days in country admin main api End
 
 export {
   clearResponseMessageAdmin,
@@ -3820,4 +4170,7 @@ export {
   addNationalHolidayMainApi,
   deleteNationalHolidayMainApi,
   getAppointmentReportBranchAPI,
+  getCountryWorkingDaysApi,
+  updateWorkingDaysApi,
+  getCountryCitiesApi,
 };

@@ -50,9 +50,9 @@ const CityBranchShiftNew = () => {
     return () => {
       localStorage.removeItem("branchID");
       dispatch(getAllShiftsOfBranchCleare());
-      setCityShiftRows([])
-      setCityShiftOption([])
-      setCityShiftOptionValue([])
+      setCityShiftRows([]);
+      setCityShiftOption([]);
+      setCityShiftOptionValue([]);
     };
   }, []);
 
@@ -62,20 +62,27 @@ const CityBranchShiftNew = () => {
       if (currentLanguage === "en") {
         setCityShiftOption(
           cityShiftsBranchDropdown.map((item) => ({
-            value: item.branchID, // Change this based on your shift ID or unique identifier
+            value: item.branchID,
             label: item.branchNameEnglish,
           }))
         );
       } else {
         setCityShiftOption(
           cityShiftsBranchDropdown.map((item) => ({
-            value: item.branchID, // Change this based on your shift ID or unique identifier
+            value: item.branchID,
             label: item.branchNameArabic,
           }))
         );
       }
     }
   }, [cityShiftsBranchDropdown, currentLanguage]);
+
+  // It will show by default first selected value in dropdown
+  useEffect(() => {
+    if (cityShiftOption.length > 0) {
+      setCityShiftOptionValue(cityShiftOption[0]);
+    }
+  }, [cityShiftOption]);
 
   // updating data in table
   useEffect(() => {
@@ -129,7 +136,7 @@ const CityBranchShiftNew = () => {
       align: "center",
       render: (text, record) => (
         <span>
-          <Switch checked={text} />
+          <Switch checked={text} disabled />
         </span>
       ),
     },

@@ -68,7 +68,7 @@ const CountryCityWiseShift = () => {
       align: "center",
       render: (text, record) => (
         <span>
-          <Switch />
+          <Switch checked={true} disabled />
         </span>
       ),
     },
@@ -169,7 +169,7 @@ const CountryCityWiseShift = () => {
                           sm={6}
                           className="d-flex justify-content-end"
                         >
-                          <Switch />
+                          <Switch checked={true} disabled />
                         </Col>
                       </Row>
                       <Table
@@ -227,7 +227,7 @@ const CountryCityWiseShift = () => {
                           sm={6}
                           className="d-flex justify-content-end"
                         >
-                          <Switch />
+                          <Switch checked={true} disabled />
                         </Col>
                       </Row>
                       <Table
@@ -285,7 +285,7 @@ const CountryCityWiseShift = () => {
                           sm={6}
                           className="d-flex justify-content-end"
                         >
-                          <Switch />
+                          <Switch checked={true} disabled />
                         </Col>
                       </Row>
                       <Table

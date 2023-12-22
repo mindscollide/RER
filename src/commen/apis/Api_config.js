@@ -92,6 +92,12 @@ const addBranchCounter = {
   RequestMethod: "ServiceManager.AddBranchCounter",
 };
 
+//GET APPOINTMENT REPORT BRANCH
+
+const getAppointmentBranchReport = {
+  RequestMethod: "ServiceManager.GetAppointmentReportBranchAdmin",
+};
+
 // ===================================CITY ADMIN==========================================//
 
 // for all Shifts Of Branch list and drope down
@@ -168,6 +174,11 @@ const getCountryNationalHoliday = {
   RequestMethod: "ServiceManager.GetCountryNationalHoliday",
 };
 
+// Get Country Cities CITY using in drope down of city in employess API
+const getCountryCities = {
+  RequestMethod: "ServiceManager.GetCountryCities",
+};
+
 //for add country National Holiday COUNTRY ADMIN
 const addCountryNationalHoliday = {
   RequestMethod: "ServiceManager.AddCountryNationalHoliday",
@@ -178,10 +189,9 @@ const deleteCountryNationalHoliday = {
   RequestMethod: "ServiceManager.DeleteCountryNationalHoliday",
 };
 
-//GET APPOINTMENT REPORT BRANCH
-
-const getAppointmentBranchReport = {
-  RequestMethod: "ServiceManager.GetAppointmentReportBranchAdmin",
+//For get Country Admin Working Days Api COUNTRY ADMIN
+const getCountryWorkingDays = {
+  RequestMethod: "ServiceManager.GetCountryWorkingDays",
 };
 
 //GET APPOINTMENT CITY BRANCH
@@ -189,6 +199,13 @@ const getAppointmentBranchReport = {
 const getAppointmentCityReport = {
   RequestMethod: "ServiceManager.GetAppointmentReportCityAdmin",
 };
+
+//For update Country Admin Working Days Api COUNTRY ADMIN
+const updateCountryWorkingDays = {
+  RequestMethod: "ServiceManager.UpdateCountryWorkingDays",
+};
+
+// ===================================COUNTRY ADMIN END ==========================================//
 
 export {
   logIn,
@@ -211,6 +228,8 @@ export {
   updateBranchShift,
   deleteBranchShift,
   addBranchCounter,
+  getAppointmentBranchReport,
+
   // ===================================CITY ADMIN==========================================//
   getCityBranchList,
   addCityBranch,
@@ -232,6 +251,8 @@ export {
   getCountryNationalHoliday,
   addCountryNationalHoliday,
   deleteCountryNationalHoliday,
+  getCountryWorkingDays,
+  updateCountryWorkingDays,
+  getCountryCities,
   // ===================================COUNTRY ADMIN END ==========================================//
-  getAppointmentBranchReport,
 };

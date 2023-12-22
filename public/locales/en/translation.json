@@ -152,6 +152,7 @@
   "Shifts": "Shifts",
   "Holidays": "Holidays",
   "Working-days": "Working Days",
+  "Home-visit-charges-(Riyal)": "Home Visit Charges (Riyal)",
   "Admin_AdminServiceManager_AddCityBranch_01": "Branch Created Successfully",
   "Admin_AdminServiceManager_AddCityBranch_02": "Branch Creation Failed",
   "Admin_AdminServiceManager_UpdateCityBranch_01": "Branch Details Updated",
@@ -214,5 +215,18 @@
   "City-wise-appoinment": "City Wise Appoinment",
   "Admin_AdminServiceManager_GetAppointmentReportCityAdmin_01": "Appointment Report Available",
   "Admin_AdminServiceManager_GetAppointmentReportCityAdmin_02": "No Report Found for given search criteria",
-  "Counter-services": "Counter Services"
+  "Counter-services": "Counter Services",
+  "Admin_AdminServiceManager_GetCountryWorkingDays_01": "Working Days Found For Country",
+  "Admin_AdminServiceManager_GetCountryWorkingDays_02": "No Working Day Available for the Country yet",
+  "Admin_AdminServiceManager_GetCountryWorkingDays_03": "Country Working Day List not Found",
+  "Sunday": "Sunday",
+  "Monday": "Monday",
+  "Tuesday": "Tuesday",
+  "Wednesday": "Wednesday",
+  "Thursday": "Thursday",
+  "Friday": "Friday",
+  "Saturday": "Saturday",
+  "Admin_AdminServiceManager_GetCountryCities_01": "City List Found For Country",
+  "Admin_AdminServiceManager_GetCountryCities_02": "No Cities Available for the Country yet",
+  "Admin_AdminServiceManager_GetCountryCities_03": "Country City List not Found"
 }

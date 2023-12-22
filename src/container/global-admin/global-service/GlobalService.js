@@ -49,21 +49,25 @@ const GlobalService = () => {
 
   //open city screen page
   const openClickCityScreen = () => {
+    localStorage.setItem("selectedKeys", ["23"]);
     navigate("/GlobalAdmin/City");
   };
 
   //open branch screen page
   const openClickBranchScreen = () => {
+    localStorage.setItem("selectedKeys", ["24"]);
     navigate("/GlobalAdmin/Branch");
   };
 
   //open branch Counters page
   const openClickCountersScreen = () => {
+    localStorage.setItem("selectedKeys", ["27"]);
     navigate("/GlobalAdmin/Counters");
   };
 
   //open branch shifts page
   const openClickshiftsScreen = () => {
+    localStorage.setItem("selectedKeys", ["26"]);
     navigate("/GlobalAdmin/Shifts");
   };
 

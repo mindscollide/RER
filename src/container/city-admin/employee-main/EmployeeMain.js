@@ -31,12 +31,12 @@ import {
 const EmployeeMain = () => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
-  const location = useLocation();
   const navigate = useNavigate();
-  const currentLanguage = localStorage.getItem("i18nextLng");
-  const local = currentLanguage === "en" ? "en-US" : "ar-SA";
+  const location = useLocation();
   const searchParams = new URLSearchParams(location.search);
   const urldBranchID = searchParams.get("branchId");
+  const currentLanguage = localStorage.getItem("i18nextLng");
+  const local = currentLanguage === "en" ? "en-US" : "ar-SA";
   const [isCheckboxSelected, setIsCheckboxSelected] = useState(false);
   const [branchEmployeeOption, setBranchEmployeeOption] = useState(null);
   const [branchEmployeeOptionTwo, setBranchEmployeeOptionTwo] = useState(null);
@@ -72,6 +72,9 @@ const EmployeeMain = () => {
     isHomeVisit: false,
   });
 
+  //delete modal states
+  const [deleteModal, setDeleteModal] = useState(false);
+  
   const callApi = async () => {
     await dispatch(getCityBranchListApi(t, navigate, loadingFlag));
     await dispatch(getCityEmployeeMainApi(t, navigate, loadingFlag));
@@ -102,7 +105,7 @@ const EmployeeMain = () => {
       setBranchEmployeeOptionTwo(null);
     };
   }, []);
-  
+
   useEffect(() => {
     // Update cityShiftOption with the correct structure based on your data
     if (employeeMainBranchDropdown && employeeMainBranchDropdown.length !== 0) {
@@ -123,6 +126,13 @@ const EmployeeMain = () => {
       }
     }
   }, [employeeMainBranchDropdown, currentLanguage]);
+
+  // It will show by default first selected value in dropdown
+  useEffect(() => {
+    if (employeeMainOption.length > 0) {
+      setEmployeeMainOptionValue(employeeMainOption[0]);
+    }
+  }, [employeeMainOption]);
 
   useEffect(() => {
     if (urldBranchID != null && employeeMainOption.length > 0) {
@@ -209,12 +219,9 @@ const EmployeeMain = () => {
     setEmployeeMainOptionValue(null);
   };
 
-  //delete modal states
-  const [deleteModal, setDeleteModal] = useState(false);
 
   // updating table of city employee Main
   useEffect(() => {
-    console.log(rows);
     if (cityEmployeeMain !== null) {
       setRows(cityEmployeeMain);
     } else {
@@ -230,10 +237,6 @@ const EmployeeMain = () => {
     setBranchEmployeeOptionTwo(e.target.value);
   };
 
-  const handleCheckboxChange = (e) => {
-    setIsCheckboxSelected(e.target.checked);
-  };
-
   // open add edit modal on Button Click
   const openAddEditMoadal = () => {
     setSelectedEmployee(null);
@@ -244,11 +247,6 @@ const EmployeeMain = () => {
   // open add delete modal on Button Click
   const openDeleteModal = (record) => {
     setEmployeeIDToDelete(record.employeeID);
-    console.log(
-      "employeeIDToDeleteemployeeIDToDelete",
-      record,
-      employeeIDToDelete
-    );
     setDeleteModal(true);
   };
 
@@ -258,7 +256,9 @@ const EmployeeMain = () => {
       dataIndex: "employeeCity",
       key: "employeeCity",
       render: (text, record, index) => (
-        <span className="table-inside-text">{(index + 1).toLocaleString(local)}</span>
+        <span className="table-inside-text">
+          {(index + 1).toLocaleString(local)}
+        </span>
       ),
     },
     {

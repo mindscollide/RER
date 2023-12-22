@@ -37,6 +37,9 @@ const initialState = {
   isEditEmployeeFlag: false,
   servicesList: null,
   getAppointmentBranchReportData: null,
+  getWorkingDaysCountry: null,
+  updateWorkingDaysCountry: null,
+  cityList: [],
   getAppointmentCityReportData: null,
 };
 
@@ -524,6 +527,21 @@ const adminReducer = (state = initialState, action) => {
         admin_ResponseMessage: action.message,
       };
 
+    //GET APPOINTMENT REPORT CITY
+    case actions.GET_CITY_APPOINTMENT_SUCCESS:
+      return {
+        ...state,
+        getAppointmentCityReportData: action.response,
+        admin_ResponseMessage: action.message,
+      };
+
+    case actions.GET_CITY_APPOINTMENT_FAIL:
+      return {
+        ...state,
+        getAppointmentCityReportData: null,
+        admin_ResponseMessage: action.message,
+      };
+
     // ===================================COUNTRY ADMIN==========================================//
 
     // get Country National Holiday in Country admin
@@ -586,18 +604,45 @@ const adminReducer = (state = initialState, action) => {
         admin_ResponseMessage: action.message,
       };
 
-    //GET APPOINTMENT REPORT CITY
-    case actions.GET_CITY_APPOINTMENT_SUCCESS:
+    case actions.GET_COUNTRY_WORKING_DAYS_SUCCESS:
       return {
         ...state,
-        getAppointmentCityReportData: action.response,
+        getWorkingDaysCountry: action.response,
         admin_ResponseMessage: action.message,
       };
 
-    case actions.GET_CITY_APPOINTMENT_FAIL:
+    case actions.GET_COUNTRY_WORKING_DAYS_FAIL:
       return {
         ...state,
-        getAppointmentCityReportData: null,
+        getWorkingDaysCountry: null,
+        admin_ResponseMessage: action.message,
+      };
+
+    case actions.UPDATE_COUNTRY_WORKING_DAYS_SUCCESS:
+      return {
+        ...state,
+        updateWorkingDaysCountry: action.response,
+        admin_ResponseMessage: action.message,
+      };
+
+    case actions.UPDATE_COUNTRY_WORKING_DAYS_FAIL:
+      return {
+        ...state,
+        updateWorkingDaysCountry: null,
+        admin_ResponseMessage: action.message,
+      };
+
+    case actions.GET_COUNTRY_CITIES_API_SUCCESS:
+      return {
+        ...state,
+        cityList: action.response,
+        admin_ResponseMessage: action.message,
+      };
+
+    case actions.GET_COUNTRY_CITIES_API_FAIL:
+      return {
+        ...state,
+        cityList: [],
         admin_ResponseMessage: action.message,
       };
 
