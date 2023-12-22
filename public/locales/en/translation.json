@@ -213,5 +213,6 @@
   "Appointment-report-city": "Appointment Report City",
   "City-wise-appoinment": "City Wise Appoinment",
   "Admin_AdminServiceManager_GetAppointmentReportCityAdmin_01": "Appointment Report Available",
-  "Admin_AdminServiceManager_GetAppointmentReportCityAdmin_02": "No Report Found for given search criteria"
+  "Admin_AdminServiceManager_GetAppointmentReportCityAdmin_02": "No Report Found for given search criteria",
+  "Counter-services": "Counter Services"
 }
