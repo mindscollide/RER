@@ -47,21 +47,25 @@ const CountryAdminMain = () => {
 
   //to open country city wise branch onClick button
   const openCountryCityWiseBranch = () => {
+    localStorage.setItem("selectedKeys", ["14"]);
     navigate("/CountryAdmin/Branch");
   };
 
   //to open country city wise counter onClick button
   const openCountryCityWiseCounter = () => {
+    localStorage.setItem("selectedKeys", ["16"]);
     navigate("/CountryAdmin/Counters");
   };
 
   //to open country city branch wise shift onClick button
   const openCountryCityBranchShift = () => {
+    localStorage.setItem("selectedKeys", ["15"]);
     navigate("/CountryAdmin/Shifts");
   };
 
   //to open country Wise Employee onClick button
   const openCountryWiseEmployee = () => {
+    localStorage.setItem("selectedKeys", ["17"]);
     navigate("/CountryAdmin/Employee");
   };
 

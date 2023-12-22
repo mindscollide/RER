@@ -102,7 +102,7 @@ const EmployeeMain = () => {
       setBranchEmployeeOptionTwo(null);
     };
   }, []);
-  
+
   useEffect(() => {
     // Update cityShiftOption with the correct structure based on your data
     if (employeeMainBranchDropdown && employeeMainBranchDropdown.length !== 0) {
@@ -123,6 +123,13 @@ const EmployeeMain = () => {
       }
     }
   }, [employeeMainBranchDropdown, currentLanguage]);
+
+  // It will show by default first selected value in dropdown
+  useEffect(() => {
+    if (employeeMainOption.length > 0) {
+      setEmployeeMainOptionValue(employeeMainOption[0]);
+    }
+  }, [employeeMainOption]);
 
   useEffect(() => {
     if (urldBranchID != null && employeeMainOption.length > 0) {
@@ -230,10 +237,6 @@ const EmployeeMain = () => {
     setBranchEmployeeOptionTwo(e.target.value);
   };
 
-  const handleCheckboxChange = (e) => {
-    setIsCheckboxSelected(e.target.checked);
-  };
-
   // open add edit modal on Button Click
   const openAddEditMoadal = () => {
     setSelectedEmployee(null);
@@ -258,7 +261,9 @@ const EmployeeMain = () => {
       dataIndex: "employeeCity",
       key: "employeeCity",
       render: (text, record, index) => (
-        <span className="table-inside-text">{(index + 1).toLocaleString(local)}</span>
+        <span className="table-inside-text">
+          {(index + 1).toLocaleString(local)}
+        </span>
       ),
     },
     {
