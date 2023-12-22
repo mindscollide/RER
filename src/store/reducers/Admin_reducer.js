@@ -37,6 +37,7 @@ const initialState = {
   isEditEmployeeFlag: false,
   servicesList: null,
   getAppointmentBranchReportData: null,
+  getAppointmentCityReportData: null,
 };
 
 const adminReducer = (state = initialState, action) => {
@@ -582,6 +583,21 @@ const adminReducer = (state = initialState, action) => {
       return {
         ...state,
         getAppointmentBranchReportData: null,
+        admin_ResponseMessage: action.message,
+      };
+
+    //GET APPOINTMENT REPORT CITY
+    case actions.GET_CITY_APPOINTMENT_SUCCESS:
+      return {
+        ...state,
+        getAppointmentCityReportData: action.response,
+        admin_ResponseMessage: action.message,
+      };
+
+    case actions.GET_CITY_APPOINTMENT_FAIL:
+      return {
+        ...state,
+        getAppointmentCityReportData: null,
         admin_ResponseMessage: action.message,
       };
 

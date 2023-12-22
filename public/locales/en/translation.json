@@ -211,5 +211,7 @@
   "First-registry-service": "First Registry Service",
   "Country-working-days": "Country Working Days",
   "Appointment-report-city": "Appointment Report City",
-  "City-wise-appoinment": "City Wise Appoinment"
+  "City-wise-appoinment": "City Wise Appoinment",
+  "Admin_AdminServiceManager_GetAppointmentReportCityAdmin_01": "Appointment Report Available",
+  "Admin_AdminServiceManager_GetAppointmentReportCityAdmin_02": "No Report Found for given search criteria"
 }

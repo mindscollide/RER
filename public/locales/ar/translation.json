@@ -212,5 +212,7 @@
   "First-registry-service": "First Registry Service",
   "Country-working-days": "Country Working Days",
   "Appointment-report-city": "مدينة تقرير التعيين",
-  "City-wise-appoinment": "تعيين المدينة الحكيمة"
+  "City-wise-appoinment": "تعيين المدينة الحكيمة",
+  "Admin_AdminServiceManager_GetAppointmentReportCityAdmin_01": "Appointment Report Available",
+  "Admin_AdminServiceManager_GetAppointmentReportCityAdmin_02": "No Report Found for given search criteria"
 }

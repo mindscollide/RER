@@ -184,6 +184,12 @@ const getAppointmentBranchReport = {
   RequestMethod: "ServiceManager.GetAppointmentReportBranchAdmin",
 };
 
+//GET APPOINTMENT CITY BRANCH
+
+const getAppointmentCityReport = {
+  RequestMethod: "ServiceManager.GetAppointmentReportCityAdmin",
+};
+
 export {
   logIn,
   roleList,
@@ -219,6 +225,7 @@ export {
   addNewEmployeeCity,
   updateExistingEmployeeCity,
   deleteExistingEmployeeCity,
+  getAppointmentCityReport,
   // ===================================CITY ADMIN END ==========================================//
 
   // ===================================COUNTRY ADMIN START ==========================================//

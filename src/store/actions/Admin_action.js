@@ -39,6 +39,7 @@ import {
   deleteCountryNationalHoliday,
   getAllBranchServices,
   getAppointmentBranchReport,
+  getAppointmentCityReport,
 } from "../../commen/apis/Api_config";
 import { adminURL } from "../../commen/apis/Api_ends_points";
 import moment from "moment";
@@ -3664,6 +3665,103 @@ const getAppointmentReportBranchAPI = (data, t, navigate, loadingFlag) => {
   };
 };
 
+//GET APPOINTMENT CITY
+
+const getAppointmentCityReportSuccess = (response, message) => {
+  return {
+    type: actions.GET_APPOINTMENT_BRANCH_REPORT_SUCCESS,
+    response: response,
+    message: message,
+  };
+};
+
+const getAppointmentCityReportFail = (message) => {
+  return {
+    type: actions.GET_APPOINTMENT_BRANCH_REPORT_FAIL,
+    message: message,
+  };
+};
+
+const getAppointmentReportCityAPI = (data, t, navigate, loadingFlag) => {
+  return async (dispatch) => {
+    if (!loadingFlag) {
+      dispatch(loader_Actions(true));
+    }
+    let form = new FormData();
+    form.append("RequestMethod", getAppointmentCityReport.RequestMethod);
+    form.append("RequestData", JSON.stringify(data));
+    await axios({
+      method: "post",
+      url: adminURL,
+      data: form,
+      headers: {
+        _token: JSON.parse(localStorage.getItem("token")),
+      },
+    })
+      .then(async (response) => {
+        if (response.data.responseCode === 200) {
+          if (response.data.responseCode === 417) {
+            dispatch(
+              getAppointmentReportCityAPI(data, t, navigate, loadingFlag)
+            );
+          } else if (response.data.responseResult.isExecuted === true) {
+            if (
+              response.data.responseResult.responseMessage ===
+              "Admin_AdminServiceManager_GetAppointmentReportCityAdmin_01"
+            ) {
+              await dispatch(
+                getAppointmentCityReportSuccess(
+                  response.data.responseResult.appointmentList,
+                  t(
+                    "Admin_AdminServiceManager_GetAppointmentReportCityAdmin_01"
+                  )
+                )
+              );
+              await dispatch(loader_Actions(false));
+            } else if (
+              response.data.responseResult.responseMessage ===
+              "Admin_AdminServiceManager_GetAppointmentReportCityAdmin_02"
+            ) {
+              await dispatch(
+                getAppointmentCityReportFail(
+                  t(
+                    "Admin_AdminServiceManager_GetAppointmentReportCityAdmin_02"
+                  )
+                )
+              );
+              await dispatch(loader_Actions(false));
+            } else if (
+              response.data.responseResult.responseMessage ===
+              "Admin_AdminServiceManager_GetAppointmentReportBranchAdmin_03"
+            ) {
+              await dispatch(
+                getAppointmentCityReportFail(t("something_went_wrong"))
+              );
+              await dispatch(loader_Actions(false));
+            } else {
+              dispatch(getAppointmentCityReportFail(t("something_went_wrong")));
+              await dispatch(loader_Actions(false));
+            }
+          } else {
+            await dispatch(
+              getAppointmentCityReportFail(t("something_went_wrong"))
+            );
+            await dispatch(loader_Actions(false));
+          }
+        } else {
+          await dispatch(
+            getAppointmentCityReportFail(t("something_went_wrong"))
+          );
+          await dispatch(loader_Actions(false));
+        }
+      })
+      .catch((response) => {
+        dispatch(getAppointmentCityReportFail(t("something_went_wrong")));
+        dispatch(loader_Actions(false));
+      });
+  };
+};
+
 export {
   clearResponseMessageAdmin,
   AdminCleareState,
@@ -3716,6 +3814,7 @@ export {
   updateExistingEmployeeMainApi,
   deleteExistingEmployeeMainApi,
   addEditFlagModal,
+  getAppointmentReportCityAPI,
   // ===================================COUNTRY ADMIN START==========================================//
   getNationalHolidayMainApi,
   addNationalHolidayMainApi,
