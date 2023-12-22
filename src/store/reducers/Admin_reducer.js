@@ -39,6 +39,7 @@ const initialState = {
   getAppointmentBranchReportData: null,
   getWorkingDaysCountry: null,
   updateWorkingDaysCountry: null,
+  cityList: [],
 };
 
 const adminReducer = (state = initialState, action) => {
@@ -612,6 +613,20 @@ const adminReducer = (state = initialState, action) => {
       return {
         ...state,
         updateWorkingDaysCountry: null,
+        admin_ResponseMessage: action.message,
+      };
+
+    case actions.GET_COUNTRY_CITIES_API_SUCCESS:
+      return {
+        ...state,
+        cityList: action.response,
+        admin_ResponseMessage: action.message,
+      };
+
+    case actions.GET_COUNTRY_CITIES_API_FAIL:
+      return {
+        ...state,
+        cityList: [],
         admin_ResponseMessage: action.message,
       };
 

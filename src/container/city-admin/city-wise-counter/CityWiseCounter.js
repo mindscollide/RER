@@ -183,16 +183,33 @@ const CityWiseCounter = () => {
     <>
       <section>
         <Row>
-          <Col lg={12} md={12} sm={12} className="d-flex justify-content-start">
+          <Col lg={6} md={6} sm={6} className="d-flex justify-content-start">
             <span className="shift-heading">
               {t("City-branch-shift-wise-counters")}
-              <span className="shift-sub-heading">
-                {" "}
-                {t("Saudi-arabia-riyadh")}
-              </span>
+            </span>
+          </Col>
+          <Col lg={6} md={6} sm={6} className="d-flex justify-content-end">
+            <span className="shift-sub-heading">
+              {" "}
+              {currentLanguage === "en"
+                ? "(" +
+                  localStorage.getItem("countryName") +
+                  " " +
+                  "-" +
+                  " " +
+                  localStorage.getItem("cityName") +
+                  ")"
+                : "(" +
+                  localStorage.getItem("countryNameArabic") +
+                  " " +
+                  "-" +
+                  " " +
+                  localStorage.getItem("cityNameArabic") +
+                  ")"}
             </span>
           </Col>
         </Row>
+
         <Row className="mt-3">
           <Col lg={12} md={12} sm={12}>
             <Paper className="CityWiseCounter-paper">

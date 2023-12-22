@@ -136,7 +136,7 @@ const CityBranchShiftNew = () => {
       align: "center",
       render: (text, record) => (
         <span>
-          <Switch checked={text} />
+          <Switch checked={text} disabled />
         </span>
       ),
     },

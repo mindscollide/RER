@@ -174,6 +174,11 @@ const getCountryNationalHoliday = {
   RequestMethod: "ServiceManager.GetCountryNationalHoliday",
 };
 
+// Get Country Cities CITY using in drope down of city in employess API
+const getCountryCities = {
+  RequestMethod: "ServiceManager.GetCountryCities",
+};
+
 //for add country National Holiday COUNTRY ADMIN
 const addCountryNationalHoliday = {
   RequestMethod: "ServiceManager.AddCountryNationalHoliday",
@@ -241,5 +246,6 @@ export {
   deleteCountryNationalHoliday,
   getCountryWorkingDays,
   updateCountryWorkingDays,
+  getCountryCities,
   // ===================================COUNTRY ADMIN END ==========================================//
 };

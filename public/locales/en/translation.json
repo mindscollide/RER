@@ -152,6 +152,7 @@
   "Shifts": "Shifts",
   "Holidays": "Holidays",
   "Working-days": "Working Days",
+  "Home-visit-charges-(Riyal)": "Home Visit Charges (Riyal)",
   "Admin_AdminServiceManager_AddCityBranch_01": "Branch Created Successfully",
   "Admin_AdminServiceManager_AddCityBranch_02": "Branch Creation Failed",
   "Admin_AdminServiceManager_UpdateCityBranch_01": "Branch Details Updated",
@@ -221,5 +222,8 @@
   "Wednesday": "Wednesday",
   "Thursday": "Thursday",
   "Friday": "Friday",
-  "Saturday": "Saturday"
+  "Saturday": "Saturday",
+  "Admin_AdminServiceManager_GetCountryCities_01": "City List Found For Country",
+  "Admin_AdminServiceManager_GetCountryCities_02": "No Cities Available for the Country yet",
+  "Admin_AdminServiceManager_GetCountryCities_03": "Country City List not Found"
 }

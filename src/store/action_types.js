@@ -202,6 +202,10 @@ export const UPDATE_COUNTRY_WORKING_DAYS_SUCCESS =
 export const UPDATE_COUNTRY_WORKING_DAYS_FAIL =
   "UPDATE_COUNTRY_WORKING_DAYS_FAIL";
 
+// Get Country Cities CITY using in drope down of city in employess API
+export const GET_COUNTRY_CITIES_API_SUCCESS = "GET_COUNTRY_CITIES_API_SUCCESS";
+export const GET_COUNTRY_CITIES_API_FAIL = "GET_COUNTRY_CITIES_API_FAIL";
+
 // ===================================COUNTRY ADMIN END ==========================================//
 
 //====================================BRANCH WISE APPOINTMENT=====================================//

@@ -31,12 +31,12 @@ import {
 const EmployeeMain = () => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
-  const location = useLocation();
   const navigate = useNavigate();
-  const currentLanguage = localStorage.getItem("i18nextLng");
-  const local = currentLanguage === "en" ? "en-US" : "ar-SA";
+  const location = useLocation();
   const searchParams = new URLSearchParams(location.search);
   const urldBranchID = searchParams.get("branchId");
+  const currentLanguage = localStorage.getItem("i18nextLng");
+  const local = currentLanguage === "en" ? "en-US" : "ar-SA";
   const [isCheckboxSelected, setIsCheckboxSelected] = useState(false);
   const [branchEmployeeOption, setBranchEmployeeOption] = useState(null);
   const [branchEmployeeOptionTwo, setBranchEmployeeOptionTwo] = useState(null);
@@ -72,6 +72,9 @@ const EmployeeMain = () => {
     isHomeVisit: false,
   });
 
+  //delete modal states
+  const [deleteModal, setDeleteModal] = useState(false);
+  
   const callApi = async () => {
     await dispatch(getCityBranchListApi(t, navigate, loadingFlag));
     await dispatch(getCityEmployeeMainApi(t, navigate, loadingFlag));
@@ -216,12 +219,9 @@ const EmployeeMain = () => {
     setEmployeeMainOptionValue(null);
   };
 
-  //delete modal states
-  const [deleteModal, setDeleteModal] = useState(false);
 
   // updating table of city employee Main
   useEffect(() => {
-    console.log(rows);
     if (cityEmployeeMain !== null) {
       setRows(cityEmployeeMain);
     } else {
@@ -247,11 +247,6 @@ const EmployeeMain = () => {
   // open add delete modal on Button Click
   const openDeleteModal = (record) => {
     setEmployeeIDToDelete(record.employeeID);
-    console.log(
-      "employeeIDToDeleteemployeeIDToDelete",
-      record,
-      employeeIDToDelete
-    );
     setDeleteModal(true);
   };
 

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Row, Col } from "react-bootstrap";
 import "./CountryWiseCity.css";
-import { Paper, Table, Button } from "../../../components/elements";
+import { Paper, Table, Button, TextField } from "../../../components/elements";
 import { Switch } from "antd";
 import { useTranslation } from "react-i18next";
 import { useDispatch, useSelector } from "react-redux";
@@ -71,6 +71,32 @@ const CountryWiseCity = () => {
         </span>
       ),
     },
+    {
+      title: <span className="table-text">{t("Home-visit-charges-(Riyal)")}</span>,
+      dataIndex: "homeVisitCharges",
+      key: "homeVisitCharges",
+      width: "200px",
+      align: "center",
+      render: (text, record, rowIndex) => (
+        <>
+          <span className="For-table-textfield">
+            <TextField
+              labelClass="d-none"
+              className="for-inside-table-textfiel"
+              value={text}
+              onChange={(e) => {
+                const inputValue = e.target.value;
+                const numericInput = inputValue.replace(/[^0-9]/g, "");
+                handleTextFieldChangeService(numericInput, rowIndex, 50, 1000);
+              }}
+              type="number"
+              min={50}
+              max={1000}
+            />
+          </span>
+        </>
+      ),
+    },
   ];
 
   // calling branch data api
@@ -117,6 +143,26 @@ const CountryWiseCity = () => {
     } catch {}
   };
 
+  const handleTextFieldChangeService = (value, rowIndex, min, max) => {
+    // Validate the input range
+    const numericValue = Number(value);
+    if (numericValue >= min && numericValue <= max) {
+      setRows((prevServices) => {
+        return rows.map((service, index) => {
+          if (index === rowIndex) {
+            return {
+              ...service,
+              homeVisitCharges: numericValue,
+            };
+          }
+          return service;
+        });
+      });
+      // Handle invalid input (e.g., show an error message)
+      console.error("Invalid input. Please enter a value between 10 and 100.");
+    }
+  };
+  
   const handleRevert = () => {
     try {
       if (cityServiceListData !== null) {

@@ -67,7 +67,7 @@ const CountryCityBranch = () => {
       width: "20%",
       render: (text, record) => (
         <span>
-          <Switch checked={true} />
+          <Switch checked={true} disabled />
         </span>
       ),
     },
@@ -159,7 +159,7 @@ const CountryCityBranch = () => {
                           sm={6}
                           className="d-flex justify-content-end"
                         >
-                          <Switch checked={true} />
+                          <Switch checked={true} disabled />
                         </Col>
                       </Row>
                       <Table
@@ -217,7 +217,7 @@ const CountryCityBranch = () => {
                           sm={6}
                           className="d-flex justify-content-end"
                         >
-                          <Switch checked={true} />
+                          <Switch checked={true} disabled />
                         </Col>
                       </Row>
                       <Table
@@ -275,7 +275,7 @@ const CountryCityBranch = () => {
                           sm={6}
                           className="d-flex justify-content-end"
                         >
-                          <Switch checked={true} />
+                          <Switch checked={true} disabled />
                         </Col>
                       </Row>
                       <Table

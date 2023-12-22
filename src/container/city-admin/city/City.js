@@ -192,7 +192,6 @@ const CityAdmin = () => {
   const handleSaveCityBranchWise = () => {
     try {
       let convertedData = capitalizeKeysInArray(cityBranchRows);
-      console.log("convertedData", convertedData);
       const newArray = convertedData.map((item) => ({
         BranchServiceID: item.BranchServiceID,
         ServiceID: item.BranchService.ServiceID,
