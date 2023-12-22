@@ -13,7 +13,10 @@ import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router";
 import CountryAdminModal from "../../modals/country-delete-modal/CountryAdminModal";
 import { setIsCountryWiseCityComponent } from "../../../store/actions/global_action";
-import { updateCityServiceListApi } from "../../../store/actions/Admin_action";
+import {
+  getCountryCitiesApi,
+  updateCityServiceListApi,
+} from "../../../store/actions/Admin_action";
 import { capitalizeKeysInArray } from "../../../commen/functions/utils.js";
 import { Switch } from "antd";
 import CountryWiseCityComponent from "../country-wise-city-component/CountryWiseCityComponent";
@@ -25,7 +28,10 @@ const CountryAdminMain = () => {
   const currentLanguage = localStorage.getItem("i18nextLng");
   const local = currentLanguage === "en" ? "en-US" : "ar-SA";
   const Loading = useSelector((state) => state.Loader.Loading);
+  const cityList = useSelector((state) => state.admin.cityList);
   const [isCheckboxSelected, setIsCheckboxSelected] = useState(false);
+  // state to open a modal for delete
+  const [countryDeleteModal, setCountryDeleteModal] = useState(false);
   const [rows, setRows] = useState([]);
 
   const cityServiceListData = useSelector(
@@ -39,6 +45,30 @@ const CountryAdminMain = () => {
 
   // to open country wise city state
   const [isCountryWiseCity, setIsCountryWiseCity] = useState(false);
+
+  const callApi = async () => {
+    // 1 pasiing in prop for check that we have to call getCityEmployeeMainApi all api from here on page route from side bar
+    await dispatch(getCountryCitiesApi(t, navigate, Loading, 1));
+  };
+
+  useEffect(() => {
+    callApi();
+    return () => {
+      setRows([]);
+      // setCityOptionListEnglish([]);
+      // setCityOptionListArabic([]);
+      // setCityOptionValue(null);
+    };
+  }, []);
+
+  // updating table of city employee Main
+  useEffect(() => {
+    if (Object.keys(cityList).length > 0) {
+      setRows(cityList?.cities);
+    } else {
+      setRows([]);
+    }
+  }, [cityList]);
 
   // to open country wise city in onClick button
   const openCountryWiseCity = () => {
@@ -64,13 +94,11 @@ const CountryAdminMain = () => {
   };
 
   //to open country Wise Employee onClick button
-  const openCountryWiseEmployee = () => {
+  const openCountryWiseEmployee = (record) => {
     localStorage.setItem("selectedKeys", ["17"]);
-    navigate("/CountryAdmin/Employee");
+    localStorage.setItem("branchID", record);
+    navigate(`/CountryAdmin/Employee?cityID=${record}`);
   };
-
-  // state to open a modal for delete
-  const [countryDeleteModal, setCountryDeleteModal] = useState(false);
 
   // open a delete modal
   const openDeleteModal = () => {
@@ -85,27 +113,6 @@ const CountryAdminMain = () => {
     dispatch(setIsCountryWiseCityComponent(false));
   };
 
-  const dataSource = [
-    {
-      id: <span className="table-inside-text">1</span>,
-      shiftName: <span className="table-inside-text">Riyadh</span>,
-      startTime: <span className="table-inside-text">08:00 AM</span>,
-      endTime: <span className="table-inside-text">04:00 PM</span>,
-    },
-    {
-      id: <span className="table-inside-text">1</span>,
-      shiftName: <span className="table-inside-text">Taif</span>,
-      startTime: <span className="table-inside-text">08:00 AM</span>,
-      endTime: <span className="table-inside-text">04:00 PM</span>,
-    },
-    {
-      id: <span className="table-inside-text">1</span>,
-      shiftName: <span className="table-inside-text">Dammam</span>,
-      startTime: <span className="table-inside-text">08:00 AM</span>,
-      endTime: <span className="table-inside-text">04:00 PM</span>,
-    },
-  ];
-
   const columns = [
     {
       title: <span className="table-text">#</span>,
@@ -119,26 +126,39 @@ const CountryAdminMain = () => {
     },
     {
       title: <span className="table-text">{t("City-name")}</span>,
-      dataIndex: "shiftName",
-      key: "shiftName",
+      dataIndex: "cityNameEnglish",
+      key: "cityNameEnglish",
       align: "left",
+      render: (text, record) => (
+        <span className="table-inside-text">
+          {currentLanguage === "en"
+            ? record.cityNameEnglish
+            : record.cityNameArabic}
+        </span>
+      ),
     },
     {
       title: <span className="table-text">{t("Active")}</span>,
-      dataIndex: "active",
-      key: "active",
+      dataIndex: "isCityActive",
+      key: "isCityActive",
       render: (text, record) => (
         <>
-          <span>
-            <i className="icon-check icon-check-color"></i>
-          </span>
+          {text ? (
+            <span>
+              <i className="icon-check icon-check-color"></i>
+            </span>
+          ) : (
+            <span>
+              <i className="icon-close icon-check-close-color"></i>
+            </span>
+          )}
         </>
       ),
     },
     {
       title: "",
-      dataIndex: "column6",
-      key: "column6",
+      dataIndex: "cityID",
+      key: "cityID",
       align: "center",
       render: (text, record) => (
         <>
@@ -180,7 +200,7 @@ const CountryAdminMain = () => {
             ></i>
             <i
               className="icon-user icon-EDT-DLT-color"
-              onClick={openCountryWiseEmployee}
+              onClick={() => openCountryWiseEmployee(text)}
               title="Employee"
               aria-label="Employee"
             ></i>
@@ -280,7 +300,7 @@ const CountryAdminMain = () => {
                   <Row className="mt-3">
                     <Col lg={12} md={12} sm={12}>
                       <Table
-                        rows={dataSource}
+                        rows={rows}
                         column={columns}
                         pagination={false}
                       />
