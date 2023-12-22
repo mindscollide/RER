@@ -3943,7 +3943,7 @@ const getCountryCitiesApi = (t, navigate, loadingFlag, apiCallFlag, cityID) => {
                 );
               } else if (apiCallFlag === 3) {
                 await dispatch(
-                  getCityEmployeeMainApi(t, navigate, loadingFlag, 3)
+                  getCityEmployeeMainApi(t, navigate, loadingFlag, cityID)
                 );
               } else if (apiCallFlag === 1) {
                 await dispatch(loader_Actions(false));
