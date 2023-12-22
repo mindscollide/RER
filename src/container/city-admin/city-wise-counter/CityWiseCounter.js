@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Row, Col } from "react-bootstrap";
 import "./CityWiseCounter.css";
 import { Paper, Button, Table } from "../../../components/elements";
+import { Collapse } from "antd";
 import Select from "react-select";
 import { useTranslation } from "react-i18next";
 import { useDispatch, useSelector } from "react-redux";
@@ -21,6 +22,8 @@ const CityWiseCounter = () => {
   const location = useLocation();
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const currentLanguage = localStorage.getItem("i18nextLng");
+  const { Panel } = Collapse;
   const searchParams = new URLSearchParams(location.search);
   const urldBranchID = searchParams.get("branchId");
   const loadingFlag = useSelector((state) => state.Loader.Loading);
@@ -32,12 +35,12 @@ const CityWiseCounter = () => {
     (state) => state.admin.cityBranchListData
   );
 
-  const currentLanguage = localStorage.getItem("i18nextLng");
-
   // row state for city shift counter Api
   const [cityCounterRow, setCityCounterRow] = useState([]);
-  // state for shift heading
-  const [selectedBranchShift, setSelectedBranchShift] = useState(null);
+  const [bscModelState, setBscModelState] = useState([]);
+
+  //toggle State
+  const [isPanelOpen, setIsPanelOpen] = useState(false);
 
   // states for city wise counter in dropdown
   const [cityWiseCounter, setCityWiseCounter] = useState([]);
@@ -75,12 +78,13 @@ const CityWiseCounter = () => {
   useEffect(() => {
     if (getBranchShiftWiseCounter !== null) {
       setCityCounterRow(getBranchShiftWiseCounter);
-      setSelectedBranchShift(
-        getBranchShiftWiseCounter[0]?.bscModel[0]?.branchShift
-      );
+      const extractedBscsModel = getBranchShiftWiseCounter
+        .map((bscData) => bscData.bscsModel)
+        .flat();
+      setBscModelState(extractedBscsModel);
     } else {
       setCityCounterRow([]);
-      setSelectedBranchShift(null);
+      setBscModelState([]);
     }
   }, [getBranchShiftWiseCounter]);
 
@@ -143,39 +147,45 @@ const CityWiseCounter = () => {
       getBranchShiftCounterMainApi(t, navigate, loadingFlag, newData)
     );
   };
+
+  const togglePanel = () => {
+    setIsPanelOpen(!isPanelOpen);
+  };
+
   const columns = [
     {
-      title: (
-        <span className="table-inside-header-text-new">
-          {t("Counter-name")}
-        </span>
-      ),
-      dataIndex: "bscsModel",
-      key: "counterName",
-      width: "400px",
-      render: (text, record) => (
-        <span className="table-inside-text">
-          {currentLanguage === "en"
-            ? record.branchCounterModel.counterNameEnglish
-            : record.branchCounterModel.counterNameArabic}
-        </span>
-      ),
+      title: <span className="table-text">{t("Counter-services")}</span>,
+      dataIndex: "counterNameEnglish",
+      key: "counterNameEnglish",
+      width: "50%",
+      render: (text, record) => {
+        return (
+          <>
+            <span>
+              {currentLanguage === "en"
+                ? record.branchCounterModel.counterNameEnglish
+                : record.branchCounterModel.counterNameArabic}
+            </span>
+          </>
+        );
+      },
     },
     {
-      title: (
-        <span className="table-inside-header-text-new">{t("Service")}</span>
-      ),
-      dataIndex: "bscsModel",
-      key: "serviceName",
-      width: "200px",
-      align: "center",
-      render: (text, record) => (
-        <span className="table-inside-text">
-          {currentLanguage === "en"
-            ? record.shiftService.serviceNameEnglish
-            : record.shiftService.serviceNameArabic}
-        </span>
-      ),
+      title: <span className="table-text">{t("Services")}</span>,
+      dataIndex: "serviceNameEnglish",
+      key: "serviceNameEnglish",
+      width: "50%",
+      render: (text, record) => {
+        return (
+          <>
+            <span>
+              {currentLanguage === "en"
+                ? record.shiftService.serviceNameEnglish
+                : record.shiftService.serviceNameArabic}
+            </span>
+          </>
+        );
+      },
     },
   ];
 
@@ -252,34 +262,62 @@ const CityWiseCounter = () => {
                   />
                 </Col>
               </Row>
-              <Row></Row>
+              {cityCounterRow.length > 0
+                ? cityCounterRow.map((data, index) => {
+                    return (
+                      <>
+                        <Row className="mt-3">
+                          <Col lg={12} md={12} sm={12}>
+                            <Collapse
+                              bordered={false}
+                              className="collapse-disable-bg"
+                              expandIcon={false}
+                              defaultActiveKey={["1"]}
+                            >
+                              <Panel
+                                header={
+                                  <div
+                                    className={`collapse-bg-color ${
+                                      isPanelOpen ? "open" : ""
+                                    }`}
+                                    onClick={togglePanel}
+                                  >
+                                    <span className="toggle-tiles">
+                                      {currentLanguage === "en"
+                                        ? data.branchShift.shiftNameEnglish
+                                        : data.branchShift.shiftNameArabic}
+                                    </span>
 
-              <Row className="mt-3">
-                <Col
-                  lg={12}
-                  md={12}
-                  sm={12}
-                  className="CitywiseCounter-div-row"
-                >
-                  <span>
-                    {selectedBranchShift
-                      ? selectedBranchShift.shiftNameEnglish
-                      : ""}
-                  </span>
-                </Col>
-              </Row>
-
-              <Row>
-                <Col lg={12} md={12} sm={12}>
-                  <Table
-                    pagination={false}
-                    column={columns}
-                    rows={cityCounterRow}
-                    className="div-table-counter"
-                    // scroll={{ x: 500, y: 500 }}
-                  />
-                </Col>
-              </Row>
+                                    {isPanelOpen ? (
+                                      <i
+                                        className={
+                                          "icon-arrow-up icon-size-of-collapse"
+                                        }
+                                      ></i>
+                                    ) : (
+                                      <i
+                                        className={
+                                          "icon-arrow-down icon-size-of-collapse"
+                                        }
+                                      ></i>
+                                    )}
+                                  </div>
+                                }
+                                key="1"
+                              >
+                                <Table
+                                  column={columns}
+                                  rows={bscModelState}
+                                  pagination={false}
+                                />
+                              </Panel>
+                            </Collapse>
+                          </Col>
+                        </Row>
+                      </>
+                    );
+                  })
+                : null}
             </Paper>
           </Col>
         </Row>

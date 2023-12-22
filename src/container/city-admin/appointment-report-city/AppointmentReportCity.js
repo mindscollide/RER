@@ -15,7 +15,7 @@ import {
 import {
   getAllCountersOfBranch,
   getAllShiftsOfBranch,
-  getAppointmentReportBranchAPI,
+  getAppointmentReportCityAPI,
   getCityBranchListApi,
   getCityServiceListApi,
 } from "../../../store/actions/Admin_action";
@@ -321,7 +321,7 @@ const AppointmentReportCity = () => {
       Length: 50,
     };
     console.log(data, "getAppointmentReportBranchAPI");
-    dispatch(getAppointmentReportBranchAPI(data, t, navigate, Loading));
+    dispatch(getAppointmentReportCityAPI(data, t, navigate, Loading));
   };
 
   const handleResetAppointment = () => {

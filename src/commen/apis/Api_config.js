@@ -194,6 +194,12 @@ const getCountryWorkingDays = {
   RequestMethod: "ServiceManager.GetCountryWorkingDays",
 };
 
+//GET APPOINTMENT CITY BRANCH
+
+const getAppointmentCityReport = {
+  RequestMethod: "ServiceManager.GetAppointmentReportCityAdmin",
+};
+
 //For update Country Admin Working Days Api COUNTRY ADMIN
 const updateCountryWorkingDays = {
   RequestMethod: "ServiceManager.UpdateCountryWorkingDays",
@@ -238,6 +244,7 @@ export {
   addNewEmployeeCity,
   updateExistingEmployeeCity,
   deleteExistingEmployeeCity,
+  getAppointmentCityReport,
   // ===================================CITY ADMIN END ==========================================//
 
   // ===================================COUNTRY ADMIN START ==========================================//

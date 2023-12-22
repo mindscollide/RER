@@ -4,6 +4,8 @@
   width: 100% !important;
   overflow: hidden !important;
   background-color: #ffffff !important;
+  height: auto !important;
+  min-height: 40vh !important;
 }
 
 .CityWiseCounter-col {

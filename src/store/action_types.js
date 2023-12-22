@@ -174,6 +174,9 @@ export const DELETE_EXISTING_EMPLOYEE_CITY_SUCCESS =
 export const DELETE_EXISTING_EMPLOYEE_CITY_FAIL =
   "DELETE_EXISTING_EMPLOYEE_CITY_FAIL";
 
+export const GET_CITY_APPOINTMENT_SUCCESS = "GET_CITY_APPOINTMENT_SUCCESS";
+export const GET_CITY_APPOINTMENT_FAIL = "GET_CITY_APPOINTMENT_FAIL";
+
 // ===================================CITY ADMIN END ==========================================//
 
 // ===================================COUNTRY ADMIN START ==========================================//
