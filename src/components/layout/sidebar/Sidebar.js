@@ -8,6 +8,9 @@ import { generateMenuItems, getItem } from "../../../commen/functions/utils.js";
 import {
   setIsCityWiseBranchService,
   setIsCountryCityWiseCounter,
+  setIsCountryServiceScreenComponent,
+  setIsCountryWiseCityComponent,
+  setIsServiceCountryScreenComponent,
 } from "../../../store/actions/global_action";
 import {
   getCityBranchServiceFail,
@@ -71,6 +74,7 @@ const Sidebar = () => {
     } else if (e.key === "11") {
       navigate("CountryMain");
     } else if (e.key === "12") {
+      dispatch(setIsCountryWiseCityComponent(false));
       navigate("City");
     } else if (e.key === "13") {
       navigate("Services");
@@ -89,8 +93,10 @@ const Sidebar = () => {
     } else if (e.key === "20") {
       navigate("Services");
     } else if (e.key === "21") {
+      dispatch(setIsCountryServiceScreenComponent(false));
       navigate("Services");
     } else if (e.key === "22") {
+      dispatch(setIsServiceCountryScreenComponent(false));
       navigate("Country");
     } else if (e.key === "23") {
       navigate("City");

@@ -92,6 +92,12 @@ const addBranchCounter = {
   RequestMethod: "ServiceManager.AddBranchCounter",
 };
 
+//GET APPOINTMENT REPORT BRANCH
+
+const getAppointmentBranchReport = {
+  RequestMethod: "ServiceManager.GetAppointmentReportBranchAdmin",
+};
+
 // ===================================CITY ADMIN==========================================//
 
 // for all Shifts Of Branch list and drope down
@@ -178,11 +184,17 @@ const deleteCountryNationalHoliday = {
   RequestMethod: "ServiceManager.DeleteCountryNationalHoliday",
 };
 
-//GET APPOINTMENT REPORT BRANCH
-
-const getAppointmentBranchReport = {
-  RequestMethod: "ServiceManager.GetAppointmentReportBranchAdmin",
+//For get Country Admin Working Days Api COUNTRY ADMIN
+const getCountryWorkingDays = {
+  RequestMethod: "ServiceManager.GetCountryWorkingDays",
 };
+
+//For update Country Admin Working Days Api COUNTRY ADMIN
+const updateCountryWorkingDays = {
+  RequestMethod: "ServiceManager.UpdateCountryWorkingDays",
+};
+
+// ===================================COUNTRY ADMIN END ==========================================//
 
 export {
   logIn,
@@ -205,6 +217,8 @@ export {
   updateBranchShift,
   deleteBranchShift,
   addBranchCounter,
+  getAppointmentBranchReport,
+
   // ===================================CITY ADMIN==========================================//
   getCityBranchList,
   addCityBranch,
@@ -225,6 +239,7 @@ export {
   getCountryNationalHoliday,
   addCountryNationalHoliday,
   deleteCountryNationalHoliday,
+  getCountryWorkingDays,
+  updateCountryWorkingDays,
   // ===================================COUNTRY ADMIN END ==========================================//
-  getAppointmentBranchReport,
 };

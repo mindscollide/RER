@@ -73,6 +73,19 @@ const BranchRoaster = () => {
   const [optionsServices, setOptionsServices] = useState([]);
   const [selectedOptionServices, setSelectedOptionServices] = useState(null);
 
+  // It will show by default first selected value in dropdown
+  useEffect(() => {
+    if (
+      optionsShift.length > 0 &&
+      optionsCounter.length > 0 &&
+      optionsServices.length > 0
+    ) {
+      setSelectedOptionShift(optionsShift[0]);
+      setSelectedOptionCounter(optionsCounter[0]);
+      setSelectedOptionServices(optionsServices[0]);
+    }
+  }, [optionsShift, optionsCounter, optionsServices]);
+
   //Delete Roaster Record Data
   const [deleteRoasterRecordData, setDeleteRoasterRecordData] = useState(null);
 

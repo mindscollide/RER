@@ -39,26 +39,31 @@ const CountryMain = () => {
 
   //open city screen page in Country Main
   const openClickCityScreenInCountryMain = () => {
+    localStorage.setItem("selectedKeys", ["23"]);
     navigate("/GlobalAdmin/City");
   };
 
   //open branch screen page in Country Main
   const openClickBranchScreenInCountryMain = () => {
+    localStorage.setItem("selectedKeys", ["24"]);
     navigate("/GlobalAdmin/Branch");
   };
 
   //open Counters updated page in Country Main
   const openClickCountersScreenInCountryMain = () => {
+    localStorage.setItem("selectedKeys", ["27"]);
     navigate("/GlobalAdmin/Counters");
   };
 
   //open shifts page in Country Main
   const openClickshiftsScreenInCountryMain = () => {
+    localStorage.setItem("selectedKeys", ["26"]);
     navigate("/GlobalAdmin/Shifts");
   };
 
   //open Employee page in Country Main
   const openClickEmployeeScreenInCountryMain = () => {
+    localStorage.setItem("selectedKeys", ["25"]);
     navigate("/GlobalAdmin/Employee");
   };
 

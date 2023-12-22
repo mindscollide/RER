@@ -191,6 +191,17 @@ export const DELETE_NATIONAL_HOLIDAY_SUCCESS =
   "DELETE_NATIONAL_HOLIDAY_SUCCESS";
 export const DELETE_NATIONAL_HOLIDAY_FAIL = "DELETE_NATIONAL_HOLIDAY_FAIL";
 
+// For Get Working Days in Country Admin on Working days page action types for country admin
+export const GET_COUNTRY_WORKING_DAYS_SUCCESS =
+  "GET_COUNTRY_WORKING_DAYS_SUCCESS";
+export const GET_COUNTRY_WORKING_DAYS_FAIL = "GET_COUNTRY_WORKING_DAYS_FAIL";
+
+// For Update Working Days in Country Admin on Working days page action types for country admin
+export const UPDATE_COUNTRY_WORKING_DAYS_SUCCESS =
+  "UPDATE_COUNTRY_WORKING_DAYS_SUCCESS";
+export const UPDATE_COUNTRY_WORKING_DAYS_FAIL =
+  "UPDATE_COUNTRY_WORKING_DAYS_FAIL";
+
 // ===================================COUNTRY ADMIN END ==========================================//
 
 //====================================BRANCH WISE APPOINTMENT=====================================//

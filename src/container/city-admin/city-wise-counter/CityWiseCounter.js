@@ -50,7 +50,9 @@ const CityWiseCounter = () => {
     let newData = {
       RoasterDate: getCurrentDateUTC(roasterDate),
       BranchID:
-        urldBranchID !== null && urldBranchID !== undefined ? Number(urldBranchID) : 0,
+        urldBranchID !== null && urldBranchID !== undefined
+          ? Number(urldBranchID)
+          : 0,
     };
     await dispatch(
       getBranchShiftCounterMainApi(t, navigate, loadingFlag, newData)
@@ -106,6 +108,13 @@ const CityWiseCounter = () => {
       }
     }
   }, [cityShiftsBranchDropdown, currentLanguage]);
+
+  // It will show by default first selected value in dropdown
+  useEffect(() => {
+    if (cityWiseCounter.length > 0) {
+      setCityWiseCounterValue(cityWiseCounter[0]);
+    }
+  }, [cityWiseCounter]);
 
   // onchange handler for branch dropdown
   const onChangeBranchHandler = (cityWiseCounterValue) => {
