@@ -209,6 +209,18 @@ export const UPDATE_COUNTRY_WORKING_DAYS_FAIL =
 export const GET_COUNTRY_CITIES_API_SUCCESS = "GET_COUNTRY_CITIES_API_SUCCESS";
 export const GET_COUNTRY_CITIES_API_FAIL = "GET_COUNTRY_CITIES_API_FAIL";
 
+//For add Country city in country admin main page
+export const ADD_COUNTRY_ADMIN_SUCCESS = "ADD_COUNTRY_ADMIN_SUCCESS";
+export const ADD_COUNTRY_ADMIN_FAIL = "ADD_COUNTRY_ADMIN_FAIL";
+
+//For update Country city in country admin main page
+export const UPDATE_COUNTRY_ADMIN_SUCCESS = "UPDATE_COUNTRY_ADMIN_SUCCESS";
+export const UPDATE_COUNTRY_ADMIN_FAIL = "UPDATE_COUNTRY_ADMIN_FAIL";
+
+// for delete country city in country admin main page
+export const DELETE_COUNTRY_ADMIN_SUCCESS = "DELETE_COUNTRY_ADMIN_SUCCESS";
+export const DELETE_COUNTRY_ADMIN_FAIL = "DELETE_COUNTRY_ADMIN_FAIL";
+
 // ===================================COUNTRY ADMIN END ==========================================//
 
 //====================================BRANCH WISE APPOINTMENT=====================================//

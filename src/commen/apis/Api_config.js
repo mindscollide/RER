@@ -205,6 +205,21 @@ const updateCountryWorkingDays = {
   RequestMethod: "ServiceManager.UpdateCountryWorkingDays",
 };
 
+//For add Country city in country admin main page
+const addCountryCity = {
+  RequestMethod: "ServiceManager.AddCountryCity",
+};
+
+//For update Country city in country admin main page
+const updateCountryCity = {
+  RequestMethod: "ServiceManager.UpdateCountryCity",
+};
+
+//For delete country City in country admin main page
+const deleteCountryCity = {
+  RequestMethod: "ServiceManager.DeleteCountryCity",
+};
+
 // ===================================COUNTRY ADMIN END ==========================================//
 
 export {
@@ -254,5 +269,8 @@ export {
   getCountryWorkingDays,
   updateCountryWorkingDays,
   getCountryCities,
+  addCountryCity,
+  updateCountryCity,
+  deleteCountryCity,
   // ===================================COUNTRY ADMIN END ==========================================//
 };

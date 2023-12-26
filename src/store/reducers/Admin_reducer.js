@@ -41,6 +41,9 @@ const initialState = {
   updateWorkingDaysCountry: null,
   cityList: [],
   getAppointmentCityReportData: null,
+  countryAdminMainData: null,
+  updateCountryAdmin: null,
+  deleteCountryAdmin: null,
 };
 
 const adminReducer = (state = initialState, action) => {
@@ -643,6 +646,51 @@ const adminReducer = (state = initialState, action) => {
       return {
         ...state,
         cityList: [],
+        admin_ResponseMessage: action.message,
+      };
+
+    // add country National Holiday in Country admin
+    case actions.ADD_COUNTRY_ADMIN_SUCCESS:
+      return {
+        ...state,
+        countryAdminMainData: action.response,
+        admin_ResponseMessage: action.message,
+      };
+
+    case actions.ADD_COUNTRY_ADMIN_FAIL:
+      return {
+        ...state,
+        countryAdminMainData: null,
+        admin_ResponseMessage: action.message,
+      };
+
+    // update country National Holiday in Country admin
+    case actions.UPDATE_COUNTRY_ADMIN_SUCCESS:
+      return {
+        ...state,
+        updateCountryAdmin: action.response,
+        admin_ResponseMessage: action.message,
+      };
+
+    case actions.UPDATE_COUNTRY_ADMIN_FAIL:
+      return {
+        ...state,
+        updateCountryAdmin: null,
+        admin_ResponseMessage: action.message,
+      };
+
+    // delete country National Holiday in Country admin
+    case actions.DELETE_COUNTRY_ADMIN_SUCCESS:
+      return {
+        ...state,
+        deleteCountryAdmin: action.response,
+        admin_ResponseMessage: action.message,
+      };
+
+    case actions.DELETE_COUNTRY_ADMIN_FAIL:
+      return {
+        ...state,
+        deleteCountryAdmin: null,
         admin_ResponseMessage: action.message,
       };
 

@@ -229,5 +229,17 @@
   "Saturday": "Saturday",
   "Admin_AdminServiceManager_GetCountryCities_01": "City List Found For Country",
   "Admin_AdminServiceManager_GetCountryCities_02": "No Cities Available for the Country yet",
-  "Admin_AdminServiceManager_GetCountryCities_03": "Country City List not Found"
+  "Admin_AdminServiceManager_GetCountryCities_03": "Country City List not Found",
+  "Admin_AdminServiceManager_AddCountryCity_01": "City Successfully Added for the Country",
+  "Admin_AdminServiceManager_AddCountryCity_02": "City Not Added for the Country",
+  "Admin_AdminServiceManager_UpdateCountryCity_01": "City Updated Successfully for the Country",
+  "Admin_AdminServiceManager_UpdateCountryCity_02": "City Not Updated for the Country",
+  "Admin_AdminServiceManager_UpdateCountryCity_03": "City with given details not available",
+  "Admin_AdminServiceManager_UpdateCountryCity_04": "No Cities available for the Country",
+  "Admin_AdminServiceManager_DeleteCountryCity_01": "City Deleted Successfully",
+  "Admin_AdminServiceManager_DeleteCountryCity_03": "City List Not Found",
+  "Service-slot": "Service Slot",
+  "Advance-roaster": "Advance Roaster",
+  "Prebooking-margin": "Prebooking Margin",
+  "Visit-charges": "Visit Charges"
 }
