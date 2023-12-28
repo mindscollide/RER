@@ -4051,10 +4051,6 @@ const getCountryCitiesApi = (t, navigate, loadingFlag, apiCallFlag, cityID) => {
                 await dispatch(
                   getCityEmployeeMainApi(t, navigate, loadingFlag, cityID)
                 );
-              } else if (apiCallFlag === 4) {
-                await dispatch(
-                  getCityEmployeeMainApi(t, navigate, loadingFlag, cityID)
-                );
               } else if (apiCallFlag === 1) {
                 await dispatch(loader_Actions(false));
               }

@@ -56,7 +56,7 @@ const CountryWiseEmployee = () => {
 
   useEffect(() => {
     // Update cityShiftOption with the correct structure based on your data
-    if (Object.keys(cityList).length > 0) {
+    if (cityList && Object.keys(cityList).length > 0) {
       setCityOptionListEnglish(
         cityList.cities.map((item) => ({
           value: item.cityID,

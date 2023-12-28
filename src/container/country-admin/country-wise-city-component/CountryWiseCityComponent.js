@@ -84,11 +84,27 @@ const CountryWiseCityComponent = ({
               </Row>
               <Row className="mt-2">
                 <Col lg={12} md={12} sm={12}>
-                  <Table
-                    rows={rows}
-                    column={columnsCityWise}
-                    pagination={false}
-                  />
+                  <div className="top-background-color">
+                    <Row>
+                      <Col lg={6} md={6} sm={6} />
+                      <Col
+                        lg={6}
+                        md={6}
+                        sm={6}
+                        className="d-flex justify-content-center"
+                      >
+                        <span className="table-above-header-text">
+                          {t("Home-visit-settings")}
+                        </span>
+                      </Col>
+                    </Row>
+                    <Table
+                      rows={rows}
+                      column={columnsCityWise}
+                      pagination={false}
+                      className="specific-header"
+                    />
+                  </div>
                 </Col>
               </Row>
             </Paper>

@@ -28,7 +28,7 @@ const CountryCityBranch = () => {
   const getAllBranchServiceData = useSelector(
     (state) => state.admin.getAllBranchServiceData
   );
-  console.log(getAllBranchServiceData, "getAllBranchServiceData");
+  console.log(cityList, "getAllBranchServiceData");
 
   const [branchNameArabic, setBranchNameArabic] = useState("");
   const [branchNameEnglish, setBranchNameEnglish] = useState("");
@@ -43,10 +43,7 @@ const CountryCityBranch = () => {
   const callApi = async () => {
     if (cityID !== null && cityID !== undefined && cityID !== 0) {
       // 2 pasiing in prop for check that we have to call getCityEmployeeMainApi all api from here on page route from side bar
-      await dispatch(getCountryCitiesApi(t, navigate, loadingFlag, 4, cityID));
-    } else {
-      // 2 pasiing in prop for check that we have to call getCityEmployeeMainApi all api from here on page route from side bar
-      await dispatch(getCountryCitiesApi(t, navigate, loadingFlag, 2));
+      await dispatch(getCountryCitiesApi(t, navigate, loadingFlag, cityID));
     }
   };
 
@@ -62,7 +59,7 @@ const CountryCityBranch = () => {
 
   console.log(cityID, "cityIDcityID");
 
-  const [isPanelOpen, setIsPanelOpen] = useState(false);
+  const [panelOpenStates, setPanelOpenStates] = useState([]);
 
   // states for rows in table
   const [rows, setRows] = useState([]);
@@ -80,7 +77,7 @@ const CountryCityBranch = () => {
   // to show cities in city dropdown;
   useEffect(() => {
     // Update cityShiftOption with the correct structure based on your data
-    if (Object.keys(cityList).length > 0) {
+    if (cityList && Object.keys(cityList).length > 0) {
       setCityOptionListEnglish(
         cityList.cities.map((item) => ({
           value: item.cityID,
@@ -179,53 +176,69 @@ const CountryCityBranch = () => {
     }
   }, [getAllBranchServiceData]);
 
+  useEffect(() => {
+    // Initialize the open/close state for each panel based on the data
+    if (getAllBranchServiceData) {
+      setPanelOpenStates(
+        getAllBranchServiceData.map((_, index) => index === 0)
+      );
+    }
+  }, [getAllBranchServiceData]);
+
   //onChange handler of cities dropdown
   const onChangeCityHandler = (cityShiftOptionValue) => {
     setCityOptionValue(cityShiftOptionValue);
   };
 
-  const togglePanel = () => {
-    setIsPanelOpen(!isPanelOpen);
+  const togglePanel = (index) => {
+    // Toggle the open/close state of the clicked panel
+    setPanelOpenStates((prevStates) =>
+      prevStates.map((state, i) => (i === index ? !state : state))
+    );
   };
 
   const columns = [
     {
       title: <span className="table-text">{t("Services")}</span>,
-      dataIndex: "branchServiceModelList",
-      key: "branchServiceModelList",
+      dataIndex: "serviceNameEnglish",
+      key: "serviceNameEnglish",
       width: "80%",
       render: (text, record) => (
         <span className="table-inside-text">
-          {record.branchServiceModelList &&
-          record.branchServiceModelList.length > 0
-            ? record.branchServiceModelList.map((service) => (
-                <div key={service.branchServiceID}>
-                  {service.branchService &&
-                    (currentLanguage === "en"
-                      ? service.branchService.serviceNameEnglish
-                      : service.branchService.serviceNameArabic)}
-                </div>
-              ))
-            : null}
+          <span>
+            {currentLanguage === "en"
+              ? record.branchService.serviceNameEnglish
+              : record.branchService.serviceNameArabic}
+          </span>
         </span>
       ),
     },
     {
       title: <span className="table-text">{t("Branch-availability")}</span>,
-      dataIndex: "branchServiceModelList",
-      key: "branchServiceModelList",
+      dataIndex: "isServiceAvailableAtBranch",
+      key: "isServiceAvailableAtBranch",
       width: "20%",
       render: (text, record) => (
         <span>
-          <Switch
-            checked={record.branchServiceModelList.some(
-              (service) => service.isServiceAvailableAtBranch
-            )}
-          />
+          <Switch checked={record.isServiceAvailableAtBranch} disabled />
         </span>
       ),
     },
   ];
+
+  const handleSearch = async () => {
+    if (cityOptionValue != null) {
+      let newData = {
+        CityID: cityID,
+        CountryID: Number(cityOptionValue.value),
+      };
+      await dispatch(
+        getAllBranchServiceMainApi(t, navigate, loadingFlag, newData)
+      );
+    } else {
+      // add snackbar fun here
+    }
+  };
 
   return (
     <>
@@ -266,6 +279,7 @@ const CountryCityBranch = () => {
                   <Button
                     icon={<i className="icon-search city-icon-space"></i>}
                     text={t("Search")}
+                    onClick={handleSearch}
                     className="Search-Icon-Btn"
                   />
                 </Col>
@@ -277,56 +291,78 @@ const CountryCityBranch = () => {
                   <Collapse
                     bordered={false}
                     className="collapse-disable-bg"
-                    expandIcon={false}
-                    defaultActiveKey={["1"]}
+                    expandIcon={() => null}
+                    defaultActiveKey={[0]}
+                    activeKey={panelOpenStates.map((state, index) =>
+                      state ? index.toString() : null
+                    )}
                   >
-                    <Panel
-                      header={
-                        <div
-                          className={`collapse-bg-color ${
-                            isPanelOpen ? "open" : ""
-                          }`}
-                          onClick={togglePanel}
-                        >
-                          <span className="toggle-tiles">
-                            {" "}
-                            {currentLanguage === "en"
-                              ? branchNameEnglish
-                              : branchNameArabic}
-                          </span>
-
-                          {isPanelOpen ? (
-                            <i
-                              className={"icon-arrow-up icon-size-of-collapse"}
-                            ></i>
-                          ) : (
-                            <i
-                              className={
-                                "icon-arrow-down icon-size-of-collapse"
-                              }
-                            ></i>
+                    {getAllBranchServiceData !== null &&
+                      getAllBranchServiceData.map((data, index) => (
+                        <>
+                          {console.log(
+                            data,
+                            "cityBranchServiceListcityBranchServiceList"
                           )}
-                        </div>
-                      }
-                      key="1"
-                    >
-                      <Row className="mb-3">
-                        <Col lg={6} md={6} sm={6}>
-                          <span className="toggle-insidetile-available">
-                            {t("Available")}
-                          </span>
-                        </Col>
-                        <Col
-                          lg={6}
-                          md={6}
-                          sm={6}
-                          className="d-flex justify-content-end"
-                        >
-                          <Switch checked={isBranchActive} disabled />
-                        </Col>
-                      </Row>
-                      <Table column={columns} rows={rows} pagination={false} />
-                    </Panel>
+                          <Panel
+                            key={index.toString()}
+                            header={
+                              <div
+                                className={`collapse-bg-color ${
+                                  panelOpenStates[index] ? "open" : ""
+                                }`}
+                                onClick={() => togglePanel(index)}
+                              >
+                                <span className="toggle-tiles">
+                                  {" "}
+                                  {currentLanguage === "en"
+                                    ? data.cityBranchModel.branchNameEnglish
+                                    : data.cityBranchModel.branchNameArabic}
+                                </span>
+
+                                {panelOpenStates[index] ? (
+                                  <i
+                                    className={
+                                      "icon-arrow-up icon-size-of-collapse"
+                                    }
+                                  ></i>
+                                ) : (
+                                  <i
+                                    className={
+                                      "icon-arrow-down icon-size-of-collapse"
+                                    }
+                                  ></i>
+                                )}
+                              </div>
+                            }
+                          >
+                            <Row className="mb-3">
+                              <Col lg={6} md={6} sm={6}>
+                                <span className="toggle-insidetile-available">
+                                  {t("Available")}
+                                </span>
+                              </Col>
+                              <Col
+                                lg={6}
+                                md={6}
+                                sm={6}
+                                className="d-flex justify-content-end"
+                              >
+                                <Switch
+                                  checked={data.cityBranchModel.isBranchActive}
+                                  disabled
+                                />
+                              </Col>
+                            </Row>
+                            <Table
+                              column={columns}
+                              rows={data.branchServiceModelList}
+                              // rows={rows}
+                              pagination={false}
+                            />
+                          </Panel>
+                        </>
+                      ))}
                   </Collapse>
                 </Col>
               </Row>

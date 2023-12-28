@@ -48,66 +48,66 @@ body {
   color: #45494d !important;
   font-family: "Montserrat", sans-serif !important;
   font-size: 14px !important;
-  font-weight: 500!important;
-  overflow-x: hidden!important;
-  height: 100%!important;
+  font-weight: 500 !important;
+  overflow-x: hidden !important;
+  height: 100% !important;
 }
 
 body::-webkit-scrollbar {
-  width: 0.5rem!important;
-  height: 0.5rem!important;
-  border-radius: 20px!important;
-  background-color: #ffffff!important;
+  width: 0.5rem !important;
+  height: 0.5rem !important;
+  border-radius: 20px !important;
+  background-color: #ffffff !important;
 }
 
 body::-webkit-scrollbar-thumb {
-  border-radius: 20px!important;
-  background: #cecece!important;
-  margin-left: -15px!important;
+  border-radius: 20px !important;
+  background: #cecece !important;
+  margin-left: -15px !important;
 }
 
 /* for headings and Sub Heading Start */
 
 .shift-heading {
-  font-size: 18px!important;
-  color: #004990!important;
-  font-family: "Montserrat", sans-serif!important;
-  font-weight: 600!important;
+  font-size: 18px !important;
+  color: #004990 !important;
+  font-family: "Montserrat", sans-serif !important;
+  font-weight: 600 !important;
 }
 
 body[dir="rtl"] .shift-heading {
-  font-size: 18px!important;
-  color: #004990!important;
+  font-size: 18px !important;
+  color: #004990 !important;
   font-family: "NeoSansArabic" !important;
-  font-weight: 600!important;
+  font-weight: 600 !important;
 }
 
 .shift-sub-heading {
-  font-size: 18px!important;
+  font-size: 18px !important;
   color: #1ab4d0 !important;
-  font-family: "Montserrat", sans-serif!important;
-  font-weight: 600!important;
+  font-family: "Montserrat", sans-serif !important;
+  font-weight: 600 !important;
 }
 
 body[dir="rtl"] .shift-sub-heading {
-  font-size: 18px!important;
-  color: #1ab4d0!important;
+  font-size: 18px !important;
+  color: #1ab4d0 !important;
   font-family: "NeoSansArabic" !important;
-  font-weight: 600!important;
+  font-weight: 600 !important;
 }
 
 .shift-sub-heading-right {
-  font-size: 18px!important;
-  font-family: "Montserrat", sans-serif!important;
+  font-size: 18px !important;
+  font-family: "Montserrat", sans-serif !important;
   color: #87b939 !important;
-  font-weight: 600!important;
+  font-weight: 600 !important;
 }
 
 body[dir="rtl"] .shift-sub-heading-right {
-  font-size: 18px!important;
+  font-size: 18px !important;
   font-family: "NeoSansArabic" !important;
   color: #87b939 !important;
-  font-weight: 600!important;
+  font-weight: 600 !important;
 }
 
 /* for headings and Sub Heading End */
@@ -115,15 +115,15 @@ body[dir="rtl"] .shift-sub-heading-right {
 /* For text fields labels start*/
 
 .text-labels {
-  font-size: 11px!important;
-  font-weight: 700!important;
-  font-family: "Montserrat", sans-serif!important;
+  font-size: 11px !important;
+  font-weight: 700 !important;
+  font-family: "Montserrat", sans-serif !important;
   color: #45494d !important;
 }
 
 body[dir="rtl"] .text-labels {
-  font-size: 11px!important;
-  font-weight: 700!important;
+  font-size: 11px !important;
+  font-weight: 700 !important;
   font-family: "NeoSansArabic" !important;
   color: #45494d !important;
 }
@@ -133,41 +133,41 @@ body[dir="rtl"] .text-labels {
 /* For checkbox labels start */
 
 .checkbox-label {
-  margin-left: 10px!important;
+  margin-left: 10px !important;
   color: #45494d !important;
-  font-family: "Montserrat", sans-serif!important;
-  font-weight: 500!important;
+  font-family: "Montserrat", sans-serif !important;
+  font-weight: 500 !important;
 }
 
 body[dir="rtl"] .checkbox-label {
-  margin-right: 10px!important;
+  margin-right: 10px !important;
   color: #45494d !important;
   font-family: "NeoSansArabic" !important;
-  font-weight: 500!important;
+  font-weight: 500 !important;
 }
 
 .checkbox-label-Active-Employee-Modal {
-  margin-left: 3px!important;
+  margin-left: 3px !important;
   color: #21252d !important;
-  font-family: "Montserrat", sans-serif!important;
-  font-weight: 400!important;
+  font-family: "Montserrat", sans-serif !important;
+  font-weight: 400 !important;
 }
 
 body[dir="rtl"] .checkbox-label-Active-Employee-Modal {
-  margin-right: 3px!important;
+  margin-right: 3px !important;
   font-family: "Times New Roman", Times, serif !important;
 }
 
 .branch-employee-checkbox {
-  margin-left: 2px!important;
-  font-size: 12px!important;
+  margin-left: 2px !important;
+  font-size: 12px !important;
   color: #21252d !important;
-  font-family: "Montserrat", sans-serif!important;
-  font-weight: 400!important;
+  font-family: "Montserrat", sans-serif !important;
+  font-weight: 400 !important;
 }
 
 body[dir="rtl"] .branch-employee-checkbox {
-  margin-right: 3px!important;
+  margin-right: 3px !important;
   font-family: "NeoSansArabic" !important;
 }
 
@@ -187,23 +187,23 @@ body[dir="rtl"] .table-text {
 
 .table-inside-text {
   color: #212529 !important;
-  font-family: "Montserrat", sans-serif!important;
-  font-size: 14px!important;
-  font-weight: 500!important;
+  font-family: "Montserrat", sans-serif !important;
+  font-size: 14px !important;
+  font-weight: 500 !important;
 }
 
 body[dir="rtl"] .table-inside-text {
   color: #212529 !important;
   font-family: "NeoSansArabic" !important;
   font-size: 14px !important;
-  font-weight: 500!important;
+  font-weight: 500 !important;
 }
 
 .table-inside-header-text-new {
   color: #ffffff !important;
-  font-family: "Montserrat", sans-serif!important;
+  font-family: "Montserrat", sans-serif !important;
   font-size: 14px !important;
-  font-weight: 700!important;
+  font-weight: 700 !important;
 }
 
 body[dir="rtl"] .table-inside-header-text-new {
@@ -217,22 +217,22 @@ body[dir="rtl"] .table-inside-header-text-new {
   display: flex !important;
   justify-content: center !important;
   align-items: center !important;
-  margin-top: 4px!important;
+  margin-top: 4px !important;
   height: 38px !important;
   width: 100% !important;
   border: 1px solid #dee2e6 !important;
 }
 
 .containerClassTimePicker .rmdp-input {
-  max-width: 400px!important;
+  max-width: 400px !important;
 }
 
 .containerClassTimePicker .rmdp-time-picker.bottom {
   border: 1px solid #dee2e6 !important;
   border-radius: 4px !important;
-  box-shadow: 0px 0px 5px #dee2e6!important;
+  box-shadow: 0px 0px 5px #dee2e6 !important;
   width: 188px !important;
-  padding: 15px 7px!important;
+  padding: 15px 7px !important;
 }
 
 .containerClassTimePicker i.rmdp-arrow {
@@ -246,45 +246,45 @@ body[dir="rtl"] .table-inside-header-text-new {
 }
 
 .containerClassTimePicker .rmdp-time-picker div input {
-  border: 1px solid #dddddd!important;
-  color: #8a8a8a!important;
-  flex-grow: 1!important;
-  font-size: 14px!important;
-  padding: 3px 0px!important;
-  text-align: center!important;
-  width: 35px!important;
-  border-radius: 4px!important;
+  border: 1px solid #dddddd !important;
+  color: #8a8a8a !important;
+  flex-grow: 1 !important;
+  font-size: 14px !important;
+  padding: 3px 0px !important;
+  text-align: center !important;
+  width: 35px !important;
+  border-radius: 4px !important;
 }
 
 .containerClassTimePicker .rmdp-time-picker div .rmdp-am {
-  border: 1px solid #dddddd!important;
-  color: #8a8a8a!important;
-  border-radius: 4px!important;
-  width: 35px!important;
-  font-size: 14px!important;
-  line-height: 22px!important;
-  margin-top: 2px!important;
+  border: 1px solid #dddddd !important;
+  color: #8a8a8a !important;
+  border-radius: 4px !important;
+  width: 35px !important;
+  font-size: 14px !important;
+  line-height: 22px !important;
+  margin-top: 2px !important;
 }
 
 .containerClassTimePicker .rmdp-arrow-container {
-  background: transparent!important;
-  border: none!important;
-  border-radius: 50%!important;
-  cursor: pointer!important;
-  display: flex!important;
-  height: 30px!important;
-  justify-content: center!important;
-  margin: 0px 5px!important;
-  padding: 0px!important;
-  margin-top: 0px!important;
-  width: 33px!important;
-  align-items: center!important;
+  background: transparent !important;
+  border: none !important;
+  border-radius: 50% !important;
+  cursor: pointer !important;
+  display: flex !important;
+  height: 30px !important;
+  justify-content: center !important;
+  margin: 0px 5px !important;
+  padding: 0px !important;
+  margin-top: 0px !important;
+  width: 33px !important;
+  align-items: center !important;
 }
 
 .containerClassTimePicker .rmdp-arrow-container:hover {
-  background-color: #eeeeee!important;
-  box-shadow: 0 0 3px #8798ad!important;
-  border-radius: 4px!important;
+  background-color: #eeeeee !important;
+  box-shadow: 0 0 3px #8798ad !important;
+  border-radius: 4px !important;
 }
 
 /* For start Time and End Time TimePicker End */
@@ -292,10 +292,10 @@ body[dir="rtl"] .table-inside-header-text-new {
 /* toggle title start*/
 
 .toggle-tiles {
-  font-size: 16px!important;
-  font-weight: 600!important;
+  font-size: 16px !important;
+  font-weight: 600 !important;
   font-family: "Montserrat", sans-serif !important;
-  color: #ffffff!important;
+  color: #ffffff !important;
 }
 
 body[dir="rtl"] .toggle-tiles {
@@ -303,10 +303,10 @@ body[dir="rtl"] .toggle-tiles {
 }
 
 .toggle-insidetile-available {
-  font-size: 14px!important;
-  font-weight: 700!important;
+  font-size: 14px !important;
+  font-weight: 700 !important;
   font-family: "Montserrat", sans-serif !important;
-  color: #45494d!important;
+  color: #45494d !important;
 }
 
 body[dir="rtl"] .toggle-insidetile-available {
@@ -318,10 +318,10 @@ body[dir="rtl"] .toggle-insidetile-available {
 /* Labels For Modals Start */
 
 .add-edit-heading-modal {
-  font-size: 20px!important;
-  font-weight: 700!important;
+  font-size: 20px !important;
+  font-weight: 700 !important;
   font-family: "Montserrat", sans-serif !important;
-  color: #4b5576!important;
+  color: #4b5576 !important;
 }
 
 body[dir="rtl"] .add-edit-heading-modal {
@@ -329,10 +329,10 @@ body[dir="rtl"] .add-edit-heading-modal {
 }
 
 .confirm-delete-text {
-  font-size: 14px!important;
+  font-size: 14px !important;
   font-family: "Montserrat", sans-serif !important;
   color: #45494d !important;
-  font-weight: 500!important;
+  font-weight: 500 !important;
 }
 
 body[dir="rtl"] .confirm-delete-text {
@@ -362,8 +362,8 @@ body[dir="rtl"] .confirm-delete-text {
 }
 
 .MuiSnackbar-anchorOriginTopLeft .MuiAlert-action {
-  display: flex!important;
-  align-items: center!important;
+  display: flex !important;
+  align-items: center !important;
   margin-left: -8px !important;
   margin-right: auto !important;
   padding-left: auto !important;

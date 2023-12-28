@@ -125,8 +125,8 @@ const CountryAdminMain = () => {
 
   // updating table of city employee Main
   useEffect(() => {
-    if (Object.keys(cityList).length > 0) {
-      setRows(cityList?.cities);
+    if (cityList && Object.keys(cityList).length > 0) {
+      setRows(cityList.cities);
     } else {
       setRows([]);
     }
@@ -370,6 +370,7 @@ const CountryAdminMain = () => {
     localStorage.removeItem("cityID", record.cityID);
     dispatch(setIsCountryWiseCityComponent(false));
     dispatch(getCityServiceListFail(""));
+    await dispatch(getCountryCitiesApi(t, navigate, Loading));
   };
 
   // coulumn for countrywiseCityComponent
@@ -423,115 +424,104 @@ const CountryAdminMain = () => {
         </span>
       ),
     },
+
     {
       title: (
-        <span className="d-flex justify-content-center table-text text-center">
-          {t("Home-visit-settings")}
+        <span className="d-flex justify-content-center table-text text-center me-3">
+          {t("Service-slot")}
         </span>
       ),
-      colSpan: 4,
-      children: [
-        {
-          title: (
-            <span className="table-text text-center">{t("Service-slot")}</span>
-          ),
-          // homeVisitCharges
-          dataIndex: "homeServiceSlotDurationMinutes",
-          key: "homeServiceSlotDurationMinutes",
-          width: "200px",
-          align: "center",
-          render: (text, record, rowIndex) => (
-            <div className="d-flex flex-column gap-2">
-              <TextField
-                className="for-inside-table-textfields"
-                labelClass="d-none"
-                value={text}
-                type="number"
-                min={50}
-                max={1000}
-              />
-            </div>
-          ),
-        },
-        {
-          title: (
-            <span className="table-text text-center">
-              {t("Advance-roaster")}
-            </span>
-          ),
-          // homeServiceSlotDurationMinutes
-          dataIndex: "homeMaximumAdvanceRoasterDays",
-          key: "homeMaximumAdvanceRoasterDays",
-          width: "250px",
-          align: "center",
-          render: (text, record, rowIndex) => (
-            <div className="d-flex flex-column gap-2">
-              <TextField
-                className="for-inside-table-textfields"
-                labelClass="d-none"
-                value={text}
-                type="number"
-                min={50}
-                max={1000}
-              />
-            </div>
-          ),
-        },
-        {
-          title: (
-            <span className="table-text text-center">
-              {t("Prebooking-margin")}
-            </span>
-          ),
-          dataIndex: "homePrebookingDaysMarginForCity",
-          key: "homePrebookingDaysMarginForCity",
-          width: "250px",
-          align: "center",
-          render: (text, record, rowIndex) => (
-            <div className="d-flex flex-column gap-2">
-              <TextField
-                className="for-inside-table-textfields"
-                labelClass="d-none"
-                value={text}
-                type="number"
-                min={50}
-                max={1000}
-              />
-            </div>
-          ),
-        },
-        {
-          title: (
-            <span className="table-text text-center">{t("Visit-charges")}</span>
-          ),
-          dataIndex: "homeVisitCharges",
-          key: "homeVisitCharges",
-          align: "center",
-          width: "200px",
-          render: (text, record, rowIndex) => (
-            <div className="d-flex flex-column gap-2">
-              <TextField
-                className="for-inside-table-textfields"
-                labelClass="d-none"
-                value={record.homeVisitCharges}
-                onChange={(e) => {
-                  const inputValue = e.target.value;
-                  const numericInput = inputValue.replace(/[^0-9]/g, "");
-                  handleTextFieldChangeService(
-                    numericInput,
-                    rowIndex,
-                    50,
-                    1000
-                  );
-                }}
-                type="number"
-                min={50}
-                max={1000}
-              />
-            </div>
-          ),
-        },
-      ],
+      // homeVisitCharges
+      dataIndex: "homeServiceSlotDurationMinutes",
+      key: "homeServiceSlotDurationMinutes",
+      width: "200px",
+      render: (text, record, rowIndex) => (
+        <div className="d-flex flex-column gap-2 ms-3">
+          <TextField
+            className="for-inside-table-textfields"
+            labelClass="d-none"
+            value={text}
+            type="number"
+            min={50}
+            max={1000}
+          />
+        </div>
+      ),
+    },
+    {
+      title: (
+        <span className="d-flex justify-content-center table-text text-center me-2">
+          {t("Advance-roaster")}
+        </span>
+      ),
+      // homeServiceSlotDurationMinutes
+      dataIndex: "homeMaximumAdvanceRoasterDays",
+      key: "homeMaximumAdvanceRoasterDays",
+      width: "200px",
+      align: "center",
+      render: (text, record, rowIndex) => (
+        <div className="d-flex flex-column gap-2 ms-3">
+          <TextField
+            className="for-inside-table-textfields"
+            labelClass="d-none"
+            value={text}
+            type="number"
+            min={50}
+            max={1000}
+          />
+        </div>
+      ),
+    },
+    {
+      title: (
+        <span className="d-flex justify-content-center table-text text-center me-4">
+          {t("Prebooking-margin")}
+        </span>
+      ),
+      dataIndex: "homePrebookingDaysMarginForCity",
+      key: "homePrebookingDaysMarginForCity",
+      width: "200px",
+      align: "center",
+      render: (text, record, rowIndex) => (
+        <div className="d-flex flex-column gap-2 ms-3">
+          <TextField
+            className="for-inside-table-textfields"
+            labelClass="d-none"
+            value={text}
+            type="number"
+            min={50}
+            max={1000}
+          />
+        </div>
+      ),
+    },
+    {
+      title: (
+        <span className="d-flex justify-content-center table-text text-center me-4">
+          {t("Visit-charges")}
+        </span>
+      ),
+      dataIndex: "homeVisitCharges",
+      key: "homeVisitCharges",
+      align: "center",
+      width: "200px",
+      render: (text, record, rowIndex) => (
+        <div className="d-flex flex-column gap-2 ms-2">
+          <TextField
+            className="for-inside-table-textfields"
+            labelClass="d-none"
+            value={record.homeVisitCharges}
+            onChange={(e) => {
+              const inputValue = e.target.value;
+              const numericInput = inputValue.replace(/[^0-9]/g, "");
+              handleTextFieldChangeService(numericInput, rowIndex, 50, 1000);
+            }}
+            type="number"
+            min={50}
+            max={1000}
+          />
+        </div>
+      ),
     },
   ];
 
