@@ -221,6 +221,20 @@ export const UPDATE_COUNTRY_ADMIN_FAIL = "UPDATE_COUNTRY_ADMIN_FAIL";
 export const DELETE_COUNTRY_ADMIN_SUCCESS = "DELETE_COUNTRY_ADMIN_SUCCESS";
 export const DELETE_COUNTRY_ADMIN_FAIL = "DELETE_COUNTRY_ADMIN_FAIL";
 
+// for get country service screen list api in country admin page
+export const GET_COUNTRY_SERVICE_SUCCESS = "GET_COUNTRY_SERVICE_SUCCESS";
+export const GET_COUNTRY_SERVICE_FAIL = "GET_COUNTRY_SERVICE_FAIL";
+
+// for update country service screen list api in country admin page
+export const UPDATE_COUNTRY_SERVICE_SUCCESS = "UPDATE_COUNTRY_SERVICE_SUCCESS";
+export const UPDATE_COUNTRY_SERVICE_FAIL = "UPDATE_COUNTRY_SERVICE_FAIL";
+
+// Get All BranchService Of City in BRANCH SCREEN on country admin
+export const GET_ALL_BRANCH_SERVICE_CITY_SUCCESS =
+  "GET_ALL_BRANCH_SERVICE_CITY_SUCCESS";
+export const GET_ALL_BRANCH_SERVICE_CITY_FAIL =
+  "GET_ALL_BRANCH_SERVICE_CITY_FAIL";
+
 // ===================================COUNTRY ADMIN END ==========================================//
 
 //====================================BRANCH WISE APPOINTMENT=====================================//

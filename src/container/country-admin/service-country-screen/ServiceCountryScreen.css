@@ -6,9 +6,9 @@
   background-color: #ffffff !important;
 }
 
-.btn-col-class {
+.btn-col-class-serviceScreen {
   display: flex !important;
-  justify-content: start !important;
+  justify-content: end !important;
   align-items: center !important;
   gap: 5px !important;
 }

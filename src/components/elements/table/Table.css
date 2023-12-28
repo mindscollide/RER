@@ -20,7 +20,7 @@
   margin: 20px 0 20px 0 !important;
 }
 
-.ant-table-thead>tr>th {
+.ant-table-thead > tr > th {
   background-color: #fff !important;
   border-bottom: 2px solid #dee2e6 !important;
 }
@@ -53,8 +53,8 @@
   color: #2097d6 !important;
 }
 
-.ant-table-wrapper .ant-table-thead>tr>th,
-.ant-table-wrapper .ant-table-thead>tr>td {
+.ant-table-wrapper .ant-table-thead > tr > th,
+.ant-table-wrapper .ant-table-thead > tr > td {
   position: relative !important;
   color: #ffffff !important;
   font-weight: 700 !important;
@@ -63,20 +63,30 @@
   border-bottom: 1px solid #dee2e6 !important;
 }
 
-.ant-table-wrapper .ant-table-container table>thead>tr:first-child>*:first-child {
+.ant-table-wrapper
+  .ant-table-container
+  table
+  > thead
+  > tr:first-child
+  > *:first-child {
   border-start-start-radius: 0px !important;
 }
 
-.ant-table-wrapper .ant-table-container table>thead>tr:first-child>*:last-child {
+.ant-table-wrapper
+  .ant-table-container
+  table
+  > thead
+  > tr:first-child
+  > *:last-child {
   border-start-end-radius: 0px !important;
 }
 
 .ant-table-wrapper .ant-table-cell,
-.ant-table-wrapper .ant-table-thead>tr>th,
-.ant-table-wrapper .ant-table-tbody>tr>th,
-.ant-table-wrapper .ant-table-tbody>tr>td,
-.ant-table-wrapper tfoot>tr>th,
-.ant-table-wrapper tfoot>tr>td {
+.ant-table-wrapper .ant-table-thead > tr > th,
+.ant-table-wrapper .ant-table-tbody > tr > th,
+.ant-table-wrapper .ant-table-tbody > tr > td,
+.ant-table-wrapper tfoot > tr > th,
+.ant-table-wrapper tfoot > tr > td {
   position: relative !important;
   padding: 8px 16px !important;
   overflow-wrap: break-word !important;

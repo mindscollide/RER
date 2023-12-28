@@ -44,6 +44,9 @@ const initialState = {
   countryAdminMainData: null,
   updateCountryAdmin: null,
   deleteCountryAdmin: null,
+  countryServiceScreenList: null,
+  updateCountryServiceList: null,
+  getAllBranchServiceData: null,
 };
 
 const adminReducer = (state = initialState, action) => {
@@ -691,6 +694,51 @@ const adminReducer = (state = initialState, action) => {
       return {
         ...state,
         deleteCountryAdmin: null,
+        admin_ResponseMessage: action.message,
+      };
+
+    // get country service screen in country Admin
+    case actions.GET_COUNTRY_SERVICE_SUCCESS:
+      return {
+        ...state,
+        countryServiceScreenList: action.response,
+        admin_ResponseMessage: action.message,
+      };
+
+    case actions.GET_COUNTRY_SERVICE_FAIL:
+      return {
+        ...state,
+        countryServiceScreenList: null,
+        admin_ResponseMessage: action.message,
+      };
+
+    // update country service screen in country Admin
+    case actions.UPDATE_COUNTRY_SERVICE_SUCCESS:
+      return {
+        ...state,
+        updateCountryServiceList: action.response,
+        admin_ResponseMessage: action.message,
+      };
+
+    case actions.UPDATE_COUNTRY_SERVICE_FAIL:
+      return {
+        ...state,
+        updateCountryServiceList: null,
+        admin_ResponseMessage: action.message,
+      };
+
+    // update country service screen in country Admin
+    case actions.GET_ALL_BRANCH_SERVICE_CITY_SUCCESS:
+      return {
+        ...state,
+        getAllBranchServiceData: action.response,
+        admin_ResponseMessage: action.message,
+      };
+
+    case actions.GET_ALL_BRANCH_SERVICE_CITY_FAIL:
+      return {
+        ...state,
+        getAllBranchServiceData: null,
         admin_ResponseMessage: action.message,
       };
 

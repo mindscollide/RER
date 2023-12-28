@@ -21,6 +21,7 @@ import {
   addCountryAdminFail,
   updateCountryAdminMainApi,
   updateCountryAdminFail,
+  getCityServiceListFail,
 } from "../../../store/actions/Admin_action";
 import { capitalizeKeysInArray } from "../../../commen/functions/utils.js";
 import { Switch } from "antd";
@@ -41,6 +42,7 @@ const CountryAdminMain = () => {
   const cityServiceListData = useSelector(
     (state) => state.admin.cityServiceListData
   );
+  console.log(cityList, "cityServiceListData");
   // reducers for addCountry admin main api
   const countryAdminMainData = useSelector(
     (state) => state.admin.countryAdminMainData
@@ -67,8 +69,6 @@ const CountryAdminMain = () => {
     CityID: 0,
   });
 
-  // state to open a modal for delete
-  const [countryDeleteModal, setCountryDeleteModal] = useState(false);
   const [rows, setRows] = useState([]);
 
   // state for country city admin main
@@ -305,7 +305,7 @@ const CountryAdminMain = () => {
             ></i>
             <i
               className="icon-branch icon-EDT-DLT-color"
-              onClick={openCountryCityWiseBranch}
+              onClick={() => openCountryCityWiseBranch(text)}
               title="Branch"
               aria-label="Branch"
             ></i>
@@ -341,9 +341,10 @@ const CountryAdminMain = () => {
   };
 
   //to open country city wise branch onClick button
-  const openCountryCityWiseBranch = () => {
+  const openCountryCityWiseBranch = (record) => {
     localStorage.setItem("selectedKeys", ["14"]);
-    navigate("/CountryAdmin/Branch");
+    localStorage.setItem("branchID", record);
+    navigate(`/CountryAdmin/Branch?cityID=${record}`);
   };
 
   //to open country city wise counter onClick button
@@ -365,14 +366,10 @@ const CountryAdminMain = () => {
     navigate(`/CountryAdmin/Employee?cityID=${record}`);
   };
 
-  // open a delete modal
-  const openDeleteModal = () => {
-    setCountryDeleteModal(true);
-  };
-
-  const goBackButtonCountryOnclick = (record) => {
+  const goBackButtonCountryOnclick = async (record) => {
     localStorage.removeItem("cityID", record.cityID);
     dispatch(setIsCountryWiseCityComponent(false));
+    dispatch(getCityServiceListFail(""));
   };
 
   // coulumn for countrywiseCityComponent
@@ -396,7 +393,7 @@ const CountryAdminMain = () => {
       title: <span className="table-text">{t("Branch-availability")}</span>,
       dataIndex: "branchAvailability",
       key: "branchAvailability",
-      width: "200px",
+      width: "250px",
       align: "center",
       render: (text, record) => (
         <span>
@@ -413,7 +410,7 @@ const CountryAdminMain = () => {
       title: <span className="table-text">{t("Home-availability")}</span>,
       dataIndex: "homeAvailability",
       key: "homeAvailability",
-      width: "200px",
+      width: "250px",
       align: "center",
       render: (text, record) => (
         <span>
@@ -428,87 +425,113 @@ const CountryAdminMain = () => {
     },
     {
       title: (
-        <span className="table-text text-center">{t("Service-slot")}</span>
+        <span className="d-flex justify-content-center table-text text-center">
+          {t("Home-visit-settings")}
+        </span>
       ),
-      dataIndex: "homeVisitCharges",
-      key: "homeVisitCharges",
-      width: "200px",
-      align: "center",
-      render: (text, record, rowIndex) => (
-        <div className="d-flex flex-column gap-2">
-          <TextField
-            className="for-inside-table-textfields"
-            labelClass="d-none"
-            value={record.homeVisitCharges}
-            onChange={(e) => {
-              const inputValue = e.target.value;
-              const numericInput = inputValue.replace(/[^0-9]/g, "");
-              handleTextFieldChangeService(numericInput, rowIndex, 50, 1000);
-            }}
-            type="number"
-            min={50}
-            max={1000}
-          />
-        </div>
-      ),
-    },
-    {
-      title: <span className="table-text">{t("Advance-roaster")}</span>,
-      dataIndex: "homeServiceSlotDurationMinutes",
-      key: "homeServiceSlotDurationMinutes",
-      width: "200px",
-      align: "center",
-      render: (text, record, rowIndex) => (
-        <div className="d-flex flex-column gap-2">
-          <TextField
-            className="for-inside-table-textfields"
-            labelClass="d-none"
-            value={text}
-            type="number"
-            min={50}
-            max={1000}
-          />
-        </div>
-      ),
-    },
-    {
-      title: <span className="table-text">{t("Prebooking-margin")}</span>,
-      dataIndex: "homeMaximumAdvanceRoasterDays",
-      key: "homeMaximumAdvanceRoasterDays",
-      width: "200px",
-      align: "center",
-      render: (text, record, rowIndex) => (
-        <div className="d-flex flex-column gap-2">
-          <TextField
-            className="for-inside-table-textfields"
-            labelClass="d-none"
-            value={text}
-            type="number"
-            min={50}
-            max={1000}
-          />
-        </div>
-      ),
-    },
-    {
-      title: <span className="table-text">{t("Visit-charges")}</span>,
-      dataIndex: "homePrebookingDaysMarginForCity",
-      key: "homePrebookingDaysMarginForCity",
-      align: "center",
-      width: "200px",
-
-      render: (text, record, rowIndex) => (
-        <div className="d-flex flex-column gap-2">
-          <TextField
-            className="for-inside-table-textfields"
-            labelClass="d-none"
-            value={text}
-            type="number"
-            min={50}
-            max={1000}
-          />
-        </div>
-      ),
+      colSpan: 4,
+      children: [
+        {
+          title: (
+            <span className="table-text text-center">{t("Service-slot")}</span>
+          ),
+          // homeVisitCharges
+          dataIndex: "homeServiceSlotDurationMinutes",
+          key: "homeServiceSlotDurationMinutes",
+          width: "200px",
+          align: "center",
+          render: (text, record, rowIndex) => (
+            <div className="d-flex flex-column gap-2">
+              <TextField
+                className="for-inside-table-textfields"
+                labelClass="d-none"
+                value={text}
+                type="number"
+                min={50}
+                max={1000}
+              />
+            </div>
+          ),
+        },
+        {
+          title: (
+            <span className="table-text text-center">
+              {t("Advance-roaster")}
+            </span>
+          ),
+          // homeServiceSlotDurationMinutes
+          dataIndex: "homeMaximumAdvanceRoasterDays",
+          key: "homeMaximumAdvanceRoasterDays",
+          width: "250px",
+          align: "center",
+          render: (text, record, rowIndex) => (
+            <div className="d-flex flex-column gap-2">
+              <TextField
+                className="for-inside-table-textfields"
+                labelClass="d-none"
+                value={text}
+                type="number"
+                min={50}
+                max={1000}
+              />
+            </div>
+          ),
+        },
+        {
+          title: (
+            <span className="table-text text-center">
+              {t("Prebooking-margin")}
+            </span>
+          ),
+          dataIndex: "homePrebookingDaysMarginForCity",
+          key: "homePrebookingDaysMarginForCity",
+          width: "250px",
+          align: "center",
+          render: (text, record, rowIndex) => (
+            <div className="d-flex flex-column gap-2">
+              <TextField
+                className="for-inside-table-textfields"
+                labelClass="d-none"
+                value={text}
+                type="number"
+                min={50}
+                max={1000}
+              />
+            </div>
+          ),
+        },
+        {
+          title: (
+            <span className="table-text text-center">{t("Visit-charges")}</span>
+          ),
+          dataIndex: "homeVisitCharges",
+          key: "homeVisitCharges",
+          align: "center",
+          width: "200px",
+          render: (text, record, rowIndex) => (
+            <div className="d-flex flex-column gap-2">
+              <TextField
+                className="for-inside-table-textfields"
+                labelClass="d-none"
+                value={record.homeVisitCharges}
+                onChange={(e) => {
+                  const inputValue = e.target.value;
+                  const numericInput = inputValue.replace(/[^0-9]/g, "");
+                  handleTextFieldChangeService(
+                    numericInput,
+                    rowIndex,
+                    50,
+                    1000
+                  );
+                }}
+                type="number"
+                min={50}
+                max={1000}
+              />
+            </div>
+          ),
+        },
+      ],
     },
   ];
 

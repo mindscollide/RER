@@ -241,5 +241,12 @@
   "Service-slot": "Service Slot",
   "Advance-roaster": "Advance Roaster",
   "Prebooking-margin": "Prebooking Margin",
-  "Visit-charges": "Visit Charges"
+  "Visit-charges": "Visit Charges",
+  "Admin_AdminServiceManager_GetCountryServiceList_01": "Services found for country",
+  "Admin_AdminServiceManager_GetCountryServiceList_02": "No Services Record Found For Country",
+  "Admin_AdminServiceManager_UpdateCountryServicesList_01": "Services updated for Country",
+  "Admin_AdminServiceManager_GetAllBranchServiceOfCity_01": "City Branch Services Record Found",
+  "Admin_AdminServiceManager_GetAllBranchServiceOfCity_02": "Branch List Not Found",
+  "Admin_AdminServiceManager_GetAllBranchServiceOfCity_03": "Branches Not Found",
+  "Home-visit-settings": "Home Visit Settings"
 }

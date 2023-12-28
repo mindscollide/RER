@@ -220,6 +220,21 @@ const deleteCountryCity = {
   RequestMethod: "ServiceManager.DeleteCountryCity",
 };
 
+//For get country service list api in SERVICE COUNTRY SCREEN
+const getCountryServiceScreen = {
+  RequestMethod: "ServiceManager.GetCountryServiceList",
+};
+
+//For update country service list api in SERVICE COUNTRY SCREEN
+const updateCountryServiceScreen = {
+  RequestMethod: "ServiceManager.UpdateCountryServicesList",
+};
+
+// Get All BranchService Of City in BRANCH SCREEN on country admin
+const getAllBranchServiceCity = {
+  RequestMethod: "ServiceManager.GetAllBranchServiceOfCity",
+};
+
 // ===================================COUNTRY ADMIN END ==========================================//
 
 export {
@@ -272,5 +287,8 @@ export {
   addCountryCity,
   updateCountryCity,
   deleteCountryCity,
+  getCountryServiceScreen,
+  updateCountryServiceScreen,
+  getAllBranchServiceCity,
   // ===================================COUNTRY ADMIN END ==========================================//
 };

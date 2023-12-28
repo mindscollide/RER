@@ -52,20 +52,8 @@ const CountryWiseCityComponent = ({
               <span className="shift-sub-heading">
                 {" "}
                 {currentLanguage === "en"
-                  ? "(" +
-                    localStorage.getItem("countryName") +
-                    " " +
-                    "-" +
-                    " " +
-                    localStorage.getItem("cityName") +
-                    ")"
-                  : "(" +
-                    localStorage.getItem("countryNameArabic") +
-                    " " +
-                    "-" +
-                    " " +
-                    localStorage.getItem("cityNameArabic") +
-                    ")"}
+                  ? "(" + localStorage.getItem("countryName") + ")"
+                  : "(" + localStorage.getItem("countryNameArabic") + ")"}
               </span>
             </span>
           </Col>
