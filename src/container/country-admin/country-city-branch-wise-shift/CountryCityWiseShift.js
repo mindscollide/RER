@@ -34,24 +34,14 @@ const CountryCityWiseShift = () => {
     (state) => state.admin.getAllBranchShiftData
   );
 
-  console.log(
-    getCountryWiseShiftDataRows,
-    "getCountryWiseShiftDataRowsgetCountryWiseShiftDataRows"
-  );
-
   const { Panel } = Collapse;
   const currentLanguage = localStorage.getItem("i18nextLng");
-  const [cityselectedOption, setCityselectedOption] = useState(null);
   const [isPanelOpen, setIsPanelOpen] = useState(false);
   const [isPanelOpenTwo, setIsPanelOpenTwo] = useState(false);
   const [isPanelOpenThree, setIsPanelOpenThree] = useState(false);
   const [countryCityWiseShift, setCountryCityWiseShift] = useState([]);
   const [countryBranchWiseShift, setCountryBranchWiseShift] = useState([]);
   const [branchSelectedOptions, setBranchSelectedOptions] = useState(null);
-  const [cityShiftData, setCityShiftData] = useState(null);
-  console.log(cityShiftData, "cityShiftDatacityShiftData");
-  const [selectedCityID, setSelectedCityID] = useState(null);
-  const [selectedBranchID, setSelectedBranchID] = useState(null);
   const [servicesTableData, setServicesTableData] = useState({
     branchDetailModel: null,
     branchShiftServiceList: [],
@@ -102,11 +92,14 @@ const CountryCityWiseShift = () => {
 
   //Country City  Data dropdown OnChange
   const handleSelectCity = (selectedCityOptions) => {
-    console.log(selectedCityOptions, "selectedCityOptionsselectedCityOptions");
-    setCityselectedOption(selectedCityOptions);
-    setSelectedCityID(selectedCityOptions.value);
+    setCitySelectValue({
+      ...citySelectValue,
+      value: selectedCityOptions.value,
+      label: selectedCityOptions.label,
+    });
+    // setCityselectedOption(selectedCityOptions);
+    // setSelectedCityID(selectedCityOptions.value);
   };
-  console.log(citySelectValue, "citySelectValuecitySelectValuecitySelectValue");
   //Country Branch dropdownApi
   useEffect(() => {
     if (citySelectValue.value !== 0) {
@@ -128,12 +121,16 @@ const CountryCityWiseShift = () => {
       countryBranchShiftWiseSelector !== undefined &&
       countryBranchShiftWiseSelector.length !== 0
     ) {
-      setSelectedBranchID(countryBranchShiftWiseSelector[0].branchID);
       setBranchSelectValue({
         ...branchSelectValue,
         label: countryBranchShiftWiseSelector[0].branchNameEnglish,
         value: countryBranchShiftWiseSelector[0].branchID,
       });
+      let data = {
+        BranchID: Number(countryBranchShiftWiseSelector[0].branchID),
+        CityID: Number(citySelectValue.value),
+      };
+      dispatch(getAllBranchSiftMainApi(t, data, navigate, Loading));
       if (currentLanguage === "en") {
         setCountryBranchWiseShift(
           countryBranchShiftWiseSelector.map((item) => ({
@@ -154,16 +151,27 @@ const CountryCityWiseShift = () => {
 
   //Country City  Data dropdown OnChange
   const handleSelectedBranch = (selectedBranchOptions) => {
-    setBranchSelectedOptions(selectedBranchOptions);
-    setSelectedBranchID(selectedBranchOptions.value);
+    setBranchSelectValue({
+      ...branchSelectValue,
+      label: selectedBranchOptions.label,
+      value: selectedBranchOptions.value,
+    });
   };
 
-  console.log(selectedBranchID, "selectedBranchIDselectedBranchID");
+  // useEffect(() => {
+  //   if (citySelectValue.value === 1 && branchSelectValue.value === 1) {
+  //     let data = {
+  //       BranchID: Number(branchSelectValue.value),
+  //       CityID: Number(citySelectValue.value),
+  //     };
+  //     dispatch(getAllBranchSiftMainApi(t, data, navigate, Loading));
+  //   }
+  // }, []);
 
   const hitSearchButton = () => {
     let data = {
-      BranchID: Number(selectedBranchID),
-      CityID: Number(selectedCityID),
+      BranchID: Number(branchSelectValue.value),
+      CityID: Number(citySelectValue.value),
     };
     dispatch(getAllBranchSiftMainApi(t, data, navigate, Loading));
   };
@@ -205,7 +213,6 @@ const CountryCityWiseShift = () => {
       key: "shiftServiceList",
       width: "400px",
       render: (text, record) => {
-        console.log(record, "recordrecordrecord");
         return <p>{record.serviceNameEnglish}</p>;
       },
     },
@@ -286,7 +293,6 @@ const CountryCityWiseShift = () => {
               </Row>
               {servicesTableData?.branchShiftServiceList?.length > 0 &&
                 servicesTableData.branchShiftServiceList.map((data, index) => {
-                  console.log(data, "getCountryWiseShiftDataRows");
                   return (
                     <>
                       <Row className="mt-3">
