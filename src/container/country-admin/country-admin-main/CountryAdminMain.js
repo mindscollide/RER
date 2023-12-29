@@ -311,7 +311,7 @@ const CountryAdminMain = () => {
             ></i>
             <i
               className="icon-counter icon-EDT-DLT-color"
-              onClick={openCountryCityWiseCounter}
+              onClick={() => openCountryCityWiseCounter(text)}
               title="Counter"
               aria-label="Counter"
             ></i>
@@ -348,9 +348,10 @@ const CountryAdminMain = () => {
   };
 
   //to open country city wise counter onClick button
-  const openCountryCityWiseCounter = () => {
+  const openCountryCityWiseCounter = (record) => {
     localStorage.setItem("selectedKeys", ["16"]);
-    navigate("/CountryAdmin/Counters");
+    localStorage.setItem("branchID", record);
+    navigate(`/CountryAdmin/Counters?cityID=${record}`);
   };
 
   //to open country city branch wise shift onClick button
@@ -440,10 +441,21 @@ const CountryAdminMain = () => {
           <TextField
             className="for-inside-table-textfields"
             labelClass="d-none"
-            value={text}
+            value={record.homeServiceSlotDurationMinutes}
+            onChange={(e) => {
+              const inputValue = e.target.value;
+              const numericInput = inputValue.replace(/[^0-9]/g, "");
+              handleTextFieldChangeService(
+                numericInput,
+                rowIndex,
+                0,
+                60,
+                "homeServiceSlotDurationMinutes"
+              );
+            }}
             type="number"
-            min={50}
-            max={1000}
+            min={0}
+            max={60}
           />
         </div>
       ),
@@ -464,10 +476,21 @@ const CountryAdminMain = () => {
           <TextField
             className="for-inside-table-textfields"
             labelClass="d-none"
-            value={text}
+            value={record.homeMaximumAdvanceRoasterDays}
+            onChange={(e) => {
+              const inputValue = e.target.value;
+              const numericInput = inputValue.replace(/[^0-9]/g, "");
+              handleTextFieldChangeService(
+                numericInput,
+                rowIndex,
+                0,
+                15,
+                "homeMaximumAdvanceRoasterDays"
+              );
+            }}
             type="number"
-            min={50}
-            max={1000}
+            min={0}
+            max={15}
           />
         </div>
       ),
@@ -487,10 +510,21 @@ const CountryAdminMain = () => {
           <TextField
             className="for-inside-table-textfields"
             labelClass="d-none"
-            value={text}
+            value={record.homePrebookingDaysMarginForCity}
+            onChange={(e) => {
+              const inputValue = e.target.value;
+              const numericInput = inputValue.replace(/[^0-9]/g, "");
+              handleTextFieldChangeService(
+                numericInput,
+                rowIndex,
+                0,
+                15,
+                "homePrebookingDaysMarginForCity"
+              );
+            }}
             type="number"
-            min={50}
-            max={1000}
+            min={0}
+            max={15}
           />
         </div>
       ),
@@ -514,10 +548,16 @@ const CountryAdminMain = () => {
             onChange={(e) => {
               const inputValue = e.target.value;
               const numericInput = inputValue.replace(/[^0-9]/g, "");
-              handleTextFieldChangeService(numericInput, rowIndex, 50, 1000);
+              handleTextFieldChangeService(
+                numericInput,
+                rowIndex,
+                0,
+                1000,
+                "homeVisitCharges"
+              );
             }}
             type="number"
-            min={50}
+            min={0}
             max={1000}
           />
         </div>
@@ -526,7 +566,13 @@ const CountryAdminMain = () => {
   ];
 
   //This is handler TextField for columns countrywiseCityComponent
-  const handleTextFieldChangeService = (value, rowIndex, min, max) => {
+  const handleTextFieldChangeService = (
+    value,
+    rowIndex,
+    min,
+    max,
+    columnName
+  ) => {
     // Validate the input range
     const numericValue = Number(value);
     if (numericValue >= min && numericValue <= max) {
@@ -535,16 +581,16 @@ const CountryAdminMain = () => {
           if (index === rowIndex) {
             return {
               ...service,
-              homeVisitCharges: numericValue,
+              [columnName]: numericValue,
             };
           }
           return service;
         });
       });
-      // Handle invalid input (e.g., show an error message)
-      console.error("Invalid input. Please enter a value between 10 and 100.");
     }
   };
+
+  // This is handler TextField for columns
 
   //handler for switch to change their state countrywiseCityComponent
   const handleSwitch = (name, value, record) => {

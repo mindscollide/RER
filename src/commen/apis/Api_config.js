@@ -240,6 +240,11 @@ const getAllBranchShiftServiceCity = {
   RequestMethod: "ServiceManager.GetAllBranchShiftServiceOfCity",
 };
 
+// Get All BranchShiftCounter Service Of City in COUNTER screen on country admin
+const getAllBranchCounterServiceCity = {
+  RequestMethod: "ServiceManager.GetAllBranchShiftCounterServiceOfCity",
+};
+
 // ===================================COUNTRY ADMIN END ==========================================//
 
 export {
@@ -296,5 +301,6 @@ export {
   updateCountryServiceScreen,
   getAllBranchServiceCity,
   getAllBranchShiftServiceCity,
+  getAllBranchCounterServiceCity,
   // ===================================COUNTRY ADMIN END ==========================================//
 };

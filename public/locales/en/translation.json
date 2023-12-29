@@ -248,6 +248,9 @@
   "Admin_AdminServiceManager_GetAllBranchServiceOfCity_02": "Branch List Not Found",
   "Admin_AdminServiceManager_GetAllBranchServiceOfCity_03": "Branches Not Found",
   "Home-visit-settings": "Home Visit Settings",
-  "Admin_AdminServiceManager_GetAllBranchShiftServiceOfCity_01": "Branch Shift Details Found",
-  "Admin_AdminServiceManager_GetAllBranchShiftServiceOfCity_02": "Branch Shift Details Not Found"
+  "Admin_AdminServiceManager_GetAllBranchShiftServiceOfCity_01": "Branch Shift Details Not Found",
+  "Admin_AdminServiceManager_GetAllBranchShiftServiceOfCity_02": "Branch Shift Details Found",
+  "Admin_AdminServiceManager_GetAllBranchShiftCounterServiceOfCity_01": "City Branch Wise Roaster for Date Not Found",
+  "Admin_AdminServiceManager_GetAllBranchShiftCounterServiceOfCity_02": "City Branch Wise Roaster for Date Found",
+  "Admin_AdminServiceManager_GetAllBranchShiftCounterServiceOfCity_03": "Branches Not Found for City"
 }

@@ -48,6 +48,7 @@ const initialState = {
   updateCountryServiceList: null,
   getAllBranchServiceData: null,
   getAllBranchShiftData: null,
+  getAllBranchCounterData: null,
 };
 
 const adminReducer = (state = initialState, action) => {
@@ -755,6 +756,21 @@ const adminReducer = (state = initialState, action) => {
       return {
         ...state,
         getAllBranchShiftData: null,
+        admin_ResponseMessage: action.message,
+      };
+
+    // get all Branch Counter in country Admin
+    case actions.GET_ALL_BRANCH_COUNTER_CITY_SUCCESS:
+      return {
+        ...state,
+        getAllBranchCounterData: action.response,
+        admin_ResponseMessage: action.message,
+      };
+
+    case actions.GET_ALL_BRANCH_COUNTER_CITY_FAIL:
+      return {
+        ...state,
+        getAllBranchCounterData: null,
         admin_ResponseMessage: action.message,
       };
 

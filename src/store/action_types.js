@@ -240,6 +240,12 @@ export const GET_ALL_BRANCH_SHIFT_CITY_SUCCESS =
   "GET_ALL_BRANCH_SHIFT_CITY_SUCCESS";
 export const GET_ALL_BRANCH_SHIFT_CITY_FAIL = "GET_ALL_BRANCH_SHIFT_CITY_FAIL";
 
+// Get All Branch Shift Counter Service Of City in BRANCH SCREEN on country admin
+export const GET_ALL_BRANCH_COUNTER_CITY_SUCCESS =
+  "GET_ALL_BRANCH_COUNTER_CITY_SUCCESS";
+export const GET_ALL_BRANCH_COUNTER_CITY_FAIL =
+  "GET_ALL_BRANCH_COUNTER_CITY_FAIL";
+
 // ===================================COUNTRY ADMIN END ==========================================//
 
 //====================================BRANCH WISE APPOINTMENT=====================================//

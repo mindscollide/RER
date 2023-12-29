@@ -53,6 +53,7 @@ const CountryCityBranch = () => {
 
   console.log(cityID, "cityIDcityID");
 
+  // state for toggle icon render each at a time
   const [panelOpenStates, setPanelOpenStates] = useState([]);
 
   // states for rows in table
