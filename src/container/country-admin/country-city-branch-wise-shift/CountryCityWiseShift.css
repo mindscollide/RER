@@ -4,6 +4,8 @@
   width: 100% !important;
   overflow: hidden !important;
   background-color: #ffffff !important;
+  height: auto !important;
+  min-height: 40vh !important;
 }
 
 .CityBranchShift-col {
@@ -54,16 +56,19 @@
   background-color: transparent !important;
 }
 
-.ant-collapse .ant-collapse-content>.ant-collapse-content-box {
+.ant-collapse .ant-collapse-content > .ant-collapse-content-box {
   padding: 16px 25px !important;
 }
 
 /* for not showing icon beside the header */
-.ant-collapse>.ant-collapse-item>.ant-collapse-header .ant-collapse-expand-icon {
+.ant-collapse
+  > .ant-collapse-item
+  > .ant-collapse-header
+  .ant-collapse-expand-icon {
   display: none !important;
 }
 
-.ant-collapse>.ant-collapse-item>.ant-collapse-header {
+.ant-collapse > .ant-collapse-item > .ant-collapse-header {
   padding: 3px 16px !important;
 }
 
