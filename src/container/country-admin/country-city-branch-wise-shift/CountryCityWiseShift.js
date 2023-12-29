@@ -48,18 +48,22 @@ const CountryCityWiseShift = () => {
   const [countryCityWiseShift, setCountryCityWiseShift] = useState([]);
   const [countryBranchWiseShift, setCountryBranchWiseShift] = useState([]);
   const [branchSelectedOptions, setBranchSelectedOptions] = useState(null);
+  const [cityShiftData, setCityShiftData] = useState(null);
+  console.log(cityShiftData, "cityShiftDatacityShiftData");
   const [selectedCityID, setSelectedCityID] = useState(null);
   const [selectedBranchID, setSelectedBranchID] = useState(null);
   const [servicesTableData, setServicesTableData] = useState({
     branchDetailModel: null,
     branchShiftServiceList: [],
-    servicesList: [],
   });
-  console.log(
-    servicesTableData.branchShiftServiceList,
-    "servicesTableDataservicesTableData"
-  );
-  // const [branchName , setBranchName] = useState(null)
+  const [citySelectValue, setCitySelectValue] = useState({
+    value: 0,
+    label: "",
+  });
+  const [branchSelectValue, setBranchSelectValue] = useState({
+    value: 0,
+    label: "",
+  });
 
   //Country City dropdownApi
   useEffect(() => {
@@ -73,6 +77,11 @@ const CountryCityWiseShift = () => {
       countryCityShiftWiseSelector !== undefined &&
       countryCityShiftWiseSelector.length !== 0
     ) {
+      setCitySelectValue({
+        ...citySelectValue,
+        label: countryCityShiftWiseSelector.cities[0].cityNameEnglish,
+        value: countryCityShiftWiseSelector.cities[0].cityID,
+      });
       if (currentLanguage === "en") {
         setCountryCityWiseShift(
           countryCityShiftWiseSelector.cities.map((item) => ({
@@ -97,15 +106,20 @@ const CountryCityWiseShift = () => {
     setCityselectedOption(selectedCityOptions);
     setSelectedCityID(selectedCityOptions.value);
   };
-
-  console.log(selectedCityID, "selectedCityIDselectedCityIDselectedCityID");
-
+  console.log(citySelectValue, "citySelectValuecitySelectValuecitySelectValue");
   //Country Branch dropdownApi
   useEffect(() => {
-    if (selectedCityID != null) {
-      dispatch(getCityBranchListApi(t, navigate, Loading, selectedCityID));
+    if (citySelectValue.value !== 0) {
+      dispatch(
+        getCityBranchListApi(
+          t,
+          navigate,
+          Loading,
+          Number(citySelectValue.value)
+        )
+      );
     }
-  }, [selectedCityID]);
+  }, [citySelectValue]);
 
   //Country Branch  Data dropdown
   useEffect(() => {
@@ -114,6 +128,12 @@ const CountryCityWiseShift = () => {
       countryBranchShiftWiseSelector !== undefined &&
       countryBranchShiftWiseSelector.length !== 0
     ) {
+      setSelectedBranchID(countryBranchShiftWiseSelector[0].branchID);
+      setBranchSelectValue({
+        ...branchSelectValue,
+        label: countryBranchShiftWiseSelector[0].branchNameEnglish,
+        value: countryBranchShiftWiseSelector[0].branchID,
+      });
       if (currentLanguage === "en") {
         setCountryBranchWiseShift(
           countryBranchShiftWiseSelector.map((item) => ({
@@ -151,14 +171,20 @@ const CountryCityWiseShift = () => {
   // updating data in table
   useEffect(() => {
     if (getCountryWiseShiftDataRows !== null) {
+      setServicesTableData({
+        ...servicesTableData,
+        branchDetailModel: getCountryWiseShiftDataRows.branchDetailModel,
+        branchShiftServiceList:
+          getCountryWiseShiftDataRows.branchShiftServiceList,
+      });
     } else {
+      setServicesTableData({
+        ...servicesTableData,
+        branchDetailModel: null,
+        branchShiftServiceList: [],
+      });
     }
   }, [getCountryWiseShiftDataRows]);
-
-  console.log(
-    getCountryWiseShiftDataRows,
-    "getCountryWiseShiftDataRowsgetCountryWiseShiftDataRows"
-  );
 
   const togglePanel = () => {
     setIsPanelOpen(!isPanelOpen);
@@ -221,10 +247,13 @@ const CountryCityWiseShift = () => {
                   <span className="d-flex flex-column w-100">
                     <label className="text-labels">{t("City")}</label>
                     <Select
-                      // defaultValue={selectedOption}
                       onChange={handleSelectCity}
+                      value={{
+                        value: citySelectValue.value,
+                        label: citySelectValue.label,
+                      }}
                       options={countryCityWiseShift}
-                      isSearchable={true}
+                      isSearchable={false}
                       className="select-dropdown-all"
                     />
                   </span>
@@ -237,7 +266,11 @@ const CountryCityWiseShift = () => {
                       onChange={handleSelectedBranch}
                       options={countryBranchWiseShift}
                       isSearchable={true}
-                      isDisabled={selectedCityID === null ? true : false}
+                      value={{
+                        value: branchSelectValue.value,
+                        label: branchSelectValue.label,
+                      }}
+                      // isDisabled={selectedCityID === null ? true : false}
                       className="select-dropdown-all"
                     />
                   </span>
@@ -251,76 +284,74 @@ const CountryCityWiseShift = () => {
                   />
                 </Col>
               </Row>
-              {getCountryWiseShiftDataRows.branchShiftServiceList.length > 0 &&
-                getCountryWiseShiftDataRows.branchShiftServiceList.map(
-                  (data, index) => {
-                    console.log(data, "getCountryWiseShiftDataRows");
-                    return (
-                      <>
-                        <Row className="mt-3">
-                          <Col lg={12} md={12} sm={12}>
-                            <Collapse
-                              bordered={false}
-                              className="collapse-disable-bg"
-                              expandIcon={false}
-                            >
-                              <Panel
-                                header={
-                                  <div
-                                    className={`collapse-bg-color ${
-                                      isPanelOpen ? "open" : ""
-                                    }`}
-                                    onClick={togglePanel}
-                                  >
-                                    <span className="toggle-tiles">
-                                      {data.branchShift.shiftNameEnglish}
-                                    </span>
+              {servicesTableData?.branchShiftServiceList?.length > 0 &&
+                servicesTableData.branchShiftServiceList.map((data, index) => {
+                  console.log(data, "getCountryWiseShiftDataRows");
+                  return (
+                    <>
+                      <Row className="mt-3">
+                        <Col lg={12} md={12} sm={12}>
+                          <Collapse
+                            bordered={false}
+                            className="collapse-disable-bg"
+                            expandIcon={false}
+                          >
+                            <Panel
+                              header={
+                                <div
+                                  className={`collapse-bg-color ${
+                                    isPanelOpen ? "open" : ""
+                                  }`}
+                                  onClick={togglePanel}
+                                >
+                                  <span className="toggle-tiles">
+                                    {data.branchShift.shiftNameEnglish}
+                                  </span>
 
-                                    {isPanelOpen ? (
-                                      <i
-                                        className={
-                                          "icon-arrow-up icon-size-of-collapse"
-                                        }
-                                      ></i>
-                                    ) : (
-                                      <i
-                                        className={
-                                          "icon-arrow-down icon-size-of-collapse"
-                                        }
-                                      ></i>
-                                    )}
-                                  </div>
-                                }
-                                key="1"
-                              >
-                                <Row className="mb-3">
-                                  <Col lg={6} md={6} sm={6}>
-                                    <span className="toggle-insidetile-available">
-                                      {t("Available")}
-                                    </span>
-                                  </Col>
-                                  <Col
-                                    lg={6}
-                                    md={6}
-                                    sm={6}
-                                    className="d-flex justify-content-end"
-                                  >
-                                    <Switch checked={true} disabled />
-                                  </Col>
-                                </Row>
-                                <Table
-                                  column={columns}
-                                  rows={data.shiftServiceList}
-                                  pagination={false}
-                                />
-                              </Panel>
-                            </Collapse>
-                          </Col>
-                        </Row>
-                      </>
-                    );
-                  }
-                )}
+                                  {isPanelOpen ? (
+                                    <i
+                                      className={
+                                        "icon-arrow-up icon-size-of-collapse"
+                                      }
+                                    ></i>
+                                  ) : (
+                                    <i
+                                      className={
+                                        "icon-arrow-down icon-size-of-collapse"
+                                      }
+                                    ></i>
+                                  )}
+                                </div>
+                              }
+                              key="1"
+                            >
+                              <Row className="mb-3">
+                                <Col lg={6} md={6} sm={6}>
+                                  <span className="toggle-insidetile-available">
+                                    {t("Available")}
+                                  </span>
+                                </Col>
+                                <Col
+                                  lg={6}
+                                  md={6}
+                                  sm={6}
+                                  className="d-flex justify-content-end"
+                                >
+                                  <Switch checked={true} disabled />
+                                </Col>
+                              </Row>
+                              <Table
+                                column={columns}
+                                rows={data.shiftServiceList}
+                                pagination={false}
+                              />
+                            </Panel>
+                          </Collapse>
+                        </Col>
+                      </Row>
+                    </>
+                  );
+                })}
             </Paper>
           </Col>
         </Row>
