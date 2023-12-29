@@ -1,19 +1,36 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Row, Col } from "react-bootstrap";
 import "./CountryCityWiseShift.css";
 import { Paper, Button, Table } from "../../../components/elements";
 import { Collapse, Switch } from "antd";
 import Select from "react-select";
 import { useTranslation } from "react-i18next";
+import { useNavigate } from "react-router";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  getCityBranchListApi,
+  getCountryCitiesApi,
+} from "../../../store/actions/Admin_action";
 
 const CountryCityWiseShift = () => {
-  const { Panel } = Collapse;
   const { t } = useTranslation();
+
+  const navigate = useNavigate();
+
+  const dispatch = useDispatch();
+
+  const Loading = useSelector((state) => state.Loader.Loading);
+  const { Panel } = Collapse;
   const currentLanguage = localStorage.getItem("i18nextLng");
   const [selectedOption, setSelectedOption] = useState(null);
   const [isPanelOpen, setIsPanelOpen] = useState(false);
   const [isPanelOpenTwo, setIsPanelOpenTwo] = useState(false);
   const [isPanelOpenThree, setIsPanelOpenThree] = useState(false);
+
+  useEffect(() => {
+    dispatch(getCountryCitiesApi(t, navigate, Loading));
+    dispatch(getCityBranchListApi(t, navigate, Loading));
+  }, []);
 
   const options = [
     { value: "chocolate", label: "Chocolate" },
