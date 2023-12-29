@@ -20,23 +20,101 @@ const CountryCityWiseShift = () => {
   const dispatch = useDispatch();
 
   const Loading = useSelector((state) => state.Loader.Loading);
+
+  const countryCityShiftWiseSelector = useSelector(
+    (state) => state.admin.cityList
+  );
+
+  const countryBranchShiftWiseSelector = useSelector(
+    (state) => state.admin.cityBranchListData
+  );
+
+  console.log(
+    countryBranchShiftWiseSelector,
+    "countryCityShiftWiseSelectorcountryCityShiftWiseSelector"
+  );
+
   const { Panel } = Collapse;
   const currentLanguage = localStorage.getItem("i18nextLng");
-  const [selectedOption, setSelectedOption] = useState(null);
+  const [cityselectedOption, setCityselectedOption] = useState(null);
   const [isPanelOpen, setIsPanelOpen] = useState(false);
   const [isPanelOpenTwo, setIsPanelOpenTwo] = useState(false);
   const [isPanelOpenThree, setIsPanelOpenThree] = useState(false);
+  const [countryCityWiseShift, setCountryCityWiseShift] = useState([]);
+  const [countryBranchWiseShift, setCountryBranchWiseShift] = useState([]);
+  const [selectedCityID, setSelectedCityID] = useState(null);
 
+  //Country City dropdownApi
   useEffect(() => {
     dispatch(getCountryCitiesApi(t, navigate, Loading));
-    dispatch(getCityBranchListApi(t, navigate, Loading));
   }, []);
 
-  const options = [
-    { value: "chocolate", label: "Chocolate" },
-    { value: "strawberry", label: "Strawberry" },
-    { value: "vanilla", label: "Vanilla" },
-  ];
+  //Country City  Data dropdown
+  useEffect(() => {
+    if (
+      countryCityShiftWiseSelector !== null &&
+      countryCityShiftWiseSelector !== undefined &&
+      countryCityShiftWiseSelector.length !== 0
+    ) {
+      if (currentLanguage === "en") {
+        setCountryCityWiseShift(
+          countryCityShiftWiseSelector.cities.map((item) => ({
+            value: item.cityID,
+            label: item.cityNameEnglish,
+          }))
+        );
+      } else {
+        setCountryCityWiseShift(
+          countryCityShiftWiseSelector.cities.map((item) => ({
+            value: item.cityID,
+            label: item.cityNameArabic,
+          }))
+        );
+      }
+    }
+  }, [countryCityShiftWiseSelector, currentLanguage]);
+
+  //Country City  Data dropdown OnChagnwe
+  const handleSelectCity = (selectedCityOptions) => {
+    console.log(selectedCityOptions, "selectedCityOptionsselectedCityOptions");
+    setCityselectedOption(selectedCityOptions);
+    setSelectedCityID(selectedCityOptions.value);
+  };
+
+  console.log(selectedCityID, "selectedCityIDselectedCityIDselectedCityID");
+
+  //Country Branch dropdownApi
+  useEffect(() => {
+    if (selectedCityID != null) {
+      dispatch(getCityBranchListApi(t, navigate, Loading, selectedCityID));
+    }
+  }, [selectedCityID]);
+
+  //Country Branch  Data dropdown
+
+  useEffect(() => {
+    if (
+      countryBranchShiftWiseSelector !== null &&
+      countryBranchShiftWiseSelector !== undefined &&
+      countryBranchShiftWiseSelector.length !== 0
+    ) {
+      if (currentLanguage === "en") {
+        setCountryBranchWiseShift(
+          countryBranchShiftWiseSelector.map((item) => ({
+            value: item.branchID,
+            label: item.branchNameEnglish,
+          }))
+        );
+      } else {
+        setCountryBranchWiseShift(
+          countryBranchShiftWiseSelector.map((item) => ({
+            value: item.branchID,
+            label: item.branchNameArabic,
+          }))
+        );
+      }
+    }
+  }, [countryBranchShiftWiseSelector, currentLanguage]);
 
   const togglePanel = () => {
     setIsPanelOpen(!isPanelOpen);
@@ -114,9 +192,9 @@ const CountryCityWiseShift = () => {
                   <span className="d-flex flex-column w-100">
                     <label className="text-labels">{t("City")}</label>
                     <Select
-                      defaultValue={selectedOption}
-                      onChange={setSelectedOption}
-                      options={options}
+                      // defaultValue={selectedOption}
+                      onChange={handleSelectCity}
+                      options={countryCityWiseShift}
                       isSearchable={true}
                       className="select-dropdown-all"
                     />
@@ -126,10 +204,11 @@ const CountryCityWiseShift = () => {
                   <span className="d-flex flex-column w-100">
                     <label className="text-labels">{t("Branch")}</label>
                     <Select
-                      defaultValue={selectedOption}
-                      onChange={setSelectedOption}
-                      options={options}
+                      // defaultValue={selectedOption}
+                      // onChange={setSelectedOption}
+                      options={countryBranchWiseShift}
                       isSearchable={true}
+                      isDisabled={selectedCityID === null ? true : false}
                       className="select-dropdown-all"
                     />
                   </span>

@@ -1903,8 +1903,13 @@ const getCityBranchListFail = (message) => {
   };
 };
 
-const getCityBranchListApi = (t, navigate, loadingFlag) => {
-  let data = { CityID: Number(localStorage.getItem("cityID")) };
+const getCityBranchListApi = (t, navigate, loadingFlag, id) => {
+  let data = {};
+  if (id !== undefined && id !== null) {
+    data = { CityID: Number(id) };
+  } else {
+    data = { CityID: Number(localStorage.getItem("cityID")) };
+  }
   return async (dispatch) => {
     if (!loadingFlag) {
       dispatch(loader_Actions(true));
