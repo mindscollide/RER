@@ -9,7 +9,7 @@ import { useTranslation } from "react-i18next";
 const CountryCityWiseShift = () => {
   const { Panel } = Collapse;
   const { t } = useTranslation();
-
+  const currentLanguage = localStorage.getItem("i18nextLng");
   const [selectedOption, setSelectedOption] = useState(null);
   const [isPanelOpen, setIsPanelOpen] = useState(false);
   const [isPanelOpenTwo, setIsPanelOpenTwo] = useState(false);
@@ -81,9 +81,10 @@ const CountryCityWiseShift = () => {
           <Col lg={12} md={12} sm={12} className="d-flex justify-content-start">
             <span className="shift-heading">
               {t("City-branch-wise-shifts")}
-              <span className="shift-sub-heading">
-                {" "}
-                {t("Saudi-arabia-riyadh")}
+              <span className="shift-sub-heading ms-2">
+                {currentLanguage === "en"
+                  ? "(" + localStorage.getItem("countryName") + ")"
+                  : "(" + localStorage.getItem("countryNameArabic") + ")"}
               </span>
             </span>
           </Col>

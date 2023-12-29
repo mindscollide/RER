@@ -248,5 +248,7 @@
   "Admin_AdminServiceManager_GetAllBranchServiceOfCity_01": "City Branch Services Record Found",
   "Admin_AdminServiceManager_GetAllBranchServiceOfCity_02": "Branch List Not Found",
   "Admin_AdminServiceManager_GetAllBranchServiceOfCity_03": "Branches Not Found",
-  "Home-visit-settings": "Home Visit Settings"
+  "Home-visit-settings": "Home Visit Settings",
+  "Admin_AdminServiceManager_GetAllBranchShiftServiceOfCity_01": "Branch Shift Details Found",
+  "Admin_AdminServiceManager_GetAllBranchShiftServiceOfCity_02": "Branch Shift Details Not Found"
 }

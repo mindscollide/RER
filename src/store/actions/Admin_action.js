@@ -49,6 +49,7 @@ import {
   getCountryServiceScreen,
   updateCountryServiceScreen,
   getAllBranchServiceCity,
+  getAllBranchShiftServiceCity,
 } from "../../commen/apis/Api_config";
 import { adminURL } from "../../commen/apis/Api_ends_points";
 import moment from "moment";
@@ -4802,6 +4803,115 @@ const getAllBranchServiceMainApi = (t, navigate, loadingFlag, data) => {
 
 // get all branch service of city api end
 
+//get all branch shift services of city api start
+const getAllBranchShiftSuccess = (response, message) => {
+  return {
+    type: actions.GET_ALL_BRANCH_SHIFT_CITY_SUCCESS,
+    response: response,
+    message: message,
+  };
+};
+
+const getAllBranchShiftFail = (message) => {
+  return {
+    type: actions.GET_ALL_BRANCH_SHIFT_CITY_FAIL,
+    message: message,
+  };
+};
+
+const getAllBranchSiftMainApi = (t, navigate, loadingFlag) => {
+  return async (dispatch) => {
+    if (!loadingFlag) {
+      dispatch(loader_Actions(true));
+    }
+    let form = new FormData();
+    form.append("RequestMethod", getAllBranchShiftServiceCity.RequestMethod);
+    form.append("RequestData", JSON.stringify());
+    await axios({
+      method: "post",
+      url: adminURL,
+      data: form,
+      headers: {
+        _token: JSON.parse(localStorage.getItem("token")),
+      },
+    })
+      .then(async (response) => {
+        if (response.data.responseCode === 200) {
+          if (response.data.responseCode === 417) {
+            dispatch(getAllBranchSiftMainApi(t, navigate, loadingFlag));
+          } else if (response.data.responseResult.isExecuted === true) {
+            if (
+              response.data.responseResult.responseMessage ===
+              "Admin_AdminServiceManager_GetAllBranchShiftServiceOfCity_01"
+            ) {
+              await dispatch(
+                getAllBranchShiftSuccess(
+                  response.data.responseResult.branchShiftServiceList,
+                  t(
+                    "Admin_AdminServiceManager_GetAllBranchShiftServiceOfCity_01"
+                  )
+                )
+              );
+              await dispatch(loader_Actions(false));
+            } else if (
+              response.data.responseResult.responseMessage ===
+              "Admin_AdminServiceManager_GetAllBranchShiftServiceOfCity_02"
+            ) {
+              await dispatch(
+                getAllBranchShiftFail(
+                  t(
+                    "Admin_AdminServiceManager_GetAllBranchShiftServiceOfCity_02"
+                  )
+                )
+              );
+              await dispatch(loader_Actions(false));
+            } else if (
+              response.data.responseResult.responseMessage ===
+              "Admin_AdminServiceManager_GetAllBranchShiftServiceOfCity_03"
+            ) {
+              await dispatch(
+                getAllBranchShiftFail(
+                  t("Admin_AdminServiceManager_GetBranchServices_03")
+                )
+              );
+              await dispatch(loader_Actions(false));
+            } else if (
+              response.data.responseResult.responseMessage ===
+              "Admin_AdminServiceManager_GetAllBranchShiftServiceOfCity_04"
+            ) {
+              await dispatch(
+                getAllBranchShiftFail(
+                  t("Admin_AdminServiceManager_UpdateCityBranch_03")
+                )
+              );
+              await dispatch(loader_Actions(false));
+            } else if (
+              response.data.responseResult.responseMessage ===
+              "Admin_AdminServiceManager_GetAllBranchShiftServiceOfCity_05"
+            ) {
+              await dispatch(getAllBranchShiftFail(t("something_went_wrong")));
+              await dispatch(loader_Actions(false));
+            } else {
+              await dispatch(getAllBranchShiftFail(t("something_went_wrong")));
+              await dispatch(loader_Actions(false));
+            }
+          } else {
+            await dispatch(getAllBranchShiftFail(t("something_went_wrong")));
+            await dispatch(loader_Actions(false));
+          }
+        } else {
+          await dispatch(getAllBranchShiftFail(t("something_went_wrong")));
+          await dispatch(loader_Actions(false));
+        }
+      })
+      .catch((response) => {
+        dispatch(getAllBranchShiftFail(t("something_went_wrong")));
+        dispatch(loader_Actions(false));
+      });
+  };
+};
+//get all branch shift services of city api end
+
 export {
   clearResponseMessageAdmin,
   AdminCleareState,
@@ -4872,4 +4982,5 @@ export {
   updateCountryServiceMainApi,
   getAllBranchServiceMainApi,
   getCityServiceListFail,
+  getAllBranchSiftMainApi,
 };

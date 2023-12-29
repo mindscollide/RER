@@ -235,6 +235,11 @@ const getAllBranchServiceCity = {
   RequestMethod: "ServiceManager.GetAllBranchServiceOfCity",
 };
 
+// Get all branch shift service of city in shift screen on country admin
+const getAllBranchShiftServiceCity = {
+  RequestMethod: "ServiceManager.GetAllBranchShiftServiceOfCity",
+};
+
 // ===================================COUNTRY ADMIN END ==========================================//
 
 export {
@@ -290,5 +295,6 @@ export {
   getCountryServiceScreen,
   updateCountryServiceScreen,
   getAllBranchServiceCity,
+  getAllBranchShiftServiceCity,
   // ===================================COUNTRY ADMIN END ==========================================//
 };

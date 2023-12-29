@@ -154,8 +154,10 @@ const ServiceCountryScreen = () => {
           <Col lg={12} md={12} sm={12} className="d-flex justify-content-start">
             <span className="shift-heading">
               {t("Service-wise-country-availability")}
-              <span className="shift-sub-heading">
-                {t("Saudi-arabia-riyadh")}
+              <span className="shift-sub-heading ms-2">
+                {currentLanguage === "en"
+                  ? "(" + localStorage.getItem("countryName") + ")"
+                  : "(" + localStorage.getItem("countryNameArabic") + ")"}
               </span>
             </span>
           </Col>

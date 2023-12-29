@@ -8,7 +8,7 @@ import { useTranslation } from "react-i18next";
 
 const CountryCityWise = () => {
   const { t } = useTranslation();
-
+  const currentLanguage = localStorage.getItem("i18nextLng");
   const { Panel } = Collapse;
   const [selectedOption, setSelectedOption] = useState(null);
   const [isPanelOpen, setIsPanelOpen] = useState(false);
@@ -104,7 +104,9 @@ const CountryCityWise = () => {
               {t("Country-level-shift-and-counter-details")}
               <span className="shift-sub-heading">
                 {" "}
-                {t("Saudi-arabia-riyadh")}
+                {currentLanguage === "en"
+                  ? "(" + localStorage.getItem("countryName") + ")"
+                  : "(" + localStorage.getItem("countryNameArabic") + ")"}
               </span>
             </span>
           </Col>

@@ -1,10 +1,25 @@
 .CountryCityBranch-paper {
   border-radius: 4px !important;
   height: 80vh !important;
+  max-height: 70vh !important;
+  overflow-y: auto !important;
   padding: 1.5rem 1rem !important;
   width: 100% !important;
-  overflow: hidden !important;
+  /* overflow: hidden !important; */
   background-color: #ffffff !important;
+}
+
+.CountryCityBranch-paper::-webkit-scrollbar {
+  width: 0.5rem !important;
+  height: 0.5rem !important;
+  border-radius: 20px !important;
+  background-color: #ffffff !important;
+}
+
+.CountryCityBranch-paper::-webkit-scrollbar-thumb {
+  border-radius: 20px !important;
+  background: #cecece !important;
+  margin-left: -15px !important;
 }
 
 .CityBranchShift-col {

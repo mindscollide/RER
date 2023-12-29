@@ -28,14 +28,8 @@ const CountryCityBranch = () => {
   const getAllBranchServiceData = useSelector(
     (state) => state.admin.getAllBranchServiceData
   );
-  console.log(cityList, "getAllBranchServiceData");
-
-  const [branchNameArabic, setBranchNameArabic] = useState("");
-  const [branchNameEnglish, setBranchNameEnglish] = useState("");
-  const [isBranchActive, setIsBranchActive] = useState(false);
 
   // states for city dropdown in select
-  // states for city branch shift in dropdown
   const [cityOptionListEnglish, setCityOptionListEnglish] = useState([]);
   const [cityOptionListArabic, setCityOptionListArabic] = useState([]);
   const [cityOptionValue, setCityOptionValue] = useState(null);
@@ -43,7 +37,7 @@ const CountryCityBranch = () => {
   const callApi = async () => {
     if (cityID !== null && cityID !== undefined && cityID !== 0) {
       // 2 pasiing in prop for check that we have to call getCityEmployeeMainApi all api from here on page route from side bar
-      await dispatch(getCountryCitiesApi(t, navigate, loadingFlag, cityID));
+      await dispatch(getCountryCitiesApi(t, navigate, loadingFlag, 1, cityID));
     }
   };
 
@@ -110,12 +104,14 @@ const CountryCityBranch = () => {
               label: t("Admin_AdminServiceManager_UpdateCityBranch_03"), // Example label for when cityID is not found
             };
           }
+          setCityOptionValue(data);
         } else {
           // If cityID is null or undefined, use the first city in cityList.cities
           data = {
             value: cityList.cities[0].cityID,
             label: cityList.cities[0].cityNameEnglish,
           };
+          setCityOptionValue(data);
         }
         setCityOptionValue(data);
       } else {
@@ -149,7 +145,7 @@ const CountryCityBranch = () => {
       setCityOptionListEnglish([]);
       setCityOptionListArabic([]);
     }
-  }, [cityList]);
+  }, [cityList, currentLanguage]);
 
   // it will show data on collapse
   useEffect(() => {
@@ -160,24 +156,8 @@ const CountryCityBranch = () => {
     }
   }, [getAllBranchServiceData]);
 
+  // Initialize the open/close state for each panel based on the data
   useEffect(() => {
-    if (getAllBranchServiceData !== null) {
-      setRows(getAllBranchServiceData);
-      // Assuming you have only one cityBranchModel in the array for simplicity
-      const cityBranchModel = getAllBranchServiceData[0]?.cityBranchModel;
-      setBranchNameArabic(cityBranchModel?.branchNameArabic || "");
-      setBranchNameEnglish(cityBranchModel?.branchNameEnglish || "");
-      setIsBranchActive(cityBranchModel?.isBranchActive || false);
-    } else {
-      setRows([]);
-      setBranchNameArabic("");
-      setBranchNameEnglish("");
-      setIsBranchActive(false);
-    }
-  }, [getAllBranchServiceData]);
-
-  useEffect(() => {
-    // Initialize the open/close state for each panel based on the data
     if (getAllBranchServiceData) {
       setPanelOpenStates(
         getAllBranchServiceData.map((_, index) => index === 0)
@@ -190,8 +170,8 @@ const CountryCityBranch = () => {
     setCityOptionValue(cityShiftOptionValue);
   };
 
+  // Toggle the open/close state of the clicked panel
   const togglePanel = (index) => {
-    // Toggle the open/close state of the clicked panel
     setPanelOpenStates((prevStates) =>
       prevStates.map((state, i) => (i === index ? !state : state))
     );
@@ -229,14 +209,13 @@ const CountryCityBranch = () => {
   const handleSearch = async () => {
     if (cityOptionValue != null) {
       let newData = {
-        CityID: cityID,
-        CountryID: Number(cityOptionValue.value),
+        CityID: Number(cityOptionValue.value),
+        CountryID: Number(localStorage.getItem("countryID")),
       };
       await dispatch(
         getAllBranchServiceMainApi(t, navigate, loadingFlag, newData)
       );
     } else {
-      // add snackbar fun here
     }
   };
 
@@ -247,9 +226,10 @@ const CountryCityBranch = () => {
           <Col lg={12} md={12} sm={12} className="d-flex justify-content-start">
             <span className="shift-heading">
               {t("City-wise-service-availability")}
-              <span className="shift-sub-heading">
-                {" "}
-                {t("Saudi-arabia-riyadh")}
+              <span className="shift-sub-heading ms-2">
+                {currentLanguage === "en"
+                  ? "(" + localStorage.getItem("countryName") + ")"
+                  : "(" + localStorage.getItem("countryNameArabic") + ")"}
               </span>
             </span>
           </Col>
@@ -300,10 +280,6 @@ const CountryCityBranch = () => {
                     {getAllBranchServiceData !== null &&
                       getAllBranchServiceData.map((data, index) => (
                         <>
-                          {console.log(
-                            data,
-                            "cityBranchServiceListcityBranchServiceList"
-                          )}
                           <Panel
                             key={index.toString()}
                             header={

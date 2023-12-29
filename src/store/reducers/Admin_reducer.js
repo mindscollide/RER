@@ -47,6 +47,7 @@ const initialState = {
   countryServiceScreenList: null,
   updateCountryServiceList: null,
   getAllBranchServiceData: null,
+  getAllBranchShiftData: null,
 };
 
 const adminReducer = (state = initialState, action) => {
@@ -727,7 +728,7 @@ const adminReducer = (state = initialState, action) => {
         admin_ResponseMessage: action.message,
       };
 
-    // update country service screen in country Admin
+    // get all Branch service in country Admin
     case actions.GET_ALL_BRANCH_SERVICE_CITY_SUCCESS:
       return {
         ...state,
@@ -739,6 +740,21 @@ const adminReducer = (state = initialState, action) => {
       return {
         ...state,
         getAllBranchServiceData: null,
+        admin_ResponseMessage: action.message,
+      };
+
+    // get all Branch Shify in country Admin
+    case actions.GET_ALL_BRANCH_SHIFT_CITY_SUCCESS:
+      return {
+        ...state,
+        getAllBranchShiftData: action.response,
+        admin_ResponseMessage: action.message,
+      };
+
+    case actions.GET_ALL_BRANCH_SHIFT_CITY_FAIL:
+      return {
+        ...state,
+        getAllBranchShiftData: null,
         admin_ResponseMessage: action.message,
       };
 
