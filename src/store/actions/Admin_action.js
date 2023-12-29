@@ -1904,8 +1904,13 @@ const getCityBranchListFail = (message) => {
   };
 };
 
-const getCityBranchListApi = (t, navigate, loadingFlag) => {
-  let data = { CityID: Number(localStorage.getItem("cityID")) };
+const getCityBranchListApi = (t, navigate, loadingFlag, id) => {
+  let data = {};
+  if (id !== undefined && id !== null) {
+    data = { CityID: Number(id) };
+  } else {
+    data = { CityID: Number(localStorage.getItem("cityID")) };
+  }
   return async (dispatch) => {
     if (!loadingFlag) {
       dispatch(loader_Actions(true));
@@ -4820,14 +4825,14 @@ const getAllBranchShiftFail = (message) => {
   };
 };
 
-const getAllBranchSiftMainApi = (t, navigate, loadingFlag) => {
+const getAllBranchSiftMainApi = (t, data, navigate, loadingFlag) => {
   return async (dispatch) => {
     if (!loadingFlag) {
       dispatch(loader_Actions(true));
     }
     let form = new FormData();
     form.append("RequestMethod", getAllBranchShiftServiceCity.RequestMethod);
-    form.append("RequestData", JSON.stringify());
+    form.append("RequestData", JSON.stringify(data));
     await axios({
       method: "post",
       url: adminURL,
@@ -4839,7 +4844,7 @@ const getAllBranchSiftMainApi = (t, navigate, loadingFlag) => {
       .then(async (response) => {
         if (response.data.responseCode === 200) {
           if (response.data.responseCode === 417) {
-            dispatch(getAllBranchSiftMainApi(t, navigate, loadingFlag));
+            dispatch(getAllBranchSiftMainApi(t, data, navigate, loadingFlag));
           } else if (response.data.responseResult.isExecuted === true) {
             if (
               response.data.responseResult.responseMessage ===
@@ -4847,7 +4852,7 @@ const getAllBranchSiftMainApi = (t, navigate, loadingFlag) => {
             ) {
               await dispatch(
                 getAllBranchShiftSuccess(
-                  response.data.responseResult.branchShiftServiceList,
+                  response.data.responseResult,
                   t(
                     "Admin_AdminServiceManager_GetAllBranchShiftServiceOfCity_01"
                   )
@@ -4859,7 +4864,8 @@ const getAllBranchSiftMainApi = (t, navigate, loadingFlag) => {
               "Admin_AdminServiceManager_GetAllBranchShiftServiceOfCity_02"
             ) {
               await dispatch(
-                getAllBranchShiftFail(
+                getAllBranchShiftSuccess(
+                  response.data.responseResult,
                   t(
                     "Admin_AdminServiceManager_GetAllBranchShiftServiceOfCity_02"
                   )

@@ -166,6 +166,11 @@ const CountryCityBranch = () => {
     }
   }, [getAllBranchServiceData]);
 
+  console.log(
+    getAllBranchServiceData,
+    "getAllBranchServiceDatagetAllBranchServiceData"
+  );
+
   //onChange handler of cities dropdown
   const onChangeCityHandler = (cityShiftOptionValue) => {
     setCityOptionValue(cityShiftOptionValue);
