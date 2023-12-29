@@ -54,10 +54,11 @@ const CountryCityWiseShift = () => {
     value: 0,
     label: "",
   });
-
+  const [isFirstRender, setIsFirstRender] = useState(false);
   //Country City dropdownApi
   useEffect(() => {
     dispatch(getCountryCitiesApi(t, navigate, Loading));
+    setIsFirstRender(true);
   }, []);
 
   //Country City  Data dropdown
@@ -153,15 +154,20 @@ const CountryCityWiseShift = () => {
     });
   };
 
-  // useEffect(() => {
-  //   if (citySelectValue.value === 1 && branchSelectValue.value === 1) {
-  //     let data = {
-  //       BranchID: Number(branchSelectValue.value),
-  //       CityID: Number(citySelectValue.value),
-  //     };
-  //     dispatch(getAllBranchSiftMainApi(t, data, navigate, Loading));
-  //   }
-  // }, []);
+  useEffect(() => {
+    if (
+      citySelectValue.value !== 0 &&
+      branchSelectValue.value !== 0 &&
+      isFirstRender
+    ) {
+      setIsFirstRender(false);
+      let data = {
+        BranchID: Number(branchSelectValue.value),
+        CityID: Number(citySelectValue.value),
+      };
+      dispatch(getAllBranchSiftMainApi(t, data, navigate, Loading));
+    }
+  }, [citySelectValue.value, branchSelectValue.value, isFirstRender]);
 
   const hitSearchButton = () => {
     let data = {
