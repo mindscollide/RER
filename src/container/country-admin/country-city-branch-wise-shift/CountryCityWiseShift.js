@@ -100,7 +100,6 @@ const CountryCityWiseShift = () => {
     // setCityselectedOption(selectedCityOptions);
     // setSelectedCityID(selectedCityOptions.value);
   };
-  //Country Branch dropdownApi
   useEffect(() => {
     if (citySelectValue.value !== 0) {
       dispatch(
@@ -126,11 +125,7 @@ const CountryCityWiseShift = () => {
         label: countryBranchShiftWiseSelector[0].branchNameEnglish,
         value: countryBranchShiftWiseSelector[0].branchID,
       });
-      let data = {
-        BranchID: Number(countryBranchShiftWiseSelector[0].branchID),
-        CityID: Number(citySelectValue.value),
-      };
-      dispatch(getAllBranchSiftMainApi(t, data, navigate, Loading));
+
       if (currentLanguage === "en") {
         setCountryBranchWiseShift(
           countryBranchShiftWiseSelector.map((item) => ({
