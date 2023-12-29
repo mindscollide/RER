@@ -42,6 +42,7 @@ const CountryCityWiseShift = () => {
   const [isPanelOpenThree, setIsPanelOpenThree] = useState(false);
   const [countryCityWiseShift, setCountryCityWiseShift] = useState([]);
   const [countryBranchWiseShift, setCountryBranchWiseShift] = useState([]);
+  const [branchSelectedOptions, setBranchSelectedOptions] = useState(null);
   const [selectedCityID, setSelectedCityID] = useState(null);
 
   //Country City dropdownApi
@@ -74,7 +75,7 @@ const CountryCityWiseShift = () => {
     }
   }, [countryCityShiftWiseSelector, currentLanguage]);
 
-  //Country City  Data dropdown OnChagnwe
+  //Country City  Data dropdown OnChange
   const handleSelectCity = (selectedCityOptions) => {
     console.log(selectedCityOptions, "selectedCityOptionsselectedCityOptions");
     setCityselectedOption(selectedCityOptions);
@@ -91,7 +92,6 @@ const CountryCityWiseShift = () => {
   }, [selectedCityID]);
 
   //Country Branch  Data dropdown
-
   useEffect(() => {
     if (
       countryBranchShiftWiseSelector !== null &&
@@ -115,6 +115,16 @@ const CountryCityWiseShift = () => {
       }
     }
   }, [countryBranchShiftWiseSelector, currentLanguage]);
+
+  //Country City  Data dropdown OnChange
+  const handleSelectedBranch = (selectedBranchOptions) => {
+    setBranchSelectedOptions(selectedBranchOptions);
+  };
+
+  console.log(
+    branchSelectedOptions,
+    "branchSelectedOptionsbranchSelectedOptions"
+  );
 
   const togglePanel = () => {
     setIsPanelOpen(!isPanelOpen);
@@ -205,7 +215,7 @@ const CountryCityWiseShift = () => {
                     <label className="text-labels">{t("Branch")}</label>
                     <Select
                       // defaultValue={selectedOption}
-                      // onChange={setSelectedOption}
+                      onChange={handleSelectedBranch}
                       options={countryBranchWiseShift}
                       isSearchable={true}
                       isDisabled={selectedCityID === null ? true : false}
