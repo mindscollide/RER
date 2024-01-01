@@ -49,6 +49,10 @@ const initialState = {
   getAllBranchServiceData: null,
   getAllBranchShiftData: null,
   getAllBranchCounterData: null,
+  getCountryListData: null,
+  addCountryListData: null,
+  updateCountryListData: null,
+  deleteCountryListData: null,
 };
 
 const adminReducer = (state = initialState, action) => {
@@ -771,6 +775,68 @@ const adminReducer = (state = initialState, action) => {
       return {
         ...state,
         getAllBranchCounterData: null,
+        admin_ResponseMessage: action.message,
+      };
+
+    // ===================================GLOBAL ADMIN==========================================//
+
+    // get country List in global Admin
+    case actions.GET_COUNTRY_LIST_SUCCESS:
+      return {
+        ...state,
+        getCountryListData: action.response,
+        admin_ResponseMessage: action.message,
+      };
+
+    case actions.GET_COUNTRY_LIST_FAIL:
+      return {
+        ...state,
+        getCountryListData: null,
+        admin_ResponseMessage: action.message,
+      };
+
+    // add Country List in global Admin
+    case actions.ADD_COUNTRY_LIST_SUCCESS:
+      return {
+        ...state,
+        addCountryListData: action.response,
+        admin_ResponseMessage: action.message,
+      };
+
+    case actions.ADD_COUNTRY_LIST_FAIL:
+      return {
+        ...state,
+        addCountryListData: null,
+        admin_ResponseMessage: action.message,
+      };
+
+    // update Country List in global Admin
+    case actions.UPDATE_COUNTRY_LIST_SUCCESS:
+      return {
+        ...state,
+        updateCountryListData: action.response,
+        admin_ResponseMessage: action.message,
+      };
+
+    case actions.UPDATE_COUNTRY_LIST_FAIL:
+      return {
+        ...state,
+        updateCountryListData: null,
+        admin_ResponseMessage: action.message,
+      };
+
+    // delete Country List in global Admin
+    case actions.DELETE_COUNTRY_LIST_SUCCESS:
+      return {
+        ...state,
+        deleteCountryListData: action.response,
+        admin_ResponseMessage: action.message,
+      };
+
+    case actions.DELETE_COUNTRY_LIST_FAIL:
+      return {
+        ...state,
+        deleteCountryListData: null,
         admin_ResponseMessage: action.message,
       };
 

@@ -9,6 +9,7 @@ import {
   deleteCityBranchApi,
   deleteExistingEmployeeMainApi,
   deleteCountryAdminApiMain,
+  deleteCountryMainApi,
 } from "../../../store/actions/Admin_action";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router";
@@ -90,6 +91,13 @@ const DeleteEmployeeModal = ({
           data,
           setDeleteModal
         )
+      );
+    } else if (route === "CountryMain") {
+      let data = {
+        CountryID: deleteNewID,
+      };
+      await dispatch(
+        deleteCountryMainApi(t, navigate, Loading, data, setDeleteCountryModal)
       );
     }
   };

@@ -270,3 +270,21 @@ export const SET_COUNTRY_SERVICE_SCREEN_COMPONENT =
 // For service country screen component
 export const SET_SERVICE_COUNTRY_SCREEN_COMPONENT =
   "SET_SERVICE_COUNTRY_SCREEN_COMPONENT";
+
+// Get Country List in COUNTRY MAIN screen on Global admin
+export const GET_COUNTRY_LIST_SUCCESS = "GET_COUNTRY_LIST_SUCCESS";
+export const GET_COUNTRY_LIST_FAIL = "GET_COUNTRY_LIST_FAIL";
+
+// ADD Country List in COUNTRY MAIN screen on Global admin
+export const ADD_COUNTRY_LIST_SUCCESS = "ADD_COUNTRY_LIST_SUCCESS";
+export const ADD_COUNTRY_LIST_FAIL = "ADD_COUNTRY_LIST_FAIL";
+
+// UPDATE Country List in COUNTRY MAIN screen on Global admin
+export const UPDATE_COUNTRY_LIST_SUCCESS = "UPDATE_COUNTRY_LIST_SUCCESS";
+export const UPDATE_COUNTRY_LIST_FAIL = "UPDATE_COUNTRY_LIST_FAIL";
+
+// DELETE Country List in COUNTRY MAIN screen on Global admin
+export const DELETE_COUNTRY_LIST_SUCCESS = "DELETE_COUNTRY_LIST_SUCCESS";
+export const DELETE_COUNTRY_LIST_FAIL = "DELETE_COUNTRY_LIST_FAIL";
+
+// ===================================GLOBAL ADMIN END ==========================================//

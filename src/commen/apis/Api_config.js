@@ -247,6 +247,30 @@ const getAllBranchCounterServiceCity = {
 
 // ===================================COUNTRY ADMIN END ==========================================//
 
+// ===================================GLOBAL ADMIN START ==========================================//
+
+// Get Country List in COUNTRY MAIN screen on Global admin
+const getCountryList = {
+  RequestMethod: "ServiceManager.GetCountryList",
+};
+
+// Add Country List in COUNTRY MAIN screen on Global admin
+const addCountryList = {
+  RequestMethod: "ServiceManager.AddCountry",
+};
+
+// Update Country List in COUNTRY MAIN screen on Global admin
+const updateCountryList = {
+  RequestMethod: "ServiceManager.UpdateCountry",
+};
+
+// Delete Country List in COUNTRY MAIN screen on Global admin
+const deleteCountryList = {
+  RequestMethod: "ServiceManager.DeleteCountry",
+};
+
+// ===================================GLOBAL ADMIN END ==========================================//
+
 export {
   logIn,
   roleList,
@@ -303,4 +327,11 @@ export {
   getAllBranchShiftServiceCity,
   getAllBranchCounterServiceCity,
   // ===================================COUNTRY ADMIN END ==========================================//
+
+  // ===================================GLOBAL ADMIN START ==========================================//
+  getCountryList,
+  addCountryList,
+  updateCountryList,
+  deleteCountryList,
+  // ===================================GLOBAL ADMIN END ==========================================//
 };
