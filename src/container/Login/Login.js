@@ -7,6 +7,7 @@ import { Button, Notification } from "../../components/elements";
 import { useTranslation } from "react-i18next";
 import Header from "../../components/layout/header/Header";
 import { setLogIn } from "../../store/actions/Auth_action";
+import { emailOnlyRegex, validateEmail } from "../../commen/functions/regex";
 const Login = () => {
   const { auth } = useSelector((state) => state);
   const dispatch = useDispatch();
@@ -15,9 +16,10 @@ const Login = () => {
 
   const [errorBar, setErrorBar] = useState("");
 
-  const [open, setOpen] = useState({
-    open: false,
-    message: "",
+  const [openNotification, setOpenNotification] = useState({
+    loginFlag: false,
+    loginNotification: null,
+    severity: "none",
   });
 
   const [auditCredentials, setAuditCredentials] = useState({
@@ -51,21 +53,50 @@ const Login = () => {
   const loginValidateHandler = (e) => {
     e.preventDefault();
     if (auditCredentials.UserName !== "" && auditCredentials.Password !== "") {
-      let data = {
-        UserEmail: auditCredentials.UserName,
-        UserPassword: auditCredentials.Password,
-        DeviceID: "1",
-        Device: "browser",
-      };
-      setErrorBar(false);
-      dispatch(setLogIn(t, navigate, data, i18n));
+      const isEmailValidValue = validateEmail(auditCredentials.UserName);
+
+      if (isEmailValidValue) {
+        setErrorBar(false);
+        const data = {
+          UserEmail: auditCredentials.UserName,
+          UserPassword: auditCredentials.Password,
+          DeviceID: "1",
+          Device: "browser",
+        };
+        dispatch(setLogIn(t, navigate, data, i18n));
+      } else {
+        setErrorBar(true);
+        setOpenNotification({
+          ...openNotification,
+          loginFlag: true,
+          loginNotification: t("Email-format-is-incorrect"),
+          severity: "error",
+        });
+
+        // Close the notification after 3 seconds
+        setTimeout(() => {
+          setOpenNotification({
+            ...openNotification,
+            loginFlag: false,
+          });
+        }, 3000);
+      }
     } else {
       setErrorBar(true);
-      setOpen({
-        ...open,
-        open: true,
-        message: "Please Fill All Fields",
+      setOpenNotification({
+        ...openNotification,
+        loginFlag: true,
+        loginNotification: t("Please-fill-all-fields"),
+        severity: "error",
       });
+
+      // Close the notification after 3 seconds
+      setTimeout(() => {
+        setOpenNotification({
+          ...openNotification,
+          loginFlag: false,
+        });
+      }, 3000);
     }
   };
 
@@ -199,7 +230,17 @@ const Login = () => {
           </Row>
         </Container>
       </Col>
-      <Notification setOpen={setOpen} open={open.open} message={open.message} />
+      <Notification
+        show={openNotification.loginFlag}
+        hide={setOpenNotification}
+        message={openNotification.loginNotification}
+        severity={openNotification.severity}
+        notificationClass={
+          openNotification.severity
+            ? "notification-error"
+            : "notification-email"
+        }
+      />
       {/* {auth.Loading ? <Loader /> : null} */}
     </Fragment>
   );

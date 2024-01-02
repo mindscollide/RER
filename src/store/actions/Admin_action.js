@@ -55,6 +55,10 @@ import {
   addCountryList,
   updateCountryList,
   deleteCountryList,
+  getGlobalServiceList,
+  addGlobalServiceList,
+  updateGlobalServiceList,
+  deleteGlobalServiceList,
 } from "../../commen/apis/Api_config";
 import { adminURL } from "../../commen/apis/Api_ends_points";
 import moment from "moment";
@@ -863,8 +867,21 @@ const deleteBranchShiftApi = (t, navigate, loadingFlag, data, setModalFlag) => {
                 )
               );
               await dispatch(loader_Actions(false));
-            } else {
-              dispatch(deleteBranchShiftFail(t("something_went_wrong")));
+            } else if (
+              response.data.responseResult.responseMessage ===
+              "Admin_AdminServiceManager_DeleteBranchShift_04"
+            ) {
+              await dispatch(addCountryAdminFail(t("something_went_wrong")));
+              await dispatch(loader_Actions(false));
+            } else if (
+              response.data.responseResult.responseMessage ===
+              "Admin_AdminServiceManager_DeleteBranchShift_05"
+            ) {
+              await dispatch(
+                addCountryAdminFail(
+                  t("Admin_AdminServiceManager_DeleteBranchShift_05")
+                )
+              );
               await dispatch(loader_Actions(false));
             }
           } else {
@@ -1871,6 +1888,16 @@ const deleteBranchCounterApi = (
                 deleteBranchCounterFail(t("something_went_wrong"))
               );
               await dispatch(loader_Actions(false));
+            } else if (
+              response.data.responseResult.responseMessage ===
+              "Admin_AdminServiceManager_DeleteBranchCounter_05"
+            ) {
+              await dispatch(
+                deleteBranchCounterFail(
+                  t("Admin_AdminServiceManager_DeleteBranchCounter_05")
+                )
+              );
+              await dispatch(loader_Actions(false));
             } else {
               dispatch(deleteBranchCounterFail(t("something_went_wrong")));
             }
@@ -2144,6 +2171,22 @@ const deleteCityBranchApi = (t, navigate, loadingFlag, data, setModalFlag) => {
               await dispatch(
                 deleteCityBranchFail(
                   t("Admin_AdminServiceManager_UpdateCityBranch_03")
+                )
+              );
+              await dispatch(loader_Actions(false));
+            } else if (
+              response.data.responseResult.responseMessage ===
+              "Admin_AdminServiceManager_DeleteCityBranch_04"
+            ) {
+              await dispatch(addCountryAdminFail(t("something_went_wrong")));
+              await dispatch(loader_Actions(false));
+            } else if (
+              response.data.responseResult.responseMessage ===
+              "Admin_AdminServiceManager_DeleteCityBranch_05"
+            ) {
+              await dispatch(
+                addCountryAdminFail(
+                  t("Admin_AdminServiceManager_DeleteCityBranch_05")
                 )
               );
               await dispatch(loader_Actions(false));
@@ -3244,6 +3287,16 @@ const deleteExistingEmployeeMainApi = (
               "Admin_AdminServiceManager_DeleteExistingEmployeeOfCity_04"
             ) {
               dispatch(deleteExistingEmployeeFail(t("something_went_wrong")));
+              await dispatch(loader_Actions(false));
+            } else if (
+              response.data.responseResult.responseMessage ===
+              "Admin_AdminServiceManager_DeleteExistingEmployeeOfCity_05"
+            ) {
+              await dispatch(
+                deleteExistingEmployeeFail(
+                  t("Admin_AdminServiceManager_DeleteExistingEmployeeOfCity_05")
+                )
+              );
               await dispatch(loader_Actions(false));
             } else {
               dispatch(deleteExistingEmployeeFail(t("something_went_wrong")));
@@ -5462,8 +5515,424 @@ const deleteCountryMainApi = (
       });
   };
 };
-
 // delete country List api in Global Admin End
+
+// get Global Service List api in Global Admin Start
+const getGlobalServiceSuccess = (response, message) => {
+  return {
+    type: actions.GET_GLOBAL_SERVICE_LIST_SUCCESS,
+    response: response,
+    message: message,
+  };
+};
+
+const getGlobalServiceFail = (message) => {
+  return {
+    type: actions.GET_GLOBAL_SERVICE_LIST_FAIL,
+    message: message,
+  };
+};
+
+const getGlobalServiceMainApi = (t, navigate, loadingFlag) => {
+  return async (dispatch) => {
+    if (!loadingFlag) {
+      dispatch(loader_Actions(true));
+    }
+    let form = new FormData();
+    form.append("RequestMethod", getGlobalServiceList.RequestMethod);
+    // form.append("RequestData", JSON.stringify());
+    await axios({
+      method: "post",
+      url: adminURL,
+      data: form,
+      headers: {
+        _token: JSON.parse(localStorage.getItem("token")),
+      },
+    })
+      .then(async (response) => {
+        if (response.data.responseCode === 200) {
+          if (response.data.responseCode === 417) {
+            dispatch(getGlobalServiceMainApi(t, navigate, loadingFlag));
+          } else if (response.data.responseResult.isExecuted === true) {
+            if (
+              response.data.responseResult.responseMessage ===
+              "Admin_AdminServiceManager_GetGlobalServiceList_01"
+            ) {
+              await dispatch(
+                getGlobalServiceSuccess(
+                  response.data.responseResult.servicesList,
+                  t("Admin_AdminServiceManager_GetGlobalServiceList_01")
+                )
+              );
+
+              await dispatch(loader_Actions(false));
+            } else if (
+              response.data.responseResult.responseMessage ===
+              "Admin_AdminServiceManager_GetGlobalServiceList_02"
+            ) {
+              await dispatch(
+                getGlobalServiceFail(
+                  response.data.responseResult.responseMessage,
+                  t("Admin_AdminServiceManager_GetGlobalServiceList_02")
+                )
+              );
+
+              await dispatch(loader_Actions(false));
+            } else if (
+              response.data.responseResult.responseMessage ===
+              "Admin_AdminServiceManager_GetGlobalServiceList_03"
+            ) {
+              await dispatch(getGlobalServiceFail(t("something_went_wrong")));
+              await dispatch(loader_Actions(false));
+            } else {
+              await dispatch(getGlobalServiceFail(t("something_went_wrong")));
+              await dispatch(loader_Actions(false));
+            }
+          } else {
+            await dispatch(getGlobalServiceFail(t("something_went_wrong")));
+            await dispatch(loader_Actions(false));
+          }
+        } else {
+          await dispatch(getGlobalServiceFail(t("something_went_wrong")));
+          await dispatch(loader_Actions(false));
+        }
+      })
+      .catch((response) => {
+        dispatch(getGlobalServiceFail(t("something_went_wrong")));
+        dispatch(loader_Actions(false));
+      });
+  };
+};
+// get Global Service List api in Global Admin End
+
+// Add Global Service LIst api in Global Admin Start
+const addGlobalServiceSuccess = (response, message) => {
+  return {
+    type: actions.ADD_GLOBAL_SERVICE_LIST_SUCCESS,
+    response: response,
+    message: message,
+  };
+};
+
+const addGlobalServiceFail = (message) => {
+  return {
+    type: actions.ADD_GLOBAL_SERVICE_LIST_FAIL,
+    message: message,
+  };
+};
+
+const addGlobalServiceMainApi = (t, navigate, loadingFlag, Data, setState) => {
+  return async (dispatch) => {
+    if (!loadingFlag) {
+      dispatch(loader_Actions(true));
+    }
+    let form = new FormData();
+    form.append("RequestMethod", addGlobalServiceList.RequestMethod);
+    form.append("RequestData", JSON.stringify(Data));
+    await axios({
+      method: "post",
+      url: adminURL,
+      data: form,
+      headers: {
+        _token: JSON.parse(localStorage.getItem("token")),
+      },
+    })
+      .then(async (response) => {
+        if (response.data.responseCode === 200) {
+          if (response.data.responseCode === 417) {
+            dispatch(
+              addGlobalServiceMainApi(t, navigate, loadingFlag, Data, setState)
+            );
+          } else if (response.data.responseResult.isExecuted === true) {
+            if (
+              response.data.responseResult.responseMessage ===
+              "Admin_AdminServiceManager_AddGlobalService_01"
+            ) {
+              setState({
+                ServiceNameEnglish: "",
+                ServiceNameArabic: "",
+                IsServiceActive: false,
+              });
+              await dispatch(
+                addGlobalServiceSuccess(
+                  response.data.responseResult.serviceObject,
+                  t("Admin_AdminServiceManager_AddGlobalService_01")
+                )
+              );
+            } else if (
+              response.data.responseResult.responseMessage ===
+              "Admin_AdminServiceManager_AddGlobalService_02"
+            ) {
+              await dispatch(
+                addGlobalServiceFail(
+                  t("Admin_AdminServiceManager_AddGlobalService_02")
+                )
+              );
+              await dispatch(loader_Actions(false));
+            } else if (
+              response.data.responseResult.responseMessage ===
+              "Admin_AdminServiceManager_AddGlobalService_03"
+            ) {
+              await dispatch(
+                addGlobalServiceFail(
+                  t("Admin_AdminServiceManager_AddGlobalService_03")
+                )
+              );
+              await dispatch(loader_Actions(false));
+            } else if (
+              response.data.responseResult.responseMessage ===
+              "Admin_AdminServiceManager_AddGlobalService_04"
+            ) {
+              await dispatch(addGlobalServiceFail(t("something_went_wrong")));
+              await dispatch(loader_Actions(false));
+            } else {
+              dispatch(addGlobalServiceFail(t("something_went_wrong")));
+            }
+          } else {
+            await dispatch(addGlobalServiceFail(t("something_went_wrong")));
+            await dispatch(loader_Actions(false));
+          }
+        } else {
+          await dispatch(addGlobalServiceFail(t("something_went_wrong")));
+          await dispatch(loader_Actions(false));
+        }
+      })
+      .catch((response) => {
+        dispatch(addGlobalServiceFail(t("something_went_wrong")));
+        dispatch(loader_Actions(false));
+      });
+  };
+};
+// Add Global Service LIst api in Global Admin End
+
+// Update Global Service LIst api in Global Admin Start
+const updateGlobalServiceSuccess = (response, message) => {
+  return {
+    type: actions.UPDATE_GLOBAL_SERVICE_SUCCESS,
+    response: response,
+    message: message,
+  };
+};
+
+const updateGlobalServiceFail = (message) => {
+  return {
+    type: actions.UPDATE_GLOBAL_SERVICE_FAIL,
+    message: message,
+  };
+};
+
+const updateGlobalServiceMainApi = (
+  t,
+  navigate,
+  loadingFlag,
+  Data,
+  setState,
+  setCheckFlag
+) => {
+  return async (dispatch) => {
+    if (!loadingFlag) {
+      dispatch(loader_Actions(true));
+    }
+    let form = new FormData();
+    form.append("RequestMethod", updateGlobalServiceList.RequestMethod);
+    form.append("RequestData", JSON.stringify(Data));
+    await axios({
+      method: "post",
+      url: adminURL,
+      data: form,
+      headers: {
+        _token: JSON.parse(localStorage.getItem("token")),
+      },
+    })
+      .then(async (response) => {
+        if (response.data.responseCode === 200) {
+          if (response.data.responseCode === 417) {
+            dispatch(
+              updateGlobalServiceMainApi(
+                t,
+                navigate,
+                loadingFlag,
+                Data,
+                setState,
+                setCheckFlag
+              )
+            );
+          } else if (response.data.responseResult.isExecuted === true) {
+            if (
+              response.data.responseResult.responseMessage ===
+              "Admin_AdminServiceManager_UpdateGlobalService_01"
+            ) {
+              await setState({
+                ServiceNameEnglish: "",
+                ServiceNameArabic: "",
+                IsServiceActive: false,
+                ServiceID: 0,
+              });
+              await setCheckFlag(false);
+              await dispatch(
+                updateGlobalServiceSuccess(
+                  response.data.responseResult.serviceObject,
+                  t("Admin_AdminServiceManager_UpdateGlobalService_01")
+                )
+              );
+            } else if (
+              response.data.responseResult.responseMessage ===
+              "Admin_AdminServiceManager_UpdateGlobalService_02"
+            ) {
+              await dispatch(
+                updateGlobalServiceFail(
+                  t("Admin_AdminServiceManager_UpdateGlobalService_02")
+                )
+              );
+              await dispatch(loader_Actions(false));
+            } else if (
+              response.data.responseResult.responseMessage ===
+              "Admin_AdminServiceManager_UpdateGlobalService_03"
+            ) {
+              await dispatch(
+                updateGlobalServiceFail(
+                  t("Admin_AdminServiceManager_UpdateGlobalService_03")
+                )
+              );
+              await dispatch(loader_Actions(false));
+            } else if (
+              response.data.responseResult.responseMessage ===
+              "Admin_AdminServiceManager_UpdateGlobalService_04"
+            ) {
+              dispatch(updateGlobalServiceFail(t("something_went_wrong")));
+              await dispatch(loader_Actions(false));
+            } else {
+              dispatch(updateGlobalServiceFail(t("something_went_wrong")));
+              await dispatch(loader_Actions(false));
+            }
+          } else {
+            await dispatch(updateGlobalServiceFail(t("something_went_wrong")));
+            await dispatch(loader_Actions(false));
+          }
+        } else {
+          await dispatch(updateGlobalServiceFail(t("something_went_wrong")));
+          await dispatch(loader_Actions(false));
+        }
+      })
+      .catch((response) => {
+        dispatch(updateGlobalServiceFail(t("something_went_wrong")));
+        dispatch(loader_Actions(false));
+      });
+  };
+};
+// Update Global Service LIst api in Global Admin End
+
+//Delete Global Service List api in Global Admin Start
+const deleteGlobalServiceSuccess = (response, message) => {
+  return {
+    type: actions.DELETE_GLOBAL_SERVICE_SUCCESS,
+    response: response,
+    message: message,
+  };
+};
+
+const deleteGlobalServiceFail = (message) => {
+  return {
+    type: actions.DELETE_GLOBAL_SERVICE_FAIL,
+    message: message,
+  };
+};
+
+const deleteGlobalServiceMainApi = (
+  t,
+  navigate,
+  loadingFlag,
+  data,
+  setGlobalModal
+) => {
+  return async (dispatch) => {
+    if (!loadingFlag) {
+      dispatch(loader_Actions(true));
+    }
+    let form = new FormData();
+    form.append("RequestMethod", deleteGlobalServiceList.RequestMethod);
+    form.append("RequestData", JSON.stringify(data));
+    await axios({
+      method: "post",
+      url: adminURL,
+      data: form,
+      headers: {
+        _token: JSON.parse(localStorage.getItem("token")),
+      },
+    })
+      .then(async (response) => {
+        if (response.data.responseCode === 200) {
+          if (response.data.responseCode === 417) {
+            dispatch(
+              deleteGlobalServiceMainApi(
+                t,
+                navigate,
+                loadingFlag,
+                data,
+                setGlobalModal
+              )
+            );
+          } else if (response.data.responseResult.isExecuted === true) {
+            if (
+              response.data.responseResult.responseMessage ===
+              "Admin_AdminServiceManager_DeleteGlobalService_01"
+            ) {
+              setGlobalModal(false);
+              await dispatch(
+                deleteGlobalServiceSuccess(
+                  response.data.responseResult.responseMessage,
+                  t("Admin_AdminServiceManager_DeleteGlobalService_01")
+                )
+              );
+              await dispatch(getGlobalServiceMainApi(t, navigate, loadingFlag));
+              await dispatch(loader_Actions(false));
+            } else if (
+              response.data.responseResult.responseMessage ===
+              "Admin_AdminServiceManager_DeleteGlobalService_02"
+            ) {
+              await dispatch(
+                deleteGlobalServiceFail(
+                  t("Admin_AdminServiceManager_DeleteGlobalService_02")
+                )
+              );
+              await dispatch(loader_Actions(false));
+            } else if (
+              response.data.responseResult.responseMessage ===
+              "Admin_AdminServiceManager_DeleteGlobalService_03"
+            ) {
+              await dispatch(
+                deleteGlobalServiceFail(
+                  t("Admin_AdminServiceManager_DeleteGlobalService_03")
+                )
+              );
+              await dispatch(loader_Actions(false));
+            } else if (
+              response.data.responseResult.responseMessage ===
+              "Admin_AdminServiceManager_DeleteGlobalService_04"
+            ) {
+              dispatch(deleteGlobalServiceFail(t("something_went_wrong")));
+              await dispatch(loader_Actions(false));
+            } else {
+              dispatch(deleteGlobalServiceFail(t("something_went_wrong")));
+              await dispatch(loader_Actions(false));
+            }
+          } else {
+            await dispatch(deleteGlobalServiceFail(t("something_went_wrong")));
+            await dispatch(loader_Actions(false));
+          }
+        } else {
+          await dispatch(deleteGlobalServiceFail(t("something_went_wrong")));
+          await dispatch(loader_Actions(false));
+        }
+      })
+      .catch((response) => {
+        dispatch(deleteGlobalServiceFail(t("something_went_wrong")));
+        dispatch(loader_Actions(false));
+      });
+  };
+};
+
+//Delete Global Service List api in Global Admin End
 
 export {
   clearResponseMessageAdmin,
@@ -5544,4 +6013,10 @@ export {
   updateCountryListMainApi,
   updateCountryListFail,
   deleteCountryMainApi,
+  getGlobalServiceMainApi,
+  addGlobalServiceMainApi,
+  updateGlobalServiceMainApi,
+  deleteGlobalServiceMainApi,
+  addGlobalServiceFail,
+  updateGlobalServiceFail,
 };

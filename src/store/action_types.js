@@ -287,4 +287,22 @@ export const UPDATE_COUNTRY_LIST_FAIL = "UPDATE_COUNTRY_LIST_FAIL";
 export const DELETE_COUNTRY_LIST_SUCCESS = "DELETE_COUNTRY_LIST_SUCCESS";
 export const DELETE_COUNTRY_LIST_FAIL = "DELETE_COUNTRY_LIST_FAIL";
 
+// get Global Service List in SERVICE MAIN screen on Global admin
+export const GET_GLOBAL_SERVICE_LIST_SUCCESS =
+  "GET_GLOBAL_SERVICE_LIST_SUCCESS";
+export const GET_GLOBAL_SERVICE_LIST_FAIL = "GET_GLOBAL_SERVICE_LIST_FAIL";
+
+// add Global Service List in SERVICE MAIN screen on Global admin
+export const ADD_GLOBAL_SERVICE_LIST_SUCCESS =
+  "ADD_GLOBAL_SERVICE_LIST_SUCCESS";
+export const ADD_GLOBAL_SERVICE_LIST_FAIL = "ADD_GLOBAL_SERVICE_LIST_FAIL";
+
+// update Global Service List in SERVICE MAIN screen on Global admin
+export const UPDATE_GLOBAL_SERVICE_SUCCESS = "UPDATE_GLOBAL_SERVICE_SUCCESS";
+export const UPDATE_GLOBAL_SERVICE_FAIL = "UPDATE_GLOBAL_SERVICE_FAIL";
+
+// delete Global Service List in SERVICE MAIN screen on Global admin
+export const DELETE_GLOBAL_SERVICE_SUCCESS = "DELETE_GLOBAL_SERVICE_SUCCESS";
+export const DELETE_GLOBAL_SERVICE_FAIL = "DELETE_GLOBAL_SERVICE_FAIL";
+
 // ===================================GLOBAL ADMIN END ==========================================//

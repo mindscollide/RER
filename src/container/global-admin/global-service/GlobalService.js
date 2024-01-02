@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Row, Col } from "react-bootstrap";
 import "./GlobalService.css";
 import {
@@ -14,23 +14,92 @@ import { useNavigate } from "react-router";
 import { setIsCountryServiceScreenComponent } from "../../../store/actions/global_action";
 import { useDispatch, useSelector } from "react-redux";
 import CountryServiceScreenComponent from "../country-service-screen-component/CountryServiceScreenComponent";
+import {
+  addGlobalServiceFail,
+  addGlobalServiceMainApi,
+  getGlobalServiceMainApi,
+  updateGlobalServiceFail,
+  updateGlobalServiceMainApi,
+} from "../../../store/actions/Admin_action";
+import { loader_Actions } from "../../../store/actions/Loader_action";
+import { regexOnlyForNumberNCharacters } from "../../../commen/functions/regex";
 
 const GlobalService = () => {
+  const { t } = useTranslation();
   const navigate = useNavigate();
   const dispatch = useDispatch();
-
-  const { t } = useTranslation();
   const currentLanguage = localStorage.getItem("i18nextLng");
   const local = currentLanguage === "en" ? "en-US" : "ar-SA";
   const [isCheckboxSelected, setIsCheckboxSelected] = useState(false);
   const [isCheckboxSelectedTwo, setIsCheckboxSelectedTwo] = useState(false);
-  const [isCheckboxSelectedThree, setIsCheckboxSelectedThree] = useState(false);
   const [globalModal, setGlobalModal] = useState(false);
-
+  const [globalID, setGlobalID] = useState(null);
+  const loadingFlag = useSelector((state) => state.Loader.Loading);
+  // get Global Service Data reducers
+  const getGlobalServiceData = useSelector(
+    (state) => state.admin.getGlobalServiceData
+  );
+  // add Global Service Data reducers
+  const addGlobalServiceData = useSelector(
+    (state) => state.admin.addGlobalServiceData
+  );
+  // update Global Service Data reducers
+  const updateGlobalServiceData = useSelector(
+    (state) => state.admin.updateGlobalServiceData
+  );
   // state for country city admin main
   const isCountryServiceComponentReducer = useSelector(
     (state) => state.global.isCountryServiceComponentReducer
   );
+  // state for row to updating table rows
+  const [rows, setRows] = useState([]);
+  console.log(rows, "serviceservice");
+
+  const [addUpdateCheckFlag, setAddUpdateCheckFlag] = useState(false);
+
+  // state for add and update new data
+  const [globalState, setGlobalState] = useState({
+    ServiceNameEnglish: "",
+    ServiceNameArabic: "",
+    IsServiceActive: false,
+    ServiceID: 0,
+  });
+
+  //useEffect to render Api
+  useEffect(() => {
+    dispatch(getGlobalServiceMainApi(t, navigate, loadingFlag));
+  }, []);
+
+  // useEffect to update data in table
+  useEffect(() => {
+    if (getGlobalServiceData !== null && Array.isArray(getGlobalServiceData)) {
+      setRows(getGlobalServiceData);
+    } else {
+      setRows([]);
+    }
+  }, [getGlobalServiceData]);
+
+  useEffect(() => {
+    if (addGlobalServiceData !== null) {
+      let prevData = [...rows];
+      prevData.push(addGlobalServiceData);
+      setRows(prevData);
+      dispatch(addGlobalServiceFail(""));
+      dispatch(loader_Actions(false));
+    }
+    if (updateGlobalServiceData !== null) {
+      setRows(
+        rows.map((service) => {
+          if (service.serviceID === updateGlobalServiceData.serviceID) {
+            return updateGlobalServiceData; // Replace with the new data if IDs match
+          }
+          return service; // Keep the existing shift if IDs don't match
+        })
+      );
+      dispatch(updateGlobalServiceFail(""));
+      dispatch(loader_Actions(false));
+    }
+  }, [addGlobalServiceData, updateGlobalServiceData]);
 
   // open delete modal
   const openDeleteGlobalModal = () => {
@@ -79,30 +148,11 @@ const GlobalService = () => {
     setIsCheckboxSelectedTwo(e.target.checked);
   };
 
-  const handleCheckboxChangeThree = (e) => {
-    setIsCheckboxSelectedThree(e.target.checked);
-  };
-
-  const dataSource = [
-    {
-      id: <span className="table-inside-text">1</span>,
-      name: <span className="table-inside-text">Morning Shift</span>,
-    },
-    {
-      id: <span className="table-inside-text">1</span>,
-      name: <span className="table-inside-text">Morning Shift</span>,
-    },
-    {
-      id: <span className="table-inside-text">1</span>,
-      name: <span className="table-inside-text">Morning Shift</span>,
-    },
-  ];
-
   const columns = [
     {
       title: <span className="table-text">#</span>,
-      dataIndex: "id",
-      key: "id",
+      dataIndex: "serviceID",
+      key: "serviceID",
       render: (text, record, index) => (
         <span className="table-inside-text">
           {(index + 1).toLocaleString(local)}
@@ -111,42 +161,29 @@ const GlobalService = () => {
     },
     {
       title: <span className="table-text">{t("Name")}</span>,
-      dataIndex: "name",
-      key: "name",
-    },
-    {
-      title: <span className="table-text">{t("Branch-availability")}</span>,
-      dataIndex: "branchAvailability",
-      key: "branchAvailability",
+      dataIndex:
+        currentLanguage === "en" ? "serviceNameEnglish" : "serviceNameArabic",
+      key:
+        currentLanguage === "en" ? "serviceNameEnglish" : "serviceNameArabic",
       render: (text, record) => (
-        <>
-          <span>
-            <i className="icon-check icon-check-color"></i>
-          </span>
-        </>
-      ),
-    },
-    {
-      title: <span className="table-text">{t("Home-availability")}</span>,
-      dataIndex: "homeAvailability",
-      key: "homeAvailability",
-      render: (text, record) => (
-        <>
-          <span>
-            <i className="icon-close icon-close-color"></i>
-          </span>
-        </>
+        <span className="table-inside-text">{text}</span>
       ),
     },
     {
       title: <span className="table-text">{t("Active")}</span>,
-      dataIndex: "active",
-      key: "active",
+      dataIndex: "isServiceActive",
+      key: "isServiceActive",
       render: (text, record) => (
         <>
-          <span>
-            <i className="icon-check icon-check-color"></i>
-          </span>
+          {text ? (
+            <span>
+              <i className="icon-check icon-check-color"></i>
+            </span>
+          ) : (
+            <span>
+              <i className="icon-close icon-check-close-color"></i>
+            </span>
+          )}
         </>
       ),
     },
@@ -158,10 +195,13 @@ const GlobalService = () => {
       render: (text, record) => (
         <>
           <span className="icon-spaceing-dlt-edit">
-            <i className="icon-text-edit icon-EDT-DLT-color"></i>
+            <i
+              className="icon-text-edit icon-EDT-DLT-color"
+              onClick={() => handleEditGlobal(record, 1)}
+            ></i>
             <i
               className="icon-close icon-EDT-DLT-color"
-              onClick={openDeleteGlobalModal}
+              onClick={() => handleEditGlobal(record, 2)}
             ></i>
             <i
               className="icon-globe icon-EDT-DLT-color"
@@ -188,6 +228,109 @@ const GlobalService = () => {
       ),
     },
   ];
+
+  // change handler for textfield in global service page
+  const handleChange = (e) => {
+    try {
+      let name = e.target.name;
+      let value = e.target.value;
+      let checked = e.target.checked;
+      if (name === "ServiceNameEnglish") {
+        setGlobalState({
+          ...globalState,
+          ["ServiceNameEnglish"]: regexOnlyForNumberNCharacters(value),
+        });
+      } else if (name === "ServiceNameArabic") {
+        setGlobalState({
+          ...globalState,
+          ["ServiceNameArabic"]: regexOnlyForNumberNCharacters(value),
+        });
+      } else {
+        setGlobalState({ ...globalState, ["IsServiceActive"]: checked });
+      }
+    } catch {}
+  };
+
+  // add and update handler in global service page
+  const addUpdateHandler = () => {
+    try {
+      if (addUpdateCheckFlag) {
+        if (
+          globalState.ServiceNameEnglish !== "" &&
+          globalState.ServiceNameArabic !== ""
+        ) {
+          let Data = {
+            ServiceID: Number(globalState.ServiceID),
+            ServiceNameEnglish: globalState.ServiceNameEnglish,
+            ServiceNameArabic: globalState.ServiceNameArabic,
+            IsServiceActive: globalState.IsServiceActive,
+          };
+          dispatch(
+            updateGlobalServiceMainApi(
+              t,
+              navigate,
+              loadingFlag,
+              Data,
+              setGlobalState,
+              setAddUpdateCheckFlag
+            )
+          );
+        }
+      } else {
+        if (
+          globalState.ServiceNameEnglish !== "" &&
+          globalState.ServiceNameArabic !== ""
+        ) {
+          let Data = {
+            ServiceNameEnglish: globalState.ServiceNameEnglish,
+            ServiceNameArabic: globalState.ServiceNameArabic,
+            IsServiceActive: globalState.IsServiceActive,
+          };
+          dispatch(
+            addGlobalServiceMainApi(
+              t,
+              navigate,
+              loadingFlag,
+              Data,
+              setGlobalState
+            )
+          );
+        }
+      }
+    } catch {}
+  };
+
+  // when click on edit Icon handler
+  const handleEditGlobal = (value, flag) => {
+    try {
+      if (flag === 1) {
+        setAddUpdateCheckFlag(true);
+        setGlobalState({
+          ServiceNameEnglish: value.serviceNameEnglish,
+          ServiceNameArabic: value.serviceNameArabic,
+          IsServiceActive: value.isServiceActive,
+          ServiceID: Number(value.serviceID),
+        });
+      } else if (flag === 2) {
+        setGlobalID(value.serviceID);
+        setGlobalModal(true);
+      }
+    } catch {}
+  };
+
+  const resetHandler = () => {
+    try {
+      if (addUpdateCheckFlag) {
+        setAddUpdateCheckFlag(false);
+      }
+      setGlobalState({
+        ServiceNameEnglish: "",
+        ServiceNameArabic: "",
+        IsServiceActive: false,
+        ServiceID: 0,
+      });
+    } catch {}
+  };
 
   return (
     <>
@@ -223,7 +366,9 @@ const GlobalService = () => {
                     <Col lg={6} md={6} sm={6}>
                       <span className="text-labels">{t("Service-name")}</span>
                       <TextField
-                        name="Service Name"
+                        name="ServiceNameEnglish"
+                        value={globalState.ServiceNameEnglish}
+                        onChange={handleChange}
                         placeholder={t("Service-name")}
                         labelClass="d-none"
                         className="text-fiels-GlobalService"
@@ -232,7 +377,9 @@ const GlobalService = () => {
                     <Col lg={6} md={6} sm={6} className="text-end">
                       <span className="text-labels">اسم الخدمة</span>
                       <TextField
-                        name="Service Name"
+                        name="ServiceNameArabic"
+                        value={globalState.ServiceNameArabic}
+                        onChange={handleChange}
                         placeholder={"اسم الخدمة"}
                         labelClass="d-none"
                         className="text-fiels-GlobalService-arabic"
@@ -279,8 +426,8 @@ const GlobalService = () => {
                       className="d-flex justify-content-end mt-4"
                     >
                       <Checkbox
-                        checked={isCheckboxSelectedThree}
-                        onChange={handleCheckboxChangeThree}
+                        checked={globalState.IsServiceActive}
+                        onChange={handleChange}
                         classNameDiv="GlobalService-checkbox"
                         label={
                           <span className="checkbox-label">{t("Active")}</span>
@@ -298,12 +445,14 @@ const GlobalService = () => {
                     >
                       <Button
                         icon={<i className="icon-add-circle icon-space"></i>}
-                        text={t("Add")}
+                        text={addUpdateCheckFlag ? t("Update") : t("Add")}
+                        onClick={addUpdateHandler}
                         className="Add-btn-GlobalService"
                       />
                       <Button
                         icon={<i className="icon-refresh icon-space"></i>}
                         text={t("Reset")}
+                        onClick={resetHandler}
                         className="Reset-btn-GlobalService"
                       />
                     </Col>
@@ -311,11 +460,7 @@ const GlobalService = () => {
 
                   <Row className="mt-3">
                     <Col lg={12} md={12} sm={12}>
-                      <Table
-                        rows={dataSource}
-                        column={columns}
-                        pagination={false}
-                      />
+                      <Table rows={rows} column={columns} pagination={false} />
                     </Col>
                   </Row>
                 </Paper>
@@ -327,8 +472,10 @@ const GlobalService = () => {
 
       {globalModal ? (
         <GlobalDeleteModal
+          globalID={globalID}
           globalModal={globalModal}
           setGlobalModal={setGlobalModal}
+          route={"GlobalService"}
         />
       ) : null}
     </>

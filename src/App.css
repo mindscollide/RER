@@ -370,6 +370,13 @@ body[dir="rtl"] .confirm-delete-text {
   padding-right: 16px !important;
 }
 
+.MuiAlert-filledSuccess.notification-email {
+  width: 100% !important;
+  background: #cc0000 !important;
+  position: relative !important;
+  box-shadow: none !important;
+}
+
 /* react select start */
 .select-dropdown-all {
   color: #45494d !important;
