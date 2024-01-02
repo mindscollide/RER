@@ -263,5 +263,6 @@
   "Admin_AdminServiceManager_UpdateCountry_02": "Country Details Not Updated",
   "Admin_AdminServiceManager_UpdateCountry_03": "Country with ID not Found",
   "Admin_AdminServiceManager_DeleteCountry_01": "Country Deleted Successfully",
-  "Admin_AdminServiceManager_DeleteCountry_02": "Country Cannot be Deleted Due to Dependency"
+  "Admin_AdminServiceManager_DeleteCountry_02": "Country Cannot be Deleted Due to Dependency",
+  "Admin_AdminServiceManager_DeleteCountryCity_06": "City Not Deleted due to Dependency"
 }

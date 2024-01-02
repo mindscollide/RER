@@ -4470,6 +4470,16 @@ const deleteCountryAdminApiMain = (
             ) {
               dispatch(deleteCountryAdminFail(t("something_went_wrong")));
               await dispatch(loader_Actions(false));
+            } else if (
+              response.data.responseResult.responseMessage ===
+              "Admin_AdminServiceManager_DeleteCountryCity_06"
+            ) {
+              await dispatch(
+                deleteCountryAdminFail(
+                  t("Admin_AdminServiceManager_DeleteCountryCity_06")
+                )
+              );
+              await dispatch(loader_Actions(false));
             } else {
               dispatch(deleteCountryAdminFail(t("something_went_wrong")));
               await dispatch(loader_Actions(false));
