@@ -1,9 +1,25 @@
 .CountryCityWise-paper {
   border-radius: 4px !important;
+  height: 80vh !important;
+  max-height: 70vh !important;
+  overflow-y: auto !important;
   padding: 1.5rem 1rem !important;
   width: 100% !important;
-  overflow: hidden !important;
+  /* overflow: hidden !important; */
   background-color: #ffffff !important;
+}
+
+.CountryCityWise-paper::-webkit-scrollbar {
+  width: 0.5rem !important;
+  height: 0.5rem !important;
+  border-radius: 20px !important;
+  background-color: #ffffff !important;
+}
+
+.CountryCityWise-paper::-webkit-scrollbar-thumb {
+  border-radius: 20px !important;
+  background: #cecece !important;
+  margin-left: -15px !important;
 }
 
 .CountryCityWise-col {
@@ -57,16 +73,19 @@
   background-color: transparent !important;
 }
 
-.ant-collapse .ant-collapse-content>.ant-collapse-content-box {
+.ant-collapse .ant-collapse-content > .ant-collapse-content-box {
   padding: 16px 25px !important;
 }
 
 /* for not showing icon beside the header */
-.ant-collapse>.ant-collapse-item>.ant-collapse-header .ant-collapse-expand-icon {
+.ant-collapse
+  > .ant-collapse-item
+  > .ant-collapse-header
+  .ant-collapse-expand-icon {
   display: none !important;
 }
 
-.ant-collapse>.ant-collapse-item>.ant-collapse-header {
+.ant-collapse > .ant-collapse-item > .ant-collapse-header {
   padding: 3px 16px !important;
 }
 
@@ -109,4 +128,9 @@
   font-size: 24px !important;
   font-weight: 500 !important;
   color: #ffffff !important;
+}
+
+.col-for-date-citywise-counter {
+  display: flex !important;
+  flex-direction: column !important;
 }

@@ -74,7 +74,7 @@ const EmployeeMain = () => {
 
   //delete modal states
   const [deleteModal, setDeleteModal] = useState(false);
-  
+
   const callApi = async () => {
     await dispatch(getCityBranchListApi(t, navigate, loadingFlag));
     await dispatch(getCityEmployeeMainApi(t, navigate, loadingFlag));
@@ -219,7 +219,6 @@ const EmployeeMain = () => {
     setEmployeeMainOptionValue(null);
   };
 
-
   // updating table of city employee Main
   useEffect(() => {
     if (cityEmployeeMain !== null) {
@@ -336,7 +335,27 @@ const EmployeeMain = () => {
       <section>
         <Row>
           <Col lg={12} md={12} sm={12} className="d-flex justify-content-start">
-            <span className="shift-heading">{t("Employee")}</span>
+            <span className="shift-heading">
+              {t("Employee")}
+              <span className="shift-sub-heading">
+                {" "}
+                {currentLanguage === "en"
+                  ? "(" +
+                    localStorage.getItem("countryName") +
+                    " " +
+                    "-" +
+                    " " +
+                    localStorage.getItem("cityName") +
+                    ")"
+                  : "(" +
+                    localStorage.getItem("countryNameArabic") +
+                    " " +
+                    "-" +
+                    " " +
+                    localStorage.getItem("cityNameArabic") +
+                    ")"}
+              </span>
+            </span>
           </Col>
         </Row>
         <Row className="mt-3">

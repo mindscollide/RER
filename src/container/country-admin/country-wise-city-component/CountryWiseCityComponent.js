@@ -10,75 +10,33 @@ import {
 } from "../../../components/elements";
 import { useTranslation } from "react-i18next";
 import { useDispatch, useSelector } from "react-redux";
+import {
+  getCityServiceListApi,
+  updateCityServiceListApi,
+} from "../../../store/actions/Admin_action";
 import { useNavigate } from "react-router";
 import { Switch } from "antd";
+import { capitalizeKeysInArray } from "../../../commen/functions/utils.js";
 
-const CountryWiseCityComponent = ({ goBackButtonCountryOnclick }) => {
+const CountryWiseCityComponent = ({
+  goBackButtonCountryOnclick,
+  setRows,
+  rows,
+  columnsCityWise,
+  handleRevert,
+  handleSave,
+}) => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const loadingFlag = useSelector((state) => state.Loader.Loading);
+  const cityServiceListData = useSelector(
+    (state) => state.admin.cityServiceListData
+  );
+  console.log(cityServiceListData, "cityServiceListData");
+
+  //state for current language
   const currentLanguage = localStorage.getItem("i18nextLng");
-  const [rows, setRows] = useState([]);
-
-  const onClickBackButton = () => {
-    navigate("/CountryAdmin/City");
-  };
-
-  const columnsCityWise = [
-    {
-      title: <span className="table-text">{t("Service")}</span>,
-      width: "400px",
-      dataIndex: "citySM",
-      key: "citySM",
-
-      render: (text, record) => (
-        <span className="table-inside-text">
-          {currentLanguage === "en"
-            ? record.citySM.serviceNameEnglish
-            : record.citySM.serviceNameArabic}
-        </span>
-      ),
-    },
-    {
-      title: <span className="table-text">{t("Branch-availability")}</span>,
-      dataIndex: "branchAvailability",
-      key: "branchAvailability",
-      width: "200px",
-      align: "center",
-      render: (text, record) => (
-        <span>
-          <Switch checked={text} />
-        </span>
-      ),
-    },
-    {
-      title: <span className="table-text">{t("Home-availability")}</span>,
-      dataIndex: "homeAvailability",
-      key: "homeAvailability",
-      width: "200px",
-      align: "center",
-      render: (text, record) => (
-        <span>
-          <Switch checked={text} />
-        </span>
-      ),
-    },
-    {
-      title: <span className="table-text">{t("Home-Visit-Charges")}</span>,
-      dataIndex: "homeVisit",
-      key: "homeVisit",
-      width: "200px",
-      align: "center",
-      render: (text, record) => (
-        <span>
-          <TextField
-            className="for-inside-table-textfields"
-            labelClass="d-none"
-          />
-        </span>
-      ),
-    },
-  ];
 
   return (
     <>
@@ -94,20 +52,8 @@ const CountryWiseCityComponent = ({ goBackButtonCountryOnclick }) => {
               <span className="shift-sub-heading">
                 {" "}
                 {currentLanguage === "en"
-                  ? "(" +
-                    localStorage.getItem("countryName") +
-                    " " +
-                    "-" +
-                    " " +
-                    localStorage.getItem("cityName") +
-                    ")"
-                  : "(" +
-                    localStorage.getItem("countryNameArabic") +
-                    " " +
-                    "-" +
-                    " " +
-                    localStorage.getItem("cityNameArabic") +
-                    ")"}
+                  ? "(" + localStorage.getItem("countryName") + ")"
+                  : "(" + localStorage.getItem("countryNameArabic") + ")"}
               </span>
             </span>
           </Col>
@@ -125,22 +71,40 @@ const CountryWiseCityComponent = ({ goBackButtonCountryOnclick }) => {
                   <Button
                     icon={<i className="icon-repeat icon-space"></i>}
                     text={t("Revert")}
+                    onClick={handleRevert}
                     className="revert-btn-Country-City-Wise"
                   />
                   <Button
                     icon={<i className="icon-save icon-space"></i>}
                     text={t("Save")}
+                    onClick={handleSave}
                     className="save-btn-Country-City-Wise"
                   />
                 </Col>
               </Row>
               <Row className="mt-2">
                 <Col lg={12} md={12} sm={12}>
-                  <Table
-                    rows={rows}
-                    column={columnsCityWise}
-                    pagination={false}
-                  />
+                  <div className="top-background-color">
+                    <Row>
+                      <Col lg={6} md={6} sm={6} />
+                      <Col
+                        lg={6}
+                        md={6}
+                        sm={6}
+                        className="d-flex justify-content-center"
+                      >
+                        <span className="table-above-header-text">
+                          {t("Home-visit-settings")}
+                        </span>
+                      </Col>
+                    </Row>
+                    <Table
+                      rows={rows}
+                      column={columnsCityWise}
+                      pagination={false}
+                      className="specific-header"
+                    />
+                  </div>
                 </Col>
               </Row>
             </Paper>

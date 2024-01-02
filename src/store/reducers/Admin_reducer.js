@@ -39,8 +39,20 @@ const initialState = {
   getAppointmentBranchReportData: null,
   getWorkingDaysCountry: null,
   updateWorkingDaysCountry: null,
-  cityList: [],
+  cityList: null,
   getAppointmentCityReportData: null,
+  countryAdminMainData: null,
+  updateCountryAdmin: null,
+  deleteCountryAdmin: null,
+  countryServiceScreenList: null,
+  updateCountryServiceList: null,
+  getAllBranchServiceData: null,
+  getAllBranchShiftData: null,
+  getAllBranchCounterData: null,
+  getCountryListData: null,
+  addCountryListData: null,
+  updateCountryListData: null,
+  deleteCountryListData: null,
 };
 
 const adminReducer = (state = initialState, action) => {
@@ -642,7 +654,189 @@ const adminReducer = (state = initialState, action) => {
     case actions.GET_COUNTRY_CITIES_API_FAIL:
       return {
         ...state,
-        cityList: [],
+        cityList: null,
+        admin_ResponseMessage: action.message,
+      };
+
+    // add country National Holiday in Country admin
+    case actions.ADD_COUNTRY_ADMIN_SUCCESS:
+      return {
+        ...state,
+        countryAdminMainData: action.response,
+        admin_ResponseMessage: action.message,
+      };
+
+    case actions.ADD_COUNTRY_ADMIN_FAIL:
+      return {
+        ...state,
+        countryAdminMainData: null,
+        admin_ResponseMessage: action.message,
+      };
+
+    // update country National Holiday in Country admin
+    case actions.UPDATE_COUNTRY_ADMIN_SUCCESS:
+      return {
+        ...state,
+        updateCountryAdmin: action.response,
+        admin_ResponseMessage: action.message,
+      };
+
+    case actions.UPDATE_COUNTRY_ADMIN_FAIL:
+      return {
+        ...state,
+        updateCountryAdmin: null,
+        admin_ResponseMessage: action.message,
+      };
+
+    // delete country National Holiday in Country admin
+    case actions.DELETE_COUNTRY_ADMIN_SUCCESS:
+      return {
+        ...state,
+        deleteCountryAdmin: action.response,
+        admin_ResponseMessage: action.message,
+      };
+
+    case actions.DELETE_COUNTRY_ADMIN_FAIL:
+      return {
+        ...state,
+        deleteCountryAdmin: null,
+        admin_ResponseMessage: action.message,
+      };
+
+    // get country service screen in country Admin
+    case actions.GET_COUNTRY_SERVICE_SUCCESS:
+      return {
+        ...state,
+        countryServiceScreenList: action.response,
+        admin_ResponseMessage: action.message,
+      };
+
+    case actions.GET_COUNTRY_SERVICE_FAIL:
+      return {
+        ...state,
+        countryServiceScreenList: null,
+        admin_ResponseMessage: action.message,
+      };
+
+    // update country service screen in country Admin
+    case actions.UPDATE_COUNTRY_SERVICE_SUCCESS:
+      return {
+        ...state,
+        updateCountryServiceList: action.response,
+        admin_ResponseMessage: action.message,
+      };
+
+    case actions.UPDATE_COUNTRY_SERVICE_FAIL:
+      return {
+        ...state,
+        updateCountryServiceList: null,
+        admin_ResponseMessage: action.message,
+      };
+
+    // get all Branch service in country Admin
+    case actions.GET_ALL_BRANCH_SERVICE_CITY_SUCCESS:
+      return {
+        ...state,
+        getAllBranchServiceData: action.response,
+        admin_ResponseMessage: action.message,
+      };
+
+    case actions.GET_ALL_BRANCH_SERVICE_CITY_FAIL:
+      return {
+        ...state,
+        getAllBranchServiceData: null,
+        admin_ResponseMessage: action.message,
+      };
+
+    // get all Branch Shify in country Admin
+    case actions.GET_ALL_BRANCH_SHIFT_CITY_SUCCESS:
+      return {
+        ...state,
+        getAllBranchShiftData: action.response,
+        admin_ResponseMessage: action.message,
+      };
+
+    case actions.GET_ALL_BRANCH_SHIFT_CITY_FAIL:
+      return {
+        ...state,
+        getAllBranchShiftData: null,
+        admin_ResponseMessage: action.message,
+      };
+
+    // get all Branch Counter in country Admin
+    case actions.GET_ALL_BRANCH_COUNTER_CITY_SUCCESS:
+      return {
+        ...state,
+        getAllBranchCounterData: action.response,
+        admin_ResponseMessage: action.message,
+      };
+
+    case actions.GET_ALL_BRANCH_COUNTER_CITY_FAIL:
+      return {
+        ...state,
+        getAllBranchCounterData: null,
+        admin_ResponseMessage: action.message,
+      };
+
+    // ===================================GLOBAL ADMIN==========================================//
+
+    // get country List in global Admin
+    case actions.GET_COUNTRY_LIST_SUCCESS:
+      return {
+        ...state,
+        getCountryListData: action.response,
+        admin_ResponseMessage: action.message,
+      };
+
+    case actions.GET_COUNTRY_LIST_FAIL:
+      return {
+        ...state,
+        getCountryListData: null,
+        admin_ResponseMessage: action.message,
+      };
+
+    // add Country List in global Admin
+    case actions.ADD_COUNTRY_LIST_SUCCESS:
+      return {
+        ...state,
+        addCountryListData: action.response,
+        admin_ResponseMessage: action.message,
+      };
+
+    case actions.ADD_COUNTRY_LIST_FAIL:
+      return {
+        ...state,
+        addCountryListData: null,
+        admin_ResponseMessage: action.message,
+      };
+
+    // update Country List in global Admin
+    case actions.UPDATE_COUNTRY_LIST_SUCCESS:
+      return {
+        ...state,
+        updateCountryListData: action.response,
+        admin_ResponseMessage: action.message,
+      };
+
+    case actions.UPDATE_COUNTRY_LIST_FAIL:
+      return {
+        ...state,
+        updateCountryListData: null,
+        admin_ResponseMessage: action.message,
+      };
+
+    // delete Country List in global Admin
+    case actions.DELETE_COUNTRY_LIST_SUCCESS:
+      return {
+        ...state,
+        deleteCountryListData: action.response,
+        admin_ResponseMessage: action.message,
+      };
+
+    case actions.DELETE_COUNTRY_LIST_FAIL:
+      return {
+        ...state,
+        deleteCountryListData: null,
         admin_ResponseMessage: action.message,
       };
 

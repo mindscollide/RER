@@ -53,9 +53,10 @@ const CountryWiseEmployee = () => {
     };
   }, []);
   console.log("cityID", cityID);
+
   useEffect(() => {
     // Update cityShiftOption with the correct structure based on your data
-    if (Object.keys(cityList).length > 0) {
+    if (cityList && Object.keys(cityList).length > 0) {
       setCityOptionListEnglish(
         cityList.cities.map((item) => ({
           value: item.cityID,
@@ -191,17 +192,16 @@ const CountryWiseEmployee = () => {
     <>
       <section>
         <Row>
-          <Col lg={6} md={6} sm={6} className="d-flex justify-content-start">
+          <Col lg={12} md={12} sm={12} className="d-flex justify-content-start">
             <span className="shift-heading">
               {t("Country-city-wise-employees")}
-            </span>
-          </Col>
-          <Col lg={6} md={6} sm={6} className="d-flex justify-content-end">
-            <span className="shift-sub-heading-right">
-              {" "}
-              {currentLanguage === "en"
-                ? localStorage.getItem("countryName")
-                : localStorage.getItem("countryNameArabic")}
+              <span className="shift-sub-heading">
+                {" "}
+                {currentLanguage === "en"
+                  ? "(" + localStorage.getItem("countryName") + ")"
+                  : "(" + localStorage.getItem("countryNameArabic") + ")"}
+                {/* {t("Saudi-arabia-riyadh")} */}
+              </span>
             </span>
           </Col>
         </Row>

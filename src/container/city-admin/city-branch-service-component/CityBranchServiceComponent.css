@@ -1,16 +1,1 @@
-.go-back-arrow {
-  font-size: 20px !important;
-  color: #000 !important;
-  cursor: pointer !important;
-}
 
-body[dir="rtl"] .go-back-arrow {
-  font-size: 20px !important;
-  color: #000 !important;
-  cursor: pointer !important;
-}
-
-.go-back-arrow:hover {
-  font-size: 20px !important;
-  color: rgb(82, 79, 79) !important;
-}

@@ -16,6 +16,7 @@ const CountryWorking = () => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const currentLanguage = localStorage.getItem("i18nextLng");
   const loadingFlag = useSelector((state) => state.Loader.Loading);
   const getWorkingDaysCountry = useSelector(
     (state) => state.admin.getWorkingDaysCountry
@@ -136,8 +137,12 @@ const CountryWorking = () => {
           <Col lg={12} md={12} sm={12} className="d-flex justify-content-start">
             <span className="shift-heading">
               {t("Country-working-days")}
-              <span className="shift-sub-heading ms-2">
-                {t("Saudi-arabia")}
+              <span className="shift-sub-heading">
+                {" "}
+                {currentLanguage === "en"
+                  ? "(" + localStorage.getItem("countryName") + ")"
+                  : "(" + localStorage.getItem("countryNameArabic") + ")"}
+                {/* {t("Saudi-arabia-riyadh")} */}
               </span>
             </span>
           </Col>

@@ -43,6 +43,18 @@ import {
   updateCountryWorkingDays,
   getCountryCities,
   getAppointmentCityReport,
+  addCountryCity,
+  updateCountryCity,
+  deleteCountryCity,
+  getCountryServiceScreen,
+  updateCountryServiceScreen,
+  getAllBranchServiceCity,
+  getAllBranchShiftServiceCity,
+  getAllBranchCounterServiceCity,
+  getCountryList,
+  addCountryList,
+  updateCountryList,
+  deleteCountryList,
 } from "../../commen/apis/Api_config";
 import { adminURL } from "../../commen/apis/Api_ends_points";
 import moment from "moment";
@@ -1896,8 +1908,13 @@ const getCityBranchListFail = (message) => {
   };
 };
 
-const getCityBranchListApi = (t, navigate, loadingFlag) => {
-  let data = { CityID: Number(localStorage.getItem("cityID")) };
+const getCityBranchListApi = (t, navigate, loadingFlag, id) => {
+  let data = {};
+  if (id !== undefined && id !== null) {
+    data = { CityID: Number(id) };
+  } else {
+    data = { CityID: Number(localStorage.getItem("cityID")) };
+  }
   return async (dispatch) => {
     if (!loadingFlag) {
       dispatch(loader_Actions(true));
@@ -2294,7 +2311,7 @@ const getCityServiceListApi = (t, navigate, loadingFlag) => {
         if (response.data.responseCode === 200) {
           if (response.data.responseCode === 417) {
             // await dispatch(RefreshToken(navigate, t))
-            dispatch(getCityServiceListApi(t, navigate, loadingFlag));
+            dispatch(getCityServiceListApi(t, navigate, loadingFlag, data));
           } else if (response.data.responseResult.isExecuted === true) {
             if (
               response.data.responseResult.responseMessage ===
@@ -4048,8 +4065,7 @@ const getCountryCitiesApi = (t, navigate, loadingFlag, apiCallFlag, cityID) => {
               } else if (apiCallFlag === 1) {
                 await dispatch(loader_Actions(false));
               }
-
-              // await dispatch(loader_Actions(false));
+              await dispatch(loader_Actions(false));
             } else if (
               response.data.responseResult.responseMessage ===
               "Admin_AdminServiceManager_GetCountryCities_02"
@@ -4112,6 +4128,1343 @@ const getCountryCitiesApi = (t, navigate, loadingFlag, apiCallFlag, cityID) => {
 
 // Update country working days in country admin main api End
 
+// add country admin in country admin main page
+const addCountryAdminSuccess = (response, message) => {
+  return {
+    type: actions.ADD_COUNTRY_ADMIN_SUCCESS,
+    response: response,
+    message: message,
+  };
+};
+
+const addCountryAdminFail = (message) => {
+  return {
+    type: actions.ADD_COUNTRY_ADMIN_FAIL,
+    message: message,
+  };
+};
+
+const addCountryAdminMainApi = (t, navigate, loadingFlag, Data, setState) => {
+  return async (dispatch) => {
+    if (!loadingFlag) {
+      dispatch(loader_Actions(true));
+    }
+    let form = new FormData();
+    form.append("RequestMethod", addCountryCity.RequestMethod);
+    form.append("RequestData", JSON.stringify(Data));
+    await axios({
+      method: "post",
+      url: adminURL,
+      data: form,
+      headers: {
+        _token: JSON.parse(localStorage.getItem("token")),
+      },
+    })
+      .then(async (response) => {
+        if (response.data.responseCode === 200) {
+          if (response.data.responseCode === 417) {
+            // await dispatch(RefreshToken(navigate, t))
+            dispatch(
+              addCountryAdminMainApi(t, navigate, loadingFlag, Data, setState)
+            );
+          } else if (response.data.responseResult.isExecuted === true) {
+            if (
+              response.data.responseResult.responseMessage ===
+              "Admin_AdminServiceManager_AddCountryCity_01"
+            ) {
+              setState({
+                CountryID: Number(localStorage.getItem("countryID")),
+                CityNameEnglish: "",
+                CityNameArabic: "",
+                CityID: 0,
+                IsCityActive: false,
+              });
+              await dispatch(
+                addCountryAdminSuccess(
+                  response.data.responseResult.city,
+                  t("Admin_AdminServiceManager_AddCountryCity_01")
+                )
+              );
+            } else if (
+              response.data.responseResult.responseMessage ===
+              "Admin_AdminServiceManager_AddCountryCity_02"
+            ) {
+              await dispatch(
+                addCountryAdminFail(
+                  t("Admin_AdminServiceManager_AddCountryCity_02")
+                )
+              );
+              await dispatch(loader_Actions(false));
+            } else if (
+              response.data.responseResult.responseMessage ===
+              "Admin_AdminServiceManager_AddCountryCity_03"
+            ) {
+              await dispatch(
+                addCountryAdminFail(
+                  t("Admin_AdminServiceManager_GetCountryNationalHoliday_04")
+                )
+              );
+              await dispatch(loader_Actions(false));
+            } else if (
+              response.data.responseResult.responseMessage ===
+              "Admin_AdminServiceManager_AddCountryCity_04"
+            ) {
+              await dispatch(addCountryAdminFail(t("something_went_wrong")));
+              await dispatch(loader_Actions(false));
+            } else {
+              dispatch(addCountryAdminFail(t("something_went_wrong")));
+            }
+          } else {
+            await dispatch(addCountryAdminFail(t("something_went_wrong")));
+            await dispatch(loader_Actions(false));
+          }
+        } else {
+          await dispatch(addCountryAdminFail(t("something_went_wrong")));
+          await dispatch(loader_Actions(false));
+        }
+      })
+      .catch((response) => {
+        dispatch(addCountryAdminFail(t("something_went_wrong")));
+        dispatch(loader_Actions(false));
+      });
+  };
+};
+
+// add country admin main end
+
+//update country Admin Main page Start
+const updateCountryAdminSuccess = (response, message) => {
+  return {
+    type: actions.UPDATE_COUNTRY_ADMIN_SUCCESS,
+    response: response,
+    message: message,
+  };
+};
+
+const updateCountryAdminFail = (message) => {
+  return {
+    type: actions.UPDATE_COUNTRY_ADMIN_FAIL,
+    message: message,
+  };
+};
+
+const updateCountryAdminMainApi = (
+  t,
+  navigate,
+  loadingFlag,
+  Data,
+  setState,
+  setCheckFlag
+) => {
+  return async (dispatch) => {
+    if (!loadingFlag) {
+      dispatch(loader_Actions(true));
+    }
+    let form = new FormData();
+    form.append("RequestMethod", updateCountryCity.RequestMethod);
+    form.append("RequestData", JSON.stringify(Data));
+    await axios({
+      method: "post",
+      url: adminURL,
+      data: form,
+      headers: {
+        _token: JSON.parse(localStorage.getItem("token")),
+      },
+    })
+      .then(async (response) => {
+        if (response.data.responseCode === 200) {
+          if (response.data.responseCode === 417) {
+            dispatch(
+              updateCountryAdminMainApi(
+                t,
+                navigate,
+                loadingFlag,
+                Data,
+                setState,
+                setCheckFlag
+              )
+            );
+          } else if (response.data.responseResult.isExecuted === true) {
+            if (
+              response.data.responseResult.responseMessage ===
+              "Admin_AdminServiceManager_UpdateCountryCity_01"
+            ) {
+              setState({
+                CountryID: Number(localStorage.getItem("countryID")),
+                CityNameEnglish: "",
+                CityNameArabic: "",
+                CityID: 0,
+                IsCityActive: false,
+              });
+              setCheckFlag(false);
+              await dispatch(
+                updateCountryAdminSuccess(
+                  response.data.responseResult.city,
+                  t("Admin_AdminServiceManager_UpdateCountryCity_01")
+                )
+              );
+            } else if (
+              response.data.responseResult.responseMessage ===
+              "Admin_AdminServiceManager_UpdateCountryCity_02"
+            ) {
+              await dispatch(
+                updateCountryAdminFail(
+                  t("Admin_AdminServiceManager_UpdateCountryCity_02")
+                )
+              );
+              await dispatch(loader_Actions(false));
+            } else if (
+              response.data.responseResult.responseMessage ===
+              "Admin_AdminServiceManager_UpdateCountryCity_03"
+            ) {
+              await dispatch(
+                updateCountryAdminFail(
+                  t("Admin_AdminServiceManager_UpdateCountryCity_03")
+                )
+              );
+              await dispatch(loader_Actions(false));
+            } else if (
+              response.data.responseResult.responseMessage ===
+              "Admin_AdminServiceManager_UpdateCountryCity_04"
+            ) {
+              await dispatch(
+                updateCountryAdminFail(
+                  t("Admin_AdminServiceManager_UpdateCountryCity_04")
+                )
+              );
+              await dispatch(loader_Actions(false));
+            } else if (
+              response.data.responseResult.responseMessage ===
+              "Admin_AdminServiceManager_UpdateCountryCity_05"
+            ) {
+              await dispatch(
+                updateCountryAdminFail(
+                  t("Admin_AdminServiceManager_GetCountryNationalHoliday_04")
+                )
+              );
+              await dispatch(loader_Actions(false));
+            } else if (
+              response.data.responseResult.responseMessage ===
+              "Admin_AdminServiceManager_UpdateCountryCity_06"
+            ) {
+              dispatch(updateCountryAdminFail(t("something_went_wrong")));
+              await dispatch(loader_Actions(false));
+            } else {
+              dispatch(updateCountryAdminFail(t("something_went_wrong")));
+              await dispatch(loader_Actions(false));
+            }
+          } else {
+            await dispatch(updateCountryAdminFail(t("something_went_wrong")));
+            await dispatch(loader_Actions(false));
+          }
+        } else {
+          await dispatch(updateCountryAdminFail(t("something_went_wrong")));
+          await dispatch(loader_Actions(false));
+        }
+      })
+      .catch((response) => {
+        dispatch(updateCountryAdminFail(t("something_went_wrong")));
+        dispatch(loader_Actions(false));
+      });
+  };
+};
+//Update country Admin Main page End
+
+// Delete country admin main start
+const deleteCountryAdminSuccess = (response, message) => {
+  return {
+    type: actions.DELETE_BRANCH_SHIFT_SUCCESS,
+    response: response,
+    message: message,
+  };
+};
+
+const deleteCountryAdminFail = (message) => {
+  return {
+    type: actions.DELETE_BRANCH_SHIFT_FAIL,
+    message: message,
+  };
+};
+
+const deleteCountryAdminApiMain = (
+  t,
+  navigate,
+  loadingFlag,
+  data,
+  setDeleteCountryModal
+) => {
+  return async (dispatch) => {
+    if (!loadingFlag) {
+      dispatch(loader_Actions(true));
+    }
+    let form = new FormData();
+    form.append("RequestMethod", deleteCountryCity.RequestMethod);
+    form.append("RequestData", JSON.stringify(data));
+    await axios({
+      method: "post",
+      url: adminURL,
+      data: form,
+      headers: {
+        _token: JSON.parse(localStorage.getItem("token")),
+      },
+    })
+      .then(async (response) => {
+        if (response.data.responseCode === 200) {
+          if (response.data.responseCode === 417) {
+            dispatch(
+              deleteCountryAdminApiMain(
+                t,
+                navigate,
+                loadingFlag,
+                data,
+                setDeleteCountryModal
+              )
+            );
+          } else if (response.data.responseResult.isExecuted === true) {
+            if (
+              response.data.responseResult.responseMessage ===
+              "Admin_AdminServiceManager_DeleteCountryCity_01"
+            ) {
+              setDeleteCountryModal(false);
+              await dispatch(
+                deleteCountryAdminSuccess(
+                  response.data.responseResult.responseMessage,
+                  t("Admin_AdminServiceManager_DeleteCountryCity_01")
+                )
+              );
+              await dispatch(getCountryCitiesApi(t, navigate, loadingFlag));
+              await dispatch(loader_Actions(false));
+            } else if (
+              response.data.responseResult.responseMessage ===
+              "Admin_AdminServiceManager_DeleteCountryCity_02"
+            ) {
+              await dispatch(
+                deleteCountryAdminFail(
+                  t("Admin_AdminServiceManager_UpdateCityBranch_03")
+                )
+              );
+              await dispatch(loader_Actions(false));
+            } else if (
+              response.data.responseResult.responseMessage ===
+              "Admin_AdminServiceManager_DeleteCountryCity_03"
+            ) {
+              await dispatch(
+                deleteCountryAdminFail(
+                  t("Admin_AdminServiceManager_DeleteCountryCity_03")
+                )
+              );
+              await dispatch(loader_Actions(false));
+            } else if (
+              response.data.responseResult.responseMessage ===
+              "Admin_AdminServiceManager_DeleteCountryCity_04"
+            ) {
+              await dispatch(
+                deleteCountryAdminFail(
+                  t("Admin_AdminServiceManager_GetCountryNationalHoliday_04")
+                )
+              );
+              await dispatch(loader_Actions(false));
+            } else if (
+              response.data.responseResult.responseMessage ===
+              "Admin_AdminServiceManager_DeleteCountryCity_05"
+            ) {
+              dispatch(deleteCountryAdminFail(t("something_went_wrong")));
+              await dispatch(loader_Actions(false));
+            } else if (
+              response.data.responseResult.responseMessage ===
+              "Admin_AdminServiceManager_DeleteCountryCity_06"
+            ) {
+              await dispatch(
+                deleteCountryAdminFail(
+                  t("Admin_AdminServiceManager_DeleteCountryCity_06")
+                )
+              );
+              await dispatch(loader_Actions(false));
+            } else {
+              dispatch(deleteCountryAdminFail(t("something_went_wrong")));
+              await dispatch(loader_Actions(false));
+            }
+          } else {
+            await dispatch(deleteCountryAdminFail(t("something_went_wrong")));
+            await dispatch(loader_Actions(false));
+          }
+        } else {
+          await dispatch(deleteCountryAdminFail(t("something_went_wrong")));
+          await dispatch(loader_Actions(false));
+        }
+      })
+      .catch((response) => {
+        dispatch(deleteCountryAdminFail(t("something_went_wrong")));
+        dispatch(loader_Actions(false));
+      });
+  };
+};
+// Delete country admin main end
+
+//Get country service list api start
+
+const getCountryServiceSuccess = (response, message) => {
+  return {
+    type: actions.GET_COUNTRY_SERVICE_SUCCESS,
+    response: response,
+    message: message,
+  };
+};
+
+const getCountryServiceFail = (message) => {
+  return {
+    type: actions.GET_COUNTRY_SERVICE_FAIL,
+    message: message,
+  };
+};
+
+const getCountryServiceMainApi = (t, navigate, loadingFlag) => {
+  let data = { CountryID: Number(localStorage.getItem("countryID")) };
+  return async (dispatch) => {
+    if (!loadingFlag) {
+      dispatch(loader_Actions(true));
+    }
+    let form = new FormData();
+    form.append("RequestMethod", getCountryServiceScreen.RequestMethod);
+    form.append("RequestData", JSON.stringify(data));
+    await axios({
+      method: "post",
+      url: adminURL,
+      data: form,
+      headers: {
+        _token: JSON.parse(localStorage.getItem("token")),
+      },
+    })
+      .then(async (response) => {
+        if (response.data.responseCode === 200) {
+          if (response.data.responseCode === 417) {
+            dispatch(getCountryServiceMainApi(t, navigate, loadingFlag, data));
+          } else if (response.data.responseResult.isExecuted === true) {
+            if (
+              response.data.responseResult.responseMessage ===
+              "Admin_AdminServiceManager_GetCountryServiceList_01"
+            ) {
+              await dispatch(
+                getCountryServiceSuccess(
+                  response.data.responseResult.countryServices,
+                  t("Admin_AdminServiceManager_GetCountryServiceList_01")
+                )
+              );
+              await dispatch(loader_Actions(false));
+            } else if (
+              response.data.responseResult.responseMessage ===
+              "Admin_AdminServiceManager_GetCountryServiceList_02"
+            ) {
+              await dispatch(
+                getCountryServiceFail(
+                  t("Admin_AdminServiceManager_GetCountryServiceList_02")
+                )
+              );
+              await dispatch(loader_Actions(false));
+            } else if (
+              response.data.responseResult.responseMessage ===
+              "Admin_AdminServiceManager_GetCountryServiceList_03"
+            ) {
+              await dispatch(
+                getCountryServiceFail(
+                  t("Admin_AdminServiceManager_GetCountryNationalHoliday_04")
+                )
+              );
+              await dispatch(loader_Actions(false));
+            } else if (
+              response.data.responseResult.responseMessage ===
+              "Admin_AdminServiceManager_GetCountryServiceList_04"
+            ) {
+              await dispatch(getCountryServiceFail(t("something_went_wrong")));
+              await dispatch(loader_Actions(false));
+            } else {
+              await dispatch(getCountryServiceFail(t("something_went_wrong")));
+              await dispatch(loader_Actions(false));
+            }
+          } else {
+            await dispatch(getCountryServiceFail(t("something_went_wrong")));
+            await dispatch(loader_Actions(false));
+          }
+        } else {
+          await dispatch(getCountryServiceFail(t("something_went_wrong")));
+          await dispatch(loader_Actions(false));
+        }
+      })
+      .catch((response) => {
+        dispatch(getCountryServiceFail(t("something_went_wrong")));
+        dispatch(loader_Actions(false));
+      });
+  };
+};
+
+//Get country service list api end
+
+//Update country service list api start
+const updateCountryServiceSuccess = (response, message) => {
+  return {
+    type: actions.UPDATE_COUNTRY_SERVICE_SUCCESS,
+    response: response,
+    message: message,
+  };
+};
+
+const updateCountryServiceFail = (message) => {
+  return {
+    type: actions.UPDATE_COUNTRY_SERVICE_FAIL,
+    message: message,
+  };
+};
+
+const updateCountryServiceMainApi = (t, navigate, loadingFlag, data) => {
+  return async (dispatch) => {
+    if (!loadingFlag) {
+      dispatch(loader_Actions(true));
+    }
+    let form = new FormData();
+    form.append("RequestMethod", updateCountryServiceScreen.RequestMethod);
+    form.append("RequestData", JSON.stringify(data));
+    await axios({
+      method: "post",
+      url: adminURL,
+      data: form,
+      headers: {
+        _token: JSON.parse(localStorage.getItem("token")),
+      },
+    })
+      .then(async (response) => {
+        if (response.data.responseCode === 200) {
+          if (response.data.responseCode === 417) {
+            dispatch(
+              updateCountryServiceMainApi(t, navigate, loadingFlag, data)
+            );
+          } else if (response.data.responseResult.isExecuted === true) {
+            if (
+              response.data.responseResult.responseMessage ===
+              "Admin_AdminServiceManager_UpdateCountryServicesList_01"
+            ) {
+              await dispatch(
+                updateCountryServiceSuccess(
+                  t("Admin_AdminServiceManager_UpdateCountryServicesList_01")
+                )
+              );
+              await dispatch(
+                getCountryServiceMainApi(t, navigate, loadingFlag)
+              );
+            } else if (
+              response.data.responseResult.responseMessage ===
+              "Admin_AdminServiceManager_UpdateCountryServicesList_02"
+            ) {
+              await dispatch(
+                updateCountryServiceFail(
+                  t("Admin_AdminServiceManager_UpdateCityServiceList_02")
+                )
+              );
+              await dispatch(loader_Actions(false));
+            } else if (
+              response.data.responseResult.responseMessage ===
+              "Admin_AdminServiceManager_UpdateCountryServicesList_03"
+            ) {
+              await dispatch(
+                updateCountryServiceFail(
+                  t("Admin_AdminServiceManager_GetCountryNationalHoliday_04")
+                )
+              );
+              await dispatch(loader_Actions(false));
+            } else if (
+              response.data.responseResult.responseMessage ===
+              "Admin_AdminServiceManager_UpdateCountryServicesList_04"
+            ) {
+              await dispatch(
+                updateCountryServiceFail(t("something_went_wrong"))
+              );
+              await dispatch(loader_Actions(false));
+            } else {
+              await dispatch(
+                updateCountryServiceFail(t("something_went_wrong"))
+              );
+              await dispatch(loader_Actions(false));
+            }
+          } else {
+            await dispatch(updateCountryServiceFail(t("something_went_wrong")));
+            await dispatch(loader_Actions(false));
+          }
+        } else {
+          await dispatch(updateCountryServiceFail(t("something_went_wrong")));
+          await dispatch(loader_Actions(false));
+        }
+      })
+      .catch((response) => {
+        dispatch(updateCountryServiceFail(t("something_went_wrong")));
+        dispatch(loader_Actions(false));
+      });
+  };
+};
+//Update country service list api end
+
+// get all branch service of city api start
+const getAllBranchServiceSuccess = (response, message) => {
+  return {
+    type: actions.GET_ALL_BRANCH_SERVICE_CITY_SUCCESS,
+    response: response,
+    message: message,
+  };
+};
+
+const getAllBranchServiceFail = (message) => {
+  return {
+    type: actions.GET_ALL_BRANCH_SERVICE_CITY_FAIL,
+    message: message,
+  };
+};
+
+const getAllBranchServiceMainApi = (t, navigate, loadingFlag, data) => {
+  return async (dispatch) => {
+    if (!loadingFlag) {
+      dispatch(loader_Actions(true));
+    }
+    let form = new FormData();
+    form.append("RequestMethod", getAllBranchServiceCity.RequestMethod);
+    form.append("RequestData", JSON.stringify(data));
+    await axios({
+      method: "post",
+      url: adminURL,
+      data: form,
+      headers: {
+        _token: JSON.parse(localStorage.getItem("token")),
+      },
+    })
+      .then(async (response) => {
+        if (response.data.responseCode === 200) {
+          if (response.data.responseCode === 417) {
+            dispatch(
+              getAllBranchServiceMainApi(t, navigate, loadingFlag, data)
+            );
+          } else if (response.data.responseResult.isExecuted === true) {
+            if (
+              response.data.responseResult.responseMessage ===
+              "Admin_AdminServiceManager_GetAllBranchServiceOfCity_01"
+            ) {
+              await dispatch(
+                getAllBranchServiceSuccess(
+                  response.data.responseResult.cityBranchServiceList,
+                  t("Admin_AdminServiceManager_GetAllBranchServiceOfCity_01")
+                )
+              );
+              await dispatch(loader_Actions(false));
+            } else if (
+              response.data.responseResult.responseMessage ===
+              "Admin_AdminServiceManager_GetAllBranchServiceOfCity_02"
+            ) {
+              await dispatch(
+                getAllBranchServiceFail(
+                  t("Admin_AdminServiceManager_GetAllBranchServiceOfCity_02")
+                )
+              );
+              await dispatch(loader_Actions(false));
+            } else if (
+              response.data.responseResult.responseMessage ===
+              "Admin_AdminServiceManager_GetAllBranchServiceOfCity_03"
+            ) {
+              await dispatch(
+                getAllBranchServiceFail(
+                  t("Admin_AdminServiceManager_GetAllBranchServiceOfCity_03")
+                )
+              );
+              await dispatch(loader_Actions(false));
+            } else if (
+              response.data.responseResult.responseMessage ===
+              "Admin_AdminServiceManager_GetAllBranchServiceOfCity_04"
+            ) {
+              await dispatch(
+                getAllBranchServiceFail(
+                  t("Admin_AdminServiceManager_UpdateCityBranch_03")
+                )
+              );
+              await dispatch(loader_Actions(false));
+            } else if (
+              response.data.responseResult.responseMessage ===
+              "Admin_AdminServiceManager_GetAllBranchServiceOfCity_05"
+            ) {
+              await dispatch(
+                getAllBranchServiceFail(
+                  t("Admin_AdminServiceManager_GetCountryNationalHoliday_04")
+                )
+              );
+              await dispatch(loader_Actions(false));
+            } else if (
+              response.data.responseResult.responseMessage ===
+              "Admin_AdminServiceManager_GetAllBranchServiceOfCity_06"
+            ) {
+              await dispatch(
+                getAllBranchServiceFail(t("something_went_wrong"))
+              );
+              await dispatch(loader_Actions(false));
+            } else {
+              await dispatch(
+                getAllBranchServiceFail(t("something_went_wrong"))
+              );
+              await dispatch(loader_Actions(false));
+            }
+          } else {
+            await dispatch(getAllBranchServiceFail(t("something_went_wrong")));
+            await dispatch(loader_Actions(false));
+          }
+        } else {
+          await dispatch(getAllBranchServiceFail(t("something_went_wrong")));
+          await dispatch(loader_Actions(false));
+        }
+      })
+      .catch((response) => {
+        dispatch(getAllBranchServiceFail(t("something_went_wrong")));
+        dispatch(loader_Actions(false));
+      });
+  };
+};
+
+// get all branch service of city api end
+
+//get all branch shift services of city api start
+const getAllBranchShiftSuccess = (response, message) => {
+  return {
+    type: actions.GET_ALL_BRANCH_SHIFT_CITY_SUCCESS,
+    response: response,
+    message: message,
+  };
+};
+
+const getAllBranchShiftFail = (message) => {
+  return {
+    type: actions.GET_ALL_BRANCH_SHIFT_CITY_FAIL,
+    message: message,
+  };
+};
+
+const getAllBranchSiftMainApi = (t, data, navigate, loadingFlag) => {
+  return async (dispatch) => {
+    if (!loadingFlag) {
+      dispatch(loader_Actions(true));
+    }
+    let form = new FormData();
+    form.append("RequestMethod", getAllBranchShiftServiceCity.RequestMethod);
+    form.append("RequestData", JSON.stringify(data));
+    await axios({
+      method: "post",
+      url: adminURL,
+      data: form,
+      headers: {
+        _token: JSON.parse(localStorage.getItem("token")),
+      },
+    })
+      .then(async (response) => {
+        if (response.data.responseCode === 200) {
+          if (response.data.responseCode === 417) {
+            dispatch(getAllBranchSiftMainApi(t, data, navigate, loadingFlag));
+          } else if (response.data.responseResult.isExecuted === true) {
+            if (
+              response.data.responseResult.responseMessage ===
+              "Admin_AdminServiceManager_GetAllBranchShiftServiceOfCity_01"
+            ) {
+              await dispatch(
+                getAllBranchShiftSuccess(
+                  response.data.responseResult,
+                  t(
+                    "Admin_AdminServiceManager_GetAllBranchShiftServiceOfCity_01"
+                  )
+                )
+              );
+              await dispatch(loader_Actions(false));
+            } else if (
+              response.data.responseResult.responseMessage ===
+              "Admin_AdminServiceManager_GetAllBranchShiftServiceOfCity_02"
+            ) {
+              await dispatch(
+                getAllBranchShiftSuccess(
+                  response.data.responseResult,
+                  t(
+                    "Admin_AdminServiceManager_GetAllBranchShiftServiceOfCity_02"
+                  )
+                )
+              );
+              await dispatch(loader_Actions(false));
+            } else if (
+              response.data.responseResult.responseMessage ===
+              "Admin_AdminServiceManager_GetAllBranchShiftServiceOfCity_03"
+            ) {
+              await dispatch(
+                getAllBranchShiftFail(
+                  t("Admin_AdminServiceManager_GetBranchServices_03")
+                )
+              );
+              await dispatch(loader_Actions(false));
+            } else if (
+              response.data.responseResult.responseMessage ===
+              "Admin_AdminServiceManager_GetAllBranchShiftServiceOfCity_04"
+            ) {
+              await dispatch(
+                getAllBranchShiftFail(
+                  t("Admin_AdminServiceManager_UpdateCityBranch_03")
+                )
+              );
+              await dispatch(loader_Actions(false));
+            } else if (
+              response.data.responseResult.responseMessage ===
+              "Admin_AdminServiceManager_GetAllBranchShiftServiceOfCity_05"
+            ) {
+              await dispatch(getAllBranchShiftFail(t("something_went_wrong")));
+              await dispatch(loader_Actions(false));
+            } else {
+              await dispatch(getAllBranchShiftFail(t("something_went_wrong")));
+              await dispatch(loader_Actions(false));
+            }
+          } else {
+            await dispatch(getAllBranchShiftFail(t("something_went_wrong")));
+            await dispatch(loader_Actions(false));
+          }
+        } else {
+          await dispatch(getAllBranchShiftFail(t("something_went_wrong")));
+          await dispatch(loader_Actions(false));
+        }
+      })
+      .catch((response) => {
+        dispatch(getAllBranchShiftFail(t("something_went_wrong")));
+        dispatch(loader_Actions(false));
+      });
+  };
+};
+//get all branch shift services of city api end
+
+//get all branch shift Counter services of city api in country admin start
+const getAllBranchCounterSucces = (response, message) => {
+  return {
+    type: actions.GET_ALL_BRANCH_COUNTER_CITY_SUCCESS,
+    response: response,
+    message: message,
+  };
+};
+
+const getAllBranchCounterFail = (message) => {
+  return {
+    type: actions.GET_ALL_BRANCH_COUNTER_CITY_FAIL,
+    message: message,
+  };
+};
+
+const getAllBranchCounterMainApi = (t, navigate, loadingFlag, data) => {
+  return async (dispatch) => {
+    if (!loadingFlag) {
+      dispatch(loader_Actions(true));
+    }
+    let form = new FormData();
+    form.append("RequestMethod", getAllBranchCounterServiceCity.RequestMethod);
+    form.append("RequestData", JSON.stringify(data));
+    await axios({
+      method: "post",
+      url: adminURL,
+      data: form,
+      headers: {
+        _token: JSON.parse(localStorage.getItem("token")),
+      },
+    })
+      .then(async (response) => {
+        if (response.data.responseCode === 200) {
+          if (response.data.responseCode === 417) {
+            dispatch(
+              getAllBranchCounterMainApi(t, navigate, loadingFlag, data)
+            );
+          } else if (response.data.responseResult.isExecuted === true) {
+            if (
+              response.data.responseResult.responseMessage ===
+              "Admin_AdminServiceManager_GetAllBranchShiftCounterServiceOfCity_01"
+            ) {
+              await dispatch(
+                getAllBranchCounterFail(
+                  t(
+                    "Admin_AdminServiceManager_GetAllBranchShiftCounterServiceOfCity_02"
+                  )
+                )
+              );
+
+              await dispatch(loader_Actions(false));
+            } else if (
+              response.data.responseResult.responseMessage ===
+              "Admin_AdminServiceManager_GetAllBranchShiftCounterServiceOfCity_02"
+            ) {
+              await dispatch(
+                getAllBranchCounterSucces(
+                  response.data.responseResult.bscModel,
+                  t(
+                    "Admin_AdminServiceManager_GetAllBranchShiftCounterServiceOfCity_01"
+                  )
+                )
+              );
+
+              await dispatch(loader_Actions(false));
+            } else if (
+              response.data.responseResult.responseMessage ===
+              "Admin_AdminServiceManager_GetAllBranchShiftCounterServiceOfCity_03"
+            ) {
+              await dispatch(
+                getAllBranchCounterFail(
+                  t(
+                    "Admin_AdminServiceManager_GetAllBranchShiftCounterServiceOfCity_03"
+                  )
+                )
+              );
+              await dispatch(loader_Actions(false));
+            } else if (
+              response.data.responseResult.responseMessage ===
+              "Admin_AdminServiceManager_GetAllBranchShiftCounterServiceOfCity_04"
+            ) {
+              await dispatch(
+                getAllBranchCounterFail(
+                  t("Admin_AdminServiceManager_UpdateCityBranch_03")
+                )
+              );
+              await dispatch(loader_Actions(false));
+            } else if (
+              response.data.responseResult.responseMessage ===
+              "Admin_AdminServiceManager_GetAllBranchShiftCounterServiceOfCity_05"
+            ) {
+              await dispatch(
+                getAllBranchCounterFail(t("something_went_wrong"))
+              );
+              await dispatch(loader_Actions(false));
+            } else {
+              await dispatch(
+                getAllBranchCounterFail(t("something_went_wrong"))
+              );
+              await dispatch(loader_Actions(false));
+            }
+          } else {
+            await dispatch(getAllBranchCounterFail(t("something_went_wrong")));
+            await dispatch(loader_Actions(false));
+          }
+        } else {
+          await dispatch(getAllBranchCounterFail(t("something_went_wrong")));
+          await dispatch(loader_Actions(false));
+        }
+      })
+      .catch((response) => {
+        dispatch(getAllBranchCounterFail(t("something_went_wrong")));
+        dispatch(loader_Actions(false));
+      });
+  };
+};
+//get all branch shift Counter services of city api in country admin end
+
+//get country List api in Global Admin Start
+const getCountryListSuccess = (response, message) => {
+  return {
+    type: actions.GET_COUNTRY_LIST_SUCCESS,
+    response: response,
+    message: message,
+  };
+};
+
+const getCountryListFail = (message) => {
+  return {
+    type: actions.GET_COUNTRY_LIST_FAIL,
+    message: message,
+  };
+};
+
+const getCountryListMainApi = (t, navigate, loadingFlag) => {
+  return async (dispatch) => {
+    if (!loadingFlag) {
+      dispatch(loader_Actions(true));
+    }
+    let form = new FormData();
+    form.append("RequestMethod", getCountryList.RequestMethod);
+    // form.append("RequestData", JSON.stringify());
+    await axios({
+      method: "post",
+      url: adminURL,
+      data: form,
+      headers: {
+        _token: JSON.parse(localStorage.getItem("token")),
+      },
+    })
+      .then(async (response) => {
+        if (response.data.responseCode === 200) {
+          if (response.data.responseCode === 417) {
+            dispatch(getCountryListMainApi(t, navigate, loadingFlag));
+          } else if (response.data.responseResult.isExecuted === true) {
+            if (
+              response.data.responseResult.responseMessage ===
+              "Admin_AdminServiceManager_GetCountryList_01"
+            ) {
+              await dispatch(
+                getCountryListSuccess(
+                  response.data.responseResult.countries,
+                  t("Admin_AdminServiceManager_GetCountryList_01")
+                )
+              );
+
+              await dispatch(loader_Actions(false));
+            } else if (
+              response.data.responseResult.responseMessage ===
+              "Admin_AdminServiceManager_GetCountryList_02"
+            ) {
+              await dispatch(
+                getCountryListFail(
+                  response.data.responseResult.responseMessage,
+                  t("Admin_AdminServiceManager_GetCountryList_02")
+                )
+              );
+
+              await dispatch(loader_Actions(false));
+            } else if (
+              response.data.responseResult.responseMessage ===
+              "Admin_AdminServiceManager_GetCountryList_03"
+            ) {
+              await dispatch(getCountryListFail(t("something_went_wrong")));
+              await dispatch(loader_Actions(false));
+            } else {
+              await dispatch(getCountryListFail(t("something_went_wrong")));
+              await dispatch(loader_Actions(false));
+            }
+          } else {
+            await dispatch(getCountryListFail(t("something_went_wrong")));
+            await dispatch(loader_Actions(false));
+          }
+        } else {
+          await dispatch(getCountryListFail(t("something_went_wrong")));
+          await dispatch(loader_Actions(false));
+        }
+      })
+      .catch((response) => {
+        dispatch(getCountryListFail(t("something_went_wrong")));
+        dispatch(loader_Actions(false));
+      });
+  };
+};
+//get country List api in Global Admin End
+
+//add country List api in Global Admin Start
+const addCountyListSuccess = (response, message) => {
+  return {
+    type: actions.ADD_COUNTRY_LIST_SUCCESS,
+    response: response,
+    message: message,
+  };
+};
+
+const addCountyListFail = (message) => {
+  return {
+    type: actions.ADD_COUNTRY_LIST_FAIL,
+    message: message,
+  };
+};
+
+const addCountryListMainApi = (t, navigate, loadingFlag, Data, setState) => {
+  return async (dispatch) => {
+    if (!loadingFlag) {
+      dispatch(loader_Actions(true));
+    }
+    let form = new FormData();
+    form.append("RequestMethod", addCountryList.RequestMethod);
+    form.append("RequestData", JSON.stringify(Data));
+    await axios({
+      method: "post",
+      url: adminURL,
+      data: form,
+      headers: {
+        _token: JSON.parse(localStorage.getItem("token")),
+      },
+    })
+      .then(async (response) => {
+        if (response.data.responseCode === 200) {
+          if (response.data.responseCode === 417) {
+            dispatch(
+              addCountryListMainApi(t, navigate, loadingFlag, Data, setState)
+            );
+          } else if (response.data.responseResult.isExecuted === true) {
+            if (
+              response.data.responseResult.responseMessage ===
+              "Admin_AdminServiceManager_AddCountry_01"
+            ) {
+              setState({
+                CountryNameEnglish: "",
+                CountryNameArabic: "",
+                IsCountryActive: false,
+              });
+              await dispatch(
+                addCountyListSuccess(
+                  response.data.responseResult.country,
+                  t("Admin_AdminServiceManager_AddCountry_01")
+                )
+              );
+            } else if (
+              response.data.responseResult.responseMessage ===
+              "Admin_AdminServiceManager_AddCountry_02"
+            ) {
+              await dispatch(
+                addCountyListFail(t("Admin_AdminServiceManager_AddCountry_02"))
+              );
+              await dispatch(loader_Actions(false));
+            } else if (
+              response.data.responseResult.responseMessage ===
+              "Admin_AdminServiceManager_AddCountry_03"
+            ) {
+              await dispatch(
+                addCountyListFail(t("Admin_AdminServiceManager_AddCountry_03"))
+              );
+              await dispatch(loader_Actions(false));
+            } else if (
+              response.data.responseResult.responseMessage ===
+              "Admin_AdminServiceManager_AddCountry_04"
+            ) {
+              await dispatch(addCountyListFail(t("something_went_wrong")));
+              await dispatch(loader_Actions(false));
+            } else {
+              dispatch(addCountyListFail(t("something_went_wrong")));
+            }
+          } else {
+            await dispatch(addCountyListFail(t("something_went_wrong")));
+            await dispatch(loader_Actions(false));
+          }
+        } else {
+          await dispatch(addCountyListFail(t("something_went_wrong")));
+          await dispatch(loader_Actions(false));
+        }
+      })
+      .catch((response) => {
+        dispatch(addCountyListFail(t("something_went_wrong")));
+        dispatch(loader_Actions(false));
+      });
+  };
+};
+//add country List api in Global Admin End
+
+//update country List api in Global Admin start
+const updateCountryListSuccess = (response, message) => {
+  return {
+    type: actions.UPDATE_COUNTRY_LIST_SUCCESS,
+    response: response,
+    message: message,
+  };
+};
+
+const updateCountryListFail = (message) => {
+  return {
+    type: actions.UPDATE_COUNTRY_LIST_FAIL,
+    message: message,
+  };
+};
+
+const updateCountryListMainApi = (
+  t,
+  navigate,
+  loadingFlag,
+  Data,
+  setState,
+  setCheckFlag
+) => {
+  return async (dispatch) => {
+    if (!loadingFlag) {
+      dispatch(loader_Actions(true));
+    }
+    let form = new FormData();
+    form.append("RequestMethod", updateCountryList.RequestMethod);
+    form.append("RequestData", JSON.stringify(Data));
+    await axios({
+      method: "post",
+      url: adminURL,
+      data: form,
+      headers: {
+        _token: JSON.parse(localStorage.getItem("token")),
+      },
+    })
+      .then(async (response) => {
+        if (response.data.responseCode === 200) {
+          if (response.data.responseCode === 417) {
+            dispatch(
+              updateCountryListMainApi(
+                t,
+                navigate,
+                loadingFlag,
+                Data,
+                setState,
+                setCheckFlag
+              )
+            );
+          } else if (response.data.responseResult.isExecuted === true) {
+            if (
+              response.data.responseResult.responseMessage ===
+              "Admin_AdminServiceManager_UpdateCountry_01"
+            ) {
+              setState({
+                CountryNameEnglish: "",
+                CountryNameArabic: "",
+                IsCountryActive: false,
+                CountryID: Number(localStorage.getItem("countryID")),
+              });
+              setCheckFlag(false);
+              await dispatch(
+                updateCountryListSuccess(
+                  response.data.responseResult.country,
+                  t("Admin_AdminServiceManager_UpdateCountry_01")
+                )
+              );
+            } else if (
+              response.data.responseResult.responseMessage ===
+              "Admin_AdminServiceManager_UpdateCountry_02"
+            ) {
+              await dispatch(
+                updateCountryListFail(
+                  t("Admin_AdminServiceManager_UpdateCountry_02")
+                )
+              );
+              await dispatch(loader_Actions(false));
+            } else if (
+              response.data.responseResult.responseMessage ===
+              "Admin_AdminServiceManager_UpdateCountry_03"
+            ) {
+              await dispatch(
+                updateCountryListFail(
+                  t("Admin_AdminServiceManager_UpdateCountry_03")
+                )
+              );
+              await dispatch(loader_Actions(false));
+            } else if (
+              response.data.responseResult.responseMessage ===
+              "Admin_AdminServiceManager_UpdateCountry_04"
+            ) {
+              dispatch(updateCountryListFail(t("something_went_wrong")));
+              await dispatch(loader_Actions(false));
+            } else {
+              dispatch(updateCountryListFail(t("something_went_wrong")));
+              await dispatch(loader_Actions(false));
+            }
+          } else {
+            await dispatch(updateCountryListFail(t("something_went_wrong")));
+            await dispatch(loader_Actions(false));
+          }
+        } else {
+          await dispatch(updateCountryListFail(t("something_went_wrong")));
+          await dispatch(loader_Actions(false));
+        }
+      })
+      .catch((response) => {
+        dispatch(updateCountryListFail(t("something_went_wrong")));
+        dispatch(loader_Actions(false));
+      });
+  };
+};
+// update country List api in Global Admin End
+
+// delete country List api in Global Admin Start
+const deleteCountryMainSuccess = (response, message) => {
+  return {
+    type: actions.DELETE_COUNTRY_LIST_SUCCESS,
+    response: response,
+    message: message,
+  };
+};
+
+const deleteCountryMainFail = (message) => {
+  return {
+    type: actions.DELETE_COUNTRY_LIST_FAIL,
+    message: message,
+  };
+};
+
+const deleteCountryMainApi = (
+  t,
+  navigate,
+  loadingFlag,
+  data,
+  setDeleteCountryModal
+) => {
+  return async (dispatch) => {
+    if (!loadingFlag) {
+      dispatch(loader_Actions(true));
+    }
+    let form = new FormData();
+    form.append("RequestMethod", deleteCountryList.RequestMethod);
+    form.append("RequestData", JSON.stringify(data));
+    await axios({
+      method: "post",
+      url: adminURL,
+      data: form,
+      headers: {
+        _token: JSON.parse(localStorage.getItem("token")),
+      },
+    })
+      .then(async (response) => {
+        if (response.data.responseCode === 200) {
+          if (response.data.responseCode === 417) {
+            dispatch(
+              deleteCountryMainApi(
+                t,
+                navigate,
+                loadingFlag,
+                data,
+                setDeleteCountryModal
+              )
+            );
+          } else if (response.data.responseResult.isExecuted === true) {
+            if (
+              response.data.responseResult.responseMessage ===
+              "Admin_AdminServiceManager_DeleteCountry_01"
+            ) {
+              setDeleteCountryModal(false);
+              await dispatch(
+                deleteCountryMainSuccess(
+                  response.data.responseResult.responseMessage,
+                  t("Admin_AdminServiceManager_DeleteCountry_01")
+                )
+              );
+              await dispatch(getCountryListMainApi(t, navigate, loadingFlag));
+              await dispatch(loader_Actions(false));
+            } else if (
+              response.data.responseResult.responseMessage ===
+              "Admin_AdminServiceManager_DeleteCountry_02"
+            ) {
+              await dispatch(
+                deleteCountryMainFail(
+                  t("Admin_AdminServiceManager_DeleteCountry_02")
+                )
+              );
+              await dispatch(loader_Actions(false));
+            } else if (
+              response.data.responseResult.responseMessage ===
+              "Admin_AdminServiceManager_DeleteCountry_03"
+            ) {
+              await dispatch(
+                deleteCountryMainFail(
+                  t("Admin_AdminServiceManager_GetCountryNationalHoliday_04")
+                )
+              );
+              await dispatch(loader_Actions(false));
+            } else if (
+              response.data.responseResult.responseMessage ===
+              "Admin_AdminServiceManager_DeleteCountry_04"
+            ) {
+              dispatch(deleteCountryMainFail(t("something_went_wrong")));
+              await dispatch(loader_Actions(false));
+            } else {
+              dispatch(deleteCountryMainFail(t("something_went_wrong")));
+              await dispatch(loader_Actions(false));
+            }
+          } else {
+            await dispatch(deleteCountryMainFail(t("something_went_wrong")));
+            await dispatch(loader_Actions(false));
+          }
+        } else {
+          await dispatch(deleteCountryMainFail(t("something_went_wrong")));
+          await dispatch(loader_Actions(false));
+        }
+      })
+      .catch((response) => {
+        dispatch(deleteCountryMainFail(t("something_went_wrong")));
+        dispatch(loader_Actions(false));
+      });
+  };
+};
+
+// delete country List api in Global Admin End
+
 export {
   clearResponseMessageAdmin,
   AdminCleareState,
@@ -4173,4 +5526,22 @@ export {
   getCountryWorkingDaysApi,
   updateWorkingDaysApi,
   getCountryCitiesApi,
+  addCountryAdminMainApi,
+  addCountryAdminFail,
+  updateCountryAdminMainApi,
+  updateCountryAdminFail,
+  deleteCountryAdminApiMain,
+  getCountryServiceMainApi,
+  updateCountryServiceMainApi,
+  getAllBranchServiceMainApi,
+  getCityServiceListFail,
+  getAllBranchSiftMainApi,
+  getAllBranchCounterMainApi,
+  // ===================================GLOBAL ADMIN START==========================================//
+  getCountryListMainApi,
+  addCountryListMainApi,
+  addCountyListFail,
+  updateCountryListMainApi,
+  updateCountryListFail,
+  deleteCountryMainApi,
 };

@@ -142,7 +142,10 @@ const NationalHoliday = () => {
               {t("National-holidays-list")}
               <span className="shift-sub-heading">
                 {" "}
-                {t("Saudi-arabia-riyadh")}
+                {currentLanguage === "en"
+                  ? "(" + localStorage.getItem("countryName") + ")"
+                  : "(" + localStorage.getItem("countryNameArabic") + ")"}
+                {/* {t("Saudi-arabia-riyadh")} */}
               </span>
             </span>
           </Col>

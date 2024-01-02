@@ -15,6 +15,7 @@ import {
 import {
   getCityBranchServiceFail,
   getAllShiftsOfBranchFail,
+  getCityServiceListFail,
 } from "../../../store/actions/Admin_action";
 import { useDispatch } from "react-redux";
 const { Sider } = Layout;
@@ -76,6 +77,7 @@ const Sidebar = () => {
     } else if (e.key === "12") {
       dispatch(setIsCountryWiseCityComponent(false));
       navigate("City");
+      dispatch(getCityServiceListFail(""));
     } else if (e.key === "13") {
       navigate("Services");
     } else if (e.key === "14") {

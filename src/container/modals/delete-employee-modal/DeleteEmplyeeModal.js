@@ -8,6 +8,8 @@ import {
   deleteBranchShiftApi,
   deleteCityBranchApi,
   deleteExistingEmployeeMainApi,
+  deleteCountryAdminApiMain,
+  deleteCountryMainApi,
 } from "../../../store/actions/Admin_action";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router";
@@ -18,6 +20,9 @@ const DeleteEmployeeModal = ({
   deleteID,
   route,
   employeeIDToDelete,
+  deleteNewID,
+  deleteCountryModal,
+  setDeleteCountryModal,
 }) => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
@@ -25,7 +30,11 @@ const DeleteEmployeeModal = ({
   const Loading = useSelector((state) => state.Loader.Loading);
 
   const onCloseModal = () => {
-    setDeleteModal(false);
+    if (deleteModal) {
+      setDeleteModal(false);
+    } else if (deleteCountryModal) {
+      setDeleteCountryModal(false);
+    }
   };
 
   const yesHandler = async () => {
@@ -53,6 +62,20 @@ const DeleteEmployeeModal = ({
       await dispatch(
         deleteCityBranchApi(t, navigate, Loading, data, setDeleteModal)
       );
+    } else if (route === "CountryAdminDelete") {
+      let data = {
+        CityID: deleteNewID,
+        CountryID: Number(localStorage.getItem("countryID")),
+      };
+      await dispatch(
+        deleteCountryAdminApiMain(
+          t,
+          navigate,
+          Loading,
+          data,
+          setDeleteCountryModal
+        )
+      );
     } else if (route === "EmployeeMain") {
       console.log("employeeIDToDelete", employeeIDToDelete);
       let data = {
@@ -69,14 +92,21 @@ const DeleteEmployeeModal = ({
           setDeleteModal
         )
       );
+    } else if (route === "CountryMain") {
+      let data = {
+        CountryID: deleteNewID,
+      };
+      await dispatch(
+        deleteCountryMainApi(t, navigate, Loading, data, setDeleteCountryModal)
+      );
     }
   };
 
   return (
     <>
       <Modal
-        show={deleteModal}
-        setShow={setDeleteModal}
+        show={deleteModal || deleteCountryModal}
+        setShow={setDeleteModal || setDeleteCountryModal}
         className="modaldialog delete-modal"
         modalHeaderClassName="d-none"
         modalFooterClassName="modal-bank-footer"

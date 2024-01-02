@@ -205,7 +205,71 @@ const updateCountryWorkingDays = {
   RequestMethod: "ServiceManager.UpdateCountryWorkingDays",
 };
 
+//For add Country city in country admin main page
+const addCountryCity = {
+  RequestMethod: "ServiceManager.AddCountryCity",
+};
+
+//For update Country city in country admin main page
+const updateCountryCity = {
+  RequestMethod: "ServiceManager.UpdateCountryCity",
+};
+
+//For delete country City in country admin main page
+const deleteCountryCity = {
+  RequestMethod: "ServiceManager.DeleteCountryCity",
+};
+
+//For get country service list api in SERVICE COUNTRY SCREEN
+const getCountryServiceScreen = {
+  RequestMethod: "ServiceManager.GetCountryServiceList",
+};
+
+//For update country service list api in SERVICE COUNTRY SCREEN
+const updateCountryServiceScreen = {
+  RequestMethod: "ServiceManager.UpdateCountryServicesList",
+};
+
+// Get All BranchService Of City in BRANCH SCREEN on country admin
+const getAllBranchServiceCity = {
+  RequestMethod: "ServiceManager.GetAllBranchServiceOfCity",
+};
+
+// Get all branch shift service of city in shift screen on country admin
+const getAllBranchShiftServiceCity = {
+  RequestMethod: "ServiceManager.GetAllBranchShiftServiceOfCity",
+};
+
+// Get All BranchShiftCounter Service Of City in COUNTER screen on country admin
+const getAllBranchCounterServiceCity = {
+  RequestMethod: "ServiceManager.GetAllBranchShiftCounterServiceOfCity",
+};
+
 // ===================================COUNTRY ADMIN END ==========================================//
+
+// ===================================GLOBAL ADMIN START ==========================================//
+
+// Get Country List in COUNTRY MAIN screen on Global admin
+const getCountryList = {
+  RequestMethod: "ServiceManager.GetCountryList",
+};
+
+// Add Country List in COUNTRY MAIN screen on Global admin
+const addCountryList = {
+  RequestMethod: "ServiceManager.AddCountry",
+};
+
+// Update Country List in COUNTRY MAIN screen on Global admin
+const updateCountryList = {
+  RequestMethod: "ServiceManager.UpdateCountry",
+};
+
+// Delete Country List in COUNTRY MAIN screen on Global admin
+const deleteCountryList = {
+  RequestMethod: "ServiceManager.DeleteCountry",
+};
+
+// ===================================GLOBAL ADMIN END ==========================================//
 
 export {
   logIn,
@@ -254,5 +318,20 @@ export {
   getCountryWorkingDays,
   updateCountryWorkingDays,
   getCountryCities,
+  addCountryCity,
+  updateCountryCity,
+  deleteCountryCity,
+  getCountryServiceScreen,
+  updateCountryServiceScreen,
+  getAllBranchServiceCity,
+  getAllBranchShiftServiceCity,
+  getAllBranchCounterServiceCity,
   // ===================================COUNTRY ADMIN END ==========================================//
+
+  // ===================================GLOBAL ADMIN START ==========================================//
+  getCountryList,
+  addCountryList,
+  updateCountryList,
+  deleteCountryList,
+  // ===================================GLOBAL ADMIN END ==========================================//
 };

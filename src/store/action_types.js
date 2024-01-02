@@ -209,6 +209,43 @@ export const UPDATE_COUNTRY_WORKING_DAYS_FAIL =
 export const GET_COUNTRY_CITIES_API_SUCCESS = "GET_COUNTRY_CITIES_API_SUCCESS";
 export const GET_COUNTRY_CITIES_API_FAIL = "GET_COUNTRY_CITIES_API_FAIL";
 
+//For add Country city in country admin main page
+export const ADD_COUNTRY_ADMIN_SUCCESS = "ADD_COUNTRY_ADMIN_SUCCESS";
+export const ADD_COUNTRY_ADMIN_FAIL = "ADD_COUNTRY_ADMIN_FAIL";
+
+//For update Country city in country admin main page
+export const UPDATE_COUNTRY_ADMIN_SUCCESS = "UPDATE_COUNTRY_ADMIN_SUCCESS";
+export const UPDATE_COUNTRY_ADMIN_FAIL = "UPDATE_COUNTRY_ADMIN_FAIL";
+
+// for delete country city in country admin main page
+export const DELETE_COUNTRY_ADMIN_SUCCESS = "DELETE_COUNTRY_ADMIN_SUCCESS";
+export const DELETE_COUNTRY_ADMIN_FAIL = "DELETE_COUNTRY_ADMIN_FAIL";
+
+// for get country service screen list api in country admin page
+export const GET_COUNTRY_SERVICE_SUCCESS = "GET_COUNTRY_SERVICE_SUCCESS";
+export const GET_COUNTRY_SERVICE_FAIL = "GET_COUNTRY_SERVICE_FAIL";
+
+// for update country service screen list api in country admin page
+export const UPDATE_COUNTRY_SERVICE_SUCCESS = "UPDATE_COUNTRY_SERVICE_SUCCESS";
+export const UPDATE_COUNTRY_SERVICE_FAIL = "UPDATE_COUNTRY_SERVICE_FAIL";
+
+// Get All BranchService Of City in BRANCH SCREEN on country admin
+export const GET_ALL_BRANCH_SERVICE_CITY_SUCCESS =
+  "GET_ALL_BRANCH_SERVICE_CITY_SUCCESS";
+export const GET_ALL_BRANCH_SERVICE_CITY_FAIL =
+  "GET_ALL_BRANCH_SERVICE_CITY_FAIL";
+
+// Get All Branch Shift Service Of City in BRANCH SCREEN on country admin
+export const GET_ALL_BRANCH_SHIFT_CITY_SUCCESS =
+  "GET_ALL_BRANCH_SHIFT_CITY_SUCCESS";
+export const GET_ALL_BRANCH_SHIFT_CITY_FAIL = "GET_ALL_BRANCH_SHIFT_CITY_FAIL";
+
+// Get All Branch Shift Counter Service Of City in BRANCH SCREEN on country admin
+export const GET_ALL_BRANCH_COUNTER_CITY_SUCCESS =
+  "GET_ALL_BRANCH_COUNTER_CITY_SUCCESS";
+export const GET_ALL_BRANCH_COUNTER_CITY_FAIL =
+  "GET_ALL_BRANCH_COUNTER_CITY_FAIL";
+
 // ===================================COUNTRY ADMIN END ==========================================//
 
 //====================================BRANCH WISE APPOINTMENT=====================================//
@@ -233,3 +270,21 @@ export const SET_COUNTRY_SERVICE_SCREEN_COMPONENT =
 // For service country screen component
 export const SET_SERVICE_COUNTRY_SCREEN_COMPONENT =
   "SET_SERVICE_COUNTRY_SCREEN_COMPONENT";
+
+// Get Country List in COUNTRY MAIN screen on Global admin
+export const GET_COUNTRY_LIST_SUCCESS = "GET_COUNTRY_LIST_SUCCESS";
+export const GET_COUNTRY_LIST_FAIL = "GET_COUNTRY_LIST_FAIL";
+
+// ADD Country List in COUNTRY MAIN screen on Global admin
+export const ADD_COUNTRY_LIST_SUCCESS = "ADD_COUNTRY_LIST_SUCCESS";
+export const ADD_COUNTRY_LIST_FAIL = "ADD_COUNTRY_LIST_FAIL";
+
+// UPDATE Country List in COUNTRY MAIN screen on Global admin
+export const UPDATE_COUNTRY_LIST_SUCCESS = "UPDATE_COUNTRY_LIST_SUCCESS";
+export const UPDATE_COUNTRY_LIST_FAIL = "UPDATE_COUNTRY_LIST_FAIL";
+
+// DELETE Country List in COUNTRY MAIN screen on Global admin
+export const DELETE_COUNTRY_LIST_SUCCESS = "DELETE_COUNTRY_LIST_SUCCESS";
+export const DELETE_COUNTRY_LIST_FAIL = "DELETE_COUNTRY_LIST_FAIL";
+
+// ===================================GLOBAL ADMIN END ==========================================//

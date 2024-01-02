@@ -14,12 +14,21 @@ import { useNavigate } from "react-router";
 import CountryAdminModal from "../../modals/country-delete-modal/CountryAdminModal";
 import { setIsCountryWiseCityComponent } from "../../../store/actions/global_action";
 import {
+  getCityServiceListApi,
   getCountryCitiesApi,
   updateCityServiceListApi,
+  addCountryAdminMainApi,
+  addCountryAdminFail,
+  updateCountryAdminMainApi,
+  updateCountryAdminFail,
+  getCityServiceListFail,
 } from "../../../store/actions/Admin_action";
 import { capitalizeKeysInArray } from "../../../commen/functions/utils.js";
 import { Switch } from "antd";
 import CountryWiseCityComponent from "../country-wise-city-component/CountryWiseCityComponent";
+import { regexOnlyForNumberNCharacters } from "../../../commen/functions/regex";
+import { loader_Actions } from "../../../store/actions/Loader_action";
+import DeleteEmployeeModal from "../../modals/delete-employee-modal/DeleteEmplyeeModal";
 
 const CountryAdminMain = () => {
   const { t } = useTranslation();
@@ -29,22 +38,43 @@ const CountryAdminMain = () => {
   const local = currentLanguage === "en" ? "en-US" : "ar-SA";
   const Loading = useSelector((state) => state.Loader.Loading);
   const cityList = useSelector((state) => state.admin.cityList);
-  const [isCheckboxSelected, setIsCheckboxSelected] = useState(false);
-  // state to open a modal for delete
-  const [countryDeleteModal, setCountryDeleteModal] = useState(false);
-  const [rows, setRows] = useState([]);
-
+  // reducers for countrywiseCityComponent
   const cityServiceListData = useSelector(
     (state) => state.admin.cityServiceListData
   );
+  console.log(cityList, "cityServiceListData");
+  // reducers for addCountry admin main api
+  const countryAdminMainData = useSelector(
+    (state) => state.admin.countryAdminMainData
+  );
+
+  // reducers for updateCountry admin main api
+  const updateCountryAdmin = useSelector(
+    (state) => state.admin.updateCountryAdmin
+  );
+
+  // flag for add and update country admin
+  const [addUpdateCheckFlag, setAddUpdateCheckFlag] = useState(false);
+
+  // delete state of modal
+  const [deleteNewID, setDeleteNewID] = useState(null);
+  const [deleteCountryModal, setDeleteCountryModal] = useState(false);
+
+  // state for add new data in row
+  const [addCountry, setAddCountry] = useState({
+    CountryID: Number(localStorage.getItem("countryID")),
+    CityNameEnglish: "",
+    CityNameArabic: "",
+    IsCityActive: false,
+    CityID: 0,
+  });
+
+  const [rows, setRows] = useState([]);
 
   // state for country city admin main
   const isCountryWiseCityComponentReducer = useSelector(
     (state) => state.global.isCountryWiseCityComponentReducer
   );
-
-  // to open country wise city state
-  const [isCountryWiseCity, setIsCountryWiseCity] = useState(false);
 
   const callApi = async () => {
     // 1 pasiing in prop for check that we have to call getCityEmployeeMainApi all api from here on page route from side bar
@@ -61,63 +91,155 @@ const CountryAdminMain = () => {
     };
   }, []);
 
+  useEffect(() => {
+    if (countryAdminMainData !== null) {
+      let prevData = [...rows];
+      prevData.push(countryAdminMainData);
+      setRows(prevData);
+      dispatch(addCountryAdminFail(""));
+      dispatch(loader_Actions(false));
+    }
+
+    if (updateCountryAdmin !== null) {
+      setRows(
+        rows.map((city) => {
+          if (city.cityID === updateCountryAdmin.cityID) {
+            return updateCountryAdmin; // Replace with the new data if IDs match
+          }
+          return city; // Keep the existing shift if IDs don't match
+        })
+      );
+      dispatch(updateCountryAdminFail(""));
+      dispatch(loader_Actions(false));
+    }
+  }, [countryAdminMainData, updateCountryAdmin]);
+
+  //useEffect To set data in rows from reducers in table countrywiseCityComponent
+  useEffect(() => {
+    if (cityServiceListData !== null) {
+      setRows(cityServiceListData);
+    } else {
+      setRows([]);
+    }
+  }, [cityServiceListData]);
+
   // updating table of city employee Main
   useEffect(() => {
-    if (Object.keys(cityList).length > 0) {
-      setRows(cityList?.cities);
+    if (cityList && Object.keys(cityList).length > 0) {
+      setRows(cityList.cities);
     } else {
       setRows([]);
     }
   }, [cityList]);
 
-  // to open country wise city in onClick button
-  const openCountryWiseCity = () => {
-    dispatch(setIsCountryWiseCityComponent(true));
+  //on Change handler for country Admin main
+  const handleChange = (e) => {
+    try {
+      let name = e.target.name;
+      let value = e.target.value;
+      let checked = e.target.checked;
+      if (name === "CityNameEnglish") {
+        setAddCountry({
+          ...addCountry,
+          ["CityNameEnglish"]: regexOnlyForNumberNCharacters(value),
+        });
+      } else if (name === "CityNameArabic") {
+        setAddCountry({
+          ...addCountry,
+          ["CityNameArabic"]: regexOnlyForNumberNCharacters(value),
+        });
+      } else {
+        setAddCountry({ ...addCountry, ["IsCityActive"]: checked });
+      }
+    } catch {}
   };
 
-  //to open country city wise branch onClick button
-  const openCountryCityWiseBranch = () => {
-    localStorage.setItem("selectedKeys", ["14"]);
-    navigate("/CountryAdmin/Branch");
+  // add and edit button in country Admin Main
+  const handleAddShift = () => {
+    try {
+      if (addUpdateCheckFlag) {
+        if (
+          addCountry.CityNameEnglish !== "" &&
+          addCountry.CityNameArabic !== ""
+        ) {
+          let Data = {
+            CountryID: Number(localStorage.getItem("countryID")),
+            CityNameEnglish: addCountry.CityNameEnglish,
+            CityNameArabic: addCountry.CityNameArabic,
+            CityID: addCountry.CityID,
+            IsCityActive: addCountry.IsCityActive,
+          };
+          dispatch(
+            updateCountryAdminMainApi(
+              t,
+              navigate,
+              Loading,
+              Data,
+              setAddCountry,
+              setAddUpdateCheckFlag
+            )
+          );
+        }
+      } else {
+        if (
+          addCountry.CityNameEnglish !== "" &&
+          addCountry.CityNameArabic !== ""
+        ) {
+          let Data = {
+            CountryID: Number(localStorage.getItem("countryID")),
+            CityNameEnglish: addCountry.CityNameEnglish,
+            CityNameArabic: addCountry.CityNameArabic,
+            CityID: addCountry.CityID,
+            IsCityActive: addCountry.IsCityActive,
+          };
+          dispatch(
+            addCountryAdminMainApi(t, navigate, Loading, Data, setAddCountry)
+          );
+        }
+      }
+    } catch {}
   };
 
-  //to open country city wise counter onClick button
-  const openCountryCityWiseCounter = () => {
-    localStorage.setItem("selectedKeys", ["16"]);
-    navigate("/CountryAdmin/Counters");
+  // for reset data in textfields
+  const handleResetCountry = () => {
+    try {
+      if (addUpdateCheckFlag) {
+        setAddUpdateCheckFlag(false);
+      }
+      setAddCountry({
+        CountryID: Number(localStorage.getItem("countryID")),
+        CityNameEnglish: "",
+        CityNameArabic: "",
+        CityID: 0,
+        IsCityActive: false,
+      });
+    } catch {}
   };
 
-  //to open country city branch wise shift onClick button
-  const openCountryCityBranchShift = () => {
-    localStorage.setItem("selectedKeys", ["15"]);
-    navigate("/CountryAdmin/Shifts");
+  const handleCountryEdit = (value, flag) => {
+    try {
+      if (flag === 1) {
+        setAddUpdateCheckFlag(true);
+        setAddCountry({
+          CountryID: Number(localStorage.getItem("countryID")),
+          CityNameEnglish: value.cityNameEnglish,
+          CityNameArabic: value.cityNameArabic,
+          CityID: value.cityID,
+          IsCityActive: value.isCityActive,
+        });
+      } else if (flag === 2) {
+        setDeleteNewID(value.cityID);
+        setDeleteCountryModal(true);
+      }
+    } catch {}
   };
 
-  //to open country Wise Employee onClick button
-  const openCountryWiseEmployee = (record) => {
-    localStorage.setItem("selectedKeys", ["17"]);
-    localStorage.setItem("branchID", record);
-    navigate(`/CountryAdmin/Employee?cityID=${record}`);
-  };
-
-  // open a delete modal
-  const openDeleteModal = () => {
-    setCountryDeleteModal(true);
-  };
-
-  const handleCheckboxChange = (e) => {
-    setIsCheckboxSelected(e.target.checked);
-  };
-
-  const goBackButtonCountryOnclick = (record) => {
-    dispatch(setIsCountryWiseCityComponent(false));
-  };
-
+  // this column is for country admin main
   const columns = [
     {
       title: <span className="table-text">#</span>,
-      dataIndex: "id",
-      key: "id",
+      dataIndex: "cityID",
+      key: "cityID",
       render: (text, record, index) => (
         <span className="table-inside-text">
           {(index + 1).toLocaleString(local)}
@@ -167,28 +289,29 @@ const CountryAdminMain = () => {
               className="icon-text-edit icon-EDT-DLT-color"
               title="Edit"
               aria-label="Edit"
+              onClick={() => handleCountryEdit(record, 1)}
             ></i>
             <i
               className="icon-close icon-EDT-DLT-color"
               title="Delete"
-              onClick={openDeleteModal}
+              onClick={() => handleCountryEdit(record, 2)}
               aria-label="Delete"
             ></i>
             <i
               className="icon-settings icon-EDT-DLT-color"
-              onClick={openCountryWiseCity}
+              onClick={() => openCountryWiseCity(record)}
               title="Service"
               aria-label="Service"
             ></i>
             <i
               className="icon-branch icon-EDT-DLT-color"
-              onClick={openCountryCityWiseBranch}
+              onClick={() => openCountryCityWiseBranch(text)}
               title="Branch"
               aria-label="Branch"
             ></i>
             <i
               className="icon-counter icon-EDT-DLT-color"
-              onClick={openCountryCityWiseCounter}
+              onClick={() => openCountryCityWiseCounter(text)}
               title="Counter"
               aria-label="Counter"
             ></i>
@@ -210,6 +333,327 @@ const CountryAdminMain = () => {
     },
   ];
 
+  // to open country wise city in onClick button
+  const openCountryWiseCity = (record) => {
+    localStorage.setItem("cityID", record.cityID);
+    dispatch(getCityServiceListApi(t, navigate, Loading));
+    dispatch(setIsCountryWiseCityComponent(true));
+  };
+
+  //to open country city wise branch onClick button
+  const openCountryCityWiseBranch = (record) => {
+    localStorage.setItem("selectedKeys", ["14"]);
+    localStorage.setItem("branchID", record);
+    navigate(`/CountryAdmin/Branch?cityID=${record}`);
+  };
+
+  //to open country city wise counter onClick button
+  const openCountryCityWiseCounter = (record) => {
+    localStorage.setItem("selectedKeys", ["16"]);
+    localStorage.setItem("branchID", record);
+    navigate(`/CountryAdmin/Counters?cityID=${record}`);
+  };
+
+  //to open country city branch wise shift onClick button
+  const openCountryCityBranchShift = () => {
+    localStorage.setItem("selectedKeys", ["15"]);
+    navigate("/CountryAdmin/Shifts");
+  };
+
+  //to open country Wise Employee onClick button
+  const openCountryWiseEmployee = (record) => {
+    localStorage.setItem("selectedKeys", ["17"]);
+    localStorage.setItem("branchID", record);
+    navigate(`/CountryAdmin/Employee?cityID=${record}`);
+  };
+
+  const goBackButtonCountryOnclick = async (record) => {
+    localStorage.removeItem("cityID", record.cityID);
+    dispatch(setIsCountryWiseCityComponent(false));
+    dispatch(getCityServiceListFail(""));
+    await dispatch(getCountryCitiesApi(t, navigate, Loading));
+  };
+
+  // coulumn for countrywiseCityComponent
+  const columnsCityWise = [
+    {
+      title: <span className="table-text">{t("Service")}</span>,
+      width: "400px",
+      dataIndex: "citySM",
+      key: "citySM",
+      render: (text, record) => (
+        <span className="table-inside-text">
+          {record.citySM
+            ? currentLanguage === "en"
+              ? record.citySM.serviceNameEnglish
+              : record.citySM.serviceNameArabic
+            : ""}
+        </span>
+      ),
+    },
+    {
+      title: <span className="table-text">{t("Branch-availability")}</span>,
+      dataIndex: "branchAvailability",
+      key: "branchAvailability",
+      width: "250px",
+      align: "center",
+      render: (text, record) => (
+        <span>
+          <Switch
+            checked={text}
+            onChange={(value) =>
+              handleSwitch("branchAvailability", value, record)
+            }
+          />
+        </span>
+      ),
+    },
+    {
+      title: <span className="table-text">{t("Home-availability")}</span>,
+      dataIndex: "homeAvailability",
+      key: "homeAvailability",
+      width: "250px",
+      align: "center",
+      render: (text, record) => (
+        <span>
+          <Switch
+            checked={text}
+            onChange={(value) =>
+              handleSwitch("homeAvailability", value, record)
+            }
+          />
+        </span>
+      ),
+    },
+
+    {
+      title: (
+        <span className="d-flex justify-content-center table-text text-center me-3">
+          {t("Service-slot")}
+        </span>
+      ),
+      // homeVisitCharges
+      dataIndex: "homeServiceSlotDurationMinutes",
+      key: "homeServiceSlotDurationMinutes",
+      width: "200px",
+      render: (text, record, rowIndex) => (
+        <div className="d-flex flex-column gap-2 ms-3">
+          <TextField
+            className="for-inside-table-textfields"
+            labelClass="d-none"
+            value={record.homeServiceSlotDurationMinutes}
+            onChange={(e) => {
+              const inputValue = e.target.value;
+              const numericInput = inputValue.replace(/[^0-9]/g, "");
+              handleTextFieldChangeService(
+                numericInput,
+                rowIndex,
+                0,
+                60,
+                "homeServiceSlotDurationMinutes"
+              );
+            }}
+            type="number"
+            min={0}
+            max={60}
+          />
+        </div>
+      ),
+    },
+    {
+      title: (
+        <span className="d-flex justify-content-center table-text text-center me-2">
+          {t("Advance-roaster")}
+        </span>
+      ),
+      // homeServiceSlotDurationMinutes
+      dataIndex: "homeMaximumAdvanceRoasterDays",
+      key: "homeMaximumAdvanceRoasterDays",
+      width: "200px",
+      align: "center",
+      render: (text, record, rowIndex) => (
+        <div className="d-flex flex-column gap-2 ms-3">
+          <TextField
+            className="for-inside-table-textfields"
+            labelClass="d-none"
+            value={record.homeMaximumAdvanceRoasterDays}
+            onChange={(e) => {
+              const inputValue = e.target.value;
+              const numericInput = inputValue.replace(/[^0-9]/g, "");
+              handleTextFieldChangeService(
+                numericInput,
+                rowIndex,
+                0,
+                15,
+                "homeMaximumAdvanceRoasterDays"
+              );
+            }}
+            type="number"
+            min={0}
+            max={15}
+          />
+        </div>
+      ),
+    },
+    {
+      title: (
+        <span className="d-flex justify-content-center table-text text-center me-4">
+          {t("Prebooking-margin")}
+        </span>
+      ),
+      dataIndex: "homePrebookingDaysMarginForCity",
+      key: "homePrebookingDaysMarginForCity",
+      width: "200px",
+      align: "center",
+      render: (text, record, rowIndex) => (
+        <div className="d-flex flex-column gap-2 ms-3">
+          <TextField
+            className="for-inside-table-textfields"
+            labelClass="d-none"
+            value={record.homePrebookingDaysMarginForCity}
+            onChange={(e) => {
+              const inputValue = e.target.value;
+              const numericInput = inputValue.replace(/[^0-9]/g, "");
+              handleTextFieldChangeService(
+                numericInput,
+                rowIndex,
+                0,
+                15,
+                "homePrebookingDaysMarginForCity"
+              );
+            }}
+            type="number"
+            min={0}
+            max={15}
+          />
+        </div>
+      ),
+    },
+    {
+      title: (
+        <span className="d-flex justify-content-center table-text text-center me-4">
+          {t("Visit-charges")}
+        </span>
+      ),
+      dataIndex: "homeVisitCharges",
+      key: "homeVisitCharges",
+      align: "center",
+      width: "200px",
+      render: (text, record, rowIndex) => (
+        <div className="d-flex flex-column gap-2 ms-2">
+          <TextField
+            className="for-inside-table-textfields"
+            labelClass="d-none"
+            value={record.homeVisitCharges}
+            onChange={(e) => {
+              const inputValue = e.target.value;
+              const numericInput = inputValue.replace(/[^0-9]/g, "");
+              handleTextFieldChangeService(
+                numericInput,
+                rowIndex,
+                0,
+                1000,
+                "homeVisitCharges"
+              );
+            }}
+            type="number"
+            min={0}
+            max={1000}
+          />
+        </div>
+      ),
+    },
+  ];
+
+  //This is handler TextField for columns countrywiseCityComponent
+  const handleTextFieldChangeService = (
+    value,
+    rowIndex,
+    min,
+    max,
+    columnName
+  ) => {
+    // Validate the input range
+    const numericValue = Number(value);
+    if (numericValue >= min && numericValue <= max) {
+      setRows((prevServices) => {
+        return rows.map((service, index) => {
+          if (index === rowIndex) {
+            return {
+              ...service,
+              [columnName]: numericValue,
+            };
+          }
+          return service;
+        });
+      });
+    }
+  };
+
+  // This is handler TextField for columns
+
+  //handler for switch to change their state countrywiseCityComponent
+  const handleSwitch = (name, value, record) => {
+    try {
+      if (name === "homeAvailability") {
+        setRows(
+          rows.map((service) => {
+            if (service.cityServiceID === record.cityServiceID) {
+              return {
+                ...service,
+                homeAvailability: value,
+              };
+            }
+            return service;
+          })
+        );
+      } else if (name === "branchAvailability") {
+        setRows(
+          rows.map((service) => {
+            if (service.cityServiceID === record.cityServiceID) {
+              return {
+                ...service,
+                branchAvailability: value,
+              };
+            }
+            return service;
+          })
+        );
+      }
+    } catch {}
+  };
+
+  // state for revert the data into original state countrywiseCityComponent
+  const handleRevert = () => {
+    try {
+      if (cityServiceListData !== null) {
+        setRows(cityServiceListData);
+      }
+    } catch {}
+  };
+
+  // this will change the data when we hit the save button countrywiseCityComponent
+  const handleSave = () => {
+    try {
+      let convertedData = capitalizeKeysInArray(rows);
+      const newArray = convertedData.map((item) => ({
+        BranchAvailability: item.BranchAvailability,
+        CityServiceID: item.CityServiceID,
+        HomeAvailability: item.HomeAvailability,
+        HomeVisitCharges: item.HomeVisitCharges,
+        HomeServiceSlotDurationMinutes: item.HomeServiceSlotDurationMinutes,
+        HomeMaximumAdvanceRoasterDays: item.HomeMaximumAdvanceRoasterDays,
+        HomePrebookingDaysMarginForCity: item.HomePrebookingDaysMarginForCity,
+      }));
+      console.log(newArray, "newArraynewArray");
+      let data = {
+        CityID: Number(localStorage.getItem("cityID")),
+        CityServices: newArray,
+      };
+      dispatch(updateCityServiceListApi(t, navigate, Loading, data));
+    } catch {}
+  };
+
   // country wise city end
 
   return (
@@ -218,7 +662,12 @@ const CountryAdminMain = () => {
         {isCountryWiseCityComponentReducer === true ? (
           <>
             <CountryWiseCityComponent
+              setRows={setRows}
+              rows={rows}
               goBackButtonCountryOnclick={goBackButtonCountryOnclick}
+              columnsCityWise={columnsCityWise}
+              handleRevert={handleRevert}
+              handleSave={handleSave}
             />
           </>
         ) : (
@@ -249,8 +698,10 @@ const CountryAdminMain = () => {
                     <Col lg={6} md={6} sm={6}>
                       <span className="text-labels">{t("City-name")}</span>
                       <TextField
-                        name="Branch Name"
+                        name="CityNameEnglish"
+                        value={addCountry.CityNameEnglish}
                         placeholder={t("City-name")}
+                        onChange={handleChange}
                         labelClass="d-none"
                         className="text-fiels-CountryAdmin"
                       />
@@ -258,8 +709,10 @@ const CountryAdminMain = () => {
                     <Col lg={6} md={6} sm={6} className="text-end">
                       <span className="text-labels">اسم المدينة</span>
                       <TextField
-                        name="Branch Name"
+                        name="CityNameArabic"
+                        value={addCountry.CityNameArabic}
                         placeholder="اسم المدينة"
+                        onChange={handleChange}
                         labelClass="d-none"
                         className="text-fields-CountryAdmin-arabic"
                       />
@@ -269,8 +722,8 @@ const CountryAdminMain = () => {
                   <Row className="mt-3">
                     <Col lg={6} md={6} sm={6} className="mt-1">
                       <Checkbox
-                        checked={isCheckboxSelected}
-                        onChange={handleCheckboxChange}
+                        checked={addCountry.IsCityActive}
+                        onChange={handleChange}
                         classNameDiv="CountryAdmin-checkbox"
                         label={
                           <span className="checkbox-label">{t("Active")}</span>
@@ -286,11 +739,13 @@ const CountryAdminMain = () => {
                     >
                       <Button
                         icon={<i className="icon-add-circle icon-space"></i>}
-                        text={t("Add")}
+                        text={addUpdateCheckFlag ? t("Update") : t("Add")}
+                        onClick={handleAddShift}
                         className="Add-btn-CountryAdmin"
                       />
                       <Button
                         icon={<i className="icon-refresh icon-space"></i>}
+                        onClick={handleResetCountry}
                         text={t("Reset")}
                         className="Reset-btn-CountryAdmin"
                       />
@@ -299,11 +754,7 @@ const CountryAdminMain = () => {
 
                   <Row className="mt-3">
                     <Col lg={12} md={12} sm={12}>
-                      <Table
-                        rows={rows}
-                        column={columns}
-                        pagination={false}
-                      />
+                      <Table rows={rows} column={columns} pagination={false} />
                     </Col>
                   </Row>
                 </Paper>
@@ -311,14 +762,14 @@ const CountryAdminMain = () => {
             </Row>
           </>
         )}
-
-        {countryDeleteModal ? (
-          <CountryAdminModal
-            countryDeleteModal={countryDeleteModal}
-            setCountryDeleteModal={setCountryDeleteModal}
-          />
-        ) : null}
       </section>
+
+      <DeleteEmployeeModal
+        deleteNewID={deleteNewID}
+        setDeleteCountryModal={setDeleteCountryModal}
+        deleteCountryModal={deleteCountryModal}
+        route={"CountryAdminDelete"}
+      />
     </>
   );
 };
