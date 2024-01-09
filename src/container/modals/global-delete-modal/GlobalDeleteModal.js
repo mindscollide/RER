@@ -1,14 +1,42 @@
 import React, { useState } from "react";
 import { Col, Row } from "react-bootstrap";
 import { useTranslation } from "react-i18next";
+import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router";
 import { Button, Modal } from "../../../components/elements";
+import { deleteGlobalServiceMainApi } from "../../../store/actions/Admin_action";
 import "./GlobalDeleteModal.css";
 
-const GlobalDeleteModal = ({ globalModal, setGlobalModal }) => {
+const GlobalDeleteModal = ({
+  globalID,
+  globalModal,
+  setGlobalModal,
+  route,
+}) => {
   const { t } = useTranslation();
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const loadingFlag = useSelector((state) => state.Loader.Loading);
 
   const onCloseModal = () => {
     setGlobalModal(false);
+  };
+
+  const yesHandler = async () => {
+    if (route === "GlobalService") {
+      let data = {
+        ServiceID: globalID,
+      };
+      await dispatch(
+        deleteGlobalServiceMainApi(
+          t,
+          navigate,
+          loadingFlag,
+          data,
+          setGlobalModal
+        )
+      );
+    }
   };
 
   return (
@@ -45,7 +73,11 @@ const GlobalDeleteModal = ({ globalModal, setGlobalModal }) => {
                 sm={12}
                 className="Yes-No-Roaster-modal-btn-col"
               >
-                <Button text={t("Yes")} className="Yes-btn-Employee" />
+                <Button
+                  text={t("Yes")}
+                  className="Yes-btn-Employee"
+                  onClick={yesHandler}
+                />
                 <Button
                   text={t("No")}
                   className="No-btn-Employee"

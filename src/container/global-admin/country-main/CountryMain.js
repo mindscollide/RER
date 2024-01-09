@@ -7,6 +7,7 @@ import {
   Checkbox,
   Button,
   Table,
+  Notification,
 } from "../../../components/elements";
 import { useTranslation } from "react-i18next";
 import { useDispatch, useSelector } from "react-redux";
@@ -17,6 +18,7 @@ import {
   addCountyListFail,
   updateCountryListFail,
   updateCountryListMainApi,
+  clearResponseMessageAdmin,
 } from "../../../store/actions/Admin_action";
 import ServiceCountryScreenComponent from "../service-country-screen-component/ServiceCountryScreenComponent";
 import { useNavigate } from "react-router";
@@ -36,6 +38,8 @@ const CountryMain = () => {
     (state) => state.admin.getCountryListData
   );
 
+  console.log(getCountryListData);
+
   const addCountryListData = useSelector(
     (state) => state.admin.addCountryListData
   );
@@ -49,8 +53,20 @@ const CountryMain = () => {
     (state) => state.global.isServiceCountryComponentReducer
   );
 
+  // reducer for response message
+  const responseMessage = useSelector(
+    (state) => state.admin.admin_ResponseMessage
+  );
+
   // states for rows to set data in table
   const [rows, setRows] = useState([]);
+
+  //state for show notifications through response
+  const [countryMainNotification, setCountryMainNotification] = useState({
+    notificationFlag: false,
+    notificationMessage: null,
+    severity: "none",
+  });
 
   // flag for add and update country admin
   const [addUpdateCheckFlag, setAddUpdateCheckFlag] = useState(false);
@@ -142,16 +158,17 @@ const CountryMain = () => {
   };
 
   //open Employee page in Country Main
-  const openClickEmployeeScreenInCountryMain = () => {
+  const openClickEmployeeScreenInCountryMain = (record) => {
     localStorage.setItem("selectedKeys", ["25"]);
-    navigate("/GlobalAdmin/Employee");
+    localStorage.setItem("countryID", record);
+    navigate(`/GlobalAdmin/Employee?countryID=${record}`);
   };
 
   const columns = [
     {
       title: <span className="table-text">#</span>,
-      dataIndex: "id",
-      key: "id",
+      dataIndex: "countryID",
+      key: "countryID",
       render: (text, record, index) => (
         <span className="table-inside-text">
           {(index + 1).toLocaleString(local)}
@@ -227,7 +244,9 @@ const CountryMain = () => {
             ></i>
             <i
               className="icon-user icon-EDT-DLT-color"
-              onClick={openClickEmployeeScreenInCountryMain}
+              onClick={() =>
+                openClickEmployeeScreenInCountryMain(record.countryID)
+              }
             ></i>
           </span>
         </>
@@ -338,6 +357,145 @@ const CountryMain = () => {
     } catch {}
   };
 
+  useEffect(() => {
+    if (
+      responseMessage !== null &&
+      responseMessage !== undefined &&
+      responseMessage !== ""
+    ) {
+      if (responseMessage === t("Admin_AdminServiceManager_AddCountry_01")) {
+        setTimeout(
+          setCountryMainNotification({
+            ...countryMainNotification,
+            notificationFlag: true,
+            notificationMessage: t("Admin_AdminServiceManager_AddCountry_01"),
+            severity: "success",
+          }),
+          3000
+        );
+      } else if (
+        responseMessage === t("Admin_AdminServiceManager_AddCountry_02")
+      ) {
+        setTimeout(
+          setCountryMainNotification({
+            ...countryMainNotification,
+            notificationFlag: true,
+            notificationMessage: t("Admin_AdminServiceManager_AddCountry_02"),
+            severity: "error",
+          }),
+          3000
+        );
+      } else if (
+        responseMessage === t("Admin_AdminServiceManager_AddCountry_03")
+      ) {
+        setTimeout(
+          setCountryMainNotification({
+            ...countryMainNotification,
+            notificationFlag: true,
+            notificationMessage: t("Admin_AdminServiceManager_AddCountry_03"),
+            severity: "error",
+          }),
+          3000
+        );
+      } else if (responseMessage === t("something_went_wrong")) {
+        setTimeout(
+          setCountryMainNotification({
+            ...countryMainNotification,
+            notificationFlag: true,
+            notificationMessage: t("something_went_wrong"),
+            severity: "error",
+          }),
+          3000
+        );
+      } else if (
+        responseMessage === t("Admin_AdminServiceManager_UpdateCountry_01")
+      ) {
+        setTimeout(
+          setCountryMainNotification({
+            ...countryMainNotification,
+            notificationFlag: true,
+            notificationMessage: t(
+              "Admin_AdminServiceManager_UpdateCountry_01"
+            ),
+            severity: "success",
+          }),
+          3000
+        );
+      } else if (
+        responseMessage === t("Admin_AdminServiceManager_UpdateCountry_02")
+      ) {
+        setTimeout(
+          setCountryMainNotification({
+            ...countryMainNotification,
+            notificationFlag: true,
+            notificationMessage: t(
+              "Admin_AdminServiceManager_UpdateCountry_02"
+            ),
+            severity: "error",
+          }),
+          3000
+        );
+      } else if (
+        responseMessage === t("Admin_AdminServiceManager_UpdateCountry_03")
+      ) {
+        setTimeout(
+          setCountryMainNotification({
+            ...countryMainNotification,
+            notificationFlag: true,
+            notificationMessage: t(
+              "Admin_AdminServiceManager_UpdateCountry_03"
+            ),
+            severity: "error",
+          }),
+          3000
+        );
+      } else if (
+        responseMessage === t("Admin_AdminServiceManager_DeleteCountry_01")
+      ) {
+        setTimeout(
+          setCountryMainNotification({
+            ...countryMainNotification,
+            notificationFlag: true,
+            notificationMessage: t(
+              "Admin_AdminServiceManager_DeleteCountry_01"
+            ),
+            severity: "success",
+          }),
+          3000
+        );
+      } else if (
+        responseMessage === t("dmin_AdminServiceManager_DeleteCountry_02")
+      ) {
+        setTimeout(
+          setCountryMainNotification({
+            ...countryMainNotification,
+            notificationFlag: true,
+            notificationMessage: t(
+              "Admin_AdminServiceManager_DeleteCountry_02"
+            ),
+            severity: "error",
+          }),
+          3000
+        );
+      } else if (
+        responseMessage === t("dmin_AdminServiceManager_DeleteCountry_03")
+      ) {
+        setTimeout(
+          setCountryMainNotification({
+            ...countryMainNotification,
+            notificationFlag: true,
+            notificationMessage: t(
+              "Admin_AdminServiceManager_GetCountryNationalHoliday_04"
+            ),
+            severity: "error",
+          }),
+          3000
+        );
+      }
+    }
+    dispatch(clearResponseMessageAdmin(null));
+  }, [responseMessage]);
+
   return (
     <>
       <section>
@@ -438,6 +596,18 @@ const CountryMain = () => {
         setDeleteCountryModal={setDeleteCountryModal}
         deleteCountryModal={deleteCountryModal}
         route={"CountryMain"}
+      />
+
+      <Notification
+        show={countryMainNotification.notificationFlag}
+        hide={setCountryMainNotification}
+        message={countryMainNotification.notificationMessage}
+        severity={countryMainNotification.severity}
+        notificationClass={
+          countryMainNotification.severity === "error"
+            ? "notification-error"
+            : "notification-success"
+        }
       />
     </>
   );

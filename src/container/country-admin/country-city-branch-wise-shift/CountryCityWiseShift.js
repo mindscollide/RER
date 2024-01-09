@@ -226,7 +226,7 @@ const CountryCityWiseShift = () => {
       align: "center",
       render: (text, record) => (
         <span>
-          <Switch checked={record.isServiceActive} />
+          <Switch checked={record.isServiceActive} disabled />
         </span>
       ),
     },
@@ -344,7 +344,10 @@ const CountryCityWiseShift = () => {
                                   sm={6}
                                   className="d-flex justify-content-end"
                                 >
-                                  <Switch checked={true} disabled />
+                                  <Switch
+                                    checked={data.branchShift.isShiftActive}
+                                    disabled
+                                  />
                                 </Col>
                               </Row>
                               <Table

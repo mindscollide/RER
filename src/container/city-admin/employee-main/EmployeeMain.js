@@ -7,6 +7,7 @@ import {
   Checkbox,
   Button,
   Table,
+  Notification,
 } from "../../../components/elements";
 import Select from "react-select";
 import { Radio } from "antd";
@@ -18,6 +19,7 @@ import {
   getCityBranchListApi,
   addEditFlagModal,
   getCityEmployeeClear,
+  clearResponseMessageAdmin,
 } from "../../../store/actions/Admin_action";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router";
@@ -45,6 +47,10 @@ const EmployeeMain = () => {
     (state) => state.admin.cityBranchListData
   );
   const cityEmployeeMain = useSelector((state) => state.admin.cityEmployeeMain);
+  // reducer for response message
+  const responseMessage = useSelector(
+    (state) => state.admin.admin_ResponseMessage
+  );
 
   // states for employee Main in dropdown
   const [employeeMainOption, setEmployeeMainOption] = useState([]);
@@ -74,6 +80,13 @@ const EmployeeMain = () => {
 
   //delete modal states
   const [deleteModal, setDeleteModal] = useState(false);
+
+  //state for show notifications through response
+  const [employeeNotification, setEmployeeNotification] = useState({
+    notificationFlag: false,
+    notificationMessage: null,
+    severity: "none",
+  });
 
   const callApi = async () => {
     await dispatch(getCityBranchListApi(t, navigate, loadingFlag));
@@ -281,14 +294,17 @@ const EmployeeMain = () => {
       title: <span className="table-text">{t("Email")}</span>,
       dataIndex: "employeeEmail",
       key: "employeeEmail",
-      align: "center",
-      render: (text, record) => <span>{text}</span>,
+      render: (text, record) => (
+        <span className="table-inside-text">{text}</span>
+      ),
     },
     {
       title: <span className="table-text">{t("Employee-id")}</span>,
       dataIndex: "employeeID",
       key: "employeeID",
-      render: (text, record) => <span>{text}</span>,
+      render: (text, record) => (
+        <span className="table-inside-text">{text}</span>
+      ),
     },
     {
       title: <span className="table-text">{t("Active")}</span>,
@@ -329,6 +345,192 @@ const EmployeeMain = () => {
       ),
     },
   ];
+
+  useEffect(() => {
+    if (
+      responseMessage !== null &&
+      responseMessage !== undefined &&
+      responseMessage !== ""
+    ) {
+      if (
+        responseMessage ===
+        t("Admin_AdminServiceManager_AddNewEmployeeOfCity_01")
+      ) {
+        setTimeout(
+          setEmployeeNotification({
+            ...employeeNotification,
+            notificationFlag: true,
+            notificationMessage: t(
+              "Admin_AdminServiceManager_AddNewEmployeeOfCity_01"
+            ),
+            severity: "success",
+          }),
+          3000
+        );
+      } else if (
+        responseMessage ===
+        t("Admin_AdminServiceManager_AddNewEmployeeOfCity_02")
+      ) {
+        setTimeout(
+          setEmployeeNotification({
+            ...employeeNotification,
+            notificationFlag: true,
+            notificationMessage: t(
+              "Admin_AdminServiceManager_AddNewEmployeeOfCity_02"
+            ),
+            severity: "error",
+          }),
+          3000
+        );
+      } else if (
+        responseMessage ===
+        t("Admin_AdminServiceManager_AddNewEmployeeOfCity_03")
+      ) {
+        setTimeout(
+          setEmployeeNotification({
+            ...employeeNotification,
+            notificationFlag: true,
+            notificationMessage: t(
+              "Admin_AdminServiceManager_AddNewEmployeeOfCity_03"
+            ),
+            severity: "error",
+          }),
+          3000
+        );
+      } else if (responseMessage === t("something_went_wrong")) {
+        setTimeout(
+          setEmployeeNotification({
+            ...employeeNotification,
+            notificationFlag: true,
+            notificationMessage: t("something_went_wrong"),
+            severity: "error",
+          }),
+          3000
+        );
+      } else if (
+        responseMessage ===
+        t("Admin_AdminServiceManager_UpdateExistingEmployeeOfCity_01")
+      ) {
+        setTimeout(
+          setEmployeeNotification({
+            ...employeeNotification,
+            notificationFlag: true,
+            notificationMessage: t(
+              "Admin_AdminServiceManager_UpdateExistingEmployeeOfCity_01"
+            ),
+            severity: "success",
+          }),
+          3000
+        );
+      } else if (
+        responseMessage ===
+        t("Admin_AdminServiceManager_UpdateExistingEmployeeOfCity_02")
+      ) {
+        setTimeout(
+          setEmployeeNotification({
+            ...employeeNotification,
+            notificationFlag: true,
+            notificationMessage: t(
+              "Admin_AdminServiceManager_UpdateExistingEmployeeOfCity_02"
+            ),
+            severity: "error",
+          }),
+          3000
+        );
+      } else if (
+        responseMessage ===
+        t("Admin_AdminServiceManager_UpdateExistingEmployeeOfCity_03")
+      ) {
+        setTimeout(
+          setEmployeeNotification({
+            ...employeeNotification,
+            notificationFlag: true,
+            notificationMessage: t(
+              "Admin_AdminServiceManager_UpdateExistingEmployeeOfCity_03"
+            ),
+            severity: "error",
+          }),
+          3000
+        );
+      } else if (
+        responseMessage ===
+        t("Admin_AdminServiceManager_UpdateExistingEmployeeOfCity_04")
+      ) {
+        setTimeout(
+          setEmployeeNotification({
+            ...employeeNotification,
+            notificationFlag: true,
+            notificationMessage: t(
+              "Admin_AdminServiceManager_UpdateExistingEmployeeOfCity_04"
+            ),
+            severity: "error",
+          }),
+          3000
+        );
+      } else if (
+        responseMessage ===
+        t("Admin_AdminServiceManager_DeleteExistingEmployeeOfCity_01")
+      ) {
+        setTimeout(
+          setEmployeeNotification({
+            ...employeeNotification,
+            notificationFlag: true,
+            notificationMessage: t(
+              "Admin_AdminServiceManager_DeleteExistingEmployeeOfCity_01"
+            ),
+            severity: "success",
+          }),
+          3000
+        );
+      } else if (
+        responseMessage ===
+        t("Admin_AdminServiceManager_DeleteExistingEmployeeOfCity_02")
+      ) {
+        setTimeout(
+          setEmployeeNotification({
+            ...employeeNotification,
+            notificationFlag: true,
+            notificationMessage: t(
+              "Admin_AdminServiceManager_DeleteExistingEmployeeOfCity_02"
+            ),
+            severity: "error",
+          }),
+          3000
+        );
+      } else if (
+        responseMessage ===
+        t("Admin_AdminServiceManager_DeleteExistingEmployeeOfCity_03")
+      ) {
+        setTimeout(
+          setEmployeeNotification({
+            ...employeeNotification,
+            notificationFlag: true,
+            notificationMessage: t(
+              "Admin_AdminServiceManager_DeleteExistingEmployeeOfCity_03"
+            ),
+            severity: "error",
+          }),
+          3000
+        );
+      } else if (
+        responseMessage ===
+        t("Admin_AdminServiceManager_DeleteExistingEmployeeOfCity_05")
+      ) {
+        setTimeout(
+          setEmployeeNotification({
+            ...employeeNotification,
+            notificationFlag: true,
+            notificationMessage: t(
+              "Admin_AdminServiceManager_DeleteExistingEmployeeOfCity_05"
+            ),
+            severity: "error",
+          }),
+          3000
+        );
+      }
+    }
+    dispatch(clearResponseMessageAdmin(null));
+  }, [responseMessage]);
 
   return (
     <>
@@ -515,6 +717,18 @@ const EmployeeMain = () => {
           />
         ) : null}
       </section>
+
+      <Notification
+        show={employeeNotification.notificationFlag}
+        hide={setEmployeeNotification}
+        message={employeeNotification.notificationMessage}
+        severity={employeeNotification.severity}
+        notificationClass={
+          employeeNotification.severity === "error"
+            ? "notification-error"
+            : "notification-success"
+        }
+      />
     </>
   );
 };

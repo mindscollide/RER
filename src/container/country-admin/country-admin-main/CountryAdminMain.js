@@ -7,6 +7,7 @@ import {
   Checkbox,
   Button,
   Table,
+  Notification,
 } from "../../../components/elements";
 import { useTranslation } from "react-i18next";
 import { useDispatch, useSelector } from "react-redux";
@@ -22,6 +23,7 @@ import {
   updateCountryAdminMainApi,
   updateCountryAdminFail,
   getCityServiceListFail,
+  clearResponseMessageAdmin,
 } from "../../../store/actions/Admin_action";
 import { capitalizeKeysInArray } from "../../../commen/functions/utils.js";
 import { Switch } from "antd";
@@ -53,6 +55,11 @@ const CountryAdminMain = () => {
     (state) => state.admin.updateCountryAdmin
   );
 
+  // reducer for response message
+  const responseMessage = useSelector(
+    (state) => state.admin.admin_ResponseMessage
+  );
+
   // flag for add and update country admin
   const [addUpdateCheckFlag, setAddUpdateCheckFlag] = useState(false);
 
@@ -70,6 +77,13 @@ const CountryAdminMain = () => {
   });
 
   const [rows, setRows] = useState([]);
+
+  //state for show notifications through response
+  const [countryNotification, setCountryNotification] = useState({
+    notificationFlag: false,
+    notificationMessage: null,
+    severity: "none",
+  });
 
   // state for country city admin main
   const isCountryWiseCityComponentReducer = useSelector(
@@ -656,6 +670,210 @@ const CountryAdminMain = () => {
 
   // country wise city end
 
+  // useEffect to show response messages in snackbar
+  useEffect(() => {
+    if (
+      responseMessage !== null &&
+      responseMessage !== undefined &&
+      responseMessage !== ""
+    ) {
+      if (
+        responseMessage === t("Admin_AdminServiceManager_AddCountryCity_01")
+      ) {
+        setTimeout(
+          setCountryNotification({
+            ...countryNotification,
+            notificationFlag: true,
+            notificationMessage: t(
+              "Admin_AdminServiceManager_AddCountryCity_01"
+            ),
+            severity: "success",
+          }),
+          3000
+        );
+      } else if (
+        responseMessage === t("Admin_AdminServiceManager_AddCountryCity_02")
+      ) {
+        setTimeout(
+          setCountryNotification({
+            ...countryNotification,
+            notificationFlag: true,
+            notificationMessage: t(
+              "Admin_AdminServiceManager_AddCountryCity_02"
+            ),
+            severity: "error",
+          }),
+          3000
+        );
+      } else if (
+        responseMessage === t("Admin_AdminServiceManager_AddCountryCity_03")
+      ) {
+        setTimeout(
+          setCountryNotification({
+            ...countryNotification,
+            notificationFlag: true,
+            notificationMessage: t(
+              "Admin_AdminServiceManager_GetCountryNationalHoliday_04"
+            ),
+            severity: "error",
+          }),
+          3000
+        );
+      } else if (responseMessage === t("something_went_wrong")) {
+        setTimeout(
+          setCountryNotification({
+            ...countryNotification,
+            notificationFlag: true,
+            notificationMessage: t("something_went_wrong"),
+            severity: "error",
+          }),
+          3000
+        );
+      } else if (
+        responseMessage === t("Admin_AdminServiceManager_UpdateCountryCity_01")
+      ) {
+        setTimeout(
+          setCountryNotification({
+            ...countryNotification,
+            notificationFlag: true,
+            notificationMessage: t(
+              "Admin_AdminServiceManager_UpdateCountryCity_01"
+            ),
+            severity: "success",
+          }),
+          3000
+        );
+      } else if (
+        responseMessage === t("Admin_AdminServiceManager_UpdateCountryCity_02")
+      ) {
+        setTimeout(
+          setCountryNotification({
+            ...countryNotification,
+            notificationFlag: true,
+            notificationMessage: t(
+              "Admin_AdminServiceManager_UpdateCountryCity_02"
+            ),
+            severity: "error",
+          }),
+          3000
+        );
+      } else if (
+        responseMessage === t("Admin_AdminServiceManager_UpdateCountryCity_03")
+      ) {
+        setTimeout(
+          setCountryNotification({
+            ...countryNotification,
+            notificationFlag: true,
+            notificationMessage: t(
+              "Admin_AdminServiceManager_UpdateCountryCity_03"
+            ),
+            severity: "error",
+          }),
+          3000
+        );
+      } else if (
+        responseMessage === t("Admin_AdminServiceManager_UpdateCountryCity_04")
+      ) {
+        setTimeout(
+          setCountryNotification({
+            ...countryNotification,
+            notificationFlag: true,
+            notificationMessage: t(
+              "Admin_AdminServiceManager_UpdateCountryCity_04"
+            ),
+            severity: "error",
+          }),
+          3000
+        );
+      } else if (
+        responseMessage === t("Admin_AdminServiceManager_UpdateCountryCity_05")
+      ) {
+        setTimeout(
+          setCountryNotification({
+            ...countryNotification,
+            notificationFlag: true,
+            notificationMessage: t(
+              "Admin_AdminServiceManager_GetCountryNationalHoliday_04"
+            ),
+            severity: "error",
+          }),
+          3000
+        );
+      } else if (
+        responseMessage === t("Admin_AdminServiceManager_DeleteCountryCity_01")
+      ) {
+        setTimeout(
+          setCountryNotification({
+            ...countryNotification,
+            notificationFlag: true,
+            notificationMessage: t(
+              "Admin_AdminServiceManager_DeleteCountryCity_01"
+            ),
+            severity: "success",
+          }),
+          3000
+        );
+      } else if (
+        responseMessage === t("Admin_AdminServiceManager_DeleteCountryCity_02")
+      ) {
+        setTimeout(
+          setCountryNotification({
+            ...countryNotification,
+            notificationFlag: true,
+            notificationMessage: t(
+              "Admin_AdminServiceManager_UpdateCityBranch_03"
+            ),
+            severity: "error",
+          }),
+          3000
+        );
+      } else if (
+        responseMessage === t("Admin_AdminServiceManager_DeleteCountryCity_03")
+      ) {
+        setTimeout(
+          setCountryNotification({
+            ...countryNotification,
+            notificationFlag: true,
+            notificationMessage: t(
+              "Admin_AdminServiceManager_DeleteCountryCity_03"
+            ),
+            severity: "error",
+          }),
+          3000
+        );
+      } else if (
+        responseMessage === t("Admin_AdminServiceManager_DeleteCountryCity_04")
+      ) {
+        setTimeout(
+          setCountryNotification({
+            ...countryNotification,
+            notificationFlag: true,
+            notificationMessage: t(
+              "Admin_AdminServiceManager_GetCountryNationalHoliday_04"
+            ),
+            severity: "error",
+          }),
+          3000
+        );
+      } else if (
+        responseMessage === t("Admin_AdminServiceManager_DeleteCountryCity_06")
+      ) {
+        setTimeout(
+          setCountryNotification({
+            ...countryNotification,
+            notificationFlag: true,
+            notificationMessage: t(
+              "Admin_AdminServiceManager_DeleteCountryCity_06"
+            ),
+            severity: "error",
+          }),
+          3000
+        );
+      }
+    }
+    dispatch(clearResponseMessageAdmin(null));
+  }, [responseMessage]);
+
   return (
     <>
       <section>
@@ -769,6 +987,18 @@ const CountryAdminMain = () => {
         setDeleteCountryModal={setDeleteCountryModal}
         deleteCountryModal={deleteCountryModal}
         route={"CountryAdminDelete"}
+      />
+
+      <Notification
+        show={countryNotification.notificationFlag}
+        hide={setCountryNotification}
+        message={countryNotification.notificationMessage}
+        severity={countryNotification.severity}
+        notificationClass={
+          countryNotification.severity === "error"
+            ? "notification-error"
+            : "notification-success"
+        }
       />
     </>
   );

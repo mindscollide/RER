@@ -269,6 +269,31 @@ const deleteCountryList = {
   RequestMethod: "ServiceManager.DeleteCountry",
 };
 
+// get Global Service List in SERVICE MAIN screen on Global admin
+const getGlobalServiceList = {
+  RequestMethod: "ServiceManager.GetGlobalServiceList",
+};
+
+// add Global Service List in SERVICE MAIN screen on Global admin
+const addGlobalServiceList = {
+  RequestMethod: "ServiceManager.AddGlobalService",
+};
+
+// update Global Service List in SERVICE MAIN screen on Global admin
+const updateGlobalServiceList = {
+  RequestMethod: "ServiceManager.UpdateGlobalService",
+};
+
+// delete Global Service List in SERVICE MAIN screen on Global admin
+const deleteGlobalServiceList = {
+  RequestMethod: "ServiceManager.DeleteGlobalService",
+};
+
+//get All of Employee List in Global Admin
+const getAllEmployeeList = {
+  RequestMethod: "ServiceManager.GetAllEmployeeList",
+};
+
 // ===================================GLOBAL ADMIN END ==========================================//
 
 export {
@@ -333,5 +358,10 @@ export {
   addCountryList,
   updateCountryList,
   deleteCountryList,
+  getGlobalServiceList,
+  addGlobalServiceList,
+  updateGlobalServiceList,
+  deleteGlobalServiceList,
+  getAllEmployeeList,
   // ===================================GLOBAL ADMIN END ==========================================//
 };

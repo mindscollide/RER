@@ -53,6 +53,11 @@ const initialState = {
   addCountryListData: null,
   updateCountryListData: null,
   deleteCountryListData: null,
+  getGlobalServiceData: null,
+  addGlobalServiceData: null,
+  updateGlobalServiceData: null,
+  deleteGlobalServiceData: null,
+  getEmployeeList: null,
 };
 
 const adminReducer = (state = initialState, action) => {
@@ -837,6 +842,81 @@ const adminReducer = (state = initialState, action) => {
       return {
         ...state,
         deleteCountryListData: null,
+        admin_ResponseMessage: action.message,
+      };
+
+    //get Global Service List in Global Admin
+    case actions.GET_GLOBAL_SERVICE_LIST_SUCCESS:
+      return {
+        ...state,
+        getGlobalServiceData: action.response,
+        admin_ResponseMessage: action.message,
+      };
+
+    case actions.GET_GLOBAL_SERVICE_LIST_FAIL:
+      return {
+        ...state,
+        getGlobalServiceData: null,
+        admin_ResponseMessage: action.message,
+      };
+
+    //add Global Service List in Global Admin
+    case actions.ADD_GLOBAL_SERVICE_LIST_SUCCESS:
+      return {
+        ...state,
+        addGlobalServiceData: action.response,
+        admin_ResponseMessage: action.message,
+      };
+
+    case actions.ADD_GLOBAL_SERVICE_LIST_FAIL:
+      return {
+        ...state,
+        addGlobalServiceData: null,
+        admin_ResponseMessage: action.message,
+      };
+
+    //update Global Service List in Global Admin
+    case actions.UPDATE_GLOBAL_SERVICE_SUCCESS:
+      return {
+        ...state,
+        updateGlobalServiceData: action.response,
+        admin_ResponseMessage: action.message,
+      };
+
+    case actions.UPDATE_GLOBAL_SERVICE_FAIL:
+      return {
+        ...state,
+        updateGlobalServiceData: null,
+        admin_ResponseMessage: action.message,
+      };
+
+    //delete Global Service List in Global Admin
+    case actions.DELETE_GLOBAL_SERVICE_SUCCESS:
+      return {
+        ...state,
+        deleteGlobalServiceData: action.response,
+        admin_ResponseMessage: action.message,
+      };
+
+    case actions.DELETE_GLOBAL_SERVICE_FAIL:
+      return {
+        ...state,
+        deleteGlobalServiceData: null,
+        admin_ResponseMessage: action.message,
+      };
+
+    // get ALL Employee List in Global Admin
+    case actions.GET_ALL_EMPLOYEE_LIST_SUCCESS:
+      return {
+        ...state,
+        getEmployeeList: action.response,
+        admin_ResponseMessage: action.message,
+      };
+
+    case actions.GET_ALL_EMPLOYEE_LIST_FAIL:
+      return {
+        ...state,
+        getEmployeeList: null,
         admin_ResponseMessage: action.message,
       };
 
