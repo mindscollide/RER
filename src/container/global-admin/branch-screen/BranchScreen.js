@@ -8,6 +8,7 @@ import Select from "react-select";
 import { useDispatch, useSelector } from "react-redux";
 import { useLocation, useNavigate } from "react-router";
 import {
+  getAllCityBranchWiseServicesMainApi,
   getCountryCitiesApi,
   getCountryListMainApi,
   getGlobalServiceMainApi,
@@ -33,10 +34,15 @@ const BranchScreen = () => {
     (state) => state.admin.getGlobalServiceData
   );
 
+  // get Branch  Service Data reducers
+  const getCityBranchWiseData = useSelector(
+    (state) => state.admin.cityBranchWiseServicesList
+  );
+
   //To get City List
   const cityList = useSelector((state) => state.admin.cityList);
 
-  console.log(cityList, "cityListcityListcityListcityList");
+  console.log(getCityBranchWiseData, "cityListcityListcityListcityList");
 
   //States for Storing Country Drop down
   const [countryOptionEnglish, setCountryOptionEnglish] = useState([]);
@@ -52,6 +58,10 @@ const BranchScreen = () => {
   const [cityOptionsEnglish, setcityOptionsEnglish] = useState([]);
   const [cityOptionsArabic, setCityOptionsArabic] = useState([]);
   const [cityOptionsValue, setCityOptionsValue] = useState(null);
+
+  //table data state
+
+  const [rows, setRows] = useState([]);
 
   const callApi = () => {
     dispatch(getCountryListMainApi(t, navigate, loadingFlag, countryID));
@@ -150,66 +160,103 @@ const BranchScreen = () => {
     setCityOptionsValue(cityValue.value);
   };
 
-  const dataSource = [
-    {
-      id: 1,
-      Country: <span className="table-inside-text">Saudi</span>,
-      shiftName: <span className="table-inside-text">First Registry</span>,
-      City: <span className="table-inside-text">Riyadh</span>,
-    },
-    {
-      id: 2,
-      Country: <span className="table-inside-text">Saudi</span>,
-      shiftName: <span className="table-inside-text">First Registry</span>,
-      City: <span className="table-inside-text">Riyadh</span>,
-    },
-    {
-      id: 3,
-      Country: <span className="table-inside-text">Saudi</span>,
-      shiftName: <span className="table-inside-text">Change Ownership</span>,
-      City: <span className="table-inside-text">Riyadh</span>,
-    },
-  ];
+  //handle Search button hit \
+
+  const handleSearchhit = () => {
+    let data = {
+      CountryID: Number(countryOptionValue),
+      ServiceID: Number(servicesOptionsValue),
+      CityID: Number(cityOptionsValue),
+    };
+    dispatch(
+      getAllCityBranchWiseServicesMainApi(t, navigate, loadingFlag, data)
+    );
+  };
+
+  // data for the table
+  useEffect(() => {
+    try {
+      if (
+        getCityBranchWiseData !== null &&
+        getCityBranchWiseData.length > 0 &&
+        Array.isArray(getCityBranchWiseData)
+      ) {
+        console.log(getCityBranchWiseData, "setRowssetRowssetRows");
+        setRows(getCityBranchWiseData);
+      } else {
+        setRows([]);
+      }
+    } catch (error) {
+      console.log(error, "errorerrorerror");
+    }
+  }, [getCityBranchWiseData]);
 
   const columns = [
     {
       title: <span className="table-text">{t("Country")}</span>,
-      dataIndex: "Country",
-      key: "Country",
+      dataIndex: "country",
+      key: "country",
       width: "200px",
+      render: (text, record) => (
+        console.log(record, "recordrecordrecord"),
+        (
+          <span>
+            {currentLanguage === "en"
+              ? record.country.countryNameEnglish
+              : record.country.countryNameArabic}
+          </span>
+        )
+      ),
     },
     {
       title: <span className="table-text">{t("Service")}</span>,
-      dataIndex: "shiftName",
-      key: "shiftName",
-      width: "200px",
-    },
-    {
-      title: <span className="table-text">{t("City")}</span>,
-      dataIndex: "City",
-      key: "City",
-      width: "200px",
-    },
-    {
-      title: <span className="table-text">{t("Branch-name")}</span>,
-      dataIndex: "active",
-      key: "active",
+      dataIndex: "branchService",
+      key: "branchService",
       width: "200px",
       render: (text, record) => (
         <span>
-          <Switch />
+          {currentLanguage === "en"
+            ? record.branchService.branchService.serviceNameEnglish
+            : record.branchService.branchService.serviceNameArabic}
+        </span>
+      ),
+    },
+    {
+      title: <span className="table-text">{t("City")}</span>,
+      dataIndex: "city",
+      key: "city",
+      width: "200px",
+      render: (text, record) => (
+        <span>
+          {currentLanguage === "en"
+            ? record.city.cityNameEnglish
+            : record.city.cityNameArabic}
+        </span>
+      ),
+    },
+    {
+      title: <span className="table-text">{t("Branch-name")}</span>,
+      dataIndex: "branchService",
+      key: "branchService",
+      width: "200px",
+      render: (text, record) => (
+        <span>
+          {currentLanguage === "en"
+            ? record.branchService.branchService.serviceNameEnglish
+            : record.branchService.branchService.serviceNameArabic}
         </span>
       ),
     },
     {
       title: <span className="table-text">{t("Availability")}</span>,
-      dataIndex: "column6",
-      key: "column6",
+      dataIndex: "branchService",
+      key: "branchService",
       width: "200px",
       render: (text, record) => (
-        <span>
-          <Switch />
-        </span>
+        <Switch
+          checked={record.branchService.isServiceAvailableAtBranch}
+          disabled
+        />
       ),
     },
   ];
@@ -286,17 +333,14 @@ const BranchScreen = () => {
                     icon={<i className="icon-search city-icon-space"></i>}
                     text={t("Search")}
                     className="Search-Icon-Btn"
+                    onClick={handleSearchhit}
                   />
                 </Col>
               </Row>
 
               <Row className="mt-2">
                 <Col lg={12} md={12} sm={12}>
-                  <Table
-                    rows={dataSource}
-                    column={columns}
-                    pagination={false}
-                  />
+                  <Table rows={rows} column={columns} pagination={false} />
                 </Col>
               </Row>
             </Paper>

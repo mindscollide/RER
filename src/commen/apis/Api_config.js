@@ -300,6 +300,10 @@ const getAllCityServices = {
   RequestMethod: "ServiceManager.GetAllCityServices",
 };
 
+const getAllCityBranchWiseServices = {
+  RequestMethod: "ServiceManager.GetAllCityBranchServices",
+};
+
 // ===================================GLOBAL ADMIN END ==========================================//
 
 export {
@@ -370,5 +374,6 @@ export {
   deleteGlobalServiceList,
   getAllEmployeeList,
   getAllCityServices,
+  getAllCityBranchWiseServices,
   // ===================================GLOBAL ADMIN END ==========================================//
 };

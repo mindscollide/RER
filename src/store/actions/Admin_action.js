@@ -61,6 +61,7 @@ import {
   deleteGlobalServiceList,
   getAllEmployeeList,
   getAllCityServices,
+  getAllCityBranchWiseServices,
 } from "../../commen/apis/Api_config";
 import { adminURL } from "../../commen/apis/Api_ends_points";
 import moment from "moment";
@@ -6115,6 +6116,115 @@ const getAllCityServicesMainApi = (t, navigate, loadingFlag, data) => {
   };
 };
 
+//get All City Branch Wise Services
+
+const getAllCityBranchWiseServicesSuccess = (response, message) => {
+  return {
+    type: actions.GET_ALL_CITY_BRANCH_SERVICES_SUCCESS,
+    response: response,
+    message: message,
+  };
+};
+
+const getAllCityBranchWiseServicesFail = (response, message) => {
+  return {
+    type: actions.GET_ALL_CITY_BRANCH_SERVICES_SUCCESS,
+    response: response,
+    message: message,
+  };
+};
+
+const getAllCityBranchWiseServicesMainApi = (
+  t,
+  navigate,
+  loadingFlag,
+  data
+) => {
+  return async (dispatch) => {
+    if (!loadingFlag) {
+      dispatch(loader_Actions(true));
+    }
+    let form = new FormData();
+    form.append("RequestMethod", getAllCityBranchWiseServices.RequestMethod);
+    form.append("RequestData", JSON.stringify(data));
+    await axios({
+      method: "post",
+      url: adminURL,
+      data: form,
+      headers: {
+        _token: JSON.parse(localStorage.getItem("token")),
+      },
+    })
+      .then(async (response) => {
+        if (response.data.responseCode === 200) {
+          if (response.data.responseCode === 417) {
+            dispatch(
+              getAllCityBranchWiseServicesMainApi(
+                t,
+                navigate,
+                loadingFlag,
+                data
+              )
+            );
+          } else if (response.data.responseResult.isExecuted === true) {
+            if (
+              response.data.responseResult.responseMessage ===
+              "Admin_AdminServiceManager_GetAllCityBranchServices_01"
+            ) {
+              await dispatch(
+                getAllCityBranchWiseServicesSuccess(
+                  response.data.responseResult.cityBranchServiceList,
+                  t("Admin_AdminServiceManager_GetAllCityBranchServices_01")
+                )
+              );
+
+              await dispatch(loader_Actions(false));
+            } else if (
+              response.data.responseResult.responseMessage ===
+              "Admin_AdminServiceManager_GetAllCityBranchServices_02"
+            ) {
+              await dispatch(
+                getAllCityBranchWiseServicesFail(
+                  response.data.responseResult.responseMessage,
+                  t("Admin_AdminServiceManager_GetAllCityBranchServices_02")
+                )
+              );
+
+              await dispatch(loader_Actions(false));
+            } else if (
+              response.data.responseResult.responseMessage ===
+              "Admin_AdminServiceManager_GetAllCityBranchServices_03"
+            ) {
+              await dispatch(
+                getAllCityBranchWiseServicesFail(t("something_went_wrong"))
+              );
+              await dispatch(loader_Actions(false));
+            } else {
+              await dispatch(
+                getAllCityBranchWiseServicesFail(t("something_went_wrong"))
+              );
+              await dispatch(loader_Actions(false));
+            }
+          } else {
+            await dispatch(
+              getAllCityBranchWiseServicesFail(t("something_went_wrong"))
+            );
+            await dispatch(loader_Actions(false));
+          }
+        } else {
+          await dispatch(
+            getAllCityBranchWiseServicesFail(t("something_went_wrong"))
+          );
+          await dispatch(loader_Actions(false));
+        }
+      })
+      .catch((response) => {
+        dispatch(getAllCityBranchWiseServicesFail(t("something_went_wrong")));
+        dispatch(loader_Actions(false));
+      });
+  };
+};
+
 export {
   clearResponseMessageAdmin,
   AdminCleareState,
@@ -6202,4 +6312,5 @@ export {
   updateGlobalServiceFail,
   getAllEmployeeMainApi,
   getAllCityServicesMainApi,
+  getAllCityBranchWiseServicesMainApi,
 };

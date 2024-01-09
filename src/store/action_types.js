@@ -316,4 +316,9 @@ export const GET_ALL_SERVICES_OF_CITIES_SUCCESS =
 export const GET_ALL_SERVICES_OF_CITIES_FAIL =
   "GET_ALL_SERVICES_OF_CITIES_FAIL";
 
+export const GET_ALL_CITY_BRANCH_SERVICES_SUCCESS =
+  "GET_ALL_CITY_BRANCH_SERVICES_SUCCESS";
+
+export const GET_ALL_CITY_BRANCH_SERVICES_FAIL =
+  "GET_ALL_CITY_BRANCH_SERVICES_FAIL";
 // ===================================GLOBAL ADMIN END ==========================================//
