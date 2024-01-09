@@ -1,12 +1,19 @@
 import React, { useEffect, useState } from "react";
 import { Row, Col } from "react-bootstrap";
 import "./ServiceCountryScreen.css";
-import { Paper, Table, Button } from "../../../components/elements";
+
+import {
+  Paper,
+  Table,
+  Button,
+  Notification,
+} from "../../../components/elements";
 import { Switch } from "antd";
 import { useTranslation } from "react-i18next";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router";
 import {
+  clearResponseMessageAdmin,
   getCountryServiceMainApi,
   updateCountryServiceMainApi,
 } from "../../../store/actions/Admin_action";
@@ -24,8 +31,20 @@ const ServiceCountryScreen = () => {
     (state) => state.admin.countryServiceScreenList
   );
 
+  // reducer for response message
+  const responseMessage = useSelector(
+    (state) => state.admin.admin_ResponseMessage
+  );
+
   // state for to get data from reducers in table
   const [rows, setRows] = useState([]);
+
+  //state for show notifications through response
+  const [serviceNotification, setServiceNotification] = useState({
+    notificationFlag: false,
+    notificationMessage: null,
+    severity: "none",
+  });
 
   // useEffect to call get API of countryServiceScreen
   useEffect(() => {
@@ -147,6 +166,72 @@ const ServiceCountryScreen = () => {
     } catch {}
   };
 
+  useEffect(() => {
+    if (
+      responseMessage !== null &&
+      responseMessage !== undefined &&
+      responseMessage !== ""
+    ) {
+      if (
+        responseMessage ===
+        t("Admin_AdminServiceManager_UpdateCountryServicesList_01")
+      ) {
+        setTimeout(
+          setServiceNotification({
+            ...serviceNotification,
+            notificationFlag: true,
+            notificationMessage: t(
+              "Admin_AdminServiceManager_UpdateCountryServicesList_01"
+            ),
+            severity: "success",
+          }),
+          3000
+        );
+      } else if (
+        responseMessage ===
+        t("Admin_AdminServiceManager_UpdateCountryServicesList_02")
+      ) {
+        setTimeout(
+          setServiceNotification({
+            ...serviceNotification,
+            notificationFlag: true,
+            notificationMessage: t(
+              "Admin_AdminServiceManager_UpdateCityServiceList_02"
+            ),
+            severity: "error",
+          }),
+          3000
+        );
+      } else if (
+        responseMessage ===
+        t("Admin_AdminServiceManager_UpdateCountryServicesList_03")
+      ) {
+        setTimeout(
+          setServiceNotification({
+            ...serviceNotification,
+            notificationFlag: true,
+            notificationMessage: t(
+              "Admin_AdminServiceManager_GetCountryNationalHoliday_04"
+            ),
+            severity: "error",
+          }),
+          3000
+        );
+      } else if (responseMessage === t("something_went_wrong")) {
+        setTimeout(
+          setServiceNotification({
+            ...serviceNotification,
+            notificationFlag: true,
+            notificationMessage: t("something_went_wrong"),
+            severity: "error",
+          }),
+          3000
+        );
+      }
+    }
+    dispatch(clearResponseMessageAdmin(null));
+  }, [responseMessage]);
+
   return (
     <>
       <section>
@@ -195,6 +280,17 @@ const ServiceCountryScreen = () => {
           </Col>
         </Row>
       </section>
+      <Notification
+        show={serviceNotification.notificationFlag}
+        hide={setServiceNotification}
+        message={serviceNotification.notificationMessage}
+        severity={serviceNotification.severity}
+        notificationClass={
+          serviceNotification.severity === "error"
+            ? "notification-error"
+            : "notification-success"
+        }
+      />
     </>
   );
 };

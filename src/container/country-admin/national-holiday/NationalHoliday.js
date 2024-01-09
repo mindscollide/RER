@@ -1,12 +1,18 @@
 import React, { useEffect, useState } from "react";
 import { Row, Col } from "react-bootstrap";
 import "./NationalHoliday.css";
-import { Paper, Button, Table } from "../../../components/elements";
+import {
+  Paper,
+  Button,
+  Table,
+  Notification,
+} from "../../../components/elements";
 import { useTranslation } from "react-i18next";
 import {
   getNationalHolidayMainApi,
   deleteNationalHolidayMainApi,
   addNationalHolidayMainApi,
+  clearResponseMessageAdmin,
 } from "../../../store/actions/Admin_action";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router";
@@ -26,6 +32,10 @@ const NationalHoliday = () => {
   const countryNationalHoliday = useSelector(
     (state) => state.admin.countryNationalHoliday
   );
+  // reducer for response message
+  const responseMessage = useSelector(
+    (state) => state.admin.admin_ResponseMessage
+  );
 
   // Calculate the date one day after the current date
   const currentDate = new Date();
@@ -38,6 +48,13 @@ const NationalHoliday = () => {
 
   // state for table rendering
   const [rows, setRows] = useState([]);
+
+  //state for show notifications through response
+  const [holidayNotification, setHolidayNotification] = useState({
+    notificationFlag: false,
+    notificationMessage: null,
+    severity: "none",
+  });
 
   // for api calling
   useEffect(() => {
@@ -133,6 +150,132 @@ const NationalHoliday = () => {
     setStartDate(nextDay);
   };
 
+  useEffect(() => {
+    if (
+      responseMessage !== null &&
+      responseMessage !== undefined &&
+      responseMessage !== ""
+    ) {
+      if (
+        responseMessage ===
+        t("Admin_AdminServiceManager_AddCountryNationalHoliday_01")
+      ) {
+        setTimeout(
+          setHolidayNotification({
+            ...holidayNotification,
+            notificationFlag: true,
+            notificationMessage: t(
+              "Admin_AdminServiceManager_AddCountryNationalHoliday_01"
+            ),
+            severity: "success",
+          }),
+          3000
+        );
+      } else if (
+        responseMessage ===
+        t("Admin_AdminServiceManager_AddCountryNationalHoliday_02")
+      ) {
+        setTimeout(
+          setHolidayNotification({
+            ...holidayNotification,
+            notificationFlag: true,
+            notificationMessage: t(
+              "Admin_AdminServiceManager_AddCountryNationalHoliday_02"
+            ),
+            severity: "error",
+          }),
+          3000
+        );
+      } else if (
+        responseMessage ===
+        t("Admin_AdminServiceManager_AddCountryNationalHoliday_03")
+      ) {
+        setTimeout(
+          setHolidayNotification({
+            ...holidayNotification,
+            notificationFlag: true,
+            notificationMessage: t(
+              "Admin_AdminServiceManager_GetCountryNationalHoliday_04"
+            ),
+            severity: "error",
+          }),
+          3000
+        );
+      } else if (responseMessage === t("something_went_wrong")) {
+        setTimeout(
+          setHolidayNotification({
+            ...holidayNotification,
+            notificationFlag: true,
+            notificationMessage: t("something_went_wrong"),
+            severity: "error",
+          }),
+          3000
+        );
+      } else if (
+        responseMessage ===
+        t("Admin_AdminServiceManager_DeleteCountryNationalHoliday_01")
+      ) {
+        setTimeout(
+          setHolidayNotification({
+            ...holidayNotification,
+            notificationFlag: true,
+            notificationMessage: t(
+              "Admin_AdminServiceManager_DeleteCountryNationalHoliday_01"
+            ),
+            severity: "success",
+          }),
+          3000
+        );
+      } else if (
+        responseMessage ===
+        t("Admin_AdminServiceManager_DeleteCountryNationalHoliday_02")
+      ) {
+        setTimeout(
+          setHolidayNotification({
+            ...holidayNotification,
+            notificationFlag: true,
+            notificationMessage: t(
+              "Admin_AdminServiceManager_DeleteCountryNationalHoliday_02"
+            ),
+            severity: "error",
+          }),
+          3000
+        );
+      } else if (
+        responseMessage ===
+        t("Admin_AdminServiceManager_DeleteCountryNationalHoliday_03")
+      ) {
+        setTimeout(
+          setHolidayNotification({
+            ...holidayNotification,
+            notificationFlag: true,
+            notificationMessage: t(
+              "Admin_AdminServiceManager_DeleteCountryNationalHoliday_03"
+            ),
+            severity: "error",
+          }),
+          3000
+        );
+      } else if (
+        responseMessage ===
+        t("Admin_AdminServiceManager_DeleteCountryNationalHoliday_04")
+      ) {
+        setTimeout(
+          setHolidayNotification({
+            ...holidayNotification,
+            notificationFlag: true,
+            notificationMessage: t(
+              "Admin_AdminServiceManager_GetCountryNationalHoliday_04"
+            ),
+            severity: "error",
+          }),
+          3000
+        );
+      }
+    }
+    dispatch(clearResponseMessageAdmin(null));
+  }, [responseMessage]);
+
   return (
     <>
       <section>
@@ -219,6 +362,18 @@ const NationalHoliday = () => {
           </Col>
         </Row>
       </section>
+
+      <Notification
+        show={holidayNotification.notificationFlag}
+        hide={setHolidayNotification}
+        message={holidayNotification.notificationMessage}
+        severity={holidayNotification.severity}
+        notificationClass={
+          holidayNotification.severity === "error"
+            ? "notification-error"
+            : "notification-success"
+        }
+      />
     </>
   );
 };

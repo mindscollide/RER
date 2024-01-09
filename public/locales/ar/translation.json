@@ -281,5 +281,7 @@
   "Admin_AdminServiceManager_DeleteGlobalService_02": "Service Cannot be Deleted Due to Dependency",
   "Admin_AdminServiceManager_DeleteGlobalService_03": "Service Not Found",
   "Email-format-is-incorrect": "Email Format Is Incorrect",
-  "Please-fill-all-fields": "Please Fill All Fields"
+  "Please-fill-all-fields": "Please Fill All Fields",
+  "Admin_AdminServiceManager_GetAllEmployeeList_01": "Employee List Found",
+  "Admin_AdminServiceManager_GetAllEmployeeList_02": "No Employee Available"
 }

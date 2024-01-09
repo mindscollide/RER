@@ -7,6 +7,7 @@ import {
   Checkbox,
   Button,
   Table,
+  Notification,
 } from "../../../components/elements";
 import DatePicker from "react-multi-date-picker";
 import TimePicker from "react-multi-date-picker/plugins/time_picker";
@@ -25,6 +26,7 @@ import {
   updateCityBranchServiceListApi,
   getCityBranchServiceFail,
   getAllShiftsOfBranchFail,
+  clearResponseMessageAdmin,
 } from "../../../store/actions/Admin_action";
 
 import { useDispatch, useSelector } from "react-redux";
@@ -77,6 +79,12 @@ const CityAdmin = () => {
   const isCityWiseBranchService = useSelector(
     (state) => state.global.isCityWiseBranchService
   );
+
+  // reducer for response message
+  const responseMessage = useSelector(
+    (state) => state.admin.admin_ResponseMessage
+  );
+
   const [addUpdateCheckFlag, setAddUpdateCheckFlag] = useState(false);
   const [calendarValue, setCalendarValue] = useState(gregorian);
   const [localValue, setLocalValue] = useState(gregorian_en);
@@ -93,6 +101,13 @@ const CityAdmin = () => {
     BranchEndTime: "",
     BranchID: 0,
     CityID: Number(localStorage.getItem("cityID")),
+  });
+
+  //state for show notifications through response
+  const [cityNotification, setCityNotification] = useState({
+    notificationFlag: false,
+    notificationMessage: null,
+    severity: "none",
   });
 
   //language UseEffect
@@ -588,6 +603,151 @@ const CityAdmin = () => {
     } catch {}
   };
 
+  useEffect(() => {
+    if (
+      responseMessage !== null &&
+      responseMessage !== undefined &&
+      responseMessage !== ""
+    ) {
+      if (responseMessage === t("Admin_AdminServiceManager_AddCityBranch_01")) {
+        setTimeout(
+          setCityNotification({
+            ...cityNotification,
+            notificationFlag: true,
+            notificationMessage: t(
+              "Admin_AdminServiceManager_AddCityBranch_01"
+            ),
+            severity: "success",
+          }),
+          3000
+        );
+      } else if (
+        responseMessage === t("Admin_AdminServiceManager_AddCityBranch_02")
+      ) {
+        setTimeout(
+          setCityNotification({
+            ...cityNotification,
+            notificationFlag: true,
+            notificationMessage: t(
+              "Admin_AdminServiceManager_AddCityBranch_02"
+            ),
+            severity: "error",
+          }),
+          3000
+        );
+      } else if (responseMessage === t("something_went_wrong")) {
+        setTimeout(
+          setCityNotification({
+            ...cityNotification,
+            notificationFlag: true,
+            notificationMessage: t("something_went_wrong"),
+            severity: "error",
+          }),
+          3000
+        );
+      } else if (
+        responseMessage === t("Admin_AdminServiceManager_UpdateCityBranch_01")
+      ) {
+        setTimeout(
+          setCityNotification({
+            ...cityNotification,
+            notificationFlag: true,
+            notificationMessage: t(
+              "Admin_AdminServiceManager_UpdateCityBranch_01"
+            ),
+            severity: "success",
+          }),
+          3000
+        );
+      } else if (
+        responseMessage === t("Admin_AdminServiceManager_UpdateCityBranch_02")
+      ) {
+        setTimeout(
+          setCityNotification({
+            ...cityNotification,
+            notificationFlag: true,
+            notificationMessage: t(
+              "Admin_AdminServiceManager_UpdateCityBranch_02"
+            ),
+            severity: "error",
+          }),
+          3000
+        );
+      } else if (
+        responseMessage === t("Admin_AdminServiceManager_UpdateCityBranch_03")
+      ) {
+        setTimeout(
+          setCityNotification({
+            ...cityNotification,
+            notificationFlag: true,
+            notificationMessage: t(
+              "Admin_AdminServiceManager_UpdateCityBranch_03"
+            ),
+            severity: "error",
+          }),
+          3000
+        );
+      } else if (
+        responseMessage === t("Admin_AdminServiceManager_DeleteCityBranch_01")
+      ) {
+        setTimeout(
+          setCityNotification({
+            ...cityNotification,
+            notificationFlag: true,
+            notificationMessage: t(
+              "Admin_AdminServiceManager_DeleteCityBranch_01"
+            ),
+            severity: "success",
+          }),
+          3000
+        );
+      } else if (
+        responseMessage === t("Admin_AdminServiceManager_DeleteCityBranch_02")
+      ) {
+        setTimeout(
+          setCityNotification({
+            ...cityNotification,
+            notificationFlag: true,
+            notificationMessage: t(
+              "Admin_AdminServiceManager_DeleteCityBranch_02"
+            ),
+            severity: "error",
+          }),
+          3000
+        );
+      } else if (
+        responseMessage === t("Admin_AdminServiceManager_DeleteCityBranch_03")
+      ) {
+        setTimeout(
+          setCityNotification({
+            ...cityNotification,
+            notificationFlag: true,
+            notificationMessage: t(
+              "Admin_AdminServiceManager_DeleteCityBranch_03"
+            ),
+            severity: "error",
+          }),
+          3000
+        );
+      } else if (
+        responseMessage === t("Admin_AdminServiceManager_DeleteCityBranch_05")
+      ) {
+        setTimeout(
+          setCityNotification({
+            ...cityNotification,
+            notificationFlag: true,
+            notificationMessage: t(
+              "Admin_AdminServiceManager_DeleteCityBranch_05"
+            ),
+            severity: "error",
+          }),
+          3000
+        );
+      }
+    }
+    dispatch(clearResponseMessageAdmin(null));
+  }, [responseMessage]);
+
   return (
     <>
       <section>
@@ -771,6 +931,18 @@ const CityAdmin = () => {
         deleteModal={deleteModal}
         deleteID={deleteID}
         route={"CityAdminBranch"}
+      />
+
+      <Notification
+        show={cityNotification.notificationFlag}
+        hide={setCityNotification}
+        message={cityNotification.notificationMessage}
+        severity={cityNotification.severity}
+        notificationClass={
+          cityNotification.severity === "error"
+            ? "notification-error"
+            : "notification-success"
+        }
       />
     </>
   );

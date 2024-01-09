@@ -305,4 +305,8 @@ export const UPDATE_GLOBAL_SERVICE_FAIL = "UPDATE_GLOBAL_SERVICE_FAIL";
 export const DELETE_GLOBAL_SERVICE_SUCCESS = "DELETE_GLOBAL_SERVICE_SUCCESS";
 export const DELETE_GLOBAL_SERVICE_FAIL = "DELETE_GLOBAL_SERVICE_FAIL";
 
+// get All Employee List in Employee screen on Global Admin
+export const GET_ALL_EMPLOYEE_LIST_SUCCESS = "GET_ALL_EMPLOYEE_LIST_SUCCESS";
+export const GET_ALL_EMPLOYEE_LIST_FAIL = "GET_ALL_EMPLOYEE_LIST_FAIL";
+
 // ===================================GLOBAL ADMIN END ==========================================//

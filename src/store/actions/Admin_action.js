@@ -59,6 +59,7 @@ import {
   addGlobalServiceList,
   updateGlobalServiceList,
   deleteGlobalServiceList,
+  getAllEmployeeList,
 } from "../../commen/apis/Api_config";
 import { adminURL } from "../../commen/apis/Api_ends_points";
 import moment from "moment";
@@ -5934,6 +5935,94 @@ const deleteGlobalServiceMainApi = (
 
 //Delete Global Service List api in Global Admin End
 
+//Get All Employee List api in Global Admin Start
+const getAllEmployeeSuccess = (response, message) => {
+  return {
+    type: actions.GET_ALL_EMPLOYEE_LIST_SUCCESS,
+    response: response,
+    message: message,
+  };
+};
+
+const getAllEmployeeFail = (message) => {
+  return {
+    type: actions.GET_ALL_EMPLOYEE_LIST_FAIL,
+    message: message,
+  };
+};
+
+const getAllEmployeeMainApi = (t, navigate, loadingFlag, data) => {
+  return async (dispatch) => {
+    if (!loadingFlag) {
+      dispatch(loader_Actions(true));
+    }
+    let form = new FormData();
+    form.append("RequestMethod", getAllEmployeeList.RequestMethod);
+    form.append("RequestData", JSON.stringify(data));
+    await axios({
+      method: "post",
+      url: adminURL,
+      data: form,
+      headers: {
+        _token: JSON.parse(localStorage.getItem("token")),
+      },
+    })
+      .then(async (response) => {
+        if (response.data.responseCode === 200) {
+          if (response.data.responseCode === 417) {
+            dispatch(getAllEmployeeMainApi(t, navigate, loadingFlag, data));
+          } else if (response.data.responseResult.isExecuted === true) {
+            if (
+              response.data.responseResult.responseMessage ===
+              "Admin_AdminServiceManager_GetAllEmployeeList_01"
+            ) {
+              await dispatch(
+                getAllEmployeeSuccess(
+                  response.data.responseResult.employeeList,
+                  t("Admin_AdminServiceManager_GetAllEmployeeList_01")
+                )
+              );
+
+              await dispatch(loader_Actions(false));
+            } else if (
+              response.data.responseResult.responseMessage ===
+              "Admin_AdminServiceManager_GetAllEmployeeList_02"
+            ) {
+              await dispatch(
+                getAllEmployeeFail(
+                  response.data.responseResult.responseMessage,
+                  t("Admin_AdminServiceManager_GetAllEmployeeList_02")
+                )
+              );
+
+              await dispatch(loader_Actions(false));
+            } else if (
+              response.data.responseResult.responseMessage ===
+              "Admin_AdminServiceManager_GetAllEmployeeList_03"
+            ) {
+              await dispatch(getAllEmployeeFail(t("something_went_wrong")));
+              await dispatch(loader_Actions(false));
+            } else {
+              await dispatch(getAllEmployeeFail(t("something_went_wrong")));
+              await dispatch(loader_Actions(false));
+            }
+          } else {
+            await dispatch(getAllEmployeeFail(t("something_went_wrong")));
+            await dispatch(loader_Actions(false));
+          }
+        } else {
+          await dispatch(getAllEmployeeFail(t("something_went_wrong")));
+          await dispatch(loader_Actions(false));
+        }
+      })
+      .catch((response) => {
+        dispatch(getAllEmployeeFail(t("something_went_wrong")));
+        dispatch(loader_Actions(false));
+      });
+  };
+};
+//Get All Employee List api in Global Admin End
+
 export {
   clearResponseMessageAdmin,
   AdminCleareState,
@@ -6019,4 +6108,5 @@ export {
   deleteGlobalServiceMainApi,
   addGlobalServiceFail,
   updateGlobalServiceFail,
+  getAllEmployeeMainApi,
 };

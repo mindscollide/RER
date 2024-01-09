@@ -7,6 +7,7 @@ import {
   Checkbox,
   Button,
   Table,
+  Notification,
 } from "../../../components/elements";
 import { useTranslation } from "react-i18next";
 import GlobalDeleteModal from "../../modals/global-delete-modal/GlobalDeleteModal";
@@ -17,6 +18,7 @@ import CountryServiceScreenComponent from "../country-service-screen-component/C
 import {
   addGlobalServiceFail,
   addGlobalServiceMainApi,
+  clearResponseMessageAdmin,
   getGlobalServiceMainApi,
   updateGlobalServiceFail,
   updateGlobalServiceMainApi,
@@ -51,9 +53,21 @@ const GlobalService = () => {
   const isCountryServiceComponentReducer = useSelector(
     (state) => state.global.isCountryServiceComponentReducer
   );
+
+  // reducer for response message
+  const responseMessage = useSelector(
+    (state) => state.admin.admin_ResponseMessage
+  );
+
   // state for row to updating table rows
   const [rows, setRows] = useState([]);
-  console.log(rows, "serviceservice");
+
+  //state for show notifications through response
+  const [globalNotification, setGlobalNotification] = useState({
+    notificationFlag: false,
+    notificationMessage: null,
+    severity: "none",
+  });
 
   const [addUpdateCheckFlag, setAddUpdateCheckFlag] = useState(false);
 
@@ -332,6 +346,159 @@ const GlobalService = () => {
     } catch {}
   };
 
+  useEffect(() => {
+    if (
+      responseMessage !== null &&
+      responseMessage !== undefined &&
+      responseMessage !== ""
+    ) {
+      if (
+        responseMessage === t("Admin_AdminServiceManager_AddGlobalService_01")
+      ) {
+        setTimeout(
+          setGlobalNotification({
+            ...globalNotification,
+            notificationFlag: true,
+            notificationMessage: t(
+              "Admin_AdminServiceManager_AddGlobalService_01"
+            ),
+            severity: "success",
+          }),
+          3000
+        );
+      } else if (
+        responseMessage === t("Admin_AdminServiceManager_AddGlobalService_02")
+      ) {
+        setTimeout(
+          setGlobalNotification({
+            ...globalNotification,
+            notificationFlag: true,
+            notificationMessage: t(
+              "Admin_AdminServiceManager_AddGlobalService_02"
+            ),
+            severity: "error",
+          }),
+          3000
+        );
+      } else if (
+        responseMessage === t("Admin_AdminServiceManager_AddGlobalService_03")
+      ) {
+        setTimeout(
+          setGlobalNotification({
+            ...globalNotification,
+            notificationFlag: true,
+            notificationMessage: t(
+              "Admin_AdminServiceManager_AddGlobalService_03"
+            ),
+            severity: "error",
+          }),
+          3000
+        );
+      } else if (responseMessage === t("something_went_wrong")) {
+        setTimeout(
+          setGlobalNotification({
+            ...globalNotification,
+            notificationFlag: true,
+            notificationMessage: t("something_went_wrong"),
+            severity: "error",
+          }),
+          3000
+        );
+      } else if (
+        responseMessage ===
+        t("Admin_AdminServiceManager_UpdateGlobalService_01")
+      ) {
+        setTimeout(
+          setGlobalNotification({
+            ...globalNotification,
+            notificationFlag: true,
+            notificationMessage: t(
+              "Admin_AdminServiceManager_UpdateGlobalService_01"
+            ),
+            severity: "success",
+          }),
+          3000
+        );
+      } else if (
+        responseMessage ===
+        t("Admin_AdminServiceManager_UpdateGlobalService_02")
+      ) {
+        setTimeout(
+          setGlobalNotification({
+            ...globalNotification,
+            notificationFlag: true,
+            notificationMessage: t(
+              "Admin_AdminServiceManager_UpdateGlobalService_02"
+            ),
+            severity: "error",
+          }),
+          3000
+        );
+      } else if (
+        responseMessage ===
+        t("Admin_AdminServiceManager_UpdateGlobalService_03")
+      ) {
+        setTimeout(
+          setGlobalNotification({
+            ...globalNotification,
+            notificationFlag: true,
+            notificationMessage: t(
+              "Admin_AdminServiceManager_UpdateGlobalService_03"
+            ),
+            severity: "error",
+          }),
+          3000
+        );
+      } else if (
+        responseMessage ===
+        t("Admin_AdminServiceManager_DeleteGlobalService_01")
+      ) {
+        setTimeout(
+          setGlobalNotification({
+            ...globalNotification,
+            notificationFlag: true,
+            notificationMessage: t(
+              "Admin_AdminServiceManager_DeleteGlobalService_01"
+            ),
+            severity: "success",
+          }),
+          3000
+        );
+      } else if (
+        responseMessage ===
+        t("Admin_AdminServiceManager_DeleteGlobalService_02")
+      ) {
+        setTimeout(
+          setGlobalNotification({
+            ...globalNotification,
+            notificationFlag: true,
+            notificationMessage: t(
+              "Admin_AdminServiceManager_DeleteGlobalService_02"
+            ),
+            severity: "error",
+          }),
+          3000
+        );
+      } else if (
+        responseMessage ===
+        t("Admin_AdminServiceManager_DeleteGlobalService_03")
+      ) {
+        setTimeout(
+          setGlobalNotification({
+            ...globalNotification,
+            notificationFlag: true,
+            notificationMessage: t(
+              "Admin_AdminServiceManager_DeleteGlobalService_03"
+            ),
+            severity: "error",
+          }),
+          3000
+        );
+      }
+    }
+    dispatch(clearResponseMessageAdmin(null));
+  }, [responseMessage]);
+
   return (
     <>
       <section>
@@ -478,6 +645,18 @@ const GlobalService = () => {
           route={"GlobalService"}
         />
       ) : null}
+
+      <Notification
+        show={globalNotification.notificationFlag}
+        hide={setGlobalNotification}
+        message={globalNotification.notificationMessage}
+        severity={globalNotification.severity}
+        notificationClass={
+          globalNotification.severity === "error"
+            ? "notification-error"
+            : "notification-success"
+        }
+      />
     </>
   );
 };

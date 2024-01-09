@@ -289,6 +289,11 @@ const deleteGlobalServiceList = {
   RequestMethod: "ServiceManager.DeleteGlobalService",
 };
 
+//get All of Employee List in Global Admin
+const getAllEmployeeList = {
+  RequestMethod: "ServiceManager.GetAllEmployeeList",
+};
+
 // ===================================GLOBAL ADMIN END ==========================================//
 
 export {
@@ -357,5 +362,6 @@ export {
   addGlobalServiceList,
   updateGlobalServiceList,
   deleteGlobalServiceList,
+  getAllEmployeeList,
   // ===================================GLOBAL ADMIN END ==========================================//
 };

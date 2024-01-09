@@ -1,12 +1,18 @@
 import React, { useState, useEffect } from "react";
 import { Row, Col } from "react-bootstrap";
 import "./CountryWorking.css";
-import { Paper, Table, Button } from "../../../components/elements";
+import {
+  Paper,
+  Table,
+  Button,
+  Notification,
+} from "../../../components/elements";
 import { Switch } from "antd";
 import { useTranslation } from "react-i18next";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router";
 import {
+  clearResponseMessageAdmin,
   getCountryWorkingDaysApi,
   updateWorkingDaysApi,
 } from "../../../store/actions/Admin_action";
@@ -22,8 +28,20 @@ const CountryWorking = () => {
     (state) => state.admin.getWorkingDaysCountry
   );
 
+  // reducer for response message
+  const responseMessage = useSelector(
+    (state) => state.admin.admin_ResponseMessage
+  );
+
   // State for table row
   const [rows, setRows] = useState([]);
+
+  //state for show notifications through response
+  const [workingNotification, setWorkingNotification] = useState({
+    notificationFlag: false,
+    notificationMessage: null,
+    severity: "none",
+  });
 
   // To render data in Table
   useEffect(() => {
@@ -130,6 +148,87 @@ const CountryWorking = () => {
     } catch {}
   };
 
+  useEffect(() => {
+    if (
+      responseMessage !== null &&
+      responseMessage !== undefined &&
+      responseMessage !== ""
+    ) {
+      if (
+        responseMessage ===
+        t("Admin_AdminServiceManager_UpdateCountryWorkingDays_01")
+      ) {
+        setTimeout(
+          setWorkingNotification({
+            ...workingNotification,
+            notificationFlag: true,
+            notificationMessage: t(
+              "Admin_AdminServiceManager_GetCountryWorkingDays_01"
+            ),
+            severity: "success",
+          }),
+          3000
+        );
+      } else if (
+        responseMessage ===
+        t("Admin_AdminServiceManager_UpdateCountryWorkingDays_02")
+      ) {
+        setTimeout(
+          setWorkingNotification({
+            ...workingNotification,
+            notificationFlag: true,
+            notificationMessage: t(
+              "Admin_AdminServiceManager_GetCountryWorkingDays_02"
+            ),
+            severity: "error",
+          }),
+          3000
+        );
+      } else if (
+        responseMessage ===
+        t("Admin_AdminServiceManager_UpdateCountryWorkingDays_03")
+      ) {
+        setTimeout(
+          setWorkingNotification({
+            ...workingNotification,
+            notificationFlag: true,
+            notificationMessage: t(
+              "Admin_AdminServiceManager_GetCountryWorkingDays_03"
+            ),
+            severity: "error",
+          }),
+          3000
+        );
+      } else if (
+        responseMessage ===
+        t("Admin_AdminServiceManager_UpdateCountryWorkingDays_04")
+      ) {
+        setTimeout(
+          setWorkingNotification({
+            ...workingNotification,
+            notificationFlag: true,
+            notificationMessage: t(
+              "Admin_AdminServiceManager_GetCountryNationalHoliday_04"
+            ),
+            severity: "error",
+          }),
+          3000
+        );
+      } else if (responseMessage === t("something_went_wrong")) {
+        setTimeout(
+          setWorkingNotification({
+            ...workingNotification,
+            notificationFlag: true,
+            notificationMessage: t("something_went_wrong"),
+            severity: "error",
+          }),
+          3000
+        );
+      }
+    }
+    dispatch(clearResponseMessageAdmin(null));
+  }, [responseMessage]);
+
   return (
     <>
       <section>
@@ -180,6 +279,18 @@ const CountryWorking = () => {
           </Col>
         </Row>
       </section>
+
+      <Notification
+        show={workingNotification.notificationFlag}
+        hide={setWorkingNotification}
+        message={workingNotification.notificationMessage}
+        severity={workingNotification.severity}
+        notificationClass={
+          workingNotification.severity === "error"
+            ? "notification-error"
+            : "notification-success"
+        }
+      />
     </>
   );
 };

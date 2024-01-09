@@ -57,6 +57,7 @@ const initialState = {
   addGlobalServiceData: null,
   updateGlobalServiceData: null,
   deleteGlobalServiceData: null,
+  getEmployeeList: null,
 };
 
 const adminReducer = (state = initialState, action) => {
@@ -901,6 +902,21 @@ const adminReducer = (state = initialState, action) => {
       return {
         ...state,
         deleteGlobalServiceData: null,
+        admin_ResponseMessage: action.message,
+      };
+
+    // get ALL Employee List in Global Admin
+    case actions.GET_ALL_EMPLOYEE_LIST_SUCCESS:
+      return {
+        ...state,
+        getEmployeeList: action.response,
+        admin_ResponseMessage: action.message,
+      };
+
+    case actions.GET_ALL_EMPLOYEE_LIST_FAIL:
+      return {
+        ...state,
+        getEmployeeList: null,
         admin_ResponseMessage: action.message,
       };
 
