@@ -6067,7 +6067,7 @@ const getAllCityServicesMainApi = (t, navigate, loadingFlag, data) => {
             ) {
               await dispatch(
                 getAllServicesCitySuccess(
-                  response.data.responseResult.employeeList,
+                  response.data.responseResult.cityServiceList,
                   t("Admin_AdminServiceManager_GetAllCityServices_01")
                 )
               );

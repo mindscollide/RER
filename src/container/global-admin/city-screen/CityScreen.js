@@ -33,16 +33,24 @@ const CityScreen = () => {
     (state) => state.admin.getGlobalServiceData
   );
 
+  // get All City  Service Table  Data reducers
+  const getAllCityServicesData = useSelector(
+    (state) => state.admin.servicesCity
+  );
+
   //States for Storing Country Drop down
   const [countryOptionEnglish, setCountryOptionEnglish] = useState([]);
   const [countryOptionArabic, setCountryOptionArabic] = useState([]);
   const [countryOptionValue, setCountryOptionValue] = useState(null);
 
   //States for storing Services Dropdown
-
   const [servicesOptionsEnglish, setServicesOptionsEnglish] = useState([]);
   const [servicesOptionsArabic, setServicesOptionsArabic] = useState([]);
   const [servicesOptionsValue, setServicesOptionsValue] = useState(null);
+
+  //States for storing Table data
+
+  const [rows, setRows] = useState([]);
 
   const callApi = () => {
     dispatch(getCountryListMainApi(t, navigate, loadingFlag, countryID));
@@ -51,6 +59,9 @@ const CityScreen = () => {
 
   useEffect(() => {
     callApi();
+    return () => {
+      setRows([]);
+    };
   }, []);
 
   // show countries in city dropdown
@@ -127,65 +138,80 @@ const CityScreen = () => {
     dispatch(getAllCityServicesMainApi(t, navigate, loadingFlag, data));
   };
 
-  const dataSource = [
-    {
-      id: 1,
-      Country: <span className="table-inside-text">Saudi</span>,
-      shiftName: <span className="table-inside-text">First Registry</span>,
-      City: <span className="table-inside-text">Riyadh</span>,
-    },
-    {
-      id: 2,
-      Country: <span className="table-inside-text">Saudi</span>,
-      shiftName: <span className="table-inside-text">First Registry</span>,
-      City: <span className="table-inside-text">Riyadh</span>,
-    },
-    {
-      id: 3,
-      Country: <span className="table-inside-text">Saudi</span>,
-      shiftName: <span className="table-inside-text">Change Ownership</span>,
-      City: <span className="table-inside-text">Riyadh</span>,
-    },
-  ];
+  useEffect(() => {
+    try {
+      if (
+        getAllCityServicesData !== null &&
+        getAllCityServicesData.length > 0
+      ) {
+        setRows(getAllCityServicesData);
+      } else {
+        setRows([]);
+      }
+    } catch (error) {
+      console.log(error, "errorerrorerrorerror");
+    }
+  }, [getAllCityServicesData]);
 
   const columns = [
     {
       title: <span className="table-text">{t("Country")}</span>,
-      dataIndex: "Country",
-      key: "Country",
-      width: "200px",
-    },
-    {
-      title: <span className="table-text">{t("Service")}</span>,
-      dataIndex: "shiftName",
-      key: "shiftName",
-      width: "200px",
-    },
-    {
-      title: <span className="table-text">{t("City")}</span>,
-      dataIndex: "City",
-      key: "City",
-      width: "200px",
-    },
-    {
-      title: <span className="table-text">{t("Branch-availability")}</span>,
-      dataIndex: "active",
-      key: "active",
+      dataIndex: "country",
+      key: "country",
       width: "200px",
       render: (text, record) => (
         <span>
-          <Switch />
+          {currentLanguage === "en"
+            ? record.country.countryNameEnglish
+            : record.country.countryNameArabic}
+        </span>
+      ),
+    },
+    {
+      title: <span className="table-text">{t("Service")}</span>,
+      dataIndex: "cityService",
+      key: "cityService",
+      width: "200px",
+      render: (text, record) => (
+        <span>
+          {currentLanguage === "en"
+            ? record.cityService.citySM.serviceNameEnglish
+            : record.cityService.citySM.serviceNameArabic}
+        </span>
+      ),
+    },
+    {
+      title: <span className="table-text">{t("City")}</span>,
+      dataIndex: "city",
+      key: "city",
+      width: "200px",
+      render: (text, record) => (
+        <span>
+          {currentLanguage === "en"
+            ? record.city.cityNameEnglish
+            : record.city.cityNameArabic}
+        </span>
+      ),
+    },
+    {
+      title: <span className="table-text">{t("Branch-availability")}</span>,
+      dataIndex: "branchAvailability",
+      key: "branchAvailability",
+      width: "200px",
+      render: (text, record) => (
+        <span>
+          <Switch checked={record.cityService.branchAvailability} disabled />
         </span>
       ),
     },
     {
       title: <span className="table-text">{t("Home-availability")}</span>,
-      dataIndex: "column6",
-      key: "column6",
+      dataIndex: "homeAvailability",
+      key: "homeAvailability",
       width: "200px",
       render: (text, record) => (
         <span>
-          <Switch />
+          <Switch checked={record.cityService.homeAvailability} disabled />
         </span>
       ),
     },
@@ -246,11 +272,7 @@ const CityScreen = () => {
               </Row>
               <Row className="mt-2">
                 <Col lg={12} md={12} sm={12}>
-                  <Table
-                    rows={dataSource}
-                    column={columns}
-                    pagination={false}
-                  />
+                  <Table rows={rows} column={columns} pagination={false} />
                 </Col>
               </Row>
             </Paper>
