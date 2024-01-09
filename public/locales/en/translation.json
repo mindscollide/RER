@@ -282,5 +282,6 @@
   "Email-format-is-incorrect": "Email Format Is Incorrect",
   "Please-fill-all-fields": "Please Fill All Fields",
   "Admin_AdminServiceManager_GetAllEmployeeList_01": "Employee List Found",
-  "Admin_AdminServiceManager_GetAllEmployeeList_02": "No Employee Available"
+  "Admin_AdminServiceManager_GetAllEmployeeList_02": "No Employee Available",
+  "In-shift-availability": "In Shift availability"
 }

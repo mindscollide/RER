@@ -223,7 +223,11 @@ const CountryCityWiseShift = () => {
     },
 
     {
-      title: <span className="table-text">{t("Branch-availability")}</span>,
+      title: (
+        <span className="table-text d-flex justify-content-center">
+          {t("In-shift-availability")}
+        </span>
+      ),
       dataIndex: "active",
       key: "active",
       width: "200px",
