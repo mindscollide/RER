@@ -284,5 +284,7 @@
   "Please-fill-all-fields": "Please Fill All Fields",
   "Admin_AdminServiceManager_GetAllEmployeeList_01": "Employee List Found",
   "Admin_AdminServiceManager_GetAllEmployeeList_02": "No Employee Available",
-  "In-shift-availability": "In Shift availability"
+  "In-shift-availability": "In Shift availability",
+  "Admin_AdminServiceManager_GetAllCityServices_01": "City Service List Found",
+  "Admin_AdminServiceManager_GetAllCityServices_02": "No City Service Available"
 }

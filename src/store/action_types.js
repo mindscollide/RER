@@ -309,4 +309,11 @@ export const DELETE_GLOBAL_SERVICE_FAIL = "DELETE_GLOBAL_SERVICE_FAIL";
 export const GET_ALL_EMPLOYEE_LIST_SUCCESS = "GET_ALL_EMPLOYEE_LIST_SUCCESS";
 export const GET_ALL_EMPLOYEE_LIST_FAIL = "GET_ALL_EMPLOYEE_LIST_FAIL";
 
+//get all Services of the Cities
+
+export const GET_ALL_SERVICES_OF_CITIES_SUCCESS =
+  "GET_ALL_SERVICES_OF_CITIES_SUCCESS";
+export const GET_ALL_SERVICES_OF_CITIES_FAIL =
+  "GET_ALL_SERVICES_OF_CITIES_FAIL";
+
 // ===================================GLOBAL ADMIN END ==========================================//
