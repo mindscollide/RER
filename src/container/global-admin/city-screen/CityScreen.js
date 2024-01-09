@@ -110,14 +110,6 @@ const CityScreen = () => {
     }
   }, [getGlobalServiceData, currentLanguage]);
 
-  // useEffect(() => {
-  //   let data = {
-  //     CountryID: 0,
-  //     ServiceID: 0,
-  //   };
-  //   dispatch(getAllCityServicesMainApi(t, navigate, loadingFlag, data));
-  // }, []);
-
   //onChange handler of country dropdown
   const onChangeCountryHandler = (countryValue) => {
     console.log(countryValue, "countryValuecountryValuecountryValue");
