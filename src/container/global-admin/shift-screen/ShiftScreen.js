@@ -298,7 +298,7 @@ const ShiftScreen = () => {
 
   const handleSearchhitBranchShiftEWiseServices = () => {
     let data = {
-      CountryID: Number(countryOptionValue),
+      CountryID: Number(countryOptionValue.value),
       ServiceID: Number(servicesOptionsValue),
       CityID: Number(cityOptionsValue),
       BranchID: Number(branchOptionsValue),
