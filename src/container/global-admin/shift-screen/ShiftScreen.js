@@ -25,8 +25,8 @@ const ShiftScreen = () => {
   const searchParams = new URLSearchParams(location.search);
   const countryID = Number(searchParams.get("countryID"));
   const loadingFlag = useSelector((state) => state.Loader.Loading);
-
   const currentLanguage = localStorage.getItem("i18nextLng");
+  const flag = localStorage.getItem("selectedKeys");
 
   // To get Country List in dropdown
   const getCountryListData = useSelector(
@@ -246,7 +246,7 @@ const ShiftScreen = () => {
       key: "country",
       width: "200px",
       render: (text, record) => (
-        <span>
+        <span className="table-inside-text">
           {currentLanguage === "en"
             ? record.country.countryNameEnglish
             : record.country.countryNameArabic}
@@ -259,7 +259,7 @@ const ShiftScreen = () => {
       key: "service",
       width: "200px",
       render: (text, record) => (
-        <span>
+        <span className="table-inside-text">
           {currentLanguage === "en"
             ? record.service.serviceNameEnglish
             : record.service.serviceNameArabic}
@@ -272,7 +272,7 @@ const ShiftScreen = () => {
       key: "city",
       width: "200px",
       render: (text, record) => (
-        <span>
+        <span className="table-inside-text">
           {currentLanguage === "en"
             ? record.city.cityNameEnglish
             : record.city.cityNameArabic}
@@ -285,7 +285,7 @@ const ShiftScreen = () => {
       key: "branch",
       width: "200px",
       render: (text, record) => (
-        <span>
+        <span className="table-inside-text">
           {currentLanguage === "en"
             ? record.branch.branchNameEnglish
             : record.branch.branchNameArabic}
@@ -298,7 +298,7 @@ const ShiftScreen = () => {
       key: "shift",
       width: "200px",
       render: (text, record) => (
-        <span>
+        <span className="table-inside-text">
           {currentLanguage === "en"
             ? record.shift.shiftNameEnglish
             : record.shift.shiftNameArabic}

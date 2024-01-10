@@ -198,14 +198,11 @@ const BranchScreen = () => {
       key: "country",
       width: "200px",
       render: (text, record) => (
-        console.log(record, "recordrecordrecord"),
-        (
-          <span>
-            {currentLanguage === "en"
-              ? record.country.countryNameEnglish
-              : record.country.countryNameArabic}
-          </span>
-        )
+        <span className="table-inside-text">
+          {currentLanguage === "en"
+            ? record.country.countryNameEnglish
+            : record.country.countryNameArabic}
+        </span>
       ),
     },
     {
@@ -214,7 +211,7 @@ const BranchScreen = () => {
       key: "branchService",
       width: "200px",
       render: (text, record) => (
-        <span>
+        <span className="table-inside-text">
           {currentLanguage === "en"
             ? record.branchService.branchService.serviceNameEnglish
             : record.branchService.branchService.serviceNameArabic}
@@ -227,7 +224,7 @@ const BranchScreen = () => {
       key: "city",
       width: "200px",
       render: (text, record) => (
-        <span>
+        <span className="table-inside-text">
           {currentLanguage === "en"
             ? record.city.cityNameEnglish
             : record.city.cityNameArabic}
@@ -240,7 +237,7 @@ const BranchScreen = () => {
       key: "branchService",
       width: "200px",
       render: (text, record) => (
-        <span>
+        <span className="table-inside-text">
           {currentLanguage === "en"
             ? record.branchService.branchService.serviceNameEnglish
             : record.branchService.branchService.serviceNameArabic}

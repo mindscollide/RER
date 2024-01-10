@@ -152,7 +152,7 @@ const CityScreen = () => {
       key: "country",
       width: "200px",
       render: (text, record) => (
-        <span>
+        <span className="table-inside-text">
           {currentLanguage === "en"
             ? record.country.countryNameEnglish
             : record.country.countryNameArabic}
@@ -165,7 +165,7 @@ const CityScreen = () => {
       key: "cityService",
       width: "200px",
       render: (text, record) => (
-        <span>
+        <span className="table-inside-text">
           {currentLanguage === "en"
             ? record.cityService.citySM.serviceNameEnglish
             : record.cityService.citySM.serviceNameArabic}
@@ -178,7 +178,7 @@ const CityScreen = () => {
       key: "city",
       width: "200px",
       render: (text, record) => (
-        <span>
+        <span className="table-inside-text">
           {currentLanguage === "en"
             ? record.city.cityNameEnglish
             : record.city.cityNameArabic}
@@ -191,7 +191,7 @@ const CityScreen = () => {
       key: "branchAvailability",
       width: "200px",
       render: (text, record) => (
-        <span>
+        <span className="table-inside-text">
           <Switch checked={record.cityService.branchAvailability} disabled />
         </span>
       ),
@@ -202,7 +202,7 @@ const CityScreen = () => {
       key: "homeAvailability",
       width: "200px",
       render: (text, record) => (
-        <span>
+        <span className="table-inside-text">
           <Switch checked={record.cityService.homeAvailability} disabled />
         </span>
       ),
