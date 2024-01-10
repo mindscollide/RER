@@ -60,6 +60,7 @@ const initialState = {
   getEmployeeList: null,
   servicesCity: [],
   cityBranchWiseServicesList: [],
+  citybranchShiftServicesListData: [],
 };
 
 const adminReducer = (state = initialState, action) => {
@@ -947,6 +948,20 @@ const adminReducer = (state = initialState, action) => {
       return {
         ...state,
         cityBranchWiseServicesList: [],
+        admin_ResponseMessage: action.message,
+      };
+
+    case actions.GET_ALL_CITY_BRANCH_SHIFT_SERVICES_SUCCESS:
+      return {
+        ...state,
+        citybranchShiftServicesListData: action.response,
+        admin_ResponseMessage: action.message,
+      };
+
+    case actions.GET_ALL_CITY_BRANCH_SHIFT_SERVICES_FAIL:
+      return {
+        ...state,
+        citybranchShiftServicesListData: [],
         admin_ResponseMessage: action.message,
       };
 

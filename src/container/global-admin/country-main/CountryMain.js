@@ -134,15 +134,15 @@ const CountryMain = () => {
   };
 
   //open city screen page in Country Main
-  const openClickCityScreenInCountryMain = () => {
+  const openClickCityScreenInCountryMain = (record) => {
     localStorage.setItem("selectedKeys", ["23"]);
-    navigate("/GlobalAdmin/City");
+    navigate(`/GlobalAdmin/City?countryID=${record}`);
   };
 
   //open branch screen page in Country Main
-  const openClickBranchScreenInCountryMain = () => {
+  const openClickBranchScreenInCountryMain = (record) => {
     localStorage.setItem("selectedKeys", ["24"]);
-    navigate("/GlobalAdmin/Branch");
+    navigate(`/GlobalAdmin/Branch?countryID=${record}`);
   };
 
   //open Counters updated page in Country Main
@@ -152,9 +152,10 @@ const CountryMain = () => {
   };
 
   //open shifts page in Country Main
-  const openClickshiftsScreenInCountryMain = () => {
+  const openClickshiftsScreenInCountryMain = (record) => {
     localStorage.setItem("selectedKeys", ["26"]);
-    navigate("/GlobalAdmin/Shifts");
+    // localStorage.setItem("countryIDShiftRoute", record);
+    navigate(`/GlobalAdmin/Shifts?countryID=${record}`);
   };
 
   //open Employee page in Country Main
@@ -211,46 +212,55 @@ const CountryMain = () => {
       dataIndex: "column6",
       key: "column6",
       align: "center",
-      render: (text, record) => (
-        <>
-          <span className="icon-spaceing-dlt-edit">
-            <i
-              className="icon-text-edit icon-EDT-DLT-color"
-              onClick={() => handleCountryEdit(record, 1)}
-            ></i>
-            <i
-              className="icon-close icon-EDT-DLT-color"
-              onClick={() => handleCountryEdit(record, 2)}
-            ></i>
-            <i
-              className="icon-globe icon-EDT-DLT-color"
-              onClick={openServiceCountryScreen}
-            ></i>
-            <i
-              className="icon-location icon-EDT-DLT-color"
-              onClick={openClickCityScreenInCountryMain}
-            ></i>
-            <i
-              className="icon-branch icon-EDT-DLT-color"
-              onClick={openClickBranchScreenInCountryMain}
-            ></i>
-            <i
-              className="icon-counter icon-EDT-DLT-color"
-              onClick={openClickCountersScreenInCountryMain}
-            ></i>
-            <i
-              className="icon-repeat icon-EDT-DLT-color"
-              onClick={openClickshiftsScreenInCountryMain}
-            ></i>
-            <i
-              className="icon-user icon-EDT-DLT-color"
-              onClick={() =>
-                openClickEmployeeScreenInCountryMain(record.countryID)
-              }
-            ></i>
-          </span>
-        </>
-      ),
+      render: (text, record) => {
+        console.log(record, "recordrecordrecordrecordrecord");
+        return (
+          <>
+            <span className="icon-spaceing-dlt-edit">
+              <i
+                className="icon-text-edit icon-EDT-DLT-color"
+                onClick={() => handleCountryEdit(record, 1)}
+              ></i>
+              <i
+                className="icon-close icon-EDT-DLT-color"
+                onClick={() => handleCountryEdit(record, 2)}
+              ></i>
+              <i
+                className="icon-globe icon-EDT-DLT-color"
+                onClick={openServiceCountryScreen}
+              ></i>
+              <i
+                className="icon-location icon-EDT-DLT-color"
+                onClick={() =>
+                  openClickCityScreenInCountryMain(record.countryID)
+                }
+              ></i>
+              <i
+                className="icon-branch icon-EDT-DLT-color"
+                onClick={() =>
+                  openClickBranchScreenInCountryMain(record.countryID)
+                }
+              ></i>
+              <i
+                className="icon-counter icon-EDT-DLT-color"
+                onClick={openClickCountersScreenInCountryMain}
+              ></i>
+              <i
+                className="icon-repeat icon-EDT-DLT-color"
+                onClick={() =>
+                  openClickshiftsScreenInCountryMain(record.countryID)
+                }
+              ></i>
+              <i
+                className="icon-user icon-EDT-DLT-color"
+                onClick={() =>
+                  openClickEmployeeScreenInCountryMain(record.countryID)
+                }
+              ></i>
+            </span>
+          </>
+        );
+      },
     },
   ];
 
