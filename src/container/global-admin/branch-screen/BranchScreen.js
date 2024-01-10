@@ -23,6 +23,8 @@ const BranchScreen = () => {
   const countryID = Number(searchParams.get("countryID"));
   const loadingFlag = useSelector((state) => state.Loader.Loading);
   const currentLanguage = localStorage.getItem("i18nextLng");
+  const searchParamsCountry = new URLSearchParams(location.search);
+  const CountryID = Number(searchParamsCountry.get("countryID"));
 
   // To get Country List in dropdown
   const getCountryListData = useSelector(
@@ -45,7 +47,10 @@ const BranchScreen = () => {
   //States for Storing Country Drop down
   const [countryOptionEnglish, setCountryOptionEnglish] = useState([]);
   const [countryOptionArabic, setCountryOptionArabic] = useState([]);
-  const [countryOptionValue, setCountryOptionValue] = useState(null);
+  const [countryOptionValue, setCountryOptionValue] = useState({
+    value: 1,
+    label: "",
+  });
 
   //States for storing Services Dropdown
   const [servicesOptionsEnglish, setServicesOptionsEnglish] = useState([]);
@@ -63,6 +68,9 @@ const BranchScreen = () => {
   const callApi = () => {
     dispatch(getCountryListMainApi(t, navigate, loadingFlag, countryID));
     dispatch(getGlobalServiceMainApi(t, navigate, loadingFlag));
+    dispatch(
+      getCountryCitiesApi(t, navigate, loadingFlag, 1, countryOptionValue.value)
+    );
   };
 
   useEffect(() => {
@@ -85,6 +93,67 @@ const BranchScreen = () => {
             label: item.countryNameArabic,
           }))
         );
+
+        let data;
+        if (currentLanguage === "en") {
+          if (
+            CountryID !== null &&
+            CountryID !== undefined &&
+            CountryID !== 0
+          ) {
+            const foundCountry = getCountryListData.find(
+              (country) => country.countryID === CountryID
+            );
+
+            console.log(foundCountry, "foundCountry");
+
+            if (foundCountry) {
+              console.log(foundCountry, "datadatadata");
+              data = {
+                value: foundCountry.countryID,
+                label: foundCountry.countryNameEnglish,
+              };
+            } else {
+              data = {
+                value: CountryID,
+                label: t("No Country Found"),
+              };
+            }
+          } else {
+            data = {
+              value: getCountryListData[0].countryID,
+              label: getCountryListData[0].countryNameEnglish,
+            };
+          }
+          setCountryOptionValue(data);
+        } else {
+          if (
+            CountryID !== null &&
+            CountryID !== undefined &&
+            CountryID !== 0
+          ) {
+            const foundCity = getCountryListData.find(
+              (country) => country.country === CountryID
+            );
+            if (foundCity) {
+              data = {
+                value: foundCity.countryID,
+                label: foundCity.countryNameArabic, // Change to Arabic name if available
+              };
+            } else {
+              data = {
+                value: CountryID,
+                label: t("No Country Found"),
+              };
+            }
+          } else {
+            data = {
+              value: getCountryListData[0].countryID,
+              label: getCountryListData[0].countryNameArabic, // Change to Arabic name for the first country in the list
+            };
+          }
+          setCountryOptionValue(data);
+        }
       } else {
         setCountryOptionEnglish([]);
         setCountryOptionArabic([]);
@@ -118,7 +187,10 @@ const BranchScreen = () => {
   //onChange handler of country dropdown
   const onChangeCountryHandler = (countryValue) => {
     console.log(countryValue, "countryValuecountryValuecountryValue");
-    setCountryOptionValue(countryValue.value);
+    setCountryOptionValue({
+      value: countryValue.value,
+      label: countryValue.label,
+    });
     dispatch(
       getCountryCitiesApi(t, navigate, loadingFlag, 1, countryValue.value)
     );
@@ -164,7 +236,7 @@ const BranchScreen = () => {
 
   const handleSearchhit = () => {
     let data = {
-      CountryID: Number(countryOptionValue),
+      CountryID: Number(countryOptionValue.value),
       ServiceID: Number(servicesOptionsValue),
       CityID: Number(cityOptionsValue),
     };
@@ -278,6 +350,7 @@ const BranchScreen = () => {
                     <Select
                       isSearchable={true}
                       className="select-dropdown-all"
+                      value={countryOptionValue}
                       options={
                         currentLanguage === "en"
                           ? countryOptionEnglish

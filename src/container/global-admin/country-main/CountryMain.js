@@ -140,9 +140,9 @@ const CountryMain = () => {
   };
 
   //open branch screen page in Country Main
-  const openClickBranchScreenInCountryMain = () => {
+  const openClickBranchScreenInCountryMain = (record) => {
     localStorage.setItem("selectedKeys", ["24"]);
-    navigate("/GlobalAdmin/Branch");
+    navigate(`/GlobalAdmin/Branch?countryID=${record}`);
   };
 
   //open Counters updated page in Country Main
@@ -235,7 +235,9 @@ const CountryMain = () => {
               ></i>
               <i
                 className="icon-branch icon-EDT-DLT-color"
-                onClick={openClickBranchScreenInCountryMain}
+                onClick={() =>
+                  openClickBranchScreenInCountryMain(record.countryID)
+                }
               ></i>
               <i
                 className="icon-counter icon-EDT-DLT-color"
