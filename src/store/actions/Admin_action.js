@@ -4127,7 +4127,7 @@ const getCountryCitiesApi = (t, navigate, loadingFlag, apiCallFlag, cityID) => {
                 await dispatch(loader_Actions(false));
               } else if (apiCallFlag === 4) {
                 await dispatch(
-                  getAllEmployeeMainApi(t, navigate, loadingFlag, countryID)
+                  getAllEmployeeMainApi(t, navigate, loadingFlag, data)
                 );
               }
               await dispatch(loader_Actions(false));
