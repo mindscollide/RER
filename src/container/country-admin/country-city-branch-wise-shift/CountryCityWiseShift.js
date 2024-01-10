@@ -4,6 +4,7 @@ import "./CountryCityWiseShift.css";
 import { Paper, Button, Table } from "../../../components/elements";
 import { Collapse, Switch } from "antd";
 import Select from "react-select";
+import DatePicker from "react-multi-date-picker";
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router";
 import { useDispatch, useSelector } from "react-redux";
@@ -12,6 +13,7 @@ import {
   getCityBranchListApi,
   getCountryCitiesApi,
 } from "../../../store/actions/Admin_action";
+import { multiDatePickerDateChangIntoUTC } from "../../../commen/functions/Date_time_formatter";
 
 const CountryCityWiseShift = () => {
   const { t } = useTranslation();
@@ -41,6 +43,7 @@ const CountryCityWiseShift = () => {
   const [isPanelOpenThree, setIsPanelOpenThree] = useState(false);
   const [countryCityWiseShift, setCountryCityWiseShift] = useState([]);
   const [countryBranchWiseShift, setCountryBranchWiseShift] = useState([]);
+  const [roasterdate, setRoasterdate] = useState(new Date());
   const [branchSelectedOptions, setBranchSelectedOptions] = useState(null);
   const [servicesTableData, setServicesTableData] = useState({
     branchDetailModel: null,
@@ -102,7 +105,7 @@ const CountryCityWiseShift = () => {
     // setSelectedCityID(selectedCityOptions.value);
   };
   useEffect(() => {
-    if (citySelectValue.value !== 0) {
+    if (citySelectValue.value !== 0 && isFirstRender) {
       dispatch(
         getCityBranchListApi(
           t,
@@ -164,6 +167,7 @@ const CountryCityWiseShift = () => {
       let data = {
         BranchID: Number(branchSelectValue.value),
         CityID: Number(citySelectValue.value),
+        RoasterDate: multiDatePickerDateChangIntoUTC(roasterdate),
       };
       dispatch(getAllBranchSiftMainApi(t, data, navigate, Loading));
     }
@@ -173,6 +177,7 @@ const CountryCityWiseShift = () => {
     let data = {
       BranchID: Number(branchSelectValue.value),
       CityID: Number(citySelectValue.value),
+      RoasterDate: multiDatePickerDateChangIntoUTC(roasterdate),
     };
     dispatch(getAllBranchSiftMainApi(t, data, navigate, Loading));
   };
@@ -195,16 +200,15 @@ const CountryCityWiseShift = () => {
     }
   }, [getCountryWiseShiftDataRows]);
 
+  //handling the toggle of the pannel
   const togglePanel = () => {
     setIsPanelOpen(!isPanelOpen);
   };
 
-  const togglePanelTwo = () => {
-    setIsPanelOpenTwo(!isPanelOpenTwo);
-  };
-
-  const togglePanelThree = () => {
-    setIsPanelOpenThree(!isPanelOpenThree);
+  //onChange For Roaster Date
+  const handleRoasterDateChange = (date) => {
+    console.log(date, "handleRoasterDateChange");
+    setRoasterdate(date);
   };
 
   const columns = [
@@ -219,7 +223,11 @@ const CountryCityWiseShift = () => {
     },
 
     {
-      title: <span className="table-text">{t("Branch-availability")}</span>,
+      title: (
+        <span className="table-text d-flex justify-content-center">
+          {t("In-shift-availability")}
+        </span>
+      ),
       dataIndex: "active",
       key: "active",
       width: "200px",
@@ -251,7 +259,7 @@ const CountryCityWiseShift = () => {
           <Col lg={12} md={12} sm={12}>
             <Paper className="CountryCityShift-paper">
               <Row className="mx-auto d-flex align-items-center justify-content-center">
-                <Col lg={4} md={4} sm={12}>
+                <Col lg={3} md={3} sm={12}>
                   <span className="d-flex flex-column w-100">
                     <label className="text-labels">{t("City")}</label>
                     <Select
@@ -266,7 +274,7 @@ const CountryCityWiseShift = () => {
                     />
                   </span>
                 </Col>
-                <Col lg={4} md={4} sm={12}>
+                <Col lg={3} md={3} sm={12}>
                   <span className="d-flex flex-column w-100">
                     <label className="text-labels">{t("Branch")}</label>
                     <Select
@@ -283,7 +291,22 @@ const CountryCityWiseShift = () => {
                     />
                   </span>
                 </Col>
-                <Col lg={2} md={2} sm={12} className="mt-3">
+                <Col
+                  lg={3}
+                  md={3}
+                  sm={12}
+                  className="col-for-date-timepicker-cityad"
+                >
+                  <label className="text-labels">{t("Date")}</label>
+                  <DatePicker
+                    arrowClassName="arrowClass"
+                    containerClassName="containerClassTimePicker"
+                    editable={false}
+                    value={roasterdate}
+                    onChange={handleRoasterDateChange}
+                  />
+                </Col>
+                <Col lg={3} md={3} sm={12} className="mt-3">
                   <Button
                     icon={<i className="icon-search city-icon-space"></i>}
                     text={t("Search")}

@@ -1,13 +1,194 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Row, Col } from "react-bootstrap";
 import "./ShiftScreen.css";
 import { Paper, Table, Button } from "../../../components/elements";
 import { Switch } from "antd";
 import { useTranslation } from "react-i18next";
 import Select from "react-select";
+import { useDispatch, useSelector } from "react-redux";
+import { useLocation, useNavigate } from "react-router";
+import {
+  getCityBranchListApi,
+  getCountryCitiesApi,
+  getCountryListMainApi,
+  getGlobalServiceMainApi,
+} from "../../../store/actions/Admin_action";
 
 const ShiftScreen = () => {
   const { t } = useTranslation();
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const location = useLocation();
+  const searchParams = new URLSearchParams(location.search);
+  const countryID = Number(searchParams.get("countryID"));
+  const loadingFlag = useSelector((state) => state.Loader.Loading);
+  const searchParamsBranch = new URLSearchParams(location.search);
+  const urldBranchID = searchParamsBranch.get("branchId");
+  const currentLanguage = localStorage.getItem("i18nextLng");
+
+  // To get Country List in dropdown
+  const getCountryListData = useSelector(
+    (state) => state.admin.getCountryListData
+  );
+
+  // get Global Service Data reducers
+  const getGlobalServiceData = useSelector(
+    (state) => state.admin.getGlobalServiceData
+  );
+
+  //To get City List
+  const cityList = useSelector((state) => state.admin.cityList);
+
+  const cityShiftsBranchDropdown = useSelector(
+    (state) => state.admin.cityBranchListData
+  );
+
+  //States for Storing Country Drop down
+  const [countryOptionEnglish, setCountryOptionEnglish] = useState([]);
+  const [countryOptionArabic, setCountryOptionArabic] = useState([]);
+  const [countryOptionValue, setCountryOptionValue] = useState(null);
+
+  //States for storing Services Dropdown
+  const [servicesOptionsEnglish, setServicesOptionsEnglish] = useState([]);
+  const [servicesOptionsArabic, setServicesOptionsArabic] = useState([]);
+  const [servicesOptionsValue, setServicesOptionsValue] = useState(null);
+
+  //States for storing City Dropdown
+  const [cityOptionsEnglish, setcityOptionsEnglish] = useState([]);
+  const [cityOptionsArabic, setCityOptionsArabic] = useState([]);
+  const [cityOptionsValue, setCityOptionsValue] = useState(null);
+
+  //States for storing Branch Dropdown
+  const [branchOptionsEnglish, setBranchOptionsEnglish] = useState([]);
+  const [branchOptionsArabic, setBranchOptionsArabic] = useState([]);
+  const [branchOptionsValue, setBranchOptionsValue] = useState(null);
+
+  //table data state
+  const [rows, setRows] = useState([]);
+
+  const callApi = () => {
+    dispatch(getCountryListMainApi(t, navigate, loadingFlag, countryID));
+    dispatch(getGlobalServiceMainApi(t, navigate, loadingFlag));
+    dispatch(getCountryCitiesApi(t, navigate, loadingFlag, 1, countryID));
+    dispatch(getCityBranchListApi(t, navigate, loadingFlag, urldBranchID));
+  };
+
+  useEffect(() => {
+    callApi();
+  }, []);
+
+  // show countries in city dropdown
+  useEffect(() => {
+    try {
+      if (getCountryListData && Object.keys(getCountryListData).length > 0) {
+        setCountryOptionEnglish(
+          getCountryListData.map((item) => ({
+            value: item.countryID,
+            label: item.countryNameEnglish,
+          }))
+        );
+        setCountryOptionArabic(
+          getCountryListData.map((item) => ({
+            value: item.countryID,
+            label: item.countryNameArabic,
+          }))
+        );
+      } else {
+        setCountryOptionEnglish([]);
+        setCountryOptionArabic([]);
+      }
+    } catch (error) {
+      console.log(error, "errorerrorerror");
+    }
+  }, [getCountryListData, currentLanguage]);
+
+  // show Services in Services dropdown
+  useEffect(() => {
+    if (getGlobalServiceData !== null && Array.isArray(getGlobalServiceData)) {
+      setServicesOptionsEnglish(
+        getGlobalServiceData.map((item) => ({
+          value: item.serviceID,
+          label: item.serviceNameEnglish,
+        }))
+      );
+      setServicesOptionsArabic(
+        getGlobalServiceData.map((item) => ({
+          value: item.serviceID,
+          label: item.serviceNameArabic,
+        }))
+      );
+    } else {
+      setCountryOptionEnglish([]);
+      setCountryOptionArabic([]);
+    }
+  }, [getGlobalServiceData, currentLanguage]);
+
+  // useEffect city dropdown data
+  useEffect(() => {
+    try {
+      if (cityList !== null && Object.keys(getCountryListData).length > 0) {
+        console.log(cityList, "useEffectuseEffectuseEffect");
+        setcityOptionsEnglish(
+          cityList.cities.map((item) => ({
+            value: item.cityID,
+            label: item.cityNameEnglish,
+          }))
+        );
+        setCityOptionsArabic(
+          cityList.cities.map((item) => ({
+            value: item.cityID,
+            label: item.cityNameArabic,
+          }))
+        );
+      } else {
+        setcityOptionsEnglish([]);
+        setCityOptionsArabic([]);
+      }
+    } catch (error) {
+      console.log(error, "errorerrorerrorerror");
+    }
+  }, [cityList, currentLanguage]);
+
+  // useEffect Branch  dropdown data
+  useEffect(() => {
+    if (cityShiftsBranchDropdown && cityShiftsBranchDropdown.length !== 0) {
+      if (currentLanguage === "en") {
+        setBranchOptionsEnglish(
+          cityShiftsBranchDropdown.map((item) => ({
+            value: item.branchID,
+            label: item.branchNameEnglish,
+          }))
+        );
+      } else {
+        setBranchOptionsArabic(
+          cityShiftsBranchDropdown.map((item) => ({
+            value: item.branchID,
+            label: item.branchNameArabic,
+          }))
+        );
+      }
+    }
+  }, [cityShiftsBranchDropdown, currentLanguage]);
+
+  //onChange handler of country dropdown
+  const onChangeCountryHandler = (countryValue) => {
+    setCountryOptionValue(countryValue.value);
+  };
+
+  //onChange handler of Serivces dropdown
+  const onChangeServicesHandler = (serviceValue) => {
+    setServicesOptionsValue(serviceValue.value);
+  };
+
+  //onChange handler of City dropdown
+  const onChangeCitysHandler = (cityValue) => {
+    setCityOptionsValue(cityValue.value);
+  };
+
+  //onChange handler of Branch dropdown
+  const onChangeBranchHandler = (branchValue) => {
+    setBranchOptionsValue(branchValue.value);
+  };
 
   const dataSource = [
     {
@@ -106,7 +287,12 @@ const ShiftScreen = () => {
                     <Select
                       isSearchable={true}
                       className="select-dropdown-all"
-                      // className="Shift-screen-select"
+                      options={
+                        currentLanguage === "en"
+                          ? countryOptionEnglish
+                          : countryOptionArabic
+                      }
+                      onChange={onChangeCountryHandler}
                     />
                   </span>
                 </Col>
@@ -116,7 +302,12 @@ const ShiftScreen = () => {
                     <Select
                       isSearchable={true}
                       className="select-dropdown-all"
-                      // className="Shift-screen-select"
+                      options={
+                        currentLanguage === "en"
+                          ? cityOptionsEnglish
+                          : cityOptionsArabic
+                      }
+                      onChange={onChangeCitysHandler}
                     />
                   </span>
                 </Col>
@@ -128,7 +319,12 @@ const ShiftScreen = () => {
                     <Select
                       isSearchable={true}
                       className="select-dropdown-all"
-                      // className="Shift-screen-select"
+                      options={
+                        currentLanguage === "en"
+                          ? branchOptionsEnglish
+                          : branchOptionsArabic
+                      }
+                      onChange={onChangeBranchHandler}
                     />
                   </span>
                 </Col>
@@ -138,7 +334,12 @@ const ShiftScreen = () => {
                     <Select
                       isSearchable={true}
                       className="select-dropdown-all"
-                      // className="Shift-screen-select"
+                      options={
+                        currentLanguage === "en"
+                          ? servicesOptionsEnglish
+                          : servicesOptionsArabic
+                      }
+                      onChange={onChangeServicesHandler}
                     />
                   </span>
                 </Col>

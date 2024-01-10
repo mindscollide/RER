@@ -4,6 +4,7 @@
   width: 100% !important;
   overflow: hidden !important;
   background-color: #ffffff !important;
+  min-height: 40vh !important;
 }
 
 .btn-col-class {
