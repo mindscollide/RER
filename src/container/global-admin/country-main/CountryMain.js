@@ -134,9 +134,9 @@ const CountryMain = () => {
   };
 
   //open city screen page in Country Main
-  const openClickCityScreenInCountryMain = () => {
+  const openClickCityScreenInCountryMain = (record) => {
     localStorage.setItem("selectedKeys", ["23"]);
-    navigate("/GlobalAdmin/City");
+    navigate(`/GlobalAdmin/City?countryID=${record}`);
   };
 
   //open branch screen page in Country Main
@@ -231,7 +231,9 @@ const CountryMain = () => {
               ></i>
               <i
                 className="icon-location icon-EDT-DLT-color"
-                onClick={openClickCityScreenInCountryMain}
+                onClick={() =>
+                  openClickCityScreenInCountryMain(record.countryID)
+                }
               ></i>
               <i
                 className="icon-branch icon-EDT-DLT-color"

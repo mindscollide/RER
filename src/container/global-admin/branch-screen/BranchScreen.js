@@ -199,7 +199,6 @@ const BranchScreen = () => {
 
   //onChange handler of country dropdown
   const onChangeCountryHandler = (countryValue) => {
-    console.log(countryValue, "countryValuecountryValuecountryValue");
     setCountryOptionValue({
       value: countryValue.value,
       label: countryValue.label,
