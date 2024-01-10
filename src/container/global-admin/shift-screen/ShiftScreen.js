@@ -15,6 +15,7 @@ import {
   getCountryListMainApi,
   getGlobalServiceMainApi,
 } from "../../../store/actions/Admin_action";
+import { multiDatePickerDateChangIntoUTC } from "../../../commen/functions/Date_time_formatter";
 
 const ShiftScreen = () => {
   const { t } = useTranslation();
@@ -40,8 +41,14 @@ const ShiftScreen = () => {
   //To get City List
   const cityList = useSelector((state) => state.admin.cityList);
 
+  //To get Branch List
   const cityShiftsBranchDropdown = useSelector(
     (state) => state.admin.cityBranchListData
+  );
+
+  //To get Branch Wise Shift Services
+  const BranchWiseShiftServices = useSelector(
+    (state) => state.admin.citybranchShiftServicesListData
   );
 
   //States for Storing Country Drop down
@@ -66,6 +73,9 @@ const ShiftScreen = () => {
 
   //table data state
   const [rows, setRows] = useState([]);
+
+  //Date state
+  const [dateSelector, setDateSelector] = useState(new Date());
 
   const callApi = () => {
     dispatch(getCountryListMainApi(t, navigate, loadingFlag, countryID));
@@ -193,85 +203,105 @@ const ShiftScreen = () => {
     setBranchOptionsValue(branchValue.value);
   };
 
+  //onChange handle Date Selector
+
+  const handleDateSelector = (dateObj) => {
+    setDateSelector(dateObj);
+  };
+
   const handleSearchhitBranchShiftEWiseServices = () => {
-    let data = {};
+    let data = {
+      CountryID: Number(countryOptionValue),
+      ServiceID: Number(servicesOptionsValue),
+      CityID: Number(cityOptionsValue),
+      BranchID: Number(branchOptionsValue),
+      RoasterDate: multiDatePickerDateChangIntoUTC(dateSelector),
+    };
     dispatch(
       getAllBranchShiftWiseServicesMainApi(t, navigate, loadingFlag, data)
     );
   };
 
-  const dataSource = [
-    {
-      id: 1,
-      Country: <span className="table-inside-text">Saudi</span>,
-      shiftName: <span className="table-inside-text">First Registry</span>,
-      City: <span className="table-inside-text">Riyadh</span>,
-      branchName: (
-        <span className="table-inside-text">Olaya Street Branch</span>
-      ),
-      shift: <span className="table-inside-text">Shift 1</span>,
-    },
-    {
-      id: 2,
-      Country: <span className="table-inside-text">Saudi</span>,
-      shiftName: <span className="table-inside-text">First Registry</span>,
-      City: <span className="table-inside-text">Riyadh</span>,
-      branchName: (
-        <span className="table-inside-text">Olaya Street Branch</span>
-      ),
-      shift: <span className="table-inside-text">Shift 1</span>,
-    },
-    {
-      id: 3,
-      Country: <span className="table-inside-text">Saudi</span>,
-      shiftName: <span className="table-inside-text">Change Ownership</span>,
-      City: <span className="table-inside-text">Riyadh</span>,
-      branchName: (
-        <span className="table-inside-text">Olaya Street Branch</span>
-      ),
-      shift: <span className="table-inside-text">Shift 1</span>,
-    },
-  ];
+  //Table Data State of All shift
+  useEffect(() => {
+    if (
+      BranchWiseShiftServices !== null &&
+      BranchWiseShiftServices.length > 0 &&
+      Array.isArray(BranchWiseShiftServices)
+    ) {
+      console.log(
+        BranchWiseShiftServices,
+        "BranchWiseShiftServicesBranchWiseShiftServices"
+      );
+      setRows(BranchWiseShiftServices);
+    } else {
+      setRows([]);
+    }
+  }, [BranchWiseShiftServices]);
 
   const columns = [
     {
       title: <span className="table-text">{t("Country")}</span>,
-      dataIndex: "Country",
-      key: "Country",
+      dataIndex: "country",
+      key: "country",
       width: "200px",
+      render: (text, record) => (
+        <span>
+          {currentLanguage === "en"
+            ? record.country.countryNameEnglish
+            : record.country.countryNameArabic}
+        </span>
+      ),
     },
     {
       title: <span className="table-text">{t("Service")}</span>,
-      dataIndex: "shiftName",
-      key: "shiftName",
+      dataIndex: "service",
+      key: "service",
       width: "200px",
+      render: (text, record) => (
+        <span>
+          {currentLanguage === "en"
+            ? record.service.serviceNameEnglish
+            : record.service.serviceNameArabic}
+        </span>
+      ),
     },
     {
       title: <span className="table-text">{t("City")}</span>,
-      dataIndex: "City",
-      key: "City",
+      dataIndex: "city",
+      key: "city",
       width: "200px",
+      render: (text, record) => (
+        <span>
+          {currentLanguage === "en"
+            ? record.city.cityNameEnglish
+            : record.city.cityNameArabic}
+        </span>
+      ),
     },
     {
       title: <span className="table-text">{t("Branch-name")}</span>,
-      dataIndex: "branchName",
-      key: "branchName",
+      dataIndex: "branch",
+      key: "branch",
       width: "200px",
+      render: (text, record) => (
+        <span>
+          {currentLanguage === "en"
+            ? record.branch.branchNameEnglish
+            : record.branch.branchNameArabic}
+        </span>
+      ),
     },
     {
       title: <span className="table-text">{t("Shift-name")}</span>,
       dataIndex: "shift",
       key: "shift",
       width: "200px",
-    },
-    {
-      title: <span className="table-text">{t("Availability")}</span>,
-      dataIndex: "active",
-      key: "active",
-      width: "200px",
       render: (text, record) => (
         <span>
-          <Switch />
+          {currentLanguage === "en"
+            ? record.shift.shiftNameEnglish
+            : record.shift.shiftNameArabic}
         </span>
       ),
     },
@@ -364,8 +394,8 @@ const ShiftScreen = () => {
                       arrowClassName="arrowClass"
                       containerClassName="containerClassTimePicker"
                       editable={false}
-                      // value={fromDate}
-                      // onChange={handleStartDateChange}
+                      value={dateSelector}
+                      onChange={handleDateSelector}
                     />
                   </div>
                 </Col>
@@ -385,11 +415,7 @@ const ShiftScreen = () => {
               </Row>
               <Row className="mt-2">
                 <Col lg={12} md={12} sm={12}>
-                  <Table
-                    rows={dataSource}
-                    column={columns}
-                    pagination={false}
-                  />
+                  <Table rows={rows} column={columns} pagination={false} />
                 </Col>
               </Row>
             </Paper>
