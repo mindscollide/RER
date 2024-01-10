@@ -4069,8 +4069,20 @@ const getCountryCitiesApiFail = (message) => {
 
 // apiCallFlag on which page and from which route its call so we call api on that responce
 // cityID is calling for that we pass it in request from city page to route it into employes
-const getCountryCitiesApi = (t, navigate, loadingFlag, apiCallFlag, cityID) => {
-  let data = { CountryID: Number(localStorage.getItem("countryID")) };
+const getCountryCitiesApi = (
+  t,
+  navigate,
+  loadingFlag,
+  apiCallFlag,
+  cityID,
+  countryID
+) => {
+  let data = {
+    CountryID:
+      countryID !== null && countryID !== undefined
+        ? countryID
+        : Number(localStorage.getItem("countryID")),
+  };
   return async (dispatch) => {
     if (!loadingFlag) {
       dispatch(loader_Actions(true));
@@ -4118,6 +4130,10 @@ const getCountryCitiesApi = (t, navigate, loadingFlag, apiCallFlag, cityID) => {
                 );
               } else if (apiCallFlag === 1) {
                 await dispatch(loader_Actions(false));
+              } else if (apiCallFlag === 4) {
+                await dispatch(
+                  getAllEmployeeMainApi(t, navigate, loadingFlag, countryID)
+                );
               }
               await dispatch(loader_Actions(false));
             } else if (
