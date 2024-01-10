@@ -7,7 +7,9 @@ import { useTranslation } from "react-i18next";
 import Select from "react-select";
 import { useDispatch, useSelector } from "react-redux";
 import { useLocation, useNavigate } from "react-router";
+import DatePicker from "react-multi-date-picker";
 import {
+  getAllBranchShiftWiseServicesMainApi,
   getCityBranchListApi,
   getCountryCitiesApi,
   getCountryListMainApi,
@@ -191,6 +193,13 @@ const ShiftScreen = () => {
     setBranchOptionsValue(branchValue.value);
   };
 
+  const handleSearchhitBranchShiftEWiseServices = () => {
+    let data = {};
+    dispatch(
+      getAllBranchShiftWiseServicesMainApi(t, navigate, loadingFlag, data)
+    );
+  };
+
   const dataSource = [
     {
       id: 1,
@@ -347,17 +356,30 @@ const ShiftScreen = () => {
                   </span>
                 </Col>
               </Row>
-              <Row>
+              <Row className="mt-2">
+                <Col lg={6} md={6} sm={12} className="datesection">
+                  <div className="col-for-date-timepicker-cityad">
+                    <label className="text-labels">{t("Date")}</label>
+                    <DatePicker
+                      arrowClassName="arrowClass"
+                      containerClassName="containerClassTimePicker"
+                      editable={false}
+                      // value={fromDate}
+                      // onChange={handleStartDateChange}
+                    />
+                  </div>
+                </Col>
                 <Col
-                  lg={12}
-                  md={12}
+                  lg={6}
+                  md={6}
                   sm={12}
-                  className="d-flex justify-content-center mt-3"
+                  className="d-flex justify-content-end mt-3 buttonalignment"
                 >
                   <Button
                     icon={<i className="icon-search city-icon-space"></i>}
                     text={t("Search")}
                     className="Search-Icon-Btn"
+                    onClick={handleSearchhitBranchShiftEWiseServices}
                   />
                 </Col>
               </Row>

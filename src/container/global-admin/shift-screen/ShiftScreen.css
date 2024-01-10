@@ -17,3 +17,11 @@
   width: 100% !important;
   max-width: 450px !important;
 }
+
+.datesection {
+  padding-left: 22px !important;
+}
+
+.buttonalignment {
+  padding: 0px 25px !important;
+}
