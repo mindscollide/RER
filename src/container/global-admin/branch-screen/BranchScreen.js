@@ -42,8 +42,6 @@ const BranchScreen = () => {
   //To get City List
   const cityList = useSelector((state) => state.admin.cityList);
 
-  console.log(getCityBranchWiseData, "cityListcityListcityListcityList");
-
   //States for Storing Country Drop down
   const [countryOptionEnglish, setCountryOptionEnglish] = useState([]);
   const [countryOptionArabic, setCountryOptionArabic] = useState([]);
@@ -60,13 +58,11 @@ const BranchScreen = () => {
   const [cityOptionsValue, setCityOptionsValue] = useState(null);
 
   //table data state
-
   const [rows, setRows] = useState([]);
 
   const callApi = () => {
     dispatch(getCountryListMainApi(t, navigate, loadingFlag, countryID));
     dispatch(getGlobalServiceMainApi(t, navigate, loadingFlag));
-    dispatch(getCountryCitiesApi(t, navigate, loadingFlag, 1, countryID));
   };
 
   useEffect(() => {
@@ -98,7 +94,7 @@ const BranchScreen = () => {
     }
   }, [getCountryListData, currentLanguage]);
 
-  // useEffect to update data in table
+  // show Services in Services dropdown
   useEffect(() => {
     if (getGlobalServiceData !== null && Array.isArray(getGlobalServiceData)) {
       setServicesOptionsEnglish(
@@ -118,6 +114,20 @@ const BranchScreen = () => {
       setCountryOptionArabic([]);
     }
   }, [getGlobalServiceData, currentLanguage]);
+
+  //onChange handler of country dropdown
+  const onChangeCountryHandler = (countryValue) => {
+    console.log(countryValue, "countryValuecountryValuecountryValue");
+    setCountryOptionValue(countryValue.value);
+    dispatch(
+      getCountryCitiesApi(t, navigate, loadingFlag, 1, countryValue.value)
+    );
+  };
+
+  //onChange handler of Serivces dropdown
+  const onChangeServicesHandler = (serviceValue) => {
+    setServicesOptionsValue(serviceValue.value);
+  };
 
   // useEffect city dropdown data
   useEffect(() => {
@@ -144,16 +154,6 @@ const BranchScreen = () => {
       console.log(error, "errorerrorerrorerror");
     }
   }, [cityList, currentLanguage]);
-
-  //onChange handler of country dropdown
-  const onChangeCountryHandler = (countryValue) => {
-    setCountryOptionValue(countryValue.value);
-  };
-
-  //onChange handler of Serivces dropdown
-  const onChangeServicesHandler = (serviceValue) => {
-    setServicesOptionsValue(serviceValue.value);
-  };
 
   //onChange handler of City dropdown
   const onChangeCitysHandler = (cityValue) => {

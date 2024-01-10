@@ -4072,7 +4072,12 @@ const getCountryCitiesApiFail = (message) => {
 // apiCallFlag on which page and from which route its call so we call api on that responce
 // cityID is calling for that we pass it in request from city page to route it into employes
 const getCountryCitiesApi = (t, navigate, loadingFlag, apiCallFlag, cityID) => {
-  let data = { CountryID: Number(localStorage.getItem("countryID")) };
+  let data = {};
+  if (cityID !== undefined && cityID !== null) {
+    data = { CountryID: Number(cityID) };
+  } else {
+    data = { CountryID: Number(localStorage.getItem("countryID")) };
+  }
   return async (dispatch) => {
     if (!loadingFlag) {
       dispatch(loader_Actions(true));
