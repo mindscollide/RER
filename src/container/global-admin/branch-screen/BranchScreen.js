@@ -313,6 +313,7 @@ const BranchScreen = () => {
                     <label className="text-labels">{t("City")}</label>
                     <Select
                       isSearchable={true}
+                      isDisabled={countryOptionValue === null ? true : false}
                       className="select-dropdown-all"
                       options={
                         currentLanguage === "en"
