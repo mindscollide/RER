@@ -22,8 +22,7 @@ const ShiftScreen = () => {
   const searchParams = new URLSearchParams(location.search);
   const countryID = Number(searchParams.get("countryID"));
   const loadingFlag = useSelector((state) => state.Loader.Loading);
-  const searchParamsBranch = new URLSearchParams(location.search);
-  const urldBranchID = searchParamsBranch.get("branchId");
+
   const currentLanguage = localStorage.getItem("i18nextLng");
 
   // To get Country List in dropdown
@@ -69,8 +68,6 @@ const ShiftScreen = () => {
   const callApi = () => {
     dispatch(getCountryListMainApi(t, navigate, loadingFlag, countryID));
     dispatch(getGlobalServiceMainApi(t, navigate, loadingFlag));
-    dispatch(getCountryCitiesApi(t, navigate, loadingFlag, 1, countryID));
-    dispatch(getCityBranchListApi(t, navigate, loadingFlag, urldBranchID));
   };
 
   useEffect(() => {
@@ -123,6 +120,14 @@ const ShiftScreen = () => {
     }
   }, [getGlobalServiceData, currentLanguage]);
 
+  //onChange handler of country dropdown
+  const onChangeCountryHandler = (countryValue) => {
+    setCountryOptionValue(countryValue.value);
+    dispatch(
+      getCountryCitiesApi(t, navigate, loadingFlag, 1, countryValue.value)
+    );
+  };
+
   // useEffect city dropdown data
   useEffect(() => {
     try {
@@ -149,6 +154,17 @@ const ShiftScreen = () => {
     }
   }, [cityList, currentLanguage]);
 
+  //onChange handler of Serivces dropdown
+  const onChangeServicesHandler = (serviceValue) => {
+    setServicesOptionsValue(serviceValue.value);
+  };
+
+  //onChange handler of City dropdown
+  const onChangeCitysHandler = (cityValue) => {
+    setCityOptionsValue(cityValue.value);
+    dispatch(getCityBranchListApi(t, navigate, loadingFlag, cityValue.value));
+  };
+
   // useEffect Branch  dropdown data
   useEffect(() => {
     if (cityShiftsBranchDropdown && cityShiftsBranchDropdown.length !== 0) {
@@ -169,21 +185,6 @@ const ShiftScreen = () => {
       }
     }
   }, [cityShiftsBranchDropdown, currentLanguage]);
-
-  //onChange handler of country dropdown
-  const onChangeCountryHandler = (countryValue) => {
-    setCountryOptionValue(countryValue.value);
-  };
-
-  //onChange handler of Serivces dropdown
-  const onChangeServicesHandler = (serviceValue) => {
-    setServicesOptionsValue(serviceValue.value);
-  };
-
-  //onChange handler of City dropdown
-  const onChangeCitysHandler = (cityValue) => {
-    setCityOptionsValue(cityValue.value);
-  };
 
   //onChange handler of Branch dropdown
   const onChangeBranchHandler = (branchValue) => {
@@ -301,6 +302,7 @@ const ShiftScreen = () => {
                     <label className="text-labels">{t("City")}</label>
                     <Select
                       isSearchable={true}
+                      isDisabled={countryOptionValue === null ? true : false}
                       className="select-dropdown-all"
                       options={
                         currentLanguage === "en"
@@ -318,6 +320,7 @@ const ShiftScreen = () => {
                     <label className="text-labels">{t("Branch")}</label>
                     <Select
                       isSearchable={true}
+                      isDisabled={cityOptionsValue === null ? true : false}
                       className="select-dropdown-all"
                       options={
                         currentLanguage === "en"
