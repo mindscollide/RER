@@ -68,13 +68,26 @@ const BranchScreen = () => {
   const callApi = () => {
     dispatch(getCountryListMainApi(t, navigate, loadingFlag, countryID));
     dispatch(getGlobalServiceMainApi(t, navigate, loadingFlag));
-    dispatch(
-      getCountryCitiesApi(t, navigate, loadingFlag, 1, countryOptionValue.value)
-    );
   };
 
   useEffect(() => {
     callApi();
+  }, []);
+
+  useEffect(() => {
+    if (CountryID !== null && CountryID !== 0) {
+      dispatch(getCountryCitiesApi(t, navigate, loadingFlag, 1, CountryID));
+    } else if (countryOptionValue.value !== 0) {
+      dispatch(
+        getCountryCitiesApi(
+          t,
+          navigate,
+          loadingFlag,
+          1,
+          countryOptionValue.value
+        )
+      );
+    }
   }, []);
 
   // show countries in city dropdown
