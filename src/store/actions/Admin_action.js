@@ -62,6 +62,7 @@ import {
   getAllEmployeeList,
   getAllCityServices,
   getAllCityBranchWiseServices,
+  getAllCityBranchShiftWiseServices,
 } from "../../commen/apis/Api_config";
 import { adminURL } from "../../commen/apis/Api_ends_points";
 import moment from "moment";
@@ -6131,10 +6132,9 @@ const getAllCityBranchWiseServicesSuccess = (response, message) => {
   };
 };
 
-const getAllCityBranchWiseServicesFail = (response, message) => {
+const getAllCityBranchWiseServicesFail = (message) => {
   return {
-    type: actions.GET_ALL_CITY_BRANCH_SERVICES_SUCCESS,
-    response: response,
+    type: actions.GET_ALL_CITY_BRANCH_SERVICES_FAIL,
     message: message,
   };
 };
@@ -6230,6 +6230,121 @@ const getAllCityBranchWiseServicesMainApi = (
   };
 };
 
+// Get all Branch Shift Wise Service Availability
+
+const getAllBranchShiftServicesSuccess = (response, message) => {
+  return {
+    type: actions.GET_ALL_CITY_BRANCH_SHIFT_SERVICES_SUCCESS,
+    response: response,
+    message: message,
+  };
+};
+
+const getAllBranchShiftServicesFailed = (message) => {
+  return {
+    type: actions.GET_ALL_CITY_BRANCH_SHIFT_SERVICES_FAIL,
+    message: message,
+  };
+};
+
+const getAllBranchShiftWiseServicesMainApi = (
+  t,
+  navigate,
+  loadingFlag,
+  data
+) => {
+  return async (dispatch) => {
+    if (!loadingFlag) {
+      dispatch(loader_Actions(true));
+    }
+    let form = new FormData();
+    form.append(
+      "RequestMethod",
+      getAllCityBranchShiftWiseServices.RequestMethod
+    );
+    form.append("RequestData", JSON.stringify(data));
+    await axios({
+      method: "post",
+      url: adminURL,
+      data: form,
+      headers: {
+        _token: JSON.parse(localStorage.getItem("token")),
+      },
+    })
+      .then(async (response) => {
+        if (response.data.responseCode === 200) {
+          if (response.data.responseCode === 417) {
+            dispatch(
+              getAllBranchShiftWiseServicesMainApi(
+                t,
+                navigate,
+                loadingFlag,
+                data
+              )
+            );
+          } else if (response.data.responseResult.isExecuted === true) {
+            if (
+              response.data.responseResult.responseMessage ===
+              "Admin_AdminServiceManager_GetAllCityBranchShiftServices_01"
+            ) {
+              await dispatch(
+                getAllBranchShiftServicesSuccess(
+                  response.data.responseResult.cityBranchShiftServiceList,
+                  t(
+                    "Admin_AdminServiceManager_GetAllCityBranchShiftServices_01"
+                  )
+                )
+              );
+
+              await dispatch(loader_Actions(false));
+            } else if (
+              response.data.responseResult.responseMessage ===
+              "Admin_AdminServiceManager_GetAllCityBranchShiftServices_02"
+            ) {
+              await dispatch(
+                getAllBranchShiftServicesFailed(
+                  response.data.responseResult.responseMessage,
+                  t(
+                    "Admin_AdminServiceManager_GetAllCityBranchShiftServices_02"
+                  )
+                )
+              );
+
+              await dispatch(loader_Actions(false));
+            } else if (
+              response.data.responseResult.responseMessage ===
+              "Admin_AdminServiceManager_GetAllCityBranchServices_03"
+            ) {
+              await dispatch(
+                getAllBranchShiftServicesFailed(t("something_went_wrong"))
+              );
+              await dispatch(loader_Actions(false));
+            } else {
+              await dispatch(
+                getAllBranchShiftServicesFailed(t("something_went_wrong"))
+              );
+              await dispatch(loader_Actions(false));
+            }
+          } else {
+            await dispatch(
+              getAllBranchShiftServicesFailed(t("something_went_wrong"))
+            );
+            await dispatch(loader_Actions(false));
+          }
+        } else {
+          await dispatch(
+            getAllBranchShiftServicesFailed(t("something_went_wrong"))
+          );
+          await dispatch(loader_Actions(false));
+        }
+      })
+      .catch((response) => {
+        dispatch(getAllBranchShiftServicesFailed(t("something_went_wrong")));
+        dispatch(loader_Actions(false));
+      });
+  };
+};
+
 export {
   clearResponseMessageAdmin,
   AdminCleareState,
@@ -6318,4 +6433,5 @@ export {
   getAllEmployeeMainApi,
   getAllCityServicesMainApi,
   getAllCityBranchWiseServicesMainApi,
+  getAllBranchShiftWiseServicesMainApi,
 };

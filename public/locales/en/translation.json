@@ -302,5 +302,7 @@
   "Service-name-english": "Service Name English",
   "Service-name-arabic": "Service Name Arabic",
   "Country-name-english": "Country Name English",
-  "Country-name-arabic": "Country Name Arabic"
+  "Country-name-arabic": "Country Name Arabic",
+  "Admin_AdminServiceManager_GetAllCityBranchShiftServices_01": "City Branch Shift Service List Found",
+  "Admin_AdminServiceManager_GetAllCityBranchShiftServices_02": "No City Branch Shift Service Available"
 }
