@@ -383,11 +383,10 @@ body[dir="rtl"] .confirm-delete-text {
   font-family: "Montserrat", sans-serif !important;
   font-size: 13px !important;
   font-weight: 500 !important;
-  z-index: 5 !important;
+  /* z-index: 5 !important; */
 }
 
 body[dir="rtl"] .select-dropdown-all {
   font-family: "NeoSansArabic" !important;
 }
-
 /* react select end */

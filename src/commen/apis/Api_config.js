@@ -294,6 +294,16 @@ const getAllEmployeeList = {
   RequestMethod: "ServiceManager.GetAllEmployeeList",
 };
 
+//get All city Wise Services Availability
+
+const getAllCityServices = {
+  RequestMethod: "ServiceManager.GetAllCityServices",
+};
+
+const getAllCityBranchWiseServices = {
+  RequestMethod: "ServiceManager.GetAllCityBranchServices",
+};
+
 // ===================================GLOBAL ADMIN END ==========================================//
 
 export {
@@ -363,5 +373,7 @@ export {
   updateGlobalServiceList,
   deleteGlobalServiceList,
   getAllEmployeeList,
+  getAllCityServices,
+  getAllCityBranchWiseServices,
   // ===================================GLOBAL ADMIN END ==========================================//
 };

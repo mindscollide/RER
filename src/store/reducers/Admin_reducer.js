@@ -58,6 +58,8 @@ const initialState = {
   updateGlobalServiceData: null,
   deleteGlobalServiceData: null,
   getEmployeeList: null,
+  servicesCity: [],
+  cityBranchWiseServicesList: [],
 };
 
 const adminReducer = (state = initialState, action) => {
@@ -917,6 +919,34 @@ const adminReducer = (state = initialState, action) => {
       return {
         ...state,
         getEmployeeList: null,
+        admin_ResponseMessage: action.message,
+      };
+
+    case actions.GET_ALL_SERVICES_OF_CITIES_SUCCESS:
+      return {
+        ...state,
+        servicesCity: action.response,
+        admin_ResponseMessage: action.message,
+      };
+
+    case actions.GET_ALL_SERVICES_OF_CITIES_FAIL:
+      return {
+        ...state,
+        servicesCity: [],
+        admin_ResponseMessage: action.message,
+      };
+
+    case actions.GET_ALL_CITY_BRANCH_SERVICES_SUCCESS:
+      return {
+        ...state,
+        cityBranchWiseServicesList: action.response,
+        admin_ResponseMessage: action.message,
+      };
+
+    case actions.GET_ALL_CITY_BRANCH_SERVICES_FAIL:
+      return {
+        ...state,
+        cityBranchWiseServicesList: [],
         admin_ResponseMessage: action.message,
       };
 
