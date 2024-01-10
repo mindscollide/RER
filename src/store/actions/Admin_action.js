@@ -4125,6 +4125,10 @@ const getCountryCitiesApi = (t, navigate, loadingFlag, apiCallFlag, cityID) => {
                 );
               } else if (apiCallFlag === 1) {
                 await dispatch(loader_Actions(false));
+              } else if (apiCallFlag === 4) {
+                await dispatch(
+                  getAllEmployeeMainApi(t, navigate, loadingFlag, data)
+                );
               }
               await dispatch(loader_Actions(false));
             } else if (

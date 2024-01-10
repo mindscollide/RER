@@ -19,7 +19,8 @@ const EmployeeScreen = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const searchParams = new URLSearchParams(location.search);
-  const countryID = Number(searchParams.get("countryID"));
+  const countryIDLocationValue = Number(searchParams.get("countryID"));
+  console.log(countryIDLocationValue, "countryIDcountryIDcountryIDcountryID");
   const loadingFlag = useSelector((state) => state.Loader.Loading);
   const currentLanguage = localStorage.getItem("i18nextLng");
 
@@ -33,6 +34,7 @@ const EmployeeScreen = () => {
 
   // get city list in dropdown from reducer
   const cityList = useSelector((state) => state.admin.cityList);
+  console.log(cityList);
 
   // state to render data in rows
   const [rows, setRows] = useState([]);
@@ -47,14 +49,24 @@ const EmployeeScreen = () => {
   const [cityOptionListArabic, setCityOptionListArabic] = useState([]);
   const [cityOptionValue, setCityOptionValue] = useState(null);
 
-  const callApi = () => {
-    if (countryID !== null && countryID !== undefined && countryID !== 0) {
-      dispatch(getCountryListMainApi(t, navigate, loadingFlag, countryID));
-      dispatch(getCountryCitiesApi(t, navigate, loadingFlag, 1, countryID));
+  const callApi = async () => {
+    let defaultCountryID;
+
+    if (getCountryListData && getCountryListData.length > 0) {
+      defaultCountryID = getCountryListData[0].countryID;
+    } else {
+      // If the country list is empty, you might want to set a default value or handle this case differently
+      console.error("Country list is empty!");
+      return;
     }
+    await dispatch(
+      getCountryCitiesApi(t, navigate, loadingFlag, 4, defaultCountryID)
+    );
   };
 
   useEffect(() => {
+    dispatch(getCountryListMainApi(t, navigate, loadingFlag));
+    // dispatch(getCountryCitiesApi(t, navigate, loadingFlag, 1));
     callApi();
     return () => {
       setRows([]);
@@ -66,9 +78,10 @@ const EmployeeScreen = () => {
 
   // useEffect to render an API
   useEffect(() => {
+    const cityIDFromList = cityList?.cityID;
     let data = {
-      CountryID: Number(countryID),
-      CityID: Number(localStorage.getItem("cityID")),
+      CountryID: Number(countryIDLocationValue),
+      CityID: Number(cityIDFromList || localStorage.getItem("cityID")),
     };
     dispatch(getAllEmployeeMainApi(t, navigate, loadingFlag, data));
   }, []);
@@ -82,15 +95,9 @@ const EmployeeScreen = () => {
     }
   }, [getEmployeeList]);
 
-  // to show countries in city dropdown;
+  // to show countries in country dropdown;
   useEffect(() => {
-    // Update cityShiftOption with the correct structure based on your data
-    if (
-      getCountryListData &&
-      Object.keys(getCountryListData).length > 0 &&
-      cityList &&
-      Object.keys(cityList).length > 0
-    ) {
+    if (getCountryListData && Object.keys(getCountryListData).length > 0) {
       setCountryOptionEnglish(
         getCountryListData.map((item) => ({
           value: item.countryID,
@@ -104,6 +111,84 @@ const EmployeeScreen = () => {
         }))
       );
 
+      let data;
+      // this is use to set drope down value on page route from side bar
+      if (currentLanguage === "en") {
+        if (
+          countryIDLocationValue !== null &&
+          countryIDLocationValue !== undefined &&
+          countryIDLocationValue !== 0
+        ) {
+          const foundCountry = getCountryListData.find(
+            (country) => country.countryID === countryIDLocationValue
+          );
+
+          if (foundCountry) {
+            data = {
+              value: foundCountry.countryID,
+              label: foundCountry.countryNameEnglish,
+            };
+          } else {
+            data = {
+              value: countryIDLocationValue,
+              label: t("Admin_AdminServiceManager_GetCountryList_02"), // Example label for when countryID is not found
+            };
+          }
+          setCountryOptionValue(data);
+        } else {
+          // If countryID is null or undefined, use the first city in getCountryListData
+          data = {
+            value: getCountryListData[0].countryID,
+            label: getCountryListData[0].countryNameEnglish,
+          };
+          setCountryOptionValue(data);
+        }
+        setCountryOptionValue(data);
+      } else {
+        if (
+          countryIDLocationValue !== null &&
+          countryIDLocationValue !== undefined &&
+          countryIDLocationValue !== 0
+        ) {
+          const foundCountry = getCountryListData.find(
+            (country) => country.countryID === countryIDLocationValue
+          );
+
+          if (foundCountry) {
+            data = {
+              value: foundCountry.countryID,
+              label: foundCountry.countryNameArabic,
+            };
+          } else {
+            // Handle the case where countryID is not found in getCountryListData
+            // You might want to set default values or handle this scenario differently based on your requirements
+            data = {
+              value: countryIDLocationValue,
+              label: t("Admin_AdminServiceManager_GetCountryList_02"), // Example label for when countryID is not found
+            };
+          }
+        } else {
+          // If countryID is null or undefined, use the first city in getCountryListData
+          data = {
+            value: getCountryListData[0].countryID,
+            label: getCountryListData[0].countryNameArabic,
+          };
+        }
+        setCountryOptionValue(data);
+      }
+    } else {
+      setCountryOptionEnglish([]);
+      setCountryOptionArabic([]);
+    }
+  }, [getCountryListData, currentLanguage]);
+
+  // to show country cities in city dropdown;
+  useEffect(() => {
+    if (
+      cityList &&
+      cityList.cities &&
+      Object.keys(cityList.cities).length > 0
+    ) {
       setCityOptionListEnglish(
         cityList.cities.map((item) => ({
           value: item.cityID,
@@ -116,114 +201,37 @@ const EmployeeScreen = () => {
           label: item.cityNameArabic,
         }))
       );
-      let data;
-      // this is use to set drope down value on page route from side bar
-      if (currentLanguage === "en") {
-        if (countryID !== null && countryID !== undefined && countryID !== 0) {
-          const foundCity = getCountryListData.find(
-            (country) => country.countryID === countryID
-          );
 
-          const foundCities = cityList.cities.find(
-            (city) => city.cityID === countryID
-          );
-          if (foundCity) {
-            data = {
-              value: foundCity.countryID,
-              label: foundCity.countryNameEnglish,
-            };
-          } else if (foundCities) {
-            data = {
-              value: foundCity.cityID,
-              label: foundCity.cityNameEnglish,
-            };
-          } else {
-            data = {
-              value: countryID,
-              label: t("Admin_AdminServiceManager_GetCountryList_02"), // Example label for when countryID is not found
-            };
+      // Set the initial value for city based on cityID from URL
+      const initialCity = cityList.cities.find(
+        (city) => city.cityID === Number(localStorage.getItem("cityID"))
+      );
 
-            data = {
-              value: countryID,
-              label: t("Admin_AdminServiceManager_UpdateCityBranch_03"), // Example label for when cityID is not found
-            };
-          }
-          setCountryOptionValue(data);
-        } else {
-          // If countryID is null or undefined, use the first city in getCountryListData
-          data = {
-            value: getCountryListData[0].countryID,
-            label: getCountryListData[0].countryNameEnglish,
-          };
-          setCountryOptionValue(data);
-
-          data = {
-            value: cityList.cities[0].cityID,
-            label: cityList.cities[0].cityNameEnglish,
-          };
-        }
-      } else {
-        if (countryID !== null && countryID !== undefined && countryID !== 0) {
-          const foundCity = getCountryListData.find(
-            (country) => country.countryID === countryID
-          );
-
-          const foundCities = cityList.cities.find(
-            (city) => city.cityID === countryID
-          );
-          if (foundCity) {
-            data = {
-              value: foundCity.cityID,
-              label: foundCity.countryNameArabic,
-            };
-          } else if (foundCities) {
-            data = {
-              value: foundCity.cityID,
-              label: foundCity.cityNameEnglish,
-            };
-          } else {
-            // Handle the case where countryID is not found in getCountryListData
-            // You might want to set default values or handle this scenario differently based on your requirements
-            data = {
-              value: countryID,
-              label: t("Admin_AdminServiceManager_GetCountryList_02"), // Example label for when countryID is not found
-            };
-
-            data = {
-              value: countryID,
-              label: t("Admin_AdminServiceManager_UpdateCityBranch_03"), // Example label for when cityID is not found
-            };
-          }
-        } else {
-          // If countryID is null or undefined, use the first city in getCountryListData
-          data = {
-            value: getCountryListData[0].countryID,
-            label: getCountryListData[0].countryNameArabic,
-          };
-
-          data = {
-            value: cityList.cities[0].cityID,
-            label: cityList.cities[0].cityNameArabic,
-          };
-        }
-        setCountryOptionValue(data);
+      if (initialCity) {
+        setCityOptionValue({
+          value: initialCity.cityID,
+          label:
+            currentLanguage === "en"
+              ? initialCity.cityNameEnglish
+              : initialCity.cityNameArabic,
+        });
       }
     } else {
-      setCountryOptionEnglish([]);
-      setCountryOptionArabic([]);
       setCityOptionListEnglish([]);
       setCityOptionListArabic([]);
     }
-  }, [getCountryListData, cityList, currentLanguage]);
+  }, [cityList, currentLanguage]);
 
   //onChange handler of country dropdown
-  const onChangeCountryHandler = (countryValue) => {
+  const onChangeCountryHandler = async (countryValue) => {
+    console.log(
+      countryValue.value,
+      "onChangeCountryHandleronChangeCountryHandleronChangeCountryHandler"
+    );
+    await dispatch(
+      getCountryCitiesApi(t, navigate, loadingFlag, 4, 0, countryValue.value)
+    );
     setCountryOptionValue(countryValue);
-  };
-
-  //onChange handler of cities dropdown
-  const onChangeCityHandler = (cityShiftOptionValue) => {
-    setCityOptionValue(cityShiftOptionValue);
   };
 
   const columns = [
@@ -283,11 +291,16 @@ const EmployeeScreen = () => {
     },
   ];
 
+  //onChange handler of cities dropdown
+  const onChangeCityHandler = (cityValue) => {
+    setCityOptionValue(cityValue);
+  };
+
   const handleSearch = async () => {
-    if (cityOptionValue !== null && countryOptionValue !== null) {
+    if (countryOptionValue !== null && cityOptionValue !== null) {
       let newData = {
-        CountryID: Number(cityOptionValue.value && countryOptionValue.value),
-        CityID: Number(localStorage.getItem("cityID")),
+        CountryID: Number(countryOptionValue.value),
+        CityID: Number(cityOptionValue.value),
       };
       await dispatch(getAllEmployeeMainApi(t, navigate, loadingFlag, newData));
     } else {
