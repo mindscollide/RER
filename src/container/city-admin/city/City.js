@@ -807,7 +807,9 @@ const CityAdmin = () => {
                 <Paper className="CityAdmin-paper">
                   <Row>
                     <Col lg={6} md={6} sm={6}>
-                      <span className="text-labels">{t("Branch-name")}</span>
+                      <span className="text-labels">
+                        {t("Branch-name-english")}
+                      </span>
                       <TextField
                         name="BranchNameEnglish"
                         placeholder={t("Branch-admin")}
@@ -817,8 +819,10 @@ const CityAdmin = () => {
                         onChange={handleChange}
                       />
                     </Col>
-                    <Col lg={6} md={6} sm={6} className="text-end">
-                      <span className="text-labels">اسم الفرع</span>
+                    <Col lg={6} md={6} sm={6}>
+                      <span className="text-labels">
+                        {t("Branch-name-arabic")}
+                      </span>
                       <TextField
                         name="BranchNameArabic"
                         placeholder={"اسم الفرع"}

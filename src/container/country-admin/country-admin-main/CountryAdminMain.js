@@ -914,7 +914,9 @@ const CountryAdminMain = () => {
                 <Paper className="CountryAdmin-paper">
                   <Row>
                     <Col lg={6} md={6} sm={6}>
-                      <span className="text-labels">{t("City-name")}</span>
+                      <span className="text-labels">
+                        {t("City-name-english")}
+                      </span>
                       <TextField
                         name="CityNameEnglish"
                         value={addCountry.CityNameEnglish}
@@ -924,8 +926,10 @@ const CountryAdminMain = () => {
                         className="text-fiels-CountryAdmin"
                       />
                     </Col>
-                    <Col lg={6} md={6} sm={6} className="text-end">
-                      <span className="text-labels">اسم المدينة</span>
+                    <Col lg={6} md={6} sm={6}>
+                      <span className="text-labels">
+                        {t("City-name-arabic")}
+                      </span>
                       <TextField
                         name="CityNameArabic"
                         value={addCountry.CityNameArabic}

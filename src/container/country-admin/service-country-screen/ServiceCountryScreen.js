@@ -238,7 +238,7 @@ const ServiceCountryScreen = () => {
         <Row>
           <Col lg={12} md={12} sm={12} className="d-flex justify-content-start">
             <span className="shift-heading">
-              {t("Service-wise-country-availability")}
+              {t("Country-wise-service-availability")}
               <span className="shift-sub-heading ms-2">
                 {currentLanguage === "en"
                   ? "(" + localStorage.getItem("countryName") + ")"
@@ -258,16 +258,16 @@ const ServiceCountryScreen = () => {
                   className="btn-col-class-serviceScreen"
                 >
                   <Button
-                    icon={<i className="icon-save icon-space"></i>}
-                    text={t("Save")}
-                    onClick={handleSave}
-                    className="save-btn-Service-Country"
-                  />
-                  <Button
                     icon={<i className="icon-repeat icon-space"></i>}
                     text={t("Revert")}
                     onClick={revertHandler}
                     className="revert-btn-Service-Country"
+                  />
+                  <Button
+                    icon={<i className="icon-save icon-space"></i>}
+                    text={t("Save")}
+                    onClick={handleSave}
+                    className="save-btn-Service-Country"
                   />
                 </Col>
               </Row>

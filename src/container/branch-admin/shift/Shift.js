@@ -158,7 +158,9 @@ const BranchAdmin = () => {
       dataIndex: "shiftID",
       key: "shiftID",
       render: (text, record, index) => (
-        <span className="table-inside-text">{(index + 1).toLocaleString(local)}</span>
+        <span className="table-inside-text">
+          {(index + 1).toLocaleString(local)}
+        </span>
       ),
     },
     {
@@ -205,7 +207,6 @@ const BranchAdmin = () => {
       title: <span className="table-text">{t("Active")}</span>,
       dataIndex: "isShiftActive",
       key: "isShiftActive",
-      align: "center",
       render: (text, record) => (
         <>
           {text ? (
@@ -512,7 +513,7 @@ const BranchAdmin = () => {
             <Paper className="Branch-Admin-paper">
               <Row>
                 <Col lg={6} md={6} sm={6}>
-                  <span className="text-labels">{t("Shift-name")}</span>
+                  <span className="text-labels">{t("Shift-name-english")}</span>
                   <TextField
                     name="ShiftNameEnglish"
                     placeholder={t("Shift-name")}
@@ -523,8 +524,8 @@ const BranchAdmin = () => {
                   />
                 </Col>
 
-                <Col lg={6} md={6} sm={6} className="text-end">
-                  <span className="text-labels">اسم الخدمة</span>
+                <Col lg={6} md={6} sm={6}>
+                  <span className="text-labels">{t("Shift-name-arabic")}</span>
                   <TextField
                     name="ShiftNameArabic"
                     placeholder="اسم الخدمة"

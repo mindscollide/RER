@@ -288,5 +288,20 @@
   "Admin_AdminServiceManager_GetAllCityServices_01": "City Service List Found",
   "Admin_AdminServiceManager_GetAllCityServices_02": "No City Service Available",
   "Admin_AdminServiceManager_GetAllCityBranchServices_01": "City Branch Service List Found",
-  "Admin_AdminServiceManager_GetAllCityBranchServices_02": "No City Branch Service Available"
+  "Admin_AdminServiceManager_GetAllCityBranchServices_02": "No City Branch Service Available",
+  "Home-visit-employee": "Home Visit Employee",
+  "Shift-name-english": "Shift Name English",
+  "Shift-name-arabic": "Shift Name Arabic",
+  "Counter-name-english": "Counter Name English",
+  "Counter-name-arabic": "Counter Name Arabic",
+  "Branch-name-english": "Branch Name English",
+  "Branch-name-arabic": "Branch Name Arabic",
+  "Employee-name-english": "Employee Name English",
+  "Employee-name-arabic": "Employee Name Arabic",
+  "City-name-english": "City Name English",
+  "City-name-arabic": "City Name Arabic",
+  "Service-name-english": "Service Name English",
+  "Service-name-arabic": "Service Name Arabic",
+  "Country-name-english": "Country Name English",
+  "Country-name-arabic": "Country Name Arabic"
 }

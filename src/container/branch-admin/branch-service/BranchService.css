@@ -62,13 +62,6 @@ body[dir="rtl"] .revert-btn-BranchService {
   align-items: center !important;
 }
 
-.btn-col-class {
-  display: flex !important;
-  justify-content: end !important;
-  align-items: center !important;
-  gap: 5px !important;
-}
-
 .For-table-textfield {
   display: flex !important;
   justify-content: center !important;

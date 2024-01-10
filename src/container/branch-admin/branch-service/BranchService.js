@@ -397,18 +397,23 @@ const BranchService = () => {
           <Col lg={12} md={12} sm={12}>
             <Paper className="BranchService-Admin-paper">
               <Row>
-                <Col lg={12} md={12} sm={12} className="btn-col-class">
-                  <Button
-                    icon={<i className="icon-save icon-space"></i>}
-                    text={t("Save")}
-                    className="save-btn-BranchService"
-                    onClick={() => saveBranchServices(branchServices)}
-                  />
+                <Col
+                  lg={12}
+                  md={12}
+                  sm={12}
+                  className="d-flex justify-content-center gap-1"
+                >
                   <Button
                     icon={<i className="icon-repeat icon-space"></i>}
                     text={t("Revert")}
                     className="revert-btn-BranchService"
                     onClick={revertButton}
+                  />
+                  <Button
+                    icon={<i className="icon-save icon-space"></i>}
+                    text={t("Save")}
+                    className="save-btn-BranchService"
+                    onClick={() => saveBranchServices(branchServices)}
                   />
                 </Col>
               </Row>

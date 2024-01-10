@@ -565,7 +565,9 @@ const EmployeeMain = () => {
             <Paper className="Employee-Main-paper">
               <Row>
                 <Col lg={6} md={6} sm={6}>
-                  <span className="text-labels">{t("Employee-name")}</span>
+                  <span className="text-labels">
+                    {t("Employee-name-english")}
+                  </span>
                   <TextField
                     name="EmployeeEnglishName"
                     value={employeeMainState.EmployeeEnglishName}
@@ -575,8 +577,10 @@ const EmployeeMain = () => {
                     className="text-fiels-employeeMain"
                   />
                 </Col>
-                <Col lg={6} md={6} sm={6} className="text-end">
-                  <span className="text-labels">اسم الموظف</span>
+                <Col lg={6} md={6} sm={6}>
+                  <span className="text-labels">
+                    {t("Employee-name-arabic")}
+                  </span>
                   <TextField
                     name="EmployeeArabicName"
                     value={employeeMainState.EmployeeArabicName}

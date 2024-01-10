@@ -113,7 +113,9 @@ const CounterMain = () => {
       dataIndex: "counterID",
       key: "counterID",
       render: (text, record, index) => (
-        <span className="table-inside-text">{(index + 1).toLocaleString(local)}</span>
+        <span className="table-inside-text">
+          {(index + 1).toLocaleString(local)}
+        </span>
       ),
     },
     {
@@ -131,7 +133,6 @@ const CounterMain = () => {
       title: <span className="table-text">{t("Active")}</span>,
       dataIndex: "isCounterActive",
       key: "isCounterActive",
-      align: "center",
       render: (text, record) => (
         <>
           {text ? (
@@ -426,7 +427,9 @@ const CounterMain = () => {
             <Paper className="Counter-Admin-paper">
               <Row>
                 <Col lg={6} md={6} sm={6}>
-                  <span className="text-labels">{t("Counter-name")}</span>
+                  <span className="text-labels">
+                    {t("Counter-name-english")}
+                  </span>
                   <TextField
                     name="CounterNameEnglish"
                     placeholder={t("Counter-name")}
@@ -437,8 +440,10 @@ const CounterMain = () => {
                   />
                 </Col>
 
-                <Col lg={6} md={6} sm={6} className="text-end">
-                  <span className="text-labels">اسم العداد</span>
+                <Col lg={6} md={6} sm={6}>
+                  <span className="text-labels">
+                    {t("Counter-name-arabic")}
+                  </span>
                   <TextField
                     name="CounterNameArabic"
                     placeholder="اسم العداد"
@@ -462,7 +467,12 @@ const CounterMain = () => {
                   />
                 </Col>
 
-                <Col lg={6} md={6} sm={6} className="btn-col-class">
+                <Col
+                  lg={6}
+                  md={6}
+                  sm={6}
+                  className="d-flex justify-content-end gap-1"
+                >
                   <Button
                     icon={<i className="icon-add-circle icon-space"></i>}
                     text={addUpdateCheckFlag ? t("Update") : t("Add")}

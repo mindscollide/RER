@@ -50,18 +50,15 @@ const EmployeeScreen = () => {
   const [cityOptionValue, setCityOptionValue] = useState(null);
 
   const callApi = async () => {
-    let defaultCountryID;
-
-    if (getCountryListData && getCountryListData.length > 0) {
-      defaultCountryID = getCountryListData[0].countryID;
-    } else {
-      // If the country list is empty, you might want to set a default value or handle this case differently
-      console.error("Country list is empty!");
-      return;
+    if (
+      countryIDLocationValue !== null &&
+      countryIDLocationValue !== undefined &&
+      countryIDLocationValue !== 0
+    ) {
+      await dispatch(
+        getCountryCitiesApi(t, navigate, loadingFlag, 1, countryIDLocationValue)
+      );
     }
-    await dispatch(
-      getCountryCitiesApi(t, navigate, loadingFlag, 4, defaultCountryID)
-    );
   };
 
   useEffect(() => {
@@ -136,14 +133,13 @@ const EmployeeScreen = () => {
           }
           setCountryOptionValue(data);
         } else {
+          setCountryOptionValue(null);
           // If countryID is null or undefined, use the first city in getCountryListData
           data = {
             value: getCountryListData[0].countryID,
             label: getCountryListData[0].countryNameEnglish,
           };
-          setCountryOptionValue(data);
         }
-        setCountryOptionValue(data);
       } else {
         if (
           countryIDLocationValue !== null &&
@@ -174,7 +170,6 @@ const EmployeeScreen = () => {
             label: getCountryListData[0].countryNameArabic,
           };
         }
-        setCountryOptionValue(data);
       }
     } else {
       setCountryOptionEnglish([]);
@@ -204,7 +199,9 @@ const EmployeeScreen = () => {
 
       // Set the initial value for city based on cityID from URL
       const initialCity = cityList.cities.find(
-        (city) => city.cityID === Number(localStorage.getItem("cityID"))
+        (city) =>
+          city.cityID === Number(localStorage.getItem("cityID")) ||
+          cityList.cities[0]
       );
 
       if (initialCity) {
@@ -222,16 +219,16 @@ const EmployeeScreen = () => {
     }
   }, [cityList, currentLanguage]);
 
+  useEffect(() => {
+    setCityOptionValue(null);
+  }, [countryOptionValue]);
+
   //onChange handler of country dropdown
   const onChangeCountryHandler = async (countryValue) => {
-    console.log(
-      countryValue.value,
-      "onChangeCountryHandleronChangeCountryHandleronChangeCountryHandler"
-    );
-    await dispatch(
-      getCountryCitiesApi(t, navigate, loadingFlag, 4, 0, countryValue.value)
-    );
     setCountryOptionValue(countryValue);
+    await dispatch(
+      getCountryCitiesApi(t, navigate, loadingFlag, 1, countryValue.value)
+    );
   };
 
   const columns = [
@@ -273,9 +270,19 @@ const EmployeeScreen = () => {
     },
     {
       title: <span className="table-text">{t("Capacity")}</span>,
-      dataIndex: "Capacity",
-      key: "Capacity",
-      width: "200px",
+      dataIndex: "employeeBelongsToBranch",
+      key: "employeeBelongsToBranch",
+      render: (text, record) => (
+        <span>
+          {record.employee.employeeBelongsToBranch === true ? (
+            <span className="table-inside-text">{t("Branch-employee")}</span>
+          ) : (
+            <span className="table-inside-text">
+              {t("Home-visit-employee")}
+            </span>
+          )}
+        </span>
+      ),
     },
 
     {
@@ -285,7 +292,7 @@ const EmployeeScreen = () => {
       width: "200px",
       render: (text, record) => (
         <span>
-          <Switch checked={record.employee.isEmployeeActive} />
+          <Switch checked={record.employee.isEmployeeActive} disabled={true} />
         </span>
       ),
     },
@@ -304,6 +311,7 @@ const EmployeeScreen = () => {
       };
       await dispatch(getAllEmployeeMainApi(t, navigate, loadingFlag, newData));
     } else {
+      console.log("No Data Found");
     }
   };
 

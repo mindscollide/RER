@@ -464,7 +464,7 @@ const CountryMain = () => {
           3000
         );
       } else if (
-        responseMessage === t("dmin_AdminServiceManager_DeleteCountry_02")
+        responseMessage === t("Admin_AdminServiceManager_DeleteCountry_02")
       ) {
         setTimeout(
           setCountryMainNotification({
@@ -478,7 +478,7 @@ const CountryMain = () => {
           3000
         );
       } else if (
-        responseMessage === t("dmin_AdminServiceManager_DeleteCountry_03")
+        responseMessage === t("Admin_AdminServiceManager_DeleteCountry_02")
       ) {
         setTimeout(
           setCountryMainNotification({
@@ -528,7 +528,9 @@ const CountryMain = () => {
                 <Paper className="Country-paper">
                   <Row>
                     <Col lg={6} md={6} sm={6}>
-                      <span className="text-labels">{t("Country-name")}</span>
+                      <span className="text-labels">
+                        {t("Country-name-english")}
+                      </span>
                       <TextField
                         name="CountryNameEnglish"
                         placeholder={t("Country-name")}
@@ -538,8 +540,10 @@ const CountryMain = () => {
                         className="text-fiels-Country"
                       />
                     </Col>
-                    <Col lg={6} md={6} sm={6} className="text-end">
-                      <span className="text-labels">اسم الدولة</span>
+                    <Col lg={6} md={6} sm={6}>
+                      <span className="text-labels">
+                        {t("Country-name-arabic")}
+                      </span>
                       <TextField
                         name="CountryNameArabic"
                         placeholder={"اسم الدولة"}
