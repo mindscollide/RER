@@ -19,12 +19,16 @@ import {
   updateCountryListFail,
   updateCountryListMainApi,
   clearResponseMessageAdmin,
+  getCountryServiceMainApi,
+  updateCountryServiceMainApi,
 } from "../../../store/actions/Admin_action";
 import ServiceCountryScreenComponent from "../service-country-screen-component/ServiceCountryScreenComponent";
 import { useNavigate } from "react-router";
 import { regexOnlyForNumberNCharacters } from "../../../commen/functions/regex";
 import { loader_Actions } from "../../../store/actions/Loader_action";
 import DeleteEmployeeModal from "../../modals/delete-employee-modal/DeleteEmplyeeModal";
+import { Switch } from "antd";
+import { capitalizeKeysInArray } from "../../../commen/functions/utils.js";
 
 const CountryMain = () => {
   const { t } = useTranslation();
@@ -37,8 +41,6 @@ const CountryMain = () => {
   const getCountryListData = useSelector(
     (state) => state.admin.getCountryListData
   );
-
-  console.log(getCountryListData);
 
   const addCountryListData = useSelector(
     (state) => state.admin.addCountryListData
@@ -58,8 +60,16 @@ const CountryMain = () => {
     (state) => state.admin.admin_ResponseMessage
   );
 
+  // to get service country screen reducer
+  const countryServiceScreenList = useSelector(
+    (state) => state.admin.countryServiceScreenList
+  );
+
   // states for rows to set data in table
   const [rows, setRows] = useState([]);
+
+  // states for Service Country Screen page to set data in table
+  const [countryRow, setCountryRow] = useState([]);
 
   //state for show notifications through response
   const [countryMainNotification, setCountryMainNotification] = useState({
@@ -100,6 +110,19 @@ const CountryMain = () => {
     }
   }, [getCountryListData]);
 
+  // useEffect for table to render in Service Country Screen
+  useEffect(() => {
+    if (
+      countryServiceScreenList !== null &&
+      countryServiceScreenList !== undefined &&
+      Array.isArray(countryServiceScreenList)
+    ) {
+      setCountryRow(countryServiceScreenList);
+    } else {
+      setCountryRow([]);
+    }
+  }, [countryServiceScreenList]);
+
   useEffect(() => {
     if (addCountryListData !== null) {
       let prevData = [...rows];
@@ -124,8 +147,10 @@ const CountryMain = () => {
   }, [addCountryListData, updateCountryListData]);
 
   //to open ServiceCountryscreen on click of button
-  const openServiceCountryScreen = () => {
-    dispatch(setIsServiceCountryScreenComponent(true));
+  const openServiceCountryScreen = async (record) => {
+    localStorage.setItem("countryID", record.countryID);
+    await dispatch(getCountryServiceMainApi(t, navigate, loadingFlag));
+    await dispatch(setIsServiceCountryScreenComponent(true));
   };
 
   // to close ServiceCountryscreen on click of goBackbutton
@@ -219,40 +244,56 @@ const CountryMain = () => {
             <span className="icon-spaceing-dlt-edit">
               <i
                 className="icon-text-edit icon-EDT-DLT-color"
+                title={t("Edit")}
+                aria-label={t("Edit")}
                 onClick={() => handleCountryEdit(record, 1)}
               ></i>
               <i
                 className="icon-close icon-EDT-DLT-color"
+                title={t("Delete")}
+                aria-label={t("Delete")}
                 onClick={() => handleCountryEdit(record, 2)}
               ></i>
               <i
                 className="icon-globe icon-EDT-DLT-color"
-                onClick={openServiceCountryScreen}
+                title={t("Country")}
+                aria-label={t("Country")}
+                onClick={() => openServiceCountryScreen(record)}
               ></i>
               <i
                 className="icon-location icon-EDT-DLT-color"
+                title={t("City")}
+                aria-label={t("City")}
                 onClick={() =>
                   openClickCityScreenInCountryMain(record.countryID)
                 }
               ></i>
               <i
                 className="icon-branch icon-EDT-DLT-color"
+                title={t("Branch")}
+                aria-label={t("Branch")}
                 onClick={() =>
                   openClickBranchScreenInCountryMain(record.countryID)
                 }
               ></i>
               <i
                 className="icon-counter icon-EDT-DLT-color"
+                title={t("Counter")}
+                aria-label={t("Counter")}
                 onClick={openClickCountersScreenInCountryMain}
               ></i>
               <i
                 className="icon-repeat icon-EDT-DLT-color"
+                title={t("Shifts")}
+                aria-label={t("Shifts")}
                 onClick={() =>
                   openClickshiftsScreenInCountryMain(record.countryID)
                 }
               ></i>
               <i
                 className="icon-user icon-EDT-DLT-color"
+                title={t("Employee")}
+                aria-label={t("Employee")}
                 onClick={() =>
                   openClickEmployeeScreenInCountryMain(record.countryID)
                 }
@@ -261,6 +302,123 @@ const CountryMain = () => {
           </>
         );
       },
+    },
+  ];
+
+  // handle change for toggle in Service COuntry Screen
+  const onChangeHandlerForServiceCountry = (name, value, record) => {
+    try {
+      if (name === "branchAvailability") {
+        setCountryRow(
+          countryRow.map((service) => {
+            if (service.countryServiceID === record.countryServiceID) {
+              return {
+                ...service,
+                branchAvailability: value,
+              };
+            }
+            return service;
+          })
+        );
+      } else if (name === "homeAvailability") {
+        setCountryRow(
+          countryRow.map((service) => {
+            if (service.countryServiceID === record.countryServiceID) {
+              return {
+                ...service,
+                homeAvailability: value,
+              };
+            }
+            return service;
+          })
+        );
+      }
+    } catch {}
+  };
+
+  //Revert handler for Service Country Screen
+  const revertServiceCountryHandler = () => {
+    try {
+      if (countryServiceScreenList !== null) {
+        setCountryRow(countryServiceScreenList);
+      }
+    } catch {}
+  };
+
+  // save Handler for service country screen
+  const saveServiceCountryHandler = () => {
+    try {
+      let convertData = capitalizeKeysInArray(countryRow);
+      const newArray = convertData.map((item) => ({
+        CountryServiceID: item.CountryServiceID,
+        BranchAvailability: item.BranchAvailability,
+        HomeAvailability: item.HomeAvailability,
+      }));
+
+      let data = {
+        CountryID: Number(localStorage.getItem("countryID")),
+        CountryServices: newArray,
+      };
+      dispatch(updateCountryServiceMainApi(t, navigate, loadingFlag, data));
+    } catch (error) {
+      console.log("Error", error);
+    }
+  };
+
+  // for Service Country Screen
+  const ServiceCountryColumn = [
+    {
+      title: <span className="table-text">{t("Service-name")}</span>,
+      dataIndex: "countryServices",
+      key: "countryServices",
+      width: "400px",
+      render: (text, record) => (
+        <span className="table-inside-text">
+          {currentLanguage === "en"
+            ? record.countrySM.serviceNameEnglish
+            : record.countrySM.serviceNameArabic}
+        </span>
+      ),
+    },
+    {
+      title: <span className="table-text">{t("Branch-availability")}</span>,
+      dataIndex: "branchAvailability",
+      key: "branchAvailability",
+      width: "200px",
+      render: (text, record) => (
+        <span>
+          <Switch
+            checked={text}
+            onChange={(value) =>
+              onChangeHandlerForServiceCountry(
+                "branchAvailability",
+                value,
+                record
+              )
+            }
+          />
+        </span>
+      ),
+    },
+    {
+      title: <span className="table-text">{t("Home-availability")}</span>,
+      dataIndex: "homeAvailability",
+      key: "homeAvailability",
+      width: "200px",
+      render: (text, record) => (
+        <span>
+          <Switch
+            checked={text}
+            onChange={(value) =>
+              onChangeHandlerForServiceCountry(
+                "homeAvailability",
+                value,
+                record
+              )
+            }
+          />
+        </span>
+      ),
     },
   ];
 
@@ -513,6 +671,10 @@ const CountryMain = () => {
           <>
             <ServiceCountryScreenComponent
               closeServiceCountryScreen={closeServiceCountryScreen}
+              ServiceCountryColumn={ServiceCountryColumn}
+              revertServiceCountryHandler={revertServiceCountryHandler}
+              saveServiceCountryHandler={saveServiceCountryHandler}
+              countryRow={countryRow}
             />
           </>
         ) : (
@@ -524,13 +686,7 @@ const CountryMain = () => {
                 sm={12}
                 className="d-flex justify-content-start"
               >
-                <span className="shift-heading">
-                  {t("Country")}
-                  <span className="shift-sub-heading">
-                    {" "}
-                    {t("Saudi-arabia-riyadh")}
-                  </span>
-                </span>
+                <span className="shift-heading">{t("Country")}</span>
               </Col>
             </Row>
             <Row className="mt-3">
@@ -543,7 +699,7 @@ const CountryMain = () => {
                       </span>
                       <TextField
                         name="CountryNameEnglish"
-                        placeholder={t("Country-name")}
+                        placeholder={t("Country-name-english")}
                         labelClass="d-none"
                         value={addCountryMain.CountryNameEnglish}
                         onChange={handleChange}
@@ -556,7 +712,7 @@ const CountryMain = () => {
                       </span>
                       <TextField
                         name="CountryNameArabic"
-                        placeholder={"اسم الدولة"}
+                        placeholder={t("Country-name-arabic")}
                         labelClass="d-none"
                         value={addCountryMain.CountryNameArabic}
                         onChange={handleChange}

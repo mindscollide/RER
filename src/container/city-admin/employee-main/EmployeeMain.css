@@ -29,7 +29,7 @@ body[dir="rtl"] .text-fiels-employeeMain {
   height: 37px !important;
   color: #212529 !important;
   font-weight: 500 !important;
-  text-align: end !important;
+  text-align: start !important;
 }
 
 body[dir="rtl"] .text-fiels-employeeMain-arabic {

@@ -44,7 +44,6 @@ const CountryAdminMain = () => {
   const cityServiceListData = useSelector(
     (state) => state.admin.cityServiceListData
   );
-  console.log(cityList, "cityServiceListData");
   // reducers for addCountry admin main api
   const countryAdminMainData = useSelector(
     (state) => state.admin.countryAdminMainData
@@ -264,7 +263,6 @@ const CountryAdminMain = () => {
       title: <span className="table-text">{t("City-name")}</span>,
       dataIndex: "cityNameEnglish",
       key: "cityNameEnglish",
-      align: "left",
       render: (text, record) => (
         <span className="table-inside-text">
           {currentLanguage === "en"
@@ -295,51 +293,50 @@ const CountryAdminMain = () => {
       title: "",
       dataIndex: "cityID",
       key: "cityID",
-      align: "center",
       render: (text, record) => (
         <>
           <span className="icon-spaceing-dlt-edit">
             <i
               className="icon-text-edit icon-EDT-DLT-color"
-              title="Edit"
-              aria-label="Edit"
+              title={t("Edit")}
+              aria-label={t("Edit")}
               onClick={() => handleCountryEdit(record, 1)}
             ></i>
             <i
               className="icon-close icon-EDT-DLT-color"
-              title="Delete"
+              title={t("Delete")}
+              aria-label={t("Delete")}
               onClick={() => handleCountryEdit(record, 2)}
-              aria-label="Delete"
             ></i>
             <i
               className="icon-settings icon-EDT-DLT-color"
               onClick={() => openCountryWiseCity(record)}
-              title="Service"
-              aria-label="Service"
+              title={t("Service")}
+              aria-label={t("Service")}
             ></i>
             <i
               className="icon-branch icon-EDT-DLT-color"
               onClick={() => openCountryCityWiseBranch(text)}
-              title="Branch"
-              aria-label="Branch"
+              title={t("Branch")}
+              aria-label={t("Branch")}
             ></i>
             <i
               className="icon-counter icon-EDT-DLT-color"
               onClick={() => openCountryCityWiseCounter(text)}
-              title="Counter"
-              aria-label="Counter"
+              title={t("Counter")}
+              aria-label={t("Counter")}
             ></i>
             <i
               className="icon-repeat icon-EDT-DLT-color"
               onClick={openCountryCityBranchShift}
-              title="Shifts"
-              aria-label="Shifts"
+              title={t("Shifts")}
+              aria-label={t("Shifts")}
             ></i>
             <i
               className="icon-user icon-EDT-DLT-color"
               onClick={() => openCountryWiseEmployee(text)}
-              title="Employee"
-              aria-label="Employee"
+              title={t("Employee")}
+              aria-label={t("Employee")}
             ></i>
           </span>
         </>
@@ -904,7 +901,6 @@ const CountryAdminMain = () => {
                     {currentLanguage === "en"
                       ? "(" + localStorage.getItem("countryName") + ")"
                       : "(" + localStorage.getItem("countryNameArabic") + ")"}
-                    {/* {t("Saudi-arabia-riyadh")} */}
                   </span>
                 </span>
               </Col>
@@ -920,7 +916,7 @@ const CountryAdminMain = () => {
                       <TextField
                         name="CityNameEnglish"
                         value={addCountry.CityNameEnglish}
-                        placeholder={t("City-name")}
+                        placeholder={t("City-name-english")}
                         onChange={handleChange}
                         labelClass="d-none"
                         className="text-fiels-CountryAdmin"
@@ -933,7 +929,7 @@ const CountryAdminMain = () => {
                       <TextField
                         name="CityNameArabic"
                         value={addCountry.CityNameArabic}
-                        placeholder="اسم المدينة"
+                        placeholder={t("City-name-arabic")}
                         onChange={handleChange}
                         labelClass="d-none"
                         className="text-fields-CountryAdmin-arabic"

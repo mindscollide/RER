@@ -156,10 +156,14 @@ const CounterMain = () => {
           <span className="icon-spaceing-dlt-edit">
             <i
               className="icon-text-edit icon-EDT-DLT-color"
+              title={t("Edit")}
+              aria-label={t("Edit")}
               onClick={() => handleEdittShift(record, 1)}
             ></i>
             <i
               className="icon-close icon-EDT-DLT-color"
+              title={t("Delete")}
+              aria-label={t("Delete")}
               onClick={() => handleEdittShift(record, 2)}
             ></i>
           </span>
@@ -432,7 +436,7 @@ const CounterMain = () => {
                   </span>
                   <TextField
                     name="CounterNameEnglish"
-                    placeholder={t("Counter-name")}
+                    placeholder={t("Counter-name-english")}
                     labelClass="d-none"
                     className="text-fiels-counterMain"
                     value={newCounter.CounterNameEnglish}
@@ -446,7 +450,7 @@ const CounterMain = () => {
                   </span>
                   <TextField
                     name="CounterNameArabic"
-                    placeholder="اسم العداد"
+                    placeholder={t("Counter-name-arabic")}
                     labelClass="d-none"
                     className="text-fiels-counterMain-arabic"
                     value={newCounter.CounterNameArabic}

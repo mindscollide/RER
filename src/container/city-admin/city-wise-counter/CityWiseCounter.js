@@ -161,7 +161,7 @@ const CityWiseCounter = () => {
       render: (text, record) => {
         return (
           <>
-            <span>
+            <span className="table-inside-text">
               {currentLanguage === "en"
                 ? record.branchCounterModel.counterNameEnglish
                 : record.branchCounterModel.counterNameArabic}
@@ -178,7 +178,7 @@ const CityWiseCounter = () => {
       render: (text, record) => {
         return (
           <>
-            <span>
+            <span className="table-inside-text">
               {currentLanguage === "en"
                 ? record.shiftService.serviceNameEnglish
                 : record.shiftService.serviceNameArabic}

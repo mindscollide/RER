@@ -341,26 +341,38 @@ const CityAdmin = () => {
           <span className="icon-spaceing-dlt-edit">
             <i
               className="icon-text-edit icon-EDT-DLT-color"
+              title={t("Edit")}
+              aria-label={t("Edit")}
               onClick={() => handleEditt(record, 1)}
             ></i>
             <i
               className="icon-close icon-EDT-DLT-color"
+              title={t("Delete")}
+              aria-label={t("Delete")}
               onClick={() => handleEditt(record, 2)}
             ></i>
             <i
               className="icon-settings icon-EDT-DLT-color"
+              title={t("Service")}
+              aria-label={t("Service")}
               onClick={() => onClickServiceIcon(record)}
             ></i>
             <i
               className="icon-counter icon-EDT-DLT-color"
+              title={t("Counter")}
+              aria-label={t("Counter")}
               onClick={() => onClickCounterIcon(record)}
             ></i>
             <i
               className="icon-repeat icon-EDT-DLT-color"
               onClick={() => onClickShiftIcon(record)}
+              title={t("Shifts")}
+              aria-label={t("Shifts")}
             ></i>
             <i
               className="icon-user icon-EDT-DLT-color"
+              title={t("Employee")}
+              aria-label={t("Employee")}
               onClick={() => onClickEmployeeIcon(record)}
             ></i>
           </span>
@@ -812,7 +824,7 @@ const CityAdmin = () => {
                       </span>
                       <TextField
                         name="BranchNameEnglish"
-                        placeholder={t("Branch-admin")}
+                        placeholder={t("Branch-name-english")}
                         labelClass="d-none"
                         className="text-fiels-cityAdmin"
                         value={Branch.BranchNameEnglish}
@@ -825,7 +837,7 @@ const CityAdmin = () => {
                       </span>
                       <TextField
                         name="BranchNameArabic"
-                        placeholder={"اسم الفرع"}
+                        placeholder={t("Branch-name-arabic")}
                         labelClass="d-none"
                         className="text-fiels-cityAdmin-arabic"
                         value={Branch.BranchNameArabic}

@@ -308,6 +308,16 @@ const getAllCityBranchShiftWiseServices = {
   RequestMethod: "ServiceManager.GetAllCityBranchShiftServices",
 };
 
+// get all city Branch Shift Counter Service in global Admin
+const getAllCityBranchShiftCounterServices = {
+  RequestMethod: "ServiceManager.GetAllCityBranchShiftCounterServices",
+};
+
+// get Country Service Screen for Service page in global Admin
+const getServiceWiseCountryList = {
+  RequestMethod: "ServiceManager.GetServiceWiseCountryList",
+};
+
 // ===================================GLOBAL ADMIN END ==========================================//
 
 export {
@@ -380,5 +390,7 @@ export {
   getAllCityServices,
   getAllCityBranchWiseServices,
   getAllCityBranchShiftWiseServices,
+  getAllCityBranchShiftCounterServices,
+  getServiceWiseCountryList,
   // ===================================GLOBAL ADMIN END ==========================================//
 };

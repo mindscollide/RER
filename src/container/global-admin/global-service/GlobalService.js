@@ -22,9 +22,11 @@ import {
   getGlobalServiceMainApi,
   updateGlobalServiceFail,
   updateGlobalServiceMainApi,
+  getServiceWiseCountryMainApi,
 } from "../../../store/actions/Admin_action";
 import { loader_Actions } from "../../../store/actions/Loader_action";
 import { regexOnlyForNumberNCharacters } from "../../../commen/functions/regex";
+import { Switch } from "antd";
 
 const GlobalService = () => {
   const { t } = useTranslation();
@@ -54,6 +56,11 @@ const GlobalService = () => {
     (state) => state.global.isCountryServiceComponentReducer
   );
 
+  //state for global Service in country wise component on click on service reducer
+  const getServiceWiseCountryData = useSelector(
+    (state) => state.admin.getServiceWiseCountryData
+  );
+
   // reducer for response message
   const responseMessage = useSelector(
     (state) => state.admin.admin_ResponseMessage
@@ -61,6 +68,9 @@ const GlobalService = () => {
 
   // state for row to updating table rows
   const [rows, setRows] = useState([]);
+
+  // state for countryWiseRow upadte table
+  const [countryWiseRow, setCountryWiseRow] = useState([]);
 
   //state for show notifications through response
   const [globalNotification, setGlobalNotification] = useState({
@@ -75,6 +85,8 @@ const GlobalService = () => {
   const [globalState, setGlobalState] = useState({
     ServiceNameEnglish: "",
     ServiceNameArabic: "",
+    BranchAvailability: false,
+    HomeAvailability: false,
     IsServiceActive: false,
     ServiceID: 0,
   });
@@ -92,6 +104,18 @@ const GlobalService = () => {
       setRows([]);
     }
   }, [getGlobalServiceData]);
+
+  // useEffect to update data in countryWiseService component in table
+  useEffect(() => {
+    if (
+      getServiceWiseCountryData !== null &&
+      Array.isArray(getServiceWiseCountryData)
+    ) {
+      setCountryWiseRow(getServiceWiseCountryData);
+    } else {
+      setCountryWiseRow([]);
+    }
+  }, [getServiceWiseCountryData]);
 
   useEffect(() => {
     if (addGlobalServiceData !== null) {
@@ -121,8 +145,10 @@ const GlobalService = () => {
   };
 
   // open service country screen component
-  const openServiceCountryScreenComponent = () => {
-    dispatch(setIsCountryServiceScreenComponent(true));
+  const openServiceCountryScreenComponent = async (record) => {
+    localStorage.setItem("serviceID", record.serviceID);
+    await dispatch(setIsCountryServiceScreenComponent(true));
+    await dispatch(getServiceWiseCountryMainApi(t, navigate, loadingFlag));
   };
 
   // close service country screen component
@@ -184,6 +210,42 @@ const GlobalService = () => {
       ),
     },
     {
+      title: <span className="table-text">{t("Branch-availability")}</span>,
+      dataIndex: "branchAvailability",
+      key: "branchAvailability",
+      render: (text, record) => (
+        <>
+          {text ? (
+            <span>
+              <i className="icon-check icon-check-color"></i>
+            </span>
+          ) : (
+            <span>
+              <i className="icon-close icon-check-close-color"></i>
+            </span>
+          )}
+        </>
+      ),
+    },
+    {
+      title: <span className="table-text">{t("Home-availability")}</span>,
+      dataIndex: "homeAvailability",
+      key: "homeAvailability",
+      render: (text, record) => (
+        <>
+          {text ? (
+            <span>
+              <i className="icon-check icon-check-color"></i>
+            </span>
+          ) : (
+            <span>
+              <i className="icon-close icon-check-close-color"></i>
+            </span>
+          )}
+        </>
+      ),
+    },
+    {
       title: <span className="table-text">{t("Active")}</span>,
       dataIndex: "isServiceActive",
       key: "isServiceActive",
@@ -211,34 +273,87 @@ const GlobalService = () => {
           <span className="icon-spaceing-dlt-edit">
             <i
               className="icon-text-edit icon-EDT-DLT-color"
+              title={t("Edit")}
+              aria-label={t("Edit")}
               onClick={() => handleEditGlobal(record, 1)}
             ></i>
             <i
               className="icon-close icon-EDT-DLT-color"
+              title={t("Delete")}
+              aria-label={t("Delete")}
               onClick={() => handleEditGlobal(record, 2)}
             ></i>
             <i
               className="icon-globe icon-EDT-DLT-color"
-              onClick={openServiceCountryScreenComponent}
+              title={t("Country")}
+              aria-label={t("Country")}
+              onClick={() => openServiceCountryScreenComponent(record)}
             ></i>
             <i
               className="icon-location icon-EDT-DLT-color"
+              title={t("City")}
+              aria-label={t("City")}
               onClick={openClickCityScreen}
             ></i>
             <i
               className="icon-branch icon-EDT-DLT-color"
+              title={t("Branch")}
+              aria-label={t("Branch")}
               onClick={openClickBranchScreen}
             ></i>
             <i
               className="icon-counter icon-EDT-DLT-color"
+              title={t("Counter")}
+              aria-label={t("Counter")}
               onClick={openClickCountersScreen}
             ></i>
             <i
               className="icon-repeat icon-EDT-DLT-color"
+              title={t("Shifts")}
+              aria-label={t("Shifts")}
               onClick={openClickshiftsScreen}
             ></i>
           </span>
         </>
+      ),
+    },
+  ];
+
+  // column for country wise service page component
+  const columnsWiseCountry = [
+    {
+      title: <span className="table-text">{t("Country-name")}</span>,
+      dataIndex: "countryNameEnglish",
+      key: "countryNameEnglish",
+      width: "400px",
+      render: (text, record) => (
+        <span className="table-inside-text">
+          {currentLanguage === "en"
+            ? record.serviceCountry.countryNameEnglish
+            : record.serviceCountry.countryNameArabic}
+        </span>
+      ),
+    },
+    {
+      title: <span className="table-text">{t("Branch-availability")}</span>,
+      dataIndex: "branchAvailability",
+      key: "branchAvailability",
+      width: "200px",
+      render: (text, record) => (
+        <span>
+          <Switch checked={text} />
+        </span>
+      ),
+    },
+    {
+      title: <span className="table-text">{t("Home-availability")}</span>,
+      dataIndex: "homeAvailability",
+      key: "homeAvailability",
+      width: "200px",
+      render: (text, record) => (
+        <span>
+          <Switch checked={text} />
+        </span>
       ),
     },
   ];
@@ -265,6 +380,28 @@ const GlobalService = () => {
     } catch {}
   };
 
+  // change handler for checkes global service page
+  const handleChangeForBranch = (e) => {
+    try {
+      let checked = e.target.checked;
+      setGlobalState({
+        ...globalState,
+        ["BranchAvailability"]: checked,
+      });
+    } catch {}
+  };
+
+  // change handler for textfield in global service page
+  const handleChangeForHome = (e) => {
+    try {
+      let checked = e.target.checked;
+      setGlobalState({
+        ...globalState,
+        ["HomeAvailability"]: checked,
+      });
+    } catch {}
+  };
+
   // add and update handler in global service page
   const addUpdateHandler = () => {
     try {
@@ -277,6 +414,8 @@ const GlobalService = () => {
             ServiceID: Number(globalState.ServiceID),
             ServiceNameEnglish: globalState.ServiceNameEnglish,
             ServiceNameArabic: globalState.ServiceNameArabic,
+            HomeAvailability: globalState.HomeAvailability,
+            BranchAvailability: globalState.BranchAvailability,
             IsServiceActive: globalState.IsServiceActive,
           };
           dispatch(
@@ -298,6 +437,8 @@ const GlobalService = () => {
           let Data = {
             ServiceNameEnglish: globalState.ServiceNameEnglish,
             ServiceNameArabic: globalState.ServiceNameArabic,
+            HomeAvailability: globalState.HomeAvailability,
+            BranchAvailability: globalState.BranchAvailability,
             IsServiceActive: globalState.IsServiceActive,
           };
           dispatch(
@@ -323,6 +464,8 @@ const GlobalService = () => {
           ServiceNameEnglish: value.serviceNameEnglish,
           ServiceNameArabic: value.serviceNameArabic,
           IsServiceActive: value.isServiceActive,
+          HomeAvailability: value.homeAvailability,
+          BranchAvailability: value.branchAvailability,
           ServiceID: Number(value.serviceID),
         });
       } else if (flag === 2) {
@@ -340,6 +483,8 @@ const GlobalService = () => {
       setGlobalState({
         ServiceNameEnglish: "",
         ServiceNameArabic: "",
+        BranchAvailability: false,
+        HomeAvailability: false,
         IsServiceActive: false,
         ServiceID: 0,
       });
@@ -506,6 +651,8 @@ const GlobalService = () => {
           <>
             <CountryServiceScreenComponent
               goBackServiceCountryButton={goBackServiceCountryButton}
+              columnsWiseCountry={columnsWiseCountry}
+              countryWiseRow={countryWiseRow}
             />
           </>
         ) : (
@@ -517,13 +664,7 @@ const GlobalService = () => {
                 sm={12}
                 className="d-flex justify-content-start"
               >
-                <span className="shift-heading">
-                  {t("Service")}
-                  <span className="shift-sub-heading">
-                    {" "}
-                    {t("Saudi-arabia-riyadh")}
-                  </span>
-                </span>
+                <span className="shift-heading">{t("Service")}</span>
               </Col>
             </Row>
             <Row className="mt-3">
@@ -538,7 +679,7 @@ const GlobalService = () => {
                         name="ServiceNameEnglish"
                         value={globalState.ServiceNameEnglish}
                         onChange={handleChange}
-                        placeholder={t("Service-name")}
+                        placeholder={t("Service-name-english")}
                         labelClass="d-none"
                         className="text-fiels-GlobalService"
                       />
@@ -551,7 +692,7 @@ const GlobalService = () => {
                         name="ServiceNameArabic"
                         value={globalState.ServiceNameArabic}
                         onChange={handleChange}
-                        placeholder={"اسم الخدمة"}
+                        placeholder={t("Service-name-arabic")}
                         labelClass="d-none"
                         className="text-fiels-GlobalService-arabic"
                       />
@@ -561,8 +702,8 @@ const GlobalService = () => {
                   <Row className="mt-3">
                     <Col lg={4} md={4} sm={4} className="mt-4">
                       <Checkbox
-                        checked={isCheckboxSelected}
-                        onChange={handleCheckboxChange}
+                        checked={globalState.BranchAvailability}
+                        onChange={handleChangeForBranch}
                         classNameDiv="GlobalService-checkbox"
                         label={
                           <span className="checkbox-label">
@@ -579,8 +720,8 @@ const GlobalService = () => {
                       className="d-flex justify-content-center mt-4"
                     >
                       <Checkbox
-                        checked={isCheckboxSelectedTwo}
-                        onChange={handleCheckboxChangeTwo}
+                        checked={globalState.HomeAvailability}
+                        onChange={handleChangeForHome}
                         classNameDiv="GlobalService-checkbox"
                         label={
                           <span className="checkbox-label">

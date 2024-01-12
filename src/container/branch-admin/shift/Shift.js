@@ -230,10 +230,14 @@ const BranchAdmin = () => {
           <span className="icon-spaceing-dlt-edit">
             <i
               className="icon-text-edit icon-EDT-DLT-color"
+              title={t("Edit")}
+              aria-label={t("Edit")}
               onClick={() => handleEdittShift(record, 1)}
             ></i>
             <i
               className="icon-close icon-EDT-DLT-color"
+              title={t("Delete")}
+              aria-label={t("Delete")}
               onClick={() => handleEdittShift(record, 2)}
             ></i>
           </span>
@@ -339,7 +343,7 @@ const BranchAdmin = () => {
         ShiftNameArabic: "",
         IsShiftActive: false,
         ShiftStartTime: "",
-        ShiftEndTime: null,
+        ShiftEndTime: "",
         BranchID: Number(localStorage.getItem("branchID")),
         ShiftID: 0,
       });
@@ -516,7 +520,7 @@ const BranchAdmin = () => {
                   <span className="text-labels">{t("Shift-name-english")}</span>
                   <TextField
                     name="ShiftNameEnglish"
-                    placeholder={t("Shift-name")}
+                    placeholder={t("Shift-name-english")}
                     labelClass="d-none"
                     className="text-fiels-Branch"
                     value={newShift.ShiftNameEnglish}
@@ -528,7 +532,7 @@ const BranchAdmin = () => {
                   <span className="text-labels">{t("Shift-name-arabic")}</span>
                   <TextField
                     name="ShiftNameArabic"
-                    placeholder="اسم الخدمة"
+                    placeholder={t("Shift-name-arabic")}
                     labelClass="d-none"
                     className="text-fields-Branch-arabic"
                     value={newShift.ShiftNameArabic}

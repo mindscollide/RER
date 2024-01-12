@@ -5,54 +5,12 @@ import { Paper, Table, Button } from "../../../components/elements";
 import { Switch } from "antd";
 import { useTranslation } from "react-i18next";
 
-const CountryServiceScreenComponent = ({ goBackServiceCountryButton }) => {
+const CountryServiceScreenComponent = ({
+  goBackServiceCountryButton,
+  columnsWiseCountry,
+  countryWiseRow,
+}) => {
   const { t } = useTranslation();
-
-  const dataSource = [
-    {
-      id: 1,
-      shiftName: <span className="table-inside-text">Saudi Arabia</span>,
-    },
-    {
-      id: 2,
-      shiftName: <span className="table-inside-text">Bahrain</span>,
-    },
-    {
-      id: 3,
-      shiftName: <span className="table-inside-text">Saudi Arabia</span>,
-    },
-  ];
-
-  const columns = [
-    {
-      title: <span className="table-text">{t("Country-name")}</span>,
-      dataIndex: "shiftName",
-      key: "shiftName",
-      width: "400px",
-    },
-    {
-      title: <span className="table-text">{t("Branch-availability")}</span>,
-      dataIndex: "active",
-      key: "active",
-      width: "200px",
-      render: (text, record) => (
-        <span>
-          <Switch checked={true} />
-        </span>
-      ),
-    },
-    {
-      title: <span className="table-text">{t("Home-availability")}</span>,
-      dataIndex: "column6",
-      key: "column6",
-      width: "200px",
-      render: (text, record) => (
-        <span>
-          <Switch checked={true} />
-        </span>
-      ),
-    },
-  ];
 
   return (
     <>
@@ -106,8 +64,8 @@ const CountryServiceScreenComponent = ({ goBackServiceCountryButton }) => {
               <Row className="mt-2">
                 <Col lg={12} md={12} sm={12}>
                   <Table
-                    rows={dataSource}
-                    column={columns}
+                    rows={countryWiseRow}
+                    column={columnsWiseCountry}
                     pagination={false}
                   />
                 </Col>

@@ -118,7 +118,7 @@ body[dir="rtl"] .text-fiels-CountryAdmin {
   height: 37px !important;
   color: #212529 !important;
   font-weight: 500 !important;
-  text-align: end !important;
+  text-align: start !important;
 }
 
 body[dir="rtl"] .text-fields-CountryAdmin-arabic {
