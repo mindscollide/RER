@@ -84,6 +84,8 @@ const NationalHoliday = () => {
           <span>
             <i
               className="icon-trash icon-close-style-delete"
+              title={t("Delete")}
+              aria-label={t("Delete")}
               onClick={() => onDeleteIcon(record)}
             ></i>
           </span>

@@ -39,12 +39,9 @@ const CountryCityWiseShift = () => {
   const { Panel } = Collapse;
   const currentLanguage = localStorage.getItem("i18nextLng");
   const [isPanelOpen, setIsPanelOpen] = useState(false);
-  const [isPanelOpenTwo, setIsPanelOpenTwo] = useState(false);
-  const [isPanelOpenThree, setIsPanelOpenThree] = useState(false);
   const [countryCityWiseShift, setCountryCityWiseShift] = useState([]);
   const [countryBranchWiseShift, setCountryBranchWiseShift] = useState([]);
   const [roasterdate, setRoasterdate] = useState(new Date());
-  const [branchSelectedOptions, setBranchSelectedOptions] = useState(null);
   const [servicesTableData, setServicesTableData] = useState({
     branchDetailModel: null,
     branchShiftServiceList: [],
@@ -218,7 +215,13 @@ const CountryCityWiseShift = () => {
       key: "shiftServiceList",
       width: "400px",
       render: (text, record) => {
-        return <p>{record.serviceNameEnglish}</p>;
+        return (
+          <span className="table-inside-text">
+            {currentLanguage === "en"
+              ? record.serviceNameEnglish
+              : record.serviceNameArabic}
+          </span>
+        );
       },
     },
 

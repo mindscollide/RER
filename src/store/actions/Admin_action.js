@@ -63,6 +63,8 @@ import {
   getAllCityServices,
   getAllCityBranchWiseServices,
   getAllCityBranchShiftWiseServices,
+  getAllCityBranchShiftCounterServices,
+  getServiceWiseCountryList,
 } from "../../commen/apis/Api_config";
 import { adminURL } from "../../commen/apis/Api_ends_points";
 import moment from "moment";
@@ -4126,10 +4128,6 @@ const getCountryCitiesApi = (t, navigate, loadingFlag, apiCallFlag, cityID) => {
                 );
               } else if (apiCallFlag === 1) {
                 await dispatch(loader_Actions(false));
-              } else if (apiCallFlag === 4) {
-                await dispatch(
-                  getAllEmployeeMainApi(t, navigate, loadingFlag, data)
-                );
               }
               await dispatch(loader_Actions(false));
             } else if (
@@ -6349,6 +6347,212 @@ const getAllBranchShiftWiseServicesMainApi = (
   };
 };
 
+// get all branch shift counter services Api Start
+const getAllBranchShiftCounterSuccess = (response, message) => {
+  return {
+    type: actions.GET_ALL_CITY_BRANCH_SHIFT_COUNTER_SERVICE_SUCCESS,
+    response: response,
+    message: message,
+  };
+};
+
+const getAllBranchShiftCounterFail = (message) => {
+  return {
+    type: actions.GET_ALL_CITY_BRANCH_SHIFT_COUNTER_SERVICE_FAIL,
+    message: message,
+  };
+};
+
+const getAllBranchShiftCounterMainApi = (t, navigate, loadingFlag, data) => {
+  return async (dispatch) => {
+    if (!loadingFlag) {
+      dispatch(loader_Actions(true));
+    }
+    let form = new FormData();
+    form.append(
+      "RequestMethod",
+      getAllCityBranchShiftCounterServices.RequestMethod
+    );
+    form.append("RequestData", JSON.stringify(data));
+    await axios({
+      method: "post",
+      url: adminURL,
+      data: form,
+      headers: {
+        _token: JSON.parse(localStorage.getItem("token")),
+      },
+    })
+      .then(async (response) => {
+        if (response.data.responseCode === 200) {
+          if (response.data.responseCode === 417) {
+            dispatch(
+              getAllBranchShiftCounterMainApi(t, navigate, loadingFlag, data)
+            );
+          } else if (response.data.responseResult.isExecuted === true) {
+            if (
+              response.data.responseResult.responseMessage ===
+              "Admin_AdminServiceManager_GetAllCityBranchShiftCounterServices_01"
+            ) {
+              await dispatch(
+                getAllBranchShiftCounterSuccess(
+                  response.data.responseResult
+                    .countryWiseCityWiseBranchShiftServiceCounters,
+                  t(
+                    "Admin_AdminServiceManager_GetAllCityBranchShiftCounterServices_01"
+                  )
+                )
+              );
+
+              await dispatch(loader_Actions(false));
+            } else if (
+              response.data.responseResult.responseMessage ===
+              "Admin_AdminServiceManager_GetAllCityBranchShiftCounterServices_02"
+            ) {
+              await dispatch(
+                getAllBranchShiftCounterFail(
+                  response.data.responseResult.responseMessage,
+                  t(
+                    "Admin_AdminServiceManager_GetAllCityBranchShiftCounterServices_02"
+                  )
+                )
+              );
+
+              await dispatch(loader_Actions(false));
+            } else if (
+              response.data.responseResult.responseMessage ===
+              "Admin_AdminServiceManager_GetAllCityBranchShiftCounterServices_03"
+            ) {
+              await dispatch(
+                getAllBranchShiftCounterFail(t("something_went_wrong"))
+              );
+              await dispatch(loader_Actions(false));
+            } else {
+              await dispatch(
+                getAllBranchShiftCounterFail(t("something_went_wrong"))
+              );
+              await dispatch(loader_Actions(false));
+            }
+          } else {
+            await dispatch(
+              getAllBranchShiftCounterFail(t("something_went_wrong"))
+            );
+            await dispatch(loader_Actions(false));
+          }
+        } else {
+          await dispatch(
+            getAllBranchShiftCounterFail(t("something_went_wrong"))
+          );
+          await dispatch(loader_Actions(false));
+        }
+      })
+      .catch((response) => {
+        dispatch(getAllBranchShiftCounterFail(t("something_went_wrong")));
+        dispatch(loader_Actions(false));
+      });
+  };
+};
+
+// get all branch shift counter services Api End
+
+// get service wise country in service page in global admin start
+
+const getServiceWiseCountrySuccess = (response, message) => {
+  return {
+    type: actions.GET_SERVICE_WISE_COUNTRY_SUCCESS,
+    response: response,
+    message: message,
+  };
+};
+
+const getServiceWiseCountryFail = (message) => {
+  return {
+    type: actions.GET_SERVICE_WISE_COUNTRY_FAIL,
+    message: message,
+  };
+};
+
+const getServiceWiseCountryMainApi = (t, navigate, loadingFlag) => {
+  let data = { ServiceID: Number(localStorage.getItem("serviceID")) };
+  return async (dispatch) => {
+    if (!loadingFlag) {
+      dispatch(loader_Actions(true));
+    }
+    let form = new FormData();
+    form.append("RequestMethod", getServiceWiseCountryList.RequestMethod);
+    form.append("RequestData", JSON.stringify(data));
+    await axios({
+      method: "post",
+      url: adminURL,
+      data: form,
+      headers: {
+        _token: JSON.parse(localStorage.getItem("token")),
+      },
+    })
+      .then(async (response) => {
+        if (response.data.responseCode === 200) {
+          if (response.data.responseCode === 417) {
+            dispatch(
+              getServiceWiseCountryMainApi(t, navigate, loadingFlag, data)
+            );
+          } else if (response.data.responseResult.isExecuted === true) {
+            if (
+              response.data.responseResult.responseMessage ===
+              "Admin_AdminServiceManager_GetServiceWiseCountryList_01"
+            ) {
+              await dispatch(
+                getServiceWiseCountrySuccess(
+                  response.data.responseResult.countryServices,
+                  t("Admin_AdminServiceManager_GetServiceWiseCountryList_01")
+                )
+              );
+
+              await dispatch(loader_Actions(false));
+            } else if (
+              response.data.responseResult.responseMessage ===
+              "Admin_AdminServiceManager_GetServiceWiseCountryList_02"
+            ) {
+              await dispatch(
+                getServiceWiseCountryFail(
+                  response.data.responseResult.responseMessage,
+                  t("Admin_AdminServiceManager_GetServiceWiseCountryList_02")
+                )
+              );
+
+              await dispatch(loader_Actions(false));
+            } else if (
+              response.data.responseResult.responseMessage ===
+              "Admin_AdminServiceManager_GetServiceWiseCountryList_03"
+            ) {
+              await dispatch(
+                getServiceWiseCountryFail(t("something_went_wrong"))
+              );
+              await dispatch(loader_Actions(false));
+            } else {
+              await dispatch(
+                getServiceWiseCountryFail(t("something_went_wrong"))
+              );
+              await dispatch(loader_Actions(false));
+            }
+          } else {
+            await dispatch(
+              getServiceWiseCountryFail(t("something_went_wrong"))
+            );
+            await dispatch(loader_Actions(false));
+          }
+        } else {
+          await dispatch(getServiceWiseCountryFail(t("something_went_wrong")));
+          await dispatch(loader_Actions(false));
+        }
+      })
+      .catch((response) => {
+        dispatch(getServiceWiseCountryFail(t("something_went_wrong")));
+        dispatch(loader_Actions(false));
+      });
+  };
+};
+
+// get service wise country in service page in global admin End
+
 export {
   clearResponseMessageAdmin,
   AdminCleareState,
@@ -6438,4 +6642,6 @@ export {
   getAllCityServicesMainApi,
   getAllCityBranchWiseServicesMainApi,
   getAllBranchShiftWiseServicesMainApi,
+  getAllBranchShiftCounterMainApi,
+  getServiceWiseCountryMainApi,
 };

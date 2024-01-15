@@ -158,7 +158,9 @@ const BranchAdmin = () => {
       dataIndex: "shiftID",
       key: "shiftID",
       render: (text, record, index) => (
-        <span className="table-inside-text">{(index + 1).toLocaleString(local)}</span>
+        <span className="table-inside-text">
+          {(index + 1).toLocaleString(local)}
+        </span>
       ),
     },
     {
@@ -205,7 +207,6 @@ const BranchAdmin = () => {
       title: <span className="table-text">{t("Active")}</span>,
       dataIndex: "isShiftActive",
       key: "isShiftActive",
-      align: "center",
       render: (text, record) => (
         <>
           {text ? (
@@ -229,10 +230,14 @@ const BranchAdmin = () => {
           <span className="icon-spaceing-dlt-edit">
             <i
               className="icon-text-edit icon-EDT-DLT-color"
+              title={t("Edit")}
+              aria-label={t("Edit")}
               onClick={() => handleEdittShift(record, 1)}
             ></i>
             <i
               className="icon-close icon-EDT-DLT-color"
+              title={t("Delete")}
+              aria-label={t("Delete")}
               onClick={() => handleEdittShift(record, 2)}
             ></i>
           </span>
@@ -338,7 +343,7 @@ const BranchAdmin = () => {
         ShiftNameArabic: "",
         IsShiftActive: false,
         ShiftStartTime: "",
-        ShiftEndTime: null,
+        ShiftEndTime: "",
         BranchID: Number(localStorage.getItem("branchID")),
         ShiftID: 0,
       });
@@ -512,10 +517,10 @@ const BranchAdmin = () => {
             <Paper className="Branch-Admin-paper">
               <Row>
                 <Col lg={6} md={6} sm={6}>
-                  <span className="text-labels">{t("Shift-name")}</span>
+                  <span className="text-labels">{t("Shift-name-english")}</span>
                   <TextField
                     name="ShiftNameEnglish"
-                    placeholder={t("Shift-name")}
+                    placeholder={t("Shift-name-english")}
                     labelClass="d-none"
                     className="text-fiels-Branch"
                     value={newShift.ShiftNameEnglish}
@@ -523,11 +528,11 @@ const BranchAdmin = () => {
                   />
                 </Col>
 
-                <Col lg={6} md={6} sm={6} className="text-end">
-                  <span className="text-labels">اسم الخدمة</span>
+                <Col lg={6} md={6} sm={6}>
+                  <span className="text-labels">{t("Shift-name-arabic")}</span>
                   <TextField
                     name="ShiftNameArabic"
-                    placeholder="اسم الخدمة"
+                    placeholder={t("Shift-name-arabic")}
                     labelClass="d-none"
                     className="text-fields-Branch-arabic"
                     value={newShift.ShiftNameArabic}

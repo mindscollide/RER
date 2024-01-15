@@ -5,6 +5,11 @@
   font-weight: 700 !important;
 }
 
+body[dir="rtl"] .table-above-header-text {
+  font-family: "NeoSansArabic" !important;
+  font-size: 14px !important;
+}
+
 .top-background-color {
   background: linear-gradient(to bottom, #7484b7 0%, #536395 100%) !important;
 }

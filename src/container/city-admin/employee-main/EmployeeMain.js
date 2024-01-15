@@ -276,7 +276,7 @@ const EmployeeMain = () => {
     {
       title: <span className="table-text">{t("Name")}</span>,
       dataIndex: "cityEmployeeList",
-      key: "name",
+      key: "cityEmployeeList",
       render: (text, record) => (
         <span className="table-inside-text">
           {currentLanguage === "en"
@@ -287,8 +287,21 @@ const EmployeeMain = () => {
     },
     {
       title: <span className="table-text">{t("Capcity")}</span>,
-      dataIndex: "capcity",
-      key: "capcity",
+      dataIndex: "employeeBelongsToBranch",
+      key: "employeeBelongsToBranch",
+      render: (text, record) => (
+        <span>
+          {record.employeeBelongsToBranch === true ? (
+            <span className="table-inside-text">
+              {currentLanguage === "en"
+                ? record.employeeBranch.branchNameEnglish
+                : record.employeeBranch.branchNameArabic}
+            </span>
+          ) : (
+            <span className="table-inside-text">{t("Home-visit")}</span>
+          )}
+        </span>
+      ),
     },
     {
       title: <span className="table-text">{t("Email")}</span>,
@@ -334,10 +347,14 @@ const EmployeeMain = () => {
           <span className="icon-spaceing-dlt-edit">
             <i
               className="icon-text-edit icon-EDT-DLT-color"
+              title={t("Edit")}
+              aria-label={t("Edit")}
               onClick={() => handleEditClick(record)}
             ></i>
             <i
               className="icon-close icon-EDT-DLT-color"
+              title={t("Delete")}
+              aria-label={t("Delete")}
               onClick={() => openDeleteModal(record)}
             ></i>
           </span>
@@ -565,23 +582,27 @@ const EmployeeMain = () => {
             <Paper className="Employee-Main-paper">
               <Row>
                 <Col lg={6} md={6} sm={6}>
-                  <span className="text-labels">{t("Employee-name")}</span>
+                  <span className="text-labels">
+                    {t("Employee-name-english")}
+                  </span>
                   <TextField
                     name="EmployeeEnglishName"
                     value={employeeMainState.EmployeeEnglishName}
-                    placeholder={t("Employee-name")}
+                    placeholder={t("Employee-name-english")}
                     onChange={handleChangeEmployeeMain}
                     labelClass="d-none"
                     className="text-fiels-employeeMain"
                   />
                 </Col>
-                <Col lg={6} md={6} sm={6} className="text-end">
-                  <span className="text-labels">اسم الموظف</span>
+                <Col lg={6} md={6} sm={6}>
+                  <span className="text-labels">
+                    {t("Employee-name-arabic")}
+                  </span>
                   <TextField
                     name="EmployeeArabicName"
                     value={employeeMainState.EmployeeArabicName}
                     onChange={handleChangeEmployeeMain}
-                    placeholder="اسم الموظف"
+                    placeholder={t("Employee-name-arabic")}
                     labelClass="d-none"
                     className="text-fiels-employeeMain-arabic"
                   />
@@ -681,7 +702,7 @@ const EmployeeMain = () => {
                   />
                   <Button
                     icon={<i className="icon-user-plus icon-space"></i>}
-                    text={t("Add Employee")}
+                    text={t("Add-employee")}
                     onClick={openAddEditMoadal}
                     className="Employee-Add-Btn"
                   />

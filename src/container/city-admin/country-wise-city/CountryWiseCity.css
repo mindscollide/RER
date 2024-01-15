@@ -6,13 +6,6 @@
   background-color: #ffffff !important;
 }
 
-.btn-col-class {
-  display: flex !important;
-  justify-content: start !important;
-  align-items: center !important;
-  gap: 5px !important;
-}
-
 .save-btn-Country-City-Wise {
   font-size: 14px !important;
   font-weight: 500 !important;

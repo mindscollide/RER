@@ -42,8 +42,6 @@ const AddEditEmployee = ({
   console.log(addNewEmployeeData, "addNewEmployeeDataerrr");
 
   const [homeVisit, setHomeVisit] = useState(null);
-  const [branchEmployee, setBranchEmployee] = useState(null);
-  const [isCheckbox, setIsCheckbox] = useState(false);
 
   // states for employee Main in dropdown
   const [addEditEmployeeOption, setAddEditEmployeeOption] = useState([]);
@@ -100,16 +98,16 @@ const AddEditEmployee = ({
 
   // Use useEffect to update state when selectedEmployee changes
   useEffect(() => {
-    if (selectedEmployee) {
+    if (selectedEmployee && selectedEmployee.employeeBranch) {
       setEmployeeMain({
-        EmployeeEnglishName: selectedEmployee.employeeEnglishName || "",
-        EmployeeNameArabic: selectedEmployee.employeeNameArabic || "",
-        EmployeeEmail: selectedEmployee.employeeEmail || "",
-        IsEmployeeActive: selectedEmployee.isEmployeeActive || false,
+        EmployeeEnglishName: selectedEmployee.employeeEnglishName,
+        EmployeeNameArabic: selectedEmployee.employeeNameArabic,
+        EmployeeEmail: selectedEmployee.employeeEmail,
+        IsEmployeeActive: selectedEmployee.isEmployeeActive,
         EmployeeBelongsToBranch: true,
-        BranchID: selectedEmployee.employeeBranch.branchID || 1,
+        BranchID: selectedEmployee.employeeBranch.branchID,
         CityID: Number(localStorage.getItem("cityID")),
-        employeeID: selectedEmployee.employeeID || 0,
+        employeeID: selectedEmployee.employeeID,
       });
 
       const branchDetails = {
@@ -165,20 +163,12 @@ const AddEditEmployee = ({
     setHomeVisit(e.target.value);
   };
 
-  const branchEmployeeRadioChange = (e) => {
-    setBranchEmployee(e.target.value);
-  };
-
   const onCloseAddEditModal = () => {
     setAddEditModal(false);
   };
 
   const onCancelModalHandler = () => {
     setAddEditModal(false);
-  };
-
-  const handleCheckboxChange = (e) => {
-    setIsCheckbox(e.target.checked);
   };
 
   const employeeeAddHandler = () => {
@@ -260,23 +250,25 @@ const AddEditEmployee = ({
             </Row>
             <Row>
               <Col lg={6} md={6} sm={6}>
-                <span className="text-labels">{t("Employee-name")}</span>
+                <span className="text-labels">
+                  {t("Employee-name-english")}
+                </span>
                 <TextField
                   name="EmployeeEnglishName"
                   value={employeeMain.EmployeeEnglishName}
                   onChange={handleChangeEmployee}
-                  placeholder={t("Employee-name")}
+                  placeholder={t("Employee-name-english")}
                   labelClass="d-none"
                   className="text-fields-addEdit"
                 />
               </Col>
-              <Col lg={6} md={6} sm={6} className="text-end">
-                <span className="text-labels">اسم الموظف</span>
+              <Col lg={6} md={6} sm={6}>
+                <span className="text-labels">{t("Employee-name-arabic")}</span>
                 <TextField
                   name="EmployeeNameArabic"
                   value={employeeMain.EmployeeNameArabic}
                   onChange={handleChangeEmployee}
-                  placeholder="اسم الموظف"
+                  placeholder={t("Employee-name-arabic")}
                   labelClass="d-none"
                   className="text-fiels-employeeMain-arabic"
                 />

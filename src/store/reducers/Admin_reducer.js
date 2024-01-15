@@ -61,6 +61,8 @@ const initialState = {
   servicesCity: [],
   cityBranchWiseServicesList: [],
   citybranchShiftServicesListData: [],
+  getAllBranchShiftCounterData: null,
+  getServiceWiseCountryData: null,
 };
 
 const adminReducer = (state = initialState, action) => {
@@ -962,6 +964,36 @@ const adminReducer = (state = initialState, action) => {
       return {
         ...state,
         citybranchShiftServicesListData: [],
+        admin_ResponseMessage: action.message,
+      };
+
+    // get All City Branch Shift Counter Services in Counter Page global Admin
+    case actions.GET_ALL_CITY_BRANCH_SHIFT_COUNTER_SERVICE_SUCCESS:
+      return {
+        ...state,
+        getAllBranchShiftCounterData: action.response,
+        admin_ResponseMessage: action.message,
+      };
+
+    case actions.GET_ALL_CITY_BRANCH_SHIFT_COUNTER_SERVICE_FAIL:
+      return {
+        ...state,
+        getAllBranchShiftCounterData: null,
+        admin_ResponseMessage: action.message,
+      };
+
+    // get All service wise country list in global Admin
+    case actions.GET_SERVICE_WISE_COUNTRY_SUCCESS:
+      return {
+        ...state,
+        getServiceWiseCountryData: action.response,
+        admin_ResponseMessage: action.message,
+      };
+
+    case actions.GET_SERVICE_WISE_COUNTRY_FAIL:
+      return {
+        ...state,
+        getServiceWiseCountryData: null,
         admin_ResponseMessage: action.message,
       };
 

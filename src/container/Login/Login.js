@@ -1,4 +1,4 @@
-import React, { Fragment, useEffect, useState } from "react";
+import React, { Fragment, useEffect, useRef, useState } from "react";
 import { Container, Col, Row, InputGroup, Form } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
@@ -13,6 +13,8 @@ const Login = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { t, i18n } = useTranslation();
+  const passwordInputRef = useRef(null);
+  const loginButtonRef = useRef(null);
 
   const [errorBar, setErrorBar] = useState("");
 
@@ -100,6 +102,22 @@ const Login = () => {
     }
   };
 
+  const handleEnterKey = (e, nextRef) => {
+    if (e.key === "Enter") {
+      e.preventDefault();
+      if (nextRef && nextRef.current) {
+        nextRef.current.focus();
+      }
+    }
+  };
+
+  useEffect(() => {
+    // Focus on the login button when the component mounts
+    if (loginButtonRef.current) {
+      loginButtonRef.current.tabIndex = 0;
+    }
+  }, []);
+
   // navigate to forgot page
   const navigateToForgot = () => {
     navigate("/Forgot");
@@ -143,6 +161,9 @@ const Login = () => {
                             placeholder={t("Email-id")}
                             value={auditCredentials.UserName}
                             onChange={setCredentialHandler}
+                            onKeyDown={(e) =>
+                              handleEnterKey(e, passwordInputRef)
+                            } // added onKeyDown event
                             aria-label="Username"
                             aria-describedby="basic-addon1"
                           />
@@ -172,11 +193,18 @@ const Login = () => {
                             <i className="icon-lock"></i>
                           </InputGroup.Text>
                           <Form.Control
+                            ref={passwordInputRef}
                             name="Password"
                             type="Password"
                             className="form-comtrol-textfield"
                             placeholder={t("password")}
                             value={auditCredentials.Password}
+                            onKeyDown={(e) => {
+                              if (e.key === "Enter") {
+                                e.preventDefault();
+                                loginValidateHandler(e);
+                              }
+                            }}
                             onChange={setCredentialHandler}
                             aria-label="Username"
                             aria-describedby="basic-addon1"
@@ -204,6 +232,7 @@ const Login = () => {
                       className="signIn-Signup-btn-col mb-2"
                     >
                       <Button
+                        ref={loginButtonRef}
                         text={t("Login")}
                         className="login-btn"
                         onClick={loginValidateHandler}

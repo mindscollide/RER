@@ -72,7 +72,9 @@ const CountryWiseCity = () => {
       ),
     },
     {
-      title: <span className="table-text">{t("Home-visit-charges-(Riyal)")}</span>,
+      title: (
+        <span className="table-text">{t("Home-visit-charges-(Riyal)")}</span>
+      ),
       dataIndex: "homeVisitCharges",
       key: "homeVisitCharges",
       width: "200px",
@@ -162,7 +164,7 @@ const CountryWiseCity = () => {
       console.error("Invalid input. Please enter a value between 10 and 100.");
     }
   };
-  
+
   const handleRevert = () => {
     try {
       if (cityServiceListData !== null) {
@@ -221,7 +223,12 @@ const CountryWiseCity = () => {
           <Col lg={12} md={12} sm={12}>
             <Paper className="Country-City-Wise-paper">
               <Row>
-                <Col lg={12} md={12} sm={12} className="btn-col-class">
+                <Col
+                  lg={12}
+                  md={12}
+                  sm={12}
+                  className="d-flex justify-content-center gap-1"
+                >
                   <Button
                     icon={<i className="icon-save icon-space"></i>}
                     text={t("Save")}

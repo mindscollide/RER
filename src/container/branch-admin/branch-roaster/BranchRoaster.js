@@ -114,7 +114,7 @@ const BranchRoaster = () => {
       title: <span className="table-text">{t("Service")}</span>,
       dataIndex: "shiftService",
       key: "shiftService",
-      width: "400px",
+      width: "600px",
       render: (text, record) => (
         <span className="table-inside-text">
           {currentLanguage === "en"
@@ -127,8 +127,6 @@ const BranchRoaster = () => {
       title: <span className="table-text">{t("Counter")}</span>,
       dataIndex: "branchCounterModel",
       key: "branchCounterModel",
-      width: "200px",
-      align: "center",
       render: (text, record) => (
         <span className="table-inside-text">
           {currentLanguage === "en"
@@ -141,8 +139,6 @@ const BranchRoaster = () => {
       title: <span className="table-text">{t("Shift")}</span>,
       dataIndex: "branchShift",
       key: "branchShift",
-      width: "200px",
-      align: "center",
       render: (text, record) => (
         <span className="table-inside-text">
           {currentLanguage === "en"
@@ -155,8 +151,6 @@ const BranchRoaster = () => {
       title: "",
       dataIndex: "close",
       key: "close",
-      width: "200px",
-      align: "center",
       render: (text, record) => (
         <>
           <span>
