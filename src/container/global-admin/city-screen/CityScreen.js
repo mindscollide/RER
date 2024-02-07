@@ -25,6 +25,9 @@ const CityScreen = () => {
   const searchParamsCountry = new URLSearchParams(location.search);
   const CountryID = Number(searchParamsCountry.get("countryID"));
 
+  const searchServiceParams = new URLSearchParams(location.search);
+  const serviceID = Number(searchServiceParams.get("serviceID"));
+
   // To get Country List in dropdown
   const getCountryListData = useSelector(
     (state) => state.admin.getCountryListData
@@ -40,13 +43,14 @@ const CityScreen = () => {
     (state) => state.admin.servicesCity
   );
 
+  // state for render initial
+  const [isInitialRender, setIsInitialRender] = useState(true);
+  const [searchPerformed, setSearchPerformed] = useState(false);
+
   //States for Storing Country Drop down
   const [countryOptionEnglish, setCountryOptionEnglish] = useState([]);
   const [countryOptionArabic, setCountryOptionArabic] = useState([]);
-  const [countryOptionValue, setCountryOptionValue] = useState({
-    value: 1,
-    label: "",
-  });
+  const [countryOptionValue, setCountryOptionValue] = useState(null);
 
   //States for storing Services Dropdown
   const [servicesOptionsEnglish, setServicesOptionsEnglish] = useState([]);
@@ -68,6 +72,35 @@ const CityScreen = () => {
       setRows([]);
     };
   }, []);
+
+  useEffect(() => {
+    // Check if serviceID exists in URL parameters
+    const searchServiceParams = new URLSearchParams(location.search);
+    const initialServiceID = Number(searchServiceParams.get("serviceID"));
+
+    // If serviceID exists, perform the initial search
+    if (initialServiceID) {
+      // Update the state or perform any action to trigger the initial search
+      setServicesOptionsValue({
+        value: initialServiceID,
+        label: "Service Name", // You can set a default label or update it based on the fetched data
+      });
+
+      // Call the API with the initial serviceID
+      const data = {
+        CountryID: Number(CountryID),
+        ServiceID: initialServiceID,
+      };
+      dispatch(getAllCityServicesMainApi(t, navigate, loadingFlag, data));
+
+      setCountryOptionValue(null);
+      setServicesOptionsValue(null);
+      setIsInitialRender(true);
+    } else {
+      setServicesOptionsValue(null);
+      setIsInitialRender(false);
+    }
+  }, [location.search]);
 
   // show countries in city dropdown
   useEffect(() => {
@@ -155,26 +188,112 @@ const CityScreen = () => {
     }
   }, [getCountryListData, currentLanguage]);
 
-  // useEffect to update data in table
+  // useEffect to update service dropdown
   useEffect(() => {
-    if (getGlobalServiceData !== null && Array.isArray(getGlobalServiceData)) {
-      setServicesOptionsEnglish(
-        getGlobalServiceData.map((item) => ({
-          value: item.serviceID,
-          label: item.serviceNameEnglish,
-        }))
-      );
-      setServicesOptionsArabic(
-        getGlobalServiceData.map((item) => ({
-          value: item.serviceID,
-          label: item.serviceNameArabic,
-        }))
-      );
-    } else {
-      setCountryOptionEnglish([]);
-      setCountryOptionArabic([]);
+    try {
+      if (
+        getGlobalServiceData &&
+        Object.keys(getGlobalServiceData).length > 0
+      ) {
+        setServicesOptionsEnglish(
+          getGlobalServiceData.map((item) => ({
+            value: item.serviceID,
+            label: item.serviceNameEnglish,
+          }))
+        );
+        setServicesOptionsArabic(
+          getGlobalServiceData.map((item) => ({
+            value: item.serviceID,
+            label: item.serviceNameArabic,
+          }))
+        );
+
+        let data;
+        if (currentLanguage === "en") {
+          if (
+            serviceID !== null &&
+            serviceID !== undefined &&
+            serviceID !== 0
+          ) {
+            const foundCountry = getGlobalServiceData.find(
+              (country) => country.serviceID === serviceID
+            );
+            if (foundCountry) {
+              data = {
+                value: foundCountry.serviceID,
+                label: foundCountry.serviceNameEnglish,
+              };
+              // setServicesOptionsValue(data);
+            } else {
+              data = {
+                value: serviceID,
+                label: t("No Service Found"),
+              };
+            }
+          }
+          //  else {
+          //   data = {
+          //     value: getGlobalServiceData[0].serviceID,
+          //     label: getGlobalServiceData[0].serviceNameEnglish,
+          //   };
+          // }
+          setServicesOptionsValue(data);
+        } else {
+          if (
+            serviceID !== null &&
+            serviceID !== undefined &&
+            serviceID !== 0
+          ) {
+            const foundCity = getGlobalServiceData.find(
+              (country) => country.serviceID === serviceID
+            );
+            if (foundCity) {
+              data = {
+                value: foundCity.serviceID,
+                label: foundCity.serviceNameArabic, // Change to Arabic name if available
+              };
+            } else {
+              data = {
+                value: serviceID,
+                label: t("No Service Found"),
+              };
+            }
+          } else {
+            data = {
+              value: getGlobalServiceData[0].serviceID,
+              label: getGlobalServiceData[0].serviceNameArabic, // Change to Arabic name for the first country in the list
+            };
+          }
+          setServicesOptionsValue(data);
+        }
+      } else {
+        setServicesOptionsEnglish([]);
+        setServicesOptionsArabic([]);
+      }
+    } catch (error) {
+      console.log(error, "errorerrorerror");
     }
   }, [getGlobalServiceData, currentLanguage]);
+
+  // useEffect(() => {
+  //   if (getGlobalServiceData !== null && Array.isArray(getGlobalServiceData)) {
+  //     setServicesOptionsEnglish(
+  //       getGlobalServiceData.map((item) => ({
+  //         value: item.serviceID,
+  //         label: item.serviceNameEnglish,
+  //       }))
+  //     );
+  //     setServicesOptionsArabic(
+  //       getGlobalServiceData.map((item) => ({
+  //         value: item.serviceID,
+  //         label: item.serviceNameArabic,
+  //       }))
+  //     );
+  //   } else {
+  //     setCountryOptionEnglish([]);
+  //     setCountryOptionArabic([]);
+  //   }
+  // }, [getGlobalServiceData, currentLanguage]);
 
   //onChange handler of country dropdown
   const onChangeCountryHandler = (countryValue) => {
@@ -186,16 +305,20 @@ const CityScreen = () => {
 
   //onChange handler of Serivces dropdown
   const onChangeServicesHandler = (serviceValue) => {
-    setServicesOptionsValue(serviceValue.value);
+    setServicesOptionsValue({
+      value: serviceValue.value,
+      label: serviceValue.label,
+    });
   };
 
   //Search Button Api hit
   const handleSearchApiHit = () => {
     let data = {
-      CountryID: Number(countryOptionValue.value),
-      ServiceID: Number(servicesOptionsValue),
+      CountryID: Number(countryOptionValue?.value),
+      ServiceID: Number(servicesOptionsValue?.value),
     };
     dispatch(getAllCityServicesMainApi(t, navigate, loadingFlag, data));
+    setSearchPerformed(true);
   };
 
   useEffect(() => {
@@ -313,6 +436,7 @@ const CityScreen = () => {
                     <Select
                       isSearchable={true}
                       className="select-dropdown-all"
+                      value={servicesOptionsValue}
                       options={
                         currentLanguage === "en"
                           ? servicesOptionsEnglish
@@ -333,7 +457,9 @@ const CityScreen = () => {
               </Row>
               <Row className="mt-2">
                 <Col lg={12} md={12} sm={12}>
-                  <Table rows={rows} column={columns} pagination={false} />
+                  {(isInitialRender || searchPerformed) && (
+                    <Table rows={rows} column={columns} pagination={false} />
+                  )}
                 </Col>
               </Row>
             </Paper>

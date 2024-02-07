@@ -52,6 +52,9 @@ const EmployeeMain = () => {
     (state) => state.admin.admin_ResponseMessage
   );
 
+  const [employeeSearchTerm, setEmployeeSearchTerm] = useState("");
+  const [employeeArabic, setEmployeeArabic] = useState("");
+
   // states for employee Main in dropdown
   const [employeeMainOption, setEmployeeMainOption] = useState([]);
   const [employeeMainOptionValue, setEmployeeMainOptionValue] = useState(null);
@@ -66,7 +69,7 @@ const EmployeeMain = () => {
 
   // edit Icon click to open modal
   const [selectedEmployee, setSelectedEmployee] = useState(null);
-
+  console.log(selectedEmployee, "selectedEmployeeselectedEmployee");
   // states for employeeMain states
   const [employeeMainState, setEmployeeMainState] = useState({
     EmployeeEnglishName: "",
@@ -77,6 +80,8 @@ const EmployeeMain = () => {
     isBranchEmployee: false,
     isHomeVisit: false,
   });
+
+  console.log(employeeMainState, "employeeMainStateemployeeMainState");
 
   //delete modal states
   const [deleteModal, setDeleteModal] = useState(false);
@@ -90,7 +95,11 @@ const EmployeeMain = () => {
 
   const callApi = async () => {
     await dispatch(getCityBranchListApi(t, navigate, loadingFlag));
-    await dispatch(getCityEmployeeMainApi(t, navigate, loadingFlag));
+
+    let newData = {
+      CityID: Number(localStorage.getItem("cityID")),
+    };
+    await dispatch(getCityEmployeeMainApi(t, navigate, loadingFlag, newData));
   };
 
   useEffect(() => {
@@ -210,8 +219,8 @@ const EmployeeMain = () => {
 
   // handler for eedit Icon
   const handleEditClick = (record) => {
-    dispatch(addEditFlagModal(true));
     setSelectedEmployee(record);
+    dispatch(addEditFlagModal(true));
     setAddEditModal(true);
   };
 
@@ -227,6 +236,10 @@ const EmployeeMain = () => {
       isBranchEmployee: false,
       isHomeVisit: false,
     });
+    let newData = {
+      CityID: Number(localStorage.getItem("cityID")),
+    };
+    dispatch(getCityEmployeeMainApi(t, navigate, loadingFlag, newData));
     setBranchEmployeeOption(null);
     setBranchEmployeeOptionTwo(null);
     setEmployeeMainOptionValue(null);
@@ -243,10 +256,12 @@ const EmployeeMain = () => {
 
   const handleBranchEmployeeChange = (e) => {
     setBranchEmployeeOption(e.target.value);
+    setBranchEmployeeOptionTwo(null);
   };
 
   const handleBranchEmployeeChangesTwo = (e) => {
     setBranchEmployeeOptionTwo(e.target.value);
+    setBranchEmployeeOption(null);
   };
 
   // open add edit modal on Button Click
@@ -363,6 +378,57 @@ const EmployeeMain = () => {
     },
   ];
 
+  const handlerSearch = () => {
+    // Create a copy of the data to avoid mutating the original array
+    const copyData = [...cityEmployeeMain];
+
+    // Filter the copied data based on the search criteria
+    const filteredRows = copyData.filter((employee) => {
+      const englishName = employee.employeeEnglishName
+        ? employee.employeeEnglishName.toLowerCase()
+        : "";
+      const arabicName = employee.employeeNameArabic
+        ? employee.employeeNameArabic.toLowerCase()
+        : "";
+      const email = employee.employeeEmail
+        ? employee.employeeEmail.toLowerCase()
+        : "";
+      const employeeId = Number(employee.employeeID);
+
+      // Check if the employee matches the search criteria
+      const englishNameMatch =
+        employeeMainState.EmployeeEnglishName !== "" &&
+        englishName.includes(
+          employeeMainState.EmployeeEnglishName.toLowerCase()
+        );
+      const arabicNameMatch =
+        employeeMainState.EmployeeArabicName !== "" &&
+        arabicName.includes(employeeMainState.EmployeeArabicName.toLowerCase());
+      const emailMatch =
+        employeeMainState.EmployeeEmail !== "" &&
+        email &&
+        email.includes(employeeMainState.EmployeeEmail.toLowerCase()); // Check for null email
+      const employeeIdMatch =
+        employeeMainState.EmployeeId !== 0 &&
+        Number(employeeId) === Number(employeeMainState.EmployeeId);
+
+      // Return true if any search criteria match, or if no search criteria are provided
+      return (
+        englishNameMatch ||
+        arabicNameMatch ||
+        emailMatch ||
+        employeeIdMatch ||
+        (!employeeMainState.EmployeeEnglishName &&
+          !employeeMainState.EmployeeArabicName &&
+          !employeeMainState.EmployeeEmail &&
+          !employeeMainState.EmployeeId)
+      );
+    });
+
+    // Update the table rows with the filtered data
+    setRows(filteredRows);
+  };
+
   useEffect(() => {
     if (
       responseMessage !== null &&
@@ -414,17 +480,19 @@ const EmployeeMain = () => {
           }),
           3000
         );
-      } else if (responseMessage === t("something_went_wrong")) {
-        setTimeout(
-          setEmployeeNotification({
-            ...employeeNotification,
-            notificationFlag: true,
-            notificationMessage: t("something_went_wrong"),
-            severity: "error",
-          }),
-          3000
-        );
-      } else if (
+      }
+      // else if (responseMessage === t("something_went_wrong")) {
+      //   setTimeout(
+      //     setEmployeeNotification({
+      //       ...employeeNotification,
+      //       notificationFlag: true,
+      //       notificationMessage: t("something_went_wrong"),
+      //       severity: "error",
+      //     }),
+      //     3000
+      //   );
+      // }
+      else if (
         responseMessage ===
         t("Admin_AdminServiceManager_UpdateExistingEmployeeOfCity_01")
       ) {
@@ -601,7 +669,9 @@ const EmployeeMain = () => {
                   <TextField
                     name="EmployeeArabicName"
                     value={employeeMainState.EmployeeArabicName}
+                    // value={employeeArabic}
                     onChange={handleChangeEmployeeMain}
+                    // onChange={(e) => setEmployeeArabic(e.target.value)}
                     placeholder={t("Employee-name-arabic")}
                     labelClass="d-none"
                     className="text-fiels-employeeMain-arabic"
@@ -639,7 +709,22 @@ const EmployeeMain = () => {
                   lg={2}
                   md={2}
                   sm={2}
-                  className="d-flex justify-content-center mt-4"
+                  className="d-flex justify-content-start mt-4"
+                >
+                  <Radio.Group
+                    onChange={handleBranchEmployeeChangesTwo}
+                    value={branchEmployeeOptionTwo}
+                  >
+                    <Radio value="option1" className="checkbox-label">
+                      {t("Home-visit")}
+                    </Radio>
+                  </Radio.Group>
+                </Col>
+                <Col
+                  lg={2}
+                  md={2}
+                  sm={2}
+                  className="d-flex justify-content-start mt-4"
                 >
                   <Radio.Group
                     onChange={handleBranchEmployeeChange}
@@ -659,7 +744,7 @@ const EmployeeMain = () => {
                     onChange={onChangeEmployeeBranch}
                   />
                 </Col>
-                <Col lg={3} md={3} sm={3} className="mt-4">
+                <Col lg={4} md={4} sm={4} className="mt-4">
                   <Checkbox
                     checked={employeeMainState.isActive}
                     onChange={handleChangeEmployeeMain}
@@ -669,22 +754,6 @@ const EmployeeMain = () => {
                     }
                   />
                 </Col>
-
-                <Col
-                  lg={3}
-                  md={3}
-                  sm={3}
-                  className="d-flex justify-content-end mt-4"
-                >
-                  <Radio.Group
-                    onChange={handleBranchEmployeeChangesTwo}
-                    value={branchEmployeeOptionTwo}
-                  >
-                    <Radio value="option1" className="checkbox-label">
-                      {t("Home-visit")}
-                    </Radio>
-                  </Radio.Group>
-                </Col>
               </Row>
 
               <Row>
@@ -692,6 +761,7 @@ const EmployeeMain = () => {
                   <Button
                     icon={<i className="icon-search city-icon-space"></i>}
                     text={t("Search")}
+                    onClick={handlerSearch}
                     className="Search-Icon-Btn"
                   />
                   <Button

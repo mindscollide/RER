@@ -65,6 +65,7 @@ import {
   getAllCityBranchShiftWiseServices,
   getAllCityBranchShiftCounterServices,
   getServiceWiseCountryList,
+  updateServiceWiseCountryList,
 } from "../../commen/apis/Api_config";
 import { adminURL } from "../../commen/apis/Api_ends_points";
 import moment from "moment";
@@ -1108,6 +1109,26 @@ const addBranchRoasterEntryApiFunction = (
               await dispatch(
                 addBrandRoasterEntryFailed(
                   t("Admin_AdminServiceManager_GetBranchServices_03")
+                )
+              );
+              await dispatch(loader_Actions(false));
+            } else if (
+              response.data.responseResult.responseMessage ===
+              "Admin_AdminServiceManager_AddBranchRoasterEntry_07"
+            ) {
+              await dispatch(
+                addBrandRoasterEntryFailed(
+                  t("Admin_AdminServiceManager_AddBranchRoasterEntry_07")
+                )
+              );
+              await dispatch(loader_Actions(false));
+            } else if (
+              response.data.responseResult.responseMessage ===
+              "Admin_AdminServiceManager_AddBranchRoasterEntry_08"
+            ) {
+              await dispatch(
+                addBrandRoasterEntryFailed(
+                  t("Admin_AdminServiceManager_AddBranchRoasterEntry_08")
                 )
               );
               await dispatch(loader_Actions(false));
@@ -2461,7 +2482,7 @@ const updateCityServiceListApi = (t, navigate, loadingFlag, data) => {
             ) {
               await dispatch(
                 updateCityServiceListSuccess(
-                  t("Admin_AdminServiceManager_UpdateBranchServices_01")
+                  t("Admin_AdminServiceManager_UpdateCityServiceList_01")
                 )
               );
               await dispatch(getCityServiceListApi(t, navigate, loadingFlag));
@@ -2663,7 +2684,7 @@ const updateCityBranchServiceListApi = (t, navigate, loadingFlag, newData) => {
             ) {
               await dispatch(
                 updateCityBranchServiceSuccess(
-                  t("Admin_AdminServiceManager_UpdateBranchServices_01")
+                  t("Admin_AdminServiceManager_UpdateCityBranchServices_01")
                 )
               );
               await dispatch(
@@ -2853,13 +2874,13 @@ const getCityEmployeeClear = (message) => {
     message: message,
   };
 };
-const getCityEmployeeMainApi = (t, navigate, loadingFlag, value) => {
-  let data;
-  if (value !== null && value !== undefined) {
-    data = { CityID: Number(value) };
-  } else {
-    data = { CityID: Number(localStorage.getItem("cityID")) };
-  }
+const getCityEmployeeMainApi = (t, navigate, loadingFlag, data) => {
+  // let data;
+  // if (value !== null && value !== undefined) {
+  //   data = { CityID: Number(value) };
+  // } else {
+  //   data = { CityID: Number(localStorage.getItem("cityID")) };
+  // }
 
   return async (dispatch) => {
     if (!loadingFlag) {
@@ -2879,7 +2900,7 @@ const getCityEmployeeMainApi = (t, navigate, loadingFlag, value) => {
       .then(async (response) => {
         if (response.data.responseCode === 200) {
           if (response.data.responseCode === 417) {
-            dispatch(getCityEmployeeMainApi(t, navigate, loadingFlag, value));
+            dispatch(getCityEmployeeMainApi(t, navigate, loadingFlag, data));
           } else if (response.data.responseResult.isExecuted === true) {
             if (
               response.data.responseResult.responseMessage ===
@@ -3009,7 +3030,12 @@ const addCityEmployeeMainApi = (
               });
 
               await setAddEditModal(false);
-              await dispatch(getCityEmployeeMainApi(t, navigate, loadingFlag));
+              let data = {
+                CityID: Number(localStorage.getItem("cityID")),
+              };
+              await dispatch(
+                getCityEmployeeMainApi(t, navigate, loadingFlag, data)
+              );
               await dispatch(
                 addNewEmployeeSuccess(
                   response.data.responseResult.employeeAddedUpdated,
@@ -3132,7 +3158,10 @@ const updateExistingEmployeeMainApi = (
                   t("Admin_AdminServiceManager_UpdateExistingEmployeeOfCity_01")
                 )
               );
-              dispatch(getCityEmployeeMainApi(t, navigate, loadingFlag));
+              let data = {
+                CityID: Number(localStorage.getItem("cityID")),
+              };
+              dispatch(getCityEmployeeMainApi(t, navigate, loadingFlag, data));
               await dispatch(loader_Actions(false));
             } else if (
               response.data.responseResult.responseMessage ===
@@ -3996,10 +4025,13 @@ const updateWorkingDaysApi = (t, navigate, loadingFlag, data) => {
             ) {
               await dispatch(
                 updateWorkingDaysSuccess(
-                  t("Admin_AdminServiceManager_GetCountryWorkingDays_01")
+                  response.data.responseResult.responseMessage,
+                  t("Admin_AdminServiceManager_UpdateCountryWorkingDays_01")
                 )
               );
-              dispatch(getCountryWorkingDaysApi(t, navigate, loadingFlag));
+              await dispatch(
+                getCountryWorkingDaysApi(t, navigate, loadingFlag)
+              );
             } else if (
               response.data.responseResult.responseMessage ===
               "Admin_AdminServiceManager_UpdateCountryWorkingDays_02"
@@ -4113,20 +4145,7 @@ const getCountryCitiesApi = (t, navigate, loadingFlag, apiCallFlag, cityID) => {
                   t("Admin_AdminServiceManager_GetCountryCities_01")
                 )
               );
-              if (apiCallFlag === 2) {
-                await dispatch(
-                  getCityEmployeeMainApi(
-                    t,
-                    navigate,
-                    loadingFlag,
-                    response.data.responseResult?.cities[0]?.cityID
-                  )
-                );
-              } else if (apiCallFlag === 3) {
-                await dispatch(
-                  getCityEmployeeMainApi(t, navigate, loadingFlag, cityID)
-                );
-              } else if (apiCallFlag === 1) {
+              if (apiCallFlag === 1) {
                 await dispatch(loader_Actions(false));
               }
               await dispatch(loader_Actions(false));
@@ -4708,6 +4727,7 @@ const updateCountryServiceMainApi = (t, navigate, loadingFlag, data) => {
             ) {
               await dispatch(
                 updateCountryServiceSuccess(
+                  response.data.responseResult.responseMessage,
                   t("Admin_AdminServiceManager_UpdateCountryServicesList_01")
                 )
               );
@@ -6553,6 +6573,97 @@ const getServiceWiseCountryMainApi = (t, navigate, loadingFlag) => {
 
 // get service wise country in service page in global admin End
 
+// update service wise country in service page in global admin start
+
+const updateServiceCountrySuccess = (response, message) => {
+  return {
+    type: actions.UPDATE_SERVICE_COUNTRY_LIST_SUCCESS,
+    response: response,
+    message: message,
+  };
+};
+
+const updateServiceCountryFail = (message) => {
+  return {
+    type: actions.UPDATE_SERVICE_COUNTRY_LIST_FAIL,
+    message: message,
+  };
+};
+
+const updateServiceCountryMainApi = (t, navigate, loadingFlag, data) => {
+  return async (dispatch) => {
+    if (!loadingFlag) {
+      dispatch(loader_Actions(true));
+    }
+    let form = new FormData();
+    form.append("RequestMethod", updateServiceWiseCountryList.RequestMethod);
+    form.append("RequestData", JSON.stringify(data));
+    await axios({
+      method: "post",
+      url: adminURL,
+      data: form,
+      headers: {
+        _token: JSON.parse(localStorage.getItem("token")),
+      },
+    })
+      .then(async (response) => {
+        if (response.data.responseCode === 200) {
+          if (response.data.responseCode === 417) {
+            dispatch(
+              updateServiceCountryMainApi(t, navigate, loadingFlag, data)
+            );
+          } else if (response.data.responseResult.isExecuted === true) {
+            if (
+              response.data.responseResult.responseMessage ===
+              "Admin_AdminServiceManager_UpdateServiceWiseCountryList_01"
+            ) {
+              await dispatch(
+                updateServiceCountrySuccess(
+                  response.data.responseResult.countryServices,
+                  t("Admin_AdminServiceManager_UpdateServiceWiseCountryList_01")
+                )
+              );
+              await dispatch(
+                getServiceWiseCountryMainApi(t, navigate, loadingFlag)
+              );
+            } else if (
+              response.data.responseResult.responseMessage ===
+              "Admin_AdminServiceManager_UpdateServiceWiseCountryList_02"
+            ) {
+              await dispatch(
+                updateServiceCountryFail(
+                  t("Admin_AdminServiceManager_UpdateServiceWiseCountryList_02")
+                )
+              );
+              await dispatch(loader_Actions(false));
+            } else if (
+              response.data.responseResult.responseMessage ===
+              "Admin_AdminServiceManager_UpdateServiceWiseCountryList_03"
+            ) {
+              dispatch(updateServiceCountryFail(t("something_went_wrong")));
+              await dispatch(loader_Actions(false));
+            } else {
+              dispatch(updateServiceCountryFail(t("something_went_wrong")));
+              await dispatch(loader_Actions(false));
+            }
+          } else {
+            await dispatch(updateServiceCountryFail(t("something_went_wrong")));
+            await dispatch(loader_Actions(false));
+          }
+        } else {
+          await dispatch(updateServiceCountryFail(t("something_went_wrong")));
+          await dispatch(loader_Actions(false));
+        }
+      })
+      .catch((response) => {
+        dispatch(updateServiceCountryFail(t("something_went_wrong")));
+        dispatch(loader_Actions(false));
+      });
+  };
+};
+
+// update service wise country in service page in global admin end
+
 export {
   clearResponseMessageAdmin,
   AdminCleareState,
@@ -6644,4 +6755,5 @@ export {
   getAllBranchShiftWiseServicesMainApi,
   getAllBranchShiftCounterMainApi,
   getServiceWiseCountryMainApi,
+  updateServiceCountryMainApi,
 };

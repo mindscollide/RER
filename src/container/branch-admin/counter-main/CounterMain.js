@@ -460,7 +460,7 @@ const CounterMain = () => {
               </Row>
 
               <Row className="mt-3">
-                <Col lg={6} md={6} sm={6} className="mt-2">
+                <Col lg={5} md={5} sm={5} className="mt-2">
                   <Checkbox
                     checked={newCounter.IsCounterActive}
                     onChange={handleChange}
@@ -472,10 +472,10 @@ const CounterMain = () => {
                 </Col>
 
                 <Col
-                  lg={6}
-                  md={6}
-                  sm={6}
-                  className="d-flex justify-content-end gap-1"
+                  lg={7}
+                  md={7}
+                  sm={7}
+                  className="d-flex justify-content-start gap-1"
                 >
                   <Button
                     icon={<i className="icon-add-circle icon-space"></i>}

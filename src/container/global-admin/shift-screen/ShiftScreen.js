@@ -29,6 +29,9 @@ const ShiftScreen = () => {
   const searchParamsCountry = new URLSearchParams(location.search);
   const CountryID = Number(searchParamsCountry.get("countryID"));
 
+  const searchServiceParams = new URLSearchParams(location.search);
+  const serviceID = Number(searchServiceParams.get("serviceID"));
+
   // To get Country List in dropdown
   const getCountryListData = useSelector(
     (state) => state.admin.getCountryListData
@@ -192,22 +195,86 @@ const ShiftScreen = () => {
 
   // show Services in Services dropdown
   useEffect(() => {
-    if (getGlobalServiceData !== null && Array.isArray(getGlobalServiceData)) {
-      setServicesOptionsEnglish(
-        getGlobalServiceData.map((item) => ({
-          value: item.serviceID,
-          label: item.serviceNameEnglish,
-        }))
-      );
-      setServicesOptionsArabic(
-        getGlobalServiceData.map((item) => ({
-          value: item.serviceID,
-          label: item.serviceNameArabic,
-        }))
-      );
-    } else {
-      setCountryOptionEnglish([]);
-      setCountryOptionArabic([]);
+    try {
+      if (
+        getGlobalServiceData &&
+        Object.keys(getGlobalServiceData).length > 0
+      ) {
+        setServicesOptionsEnglish(
+          getGlobalServiceData.map((item) => ({
+            value: item.serviceID,
+            label: item.serviceNameEnglish,
+          }))
+        );
+        setServicesOptionsArabic(
+          getGlobalServiceData.map((item) => ({
+            value: item.serviceID,
+            label: item.serviceNameArabic,
+          }))
+        );
+
+        let data;
+        if (currentLanguage === "en") {
+          if (
+            serviceID !== null &&
+            serviceID !== undefined &&
+            serviceID !== 0
+          ) {
+            const foundCountry = getGlobalServiceData.find(
+              (country) => country.serviceID === serviceID
+            );
+            if (foundCountry) {
+              data = {
+                value: foundCountry.serviceID,
+                label: foundCountry.serviceNameEnglish,
+              };
+            } else {
+              data = {
+                value: serviceID,
+                label: t("No Service Found"),
+              };
+            }
+          } else {
+            data = {
+              value: getGlobalServiceData[0].serviceID,
+              label: getGlobalServiceData[0].serviceNameEnglish,
+            };
+          }
+          setServicesOptionsValue(data);
+        } else {
+          if (
+            serviceID !== null &&
+            serviceID !== undefined &&
+            serviceID !== 0
+          ) {
+            const foundCity = getGlobalServiceData.find(
+              (country) => country.serviceID === serviceID
+            );
+            if (foundCity) {
+              data = {
+                value: foundCity.serviceID,
+                label: foundCity.serviceNameArabic, // Change to Arabic name if available
+              };
+            } else {
+              data = {
+                value: serviceID,
+                label: t("No Service Found"),
+              };
+            }
+          } else {
+            data = {
+              value: getGlobalServiceData[0].serviceID,
+              label: getGlobalServiceData[0].serviceNameArabic, // Change to Arabic name for the first country in the list
+            };
+          }
+          setServicesOptionsValue(data);
+        }
+      } else {
+        setServicesOptionsEnglish([]);
+        setServicesOptionsArabic([]);
+      }
+    } catch (error) {
+      console.log(error, "errorerrorerror");
     }
   }, [getGlobalServiceData, currentLanguage]);
 
@@ -255,7 +322,10 @@ const ShiftScreen = () => {
 
   //onChange handler of Serivces dropdown
   const onChangeServicesHandler = (serviceValue) => {
-    setServicesOptionsValue(serviceValue.value);
+    setServicesOptionsValue({
+      value: serviceValue.value,
+      label: serviceValue.label,
+    });
   };
 
   //onChange handler of City dropdown
@@ -299,7 +369,7 @@ const ShiftScreen = () => {
   const handleSearchhitBranchShiftEWiseServices = () => {
     let data = {
       CountryID: Number(countryOptionValue.value),
-      ServiceID: Number(servicesOptionsValue),
+      ServiceID: Number(servicesOptionsValue.value),
       CityID: Number(cityOptionsValue),
       BranchID: Number(branchOptionsValue),
       RoasterDate: multiDatePickerDateChangIntoUTC(dateSelector),
@@ -447,7 +517,7 @@ const ShiftScreen = () => {
                     <label className="text-labels">{t("Branch")}</label>
                     <Select
                       isSearchable={true}
-                      isDisabled={cityOptionsValue === null ? true : false}
+                      // isDisabled={cityOptionsValue === null ? true : false}
                       className="select-dropdown-all"
                       options={
                         currentLanguage === "en"
@@ -464,6 +534,7 @@ const ShiftScreen = () => {
                     <Select
                       isSearchable={true}
                       className="select-dropdown-all"
+                      value={servicesOptionsValue}
                       options={
                         currentLanguage === "en"
                           ? servicesOptionsEnglish

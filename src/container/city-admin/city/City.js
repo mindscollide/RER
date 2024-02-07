@@ -15,6 +15,7 @@ import { useTranslation } from "react-i18next";
 import gregorian from "react-date-object/calendars/gregorian";
 import gregorian_en from "react-date-object/locales/gregorian_en";
 import gregorian_ar from "react-date-object/locales/gregorian_ar";
+
 import {
   addCityBranchApi,
   addCityBranchFail,
@@ -752,6 +753,21 @@ const CityAdmin = () => {
               "Admin_AdminServiceManager_DeleteCityBranch_05"
             ),
             severity: "error",
+          }),
+          3000
+        );
+      } else if (
+        responseMessage ===
+        t("Admin_AdminServiceManager_UpdateCityBranchServices_01")
+      ) {
+        setTimeout(
+          setCityNotification({
+            ...cityNotification,
+            notificationFlag: true,
+            notificationMessage: t(
+              "Admin_AdminServiceManager_UpdateCityBranchServices_01"
+            ),
+            severity: "success",
           }),
           3000
         );

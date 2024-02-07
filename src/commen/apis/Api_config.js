@@ -318,6 +318,10 @@ const getServiceWiseCountryList = {
   RequestMethod: "ServiceManager.GetServiceWiseCountryList",
 };
 
+const updateServiceWiseCountryList = {
+  RequestMethod: "ServiceManager.UpdateServiceWiseCountryList",
+};
+
 // ===================================GLOBAL ADMIN END ==========================================//
 
 export {
@@ -392,5 +396,6 @@ export {
   getAllCityBranchShiftWiseServices,
   getAllCityBranchShiftCounterServices,
   getServiceWiseCountryList,
+  updateServiceWiseCountryList,
   // ===================================GLOBAL ADMIN END ==========================================//
 };

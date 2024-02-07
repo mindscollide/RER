@@ -6,7 +6,7 @@ import { Collapse, Switch } from "antd";
 import Select from "react-select";
 import DatePicker from "react-multi-date-picker";
 import { useTranslation } from "react-i18next";
-import { useNavigate } from "react-router";
+import { useLocation, useNavigate } from "react-router";
 import { useDispatch, useSelector } from "react-redux";
 import {
   getAllBranchSiftMainApi,
@@ -21,6 +21,9 @@ const CountryCityWiseShift = () => {
   const navigate = useNavigate();
 
   const dispatch = useDispatch();
+  const location = useLocation();
+  const searchParams = new URLSearchParams(location.search);
+  const cityID = Number(searchParams.get("cityID"));
 
   const Loading = useSelector((state) => state.Loader.Loading);
 
@@ -46,48 +49,113 @@ const CountryCityWiseShift = () => {
     branchDetailModel: null,
     branchShiftServiceList: [],
   });
-  const [citySelectValue, setCitySelectValue] = useState({
-    value: 0,
-    label: "",
-  });
-  const [branchSelectValue, setBranchSelectValue] = useState({
-    value: 0,
-    label: "",
-  });
+  const [citySelectValue, setCitySelectValue] = useState(null);
+  const [cityOptionListEnglish, setCityOptionListEnglish] = useState([]);
+  const [cityOptionListArabic, setCityOptionListArabic] = useState([]);
+
+  const [branchSelectValue, setBranchSelectValue] = useState(null);
+  const [branchSelectEnglish, setBranchSelectEnglish] = useState([]);
+  const [branchSelectArabic, setBranchSelectArabic] = useState([]);
+
   const [isFirstRender, setIsFirstRender] = useState(false);
   //Country City dropdownApi
-  useEffect(() => {
-    dispatch(getCountryCitiesApi(t, navigate, Loading));
+
+  const callApi = async () => {
+    if (cityID !== null && cityID !== undefined && cityID !== 0) {
+      dispatch(getCountryCitiesApi(t, navigate, Loading, 1, cityID));
+    }
     setIsFirstRender(true);
+  };
+  useEffect(() => {
+    callApi();
+    return () => {
+      setCitySelectValue(null);
+      setBranchSelectValue(null);
+      setCityOptionListEnglish([]);
+      setCityOptionListArabic([]);
+      setBranchSelectEnglish([]);
+      setBranchSelectArabic([]);
+    };
   }, []);
 
   //Country City  Data dropdown
   useEffect(() => {
     if (
-      countryCityShiftWiseSelector !== null &&
-      countryCityShiftWiseSelector !== undefined &&
-      countryCityShiftWiseSelector.length !== 0
+      countryCityShiftWiseSelector &&
+      Object.keys(countryCityShiftWiseSelector).length > 0
     ) {
-      setCitySelectValue({
-        ...citySelectValue,
-        label: countryCityShiftWiseSelector.cities[0].cityNameEnglish,
-        value: countryCityShiftWiseSelector.cities[0].cityID,
-      });
+      setCityOptionListEnglish(
+        countryCityShiftWiseSelector.cities.map((item) => ({
+          value: item.cityID,
+          label: item.cityNameEnglish,
+        }))
+      );
+      setCityOptionListArabic(
+        countryCityShiftWiseSelector.cities.map((item) => ({
+          value: item.cityID,
+          label: item.cityNameArabic,
+        }))
+      );
+      let data;
+
       if (currentLanguage === "en") {
-        setCountryCityWiseShift(
-          countryCityShiftWiseSelector.cities.map((item) => ({
-            value: item.cityID,
-            label: item.cityNameEnglish,
-          }))
-        );
+        if (cityID !== null && cityID !== undefined && cityID !== 0) {
+          const foundCity = countryCityShiftWiseSelector.cities.find(
+            (city) => city.cityID === cityID
+          );
+          if (foundCity) {
+            data = {
+              value: foundCity.cityID,
+              label: foundCity.cityNameEnglish,
+            };
+          } else {
+            // Handle the case where cityID is not found in cityList.cities
+            // You might want to set default values or handle this scenario differently based on your requirements
+            data = {
+              value: cityID,
+              label: t("Admin_AdminServiceManager_UpdateCityBranch_03"), // Example label for when cityID is not found
+            };
+          }
+          setCitySelectValue(data);
+        } else {
+          // If cityID is null or undefined, use the first city in cityList.cities
+          data = {
+            value: countryCityShiftWiseSelector.cities[0].cityID,
+            label: countryCityShiftWiseSelector.cities[0].cityNameEnglish,
+          };
+          setCitySelectValue(data);
+        }
+        setCitySelectValue(data);
       } else {
-        setCountryCityWiseShift(
-          countryCityShiftWiseSelector.cities.map((item) => ({
-            value: item.cityID,
-            label: item.cityNameArabic,
-          }))
-        );
+        if (cityID !== null && cityID !== undefined && cityID !== 0) {
+          const foundCity = countryCityShiftWiseSelector.cities.find(
+            (city) => city.cityID === cityID
+          );
+          if (foundCity) {
+            data = {
+              value: foundCity.cityID,
+              label: foundCity.cityNameArabic,
+            };
+          } else {
+            // Handle the case where cityID is not found in cityList.cities
+            // You might want to set default values or handle this scenario differently based on your requirements
+            data = {
+              value: cityID,
+              label: t("Admin_AdminServiceManager_UpdateCityBranch_03"), // Example label for when cityID is not found
+            };
+          }
+        } else {
+          // If cityID is null or undefined, use the first city in cityList.cities
+          data = {
+            value: countryCityShiftWiseSelector.cities[0].cityID,
+            label: countryCityShiftWiseSelector.cities[0].cityNameArabic,
+          };
+        }
+        setCitySelectValue(data);
       }
+    } else {
+      setCityOptionListEnglish([]);
+      setCityOptionListArabic([]);
     }
   }, [countryCityShiftWiseSelector, currentLanguage]);
 
@@ -102,13 +170,13 @@ const CountryCityWiseShift = () => {
     // setSelectedCityID(selectedCityOptions.value);
   };
   useEffect(() => {
-    if (citySelectValue.value !== 0 && isFirstRender) {
+    if (citySelectValue?.value !== 0 && isFirstRender) {
       dispatch(
         getCityBranchListApi(
           t,
           navigate,
           Loading,
-          Number(citySelectValue.value)
+          Number(citySelectValue?.value)
         )
       );
     }
@@ -121,21 +189,21 @@ const CountryCityWiseShift = () => {
       countryBranchShiftWiseSelector !== undefined &&
       countryBranchShiftWiseSelector.length !== 0
     ) {
-      setBranchSelectValue({
-        ...branchSelectValue,
-        label: countryBranchShiftWiseSelector[0].branchNameEnglish,
-        value: countryBranchShiftWiseSelector[0].branchID,
-      });
+      // setBranchSelectValue({
+      //   ...branchSelectValue,
+      //   label: countryBranchShiftWiseSelector[0].branchNameEnglish,
+      //   value: countryBranchShiftWiseSelector[0].branchID,
+      // });
 
       if (currentLanguage === "en") {
-        setCountryBranchWiseShift(
+        setBranchSelectEnglish(
           countryBranchShiftWiseSelector.map((item) => ({
             value: item.branchID,
             label: item.branchNameEnglish,
           }))
         );
       } else {
-        setCountryBranchWiseShift(
+        setBranchSelectArabic(
           countryBranchShiftWiseSelector.map((item) => ({
             value: item.branchID,
             label: item.branchNameArabic,
@@ -156,24 +224,24 @@ const CountryCityWiseShift = () => {
 
   useEffect(() => {
     if (
-      citySelectValue.value !== 0 &&
-      branchSelectValue.value !== 0 &&
+      citySelectValue?.value !== 0 &&
+      branchSelectValue?.value !== 0 &&
       isFirstRender
     ) {
       setIsFirstRender(false);
       let data = {
-        BranchID: Number(branchSelectValue.value),
-        CityID: Number(citySelectValue.value),
+        BranchID: Number(branchSelectValue?.value),
+        CityID: Number(citySelectValue?.value),
         RoasterDate: multiDatePickerDateChangIntoUTC(roasterdate),
       };
       dispatch(getAllBranchSiftMainApi(t, data, navigate, Loading));
     }
-  }, [citySelectValue.value, branchSelectValue.value, isFirstRender]);
+  }, [citySelectValue?.value, branchSelectValue?.value, isFirstRender]);
 
   const hitSearchButton = () => {
     let data = {
-      BranchID: Number(branchSelectValue.value),
-      CityID: Number(citySelectValue.value),
+      BranchID: Number(branchSelectValue?.value),
+      CityID: Number(citySelectValue?.value),
       RoasterDate: multiDatePickerDateChangIntoUTC(roasterdate),
     };
     dispatch(getAllBranchSiftMainApi(t, data, navigate, Loading));
@@ -267,12 +335,13 @@ const CountryCityWiseShift = () => {
                     <label className="text-labels">{t("City")}</label>
                     <Select
                       onChange={handleSelectCity}
-                      value={{
-                        value: citySelectValue.value,
-                        label: citySelectValue.label,
-                      }}
-                      options={countryCityWiseShift}
-                      isSearchable={false}
+                      options={
+                        currentLanguage === "en"
+                          ? cityOptionListEnglish
+                          : cityOptionListArabic
+                      }
+                      value={citySelectValue}
+                      isSearchable={true}
                       className="select-dropdown-all"
                     />
                   </span>
@@ -283,12 +352,13 @@ const CountryCityWiseShift = () => {
                     <Select
                       // defaultValue={selectedOption}
                       onChange={handleSelectedBranch}
-                      options={countryBranchWiseShift}
+                      value={branchSelectValue}
+                      options={
+                        currentLanguage === "en"
+                          ? branchSelectEnglish
+                          : branchSelectArabic
+                      }
                       isSearchable={true}
-                      value={{
-                        value: branchSelectValue.value,
-                        label: branchSelectValue.label,
-                      }}
                       // isDisabled={selectedCityID === null ? true : false}
                       className="select-dropdown-all"
                     />

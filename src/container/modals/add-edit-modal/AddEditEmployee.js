@@ -41,7 +41,11 @@ const AddEditEmployee = ({
 
   console.log(addNewEmployeeData, "addNewEmployeeDataerrr");
 
-  const [homeVisit, setHomeVisit] = useState(null);
+  const [homeVisit, setHomeVisit] = useState(1);
+
+  const [branchRadio, setBranchRadio] = useState(false);
+
+  const [radioSelectValue, setRadioSelectValue] = useState(0);
 
   // states for employee Main in dropdown
   const [addEditEmployeeOption, setAddEditEmployeeOption] = useState([]);
@@ -52,7 +56,7 @@ const AddEditEmployee = ({
     EmployeeEnglishName: "",
     EmployeeNameArabic: "",
     EmployeeEmail: "",
-    IsEmployeeActive: true,
+    IsEmployeeActive: false,
     EmployeeBelongsToBranch: true,
     BranchID: Number(localStorage.getItem("branchID")),
     CityID: Number(localStorage.getItem("cityID")),
@@ -66,8 +70,10 @@ const AddEditEmployee = ({
 
   // render dropdown value
   useEffect(() => {
-    dispatch(getCityBranchListApi(t, navigate, loadingFlag));
-  }, []);
+    if (!selectedEmployee) {
+      dispatch(getCityBranchListApi(t, navigate, loadingFlag));
+    }
+  }, [selectedEmployee]);
 
   useEffect(() => {
     if (addEditEmployeeOption) {
@@ -98,24 +104,24 @@ const AddEditEmployee = ({
 
   // Use useEffect to update state when selectedEmployee changes
   useEffect(() => {
-    if (selectedEmployee && selectedEmployee.employeeBranch) {
+    if (selectedEmployee) {
       setEmployeeMain({
-        EmployeeEnglishName: selectedEmployee.employeeEnglishName,
-        EmployeeNameArabic: selectedEmployee.employeeNameArabic,
-        EmployeeEmail: selectedEmployee.employeeEmail,
-        IsEmployeeActive: selectedEmployee.isEmployeeActive,
-        EmployeeBelongsToBranch: true,
-        BranchID: selectedEmployee.employeeBranch.branchID,
+        EmployeeEnglishName: selectedEmployee?.employeeEnglishName || "",
+        EmployeeNameArabic: selectedEmployee?.employeeNameArabic || "",
+        EmployeeEmail: selectedEmployee?.employeeEmail || "",
+        IsEmployeeActive: selectedEmployee?.isEmployeeActive || false,
+        EmployeeBelongsToBranch: selectedEmployee.employeeBelongsToBranch,
+        BranchID: selectedEmployee.employeeBranch?.branchID || 0,
         CityID: Number(localStorage.getItem("cityID")),
-        employeeID: selectedEmployee.employeeID,
+        employeeID: selectedEmployee?.employeeID || 0,
       });
-
+      setRadioSelectValue(selectedEmployee.employeeBelongsToBranch ? 1 : 2);
       const branchDetails = {
-        value: selectedEmployee.employeeBranch.branchID,
+        value: selectedEmployee?.employeeBranch?.branchID || 0,
         label:
           currentLanguage === "en"
-            ? selectedEmployee.employeeBranch.branchNameEnglish
-            : selectedEmployee.employeeBranch.branchNameArabic,
+            ? selectedEmployee.employeeBranch?.branchNameEnglish || ""
+            : selectedEmployee.employeeBranch?.branchNameArabic || "",
       };
       setAddEditEmployeeOptionValue(branchDetails);
     } else {
@@ -124,7 +130,7 @@ const AddEditEmployee = ({
         EmployeeEnglishName: "",
         EmployeeNameArabic: "",
         EmployeeEmail: "",
-        IsEmployeeActive: true,
+        IsEmployeeActive: false,
         EmployeeBelongsToBranch: true,
         BranchID: 0,
         CityID: Number(localStorage.getItem("cityID")),
@@ -159,8 +165,19 @@ const AddEditEmployee = ({
     } catch {}
   };
 
-  const homeVisitRadioChange = (e) => {
-    setHomeVisit(e.target.value);
+  const handleChangeRadio = (e) => {
+    if (e.target.value === 1) {
+      setEmployeeMain({
+        ...employeeMain,
+        EmployeeBelongsToBranch: true,
+      });
+    } else if (e.target.value === 2) {
+      setEmployeeMain({
+        ...employeeMain,
+        EmployeeBelongsToBranch: false,
+      });
+    }
+    setRadioSelectValue(e.target.value);
   };
 
   const onCloseAddEditModal = () => {
@@ -276,6 +293,17 @@ const AddEditEmployee = ({
             </Row>
 
             <Row className="mt-3">
+              <Col lg={6} md={6} sm={6}>
+                <span className="text-labels">{t("Employee-email")}</span>
+                <TextField
+                  name="EmployeeEmail"
+                  placeholder={t("Employee-email")}
+                  value={employeeMain.EmployeeEmail}
+                  onChange={handleChangeEmployee}
+                  labelClass="d-none"
+                  className="text-fields-addEdit"
+                />
+              </Col>
               {isEditFlag === true ? (
                 <Col lg={6} md={6} sm={6}>
                   <span className="text-labels">{t("Employee-id")}</span>
@@ -289,33 +317,37 @@ const AddEditEmployee = ({
                     />
                   </>
                 </Col>
-              ) : null}
-              <Col lg={6} md={6} sm={6}>
-                <span className="text-labels">{t("Employee-email")}</span>
-                <TextField
-                  name="EmployeeEmail"
-                  placeholder={t("Employee-email")}
-                  value={employeeMain.EmployeeEmail}
-                  onChange={handleChangeEmployee}
-                  labelClass="d-none"
-                  className="text-fields-addEdit"
-                />
-              </Col>
-            </Row>
-
-            <Row className="mt-3">
-              <Col lg={4} md={4} sm={4}>
-                <div className="Radio-Btn-div-For-Select">
+              ) : (
+                <Col lg={6} md={6} sm={6} className="mt-3">
                   <Checkbox
                     onChange={handleChangeEmployee}
                     checked={employeeMain.IsEmployeeActive}
                     classNameDiv="chechbox-align-label"
                     label={
                       <span className="branch-employee-checkbox">
-                        {t("Branch-employee")}
+                        {t("Active")}
                       </span>
                     }
                   />
+                </Col>
+              )}
+            </Row>
+
+            <Row className="mt-3">
+              <Col lg={4} md={4} sm={4}>
+                <div className="Radio-Btn-div-For-Select">
+                  <Radio.Group
+                    onChange={handleChangeRadio}
+                    value={radioSelectValue}
+                  >
+                    <Radio
+                      className="branch-employee-checkbox"
+                      name="capacity"
+                      value={1}
+                    >
+                      {t("Branch-employee")}
+                    </Radio>
+                  </Radio.Group>
                 </div>
               </Col>
               <Col lg={8} md={8} sm={8} className="mt-1">
@@ -328,26 +360,16 @@ const AddEditEmployee = ({
               </Col>
             </Row>
             <Row>
-              <Col lg={6} md={6} sm={6} className="mt-3">
-                <Checkbox
-                  onChange={onChangeEmployeeBranch}
-                  classNameDiv="chechbox-align-label"
-                  label={
-                    <span className="branch-employee-checkbox">
-                      {t("Active")}
-                    </span>
-                  }
-                />
-              </Col>
-
-              <Col
-                lg={6}
-                md={6}
-                sm={6}
-                className="d-flex justify-content-end mt-3"
-              >
-                <Radio.Group onChange={homeVisitRadioChange} value={homeVisit}>
-                  <Radio value="option1" className="branch-employee-checkbox">
+              <Col lg={12} md={12} sm={12} className=" mt-3">
+                <Radio.Group
+                  onChange={handleChangeRadio}
+                  value={radioSelectValue}
+                >
+                  <Radio
+                    className="branch-employee-checkbox"
+                    value={2}
+                    name="capacity"
+                  >
                     {t("Home-visit")}
                   </Radio>
                 </Radio.Group>

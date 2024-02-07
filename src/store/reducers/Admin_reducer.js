@@ -63,6 +63,7 @@ const initialState = {
   citybranchShiftServicesListData: [],
   getAllBranchShiftCounterData: null,
   getServiceWiseCountryData: null,
+  updateServiceCountryList: null,
 };
 
 const adminReducer = (state = initialState, action) => {
@@ -994,6 +995,21 @@ const adminReducer = (state = initialState, action) => {
       return {
         ...state,
         getServiceWiseCountryData: null,
+        admin_ResponseMessage: action.message,
+      };
+
+    // update All service wise country list in global Admin
+    case actions.UPDATE_SERVICE_COUNTRY_LIST_SUCCESS:
+      return {
+        ...state,
+        updateServiceCountryList: action.response,
+        admin_ResponseMessage: action.message,
+      };
+
+    case actions.UPDATE_SERVICE_COUNTRY_LIST_FAIL:
+      return {
+        ...state,
+        updateServiceCountryList: null,
         admin_ResponseMessage: action.message,
       };
 

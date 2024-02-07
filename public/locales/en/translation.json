@@ -216,7 +216,7 @@
   "Admin_AdminServiceManager_GetAppointmentReportCityAdmin_01": "Appointment Report Available",
   "Admin_AdminServiceManager_GetAppointmentReportCityAdmin_02": "No Report Found for given search criteria",
   "Counter-services": "Counter Services",
-  "Admin_AdminServiceManager_GetCountryWorkingDays_01": "Working Days Found For Country",
+  "Admin_AdminServiceManager_UpdateCountryWorkingDays_01": "Working Days Found For Country",
   "Admin_AdminServiceManager_GetCountryWorkingDays_02": "No Working Day Available for the Country yet",
   "Admin_AdminServiceManager_GetCountryWorkingDays_03": "Country Working Day List not Found",
   "Sunday": "Sunday",
@@ -311,5 +311,9 @@
   "Admin_AdminServiceManager_GetAllCityBranchShiftCounterServices_01": "City Branch Shift Service Counter List Found",
   "Admin_AdminServiceManager_GetAllCityBranchShiftCounterServices_02": "No City Branch Shift Service Counter Available",
   "Admin_AdminServiceManager_GetServiceWiseCountryList_01": "Services Availability Countries List found",
-  "Admin_AdminServiceManager_GetServiceWiseCountryList_02": "Services Availability Countries List Not Found"
+  "Admin_AdminServiceManager_GetServiceWiseCountryList_02": "Services Availability Countries List Not Found",
+  "Admin_AdminServiceManager_AddBranchRoasterEntry_07": "Roaster can be added after Branch Service Pre Booking and Advance Days",
+  "Admin_AdminServiceManager_AddBranchRoasterEntry_08": "Duplicate Record Cannot be Created",
+  "Admin_AdminServiceManager_UpdateServiceWiseCountryList_01": "Service Wise Country List Updated",
+  "Admin_AdminServiceManager_UpdateServiceWiseCountryList_02": "Service Wise Country List Not Updated"
 }

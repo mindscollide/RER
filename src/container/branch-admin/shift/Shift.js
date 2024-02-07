@@ -591,7 +591,12 @@ const BranchAdmin = () => {
               </Row>
 
               <Row className="my-3">
-                <Col lg={12} md={12} sm={12} className="btn-class-branch">
+                <Col
+                  lg={12}
+                  md={12}
+                  sm={12}
+                  className="d-flex justify-content-center gap-1"
+                >
                   <Button
                     icon={<i className="icon-add-circle icon-space"></i>}
                     text={addUpdateCheckFlag ? t("Update") : t("Add")}

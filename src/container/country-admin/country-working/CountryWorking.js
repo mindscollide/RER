@@ -163,7 +163,7 @@ const CountryWorking = () => {
             ...workingNotification,
             notificationFlag: true,
             notificationMessage: t(
-              "Admin_AdminServiceManager_GetCountryWorkingDays_01"
+              "Admin_AdminServiceManager_UpdateCountryWorkingDays_01"
             ),
             severity: "success",
           }),

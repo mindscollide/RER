@@ -31,6 +31,7 @@ import CountryWiseCityComponent from "../country-wise-city-component/CountryWise
 import { regexOnlyForNumberNCharacters } from "../../../commen/functions/regex";
 import { loader_Actions } from "../../../store/actions/Loader_action";
 import DeleteEmployeeModal from "../../modals/delete-employee-modal/DeleteEmplyeeModal";
+import { convertToGMT } from "../../../commen/functions/Date_time_formatter";
 
 const CountryAdminMain = () => {
   const { t } = useTranslation();
@@ -328,7 +329,7 @@ const CountryAdminMain = () => {
             ></i>
             <i
               className="icon-repeat icon-EDT-DLT-color"
-              onClick={openCountryCityBranchShift}
+              onClick={() => openCountryCityBranchShift(text)}
               title={t("Shifts")}
               aria-label={t("Shifts")}
             ></i>
@@ -346,6 +347,8 @@ const CountryAdminMain = () => {
 
   // to open country wise city in onClick button
   const openCountryWiseCity = (record) => {
+    localStorage.setItem("cityNameEnglish", record.cityNameEnglish);
+    localStorage.setItem("cityNameArabic", record.cityNameArabic);
     localStorage.setItem("cityID", record.cityID);
     dispatch(getCityServiceListApi(t, navigate, Loading));
     dispatch(setIsCountryWiseCityComponent(true));
@@ -366,9 +369,10 @@ const CountryAdminMain = () => {
   };
 
   //to open country city branch wise shift onClick button
-  const openCountryCityBranchShift = () => {
+  const openCountryCityBranchShift = (record) => {
+    localStorage.setItem("cityID", record);
     localStorage.setItem("selectedKeys", ["15"]);
-    navigate("/CountryAdmin/Shifts");
+    navigate(`/CountryAdmin/Shifts?cityID=${record}`);
   };
 
   //to open country Wise Employee onClick button
@@ -459,14 +463,14 @@ const CountryAdminMain = () => {
               handleTextFieldChangeService(
                 numericInput,
                 rowIndex,
-                0,
-                60,
+                30,
+                360,
                 "homeServiceSlotDurationMinutes"
               );
             }}
             type="number"
-            min={0}
-            max={60}
+            min={30}
+            max={360}
           />
         </div>
       ),
@@ -495,13 +499,13 @@ const CountryAdminMain = () => {
                 numericInput,
                 rowIndex,
                 0,
-                15,
+                30,
                 "homeMaximumAdvanceRoasterDays"
               );
             }}
             type="number"
             min={0}
-            max={15}
+            max={30}
           />
         </div>
       ),
@@ -529,13 +533,13 @@ const CountryAdminMain = () => {
                 numericInput,
                 rowIndex,
                 0,
-                15,
+                90,
                 "homePrebookingDaysMarginForCity"
               );
             }}
             type="number"
             min={0}
-            max={15}
+            max={90}
           />
         </div>
       ),
@@ -555,10 +559,10 @@ const CountryAdminMain = () => {
           <TextField
             className="for-inside-table-textfields"
             labelClass="d-none"
-            value={record.homeVisitCharges}
+            value={Math.min(record.homeVisitCharges, 1000)}
             onChange={(e) => {
               const inputValue = e.target.value;
-              const numericInput = inputValue.replace(/[^0-9]/g, "");
+              const numericInput = Math.min(parseInt(inputValue, 10), 1000);
               handleTextFieldChangeService(
                 numericInput,
                 rowIndex,
@@ -573,6 +577,52 @@ const CountryAdminMain = () => {
           />
         </div>
       ),
+    },
+    {
+      title: (
+        <span className="d-flex justify-content-center table-text text-center me-4">
+          {t("Start-time")}
+        </span>
+      ),
+      dataIndex: "homeVisitStartTime",
+      key: "homeVisitStartTime",
+      align: "center",
+      width: "130px",
+      render: (text, record) => {
+        if (
+          record?.homeVisitStartTime !== null &&
+          record?.homeVisitStartTime !== undefined
+        ) {
+          return (
+            <span className="table-inside-text">
+              {convertToGMT(record?.homeVisitStartTime, local)}
+            </span>
+          );
+        }
+      },
+    },
+    {
+      title: (
+        <span className="d-flex justify-content-center table-text text-center me-4">
+          {t("End-time")}
+        </span>
+      ),
+      dataIndex: "homeVisitEndTime",
+      key: "homeVisitEndTime",
+      align: "center",
+      width: "100px",
+      render: (text, record) => {
+        if (
+          record?.homeVisitEndTime !== null &&
+          record?.homeVisitEndTime !== undefined
+        ) {
+          return (
+            <span className="table-inside-text">
+              {convertToGMT(record?.homeVisitEndTime, local)}
+            </span>
+          );
+        }
+      },
     },
   ];
 
@@ -883,6 +933,9 @@ const CountryAdminMain = () => {
               columnsCityWise={columnsCityWise}
               handleRevert={handleRevert}
               handleSave={handleSave}
+              countryNotification={countryNotification}
+              setCountryNotification={setCountryNotification}
+              responseMessage={responseMessage}
             />
           </>
         ) : (
@@ -938,7 +991,7 @@ const CountryAdminMain = () => {
                   </Row>
 
                   <Row className="mt-3">
-                    <Col lg={6} md={6} sm={6} className="mt-1">
+                    <Col lg={5} md={5} sm={5} className="mt-1">
                       <Checkbox
                         checked={addCountry.IsCityActive}
                         onChange={handleChange}
@@ -950,9 +1003,9 @@ const CountryAdminMain = () => {
                     </Col>
 
                     <Col
-                      lg={6}
-                      md={6}
-                      sm={6}
+                      lg={7}
+                      md={7}
+                      sm={7}
                       className="btn-class-CountryAdmin"
                     >
                       <Button

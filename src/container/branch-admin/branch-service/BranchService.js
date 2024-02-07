@@ -205,11 +205,17 @@ const BranchService = () => {
             <TextField
               labelClass="d-none"
               className="for-inside-table-textfiel"
-              value={text}
+              value={Math.min(record.maximumAdvanceRoasterDays, 30)}
               onChange={(e) => {
                 const inputValue = e.target.value;
-                const numericInput = inputValue.replace(/[^0-9]/g, "");
-                handleTextFieldChangeRoaster(numericInput, rowIndex, 0, 30);
+                const numericInput = Math.min(parseInt(inputValue, 0), 30);
+                handleTextFieldChangeRoaster(
+                  numericInput,
+                  rowIndex,
+                  0,
+                  30,
+                  "maximumAdvanceRoasterDays"
+                );
               }}
               type="number"
               min={0}
@@ -231,15 +237,15 @@ const BranchService = () => {
             <TextField
               labelClass="d-none"
               className="for-inside-table-textfiel"
-              value={text}
+              value={Math.min(record.prebookingDaysMarginForBranch, 90)}
               onChange={(e) => {
                 const inputValue = e.target.value;
-                const numericInput = inputValue.replace(/[^0-9]/g, "");
-                handleTextFieldChangeMargin(numericInput, rowIndex, 10, 100);
+                const numericInput = Math.min(parseInt(inputValue, 0), 90);
+                handleTextFieldChangeMargin(numericInput, rowIndex, 0, 90);
               }}
               type="number"
               min={0}
-              max={30}
+              max={90}
             />
           </span>
         </>

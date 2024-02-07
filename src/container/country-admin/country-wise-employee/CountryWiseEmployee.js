@@ -36,10 +36,10 @@ const CountryWiseEmployee = () => {
   const callApi = async () => {
     if (cityID !== null && cityID !== undefined && cityID !== 0) {
       // 2 pasiing in prop for check that we have to call getCityEmployeeMainApi all api from here on page route from side bar
-      await dispatch(getCountryCitiesApi(t, navigate, loadingFlag, 3, cityID));
+      // await dispatch(getCountryCitiesApi(t, navigate, loadingFlag, 3, cityID));
     } else {
       // 2 pasiing in prop for check that we have to call getCityEmployeeMainApi all api from here on page route from side bar
-      await dispatch(getCountryCitiesApi(t, navigate, loadingFlag, 2));
+      await dispatch(getCountryCitiesApi(t, navigate, loadingFlag, 1));
     }
   };
 
@@ -134,10 +134,10 @@ const CountryWiseEmployee = () => {
   useEffect(() => {
     if (cityEmployeeMain !== null) {
       setRows(cityEmployeeMain);
-      dispatch(loader_Actions(false));
+      // dispatch(loader_Actions(false));
     } else {
       setRows([]);
-      dispatch(loader_Actions(false));
+      // dispatch(loader_Actions(false));
     }
   }, [cityEmployeeMain]);
 
@@ -178,11 +178,19 @@ const CountryWiseEmployee = () => {
     setCityOptionValue(cityShiftOptionValue);
   };
 
+  useEffect(() => {
+    let data = {
+      CityID: Number(cityID),
+    };
+    dispatch(getCityEmployeeMainApi(t, navigate, loadingFlag, data));
+  }, []);
+
   const handleSearch = async () => {
     if (cityOptionValue != null) {
-      await dispatch(
-        getCityEmployeeMainApi(t, navigate, loadingFlag, cityOptionValue.value)
-      );
+      let data = {
+        CityID: Number(cityOptionValue.value),
+      };
+      await dispatch(getCityEmployeeMainApi(t, navigate, loadingFlag, data));
     } else {
       // add snackbar fun here
     }

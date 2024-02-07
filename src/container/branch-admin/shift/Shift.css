@@ -11,12 +11,6 @@
   align-items: center !important;
 }
 
-.btn-class-branch {
-  display: flex !important;
-  justify-content: center !important;
-  gap: 5px !important;
-}
-
 .Add-btn-Branch {
   font-size: 14px !important;
   font-weight: 500 !important;

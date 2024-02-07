@@ -7,10 +7,12 @@ import {
   Checkbox,
   Button,
   Table,
+  Notification,
 } from "../../../components/elements";
 import { useTranslation } from "react-i18next";
 import { useDispatch, useSelector } from "react-redux";
 import {
+  clearResponseMessageAdmin,
   getCityServiceListApi,
   updateCityServiceListApi,
 } from "../../../store/actions/Admin_action";
@@ -25,6 +27,9 @@ const CountryWiseCityComponent = ({
   columnsCityWise,
   handleRevert,
   handleSave,
+  countryNotification,
+  setCountryNotification,
+  responseMessage,
 }) => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
@@ -37,6 +42,32 @@ const CountryWiseCityComponent = ({
 
   //state for current language
   const currentLanguage = localStorage.getItem("i18nextLng");
+
+  useEffect(() => {
+    if (
+      responseMessage !== null &&
+      responseMessage !== undefined &&
+      responseMessage !== ""
+    ) {
+      if (
+        responseMessage ===
+        t("Admin_AdminServiceManager_UpdateCityServiceList_01")
+      ) {
+        setTimeout(
+          setCountryNotification({
+            ...countryNotification,
+            notificationFlag: true,
+            notificationMessage: t(
+              "Admin_AdminServiceManager_UpdateCityServiceList_01"
+            ),
+            severity: "success",
+          }),
+          3000
+        );
+      }
+    }
+    dispatch(clearResponseMessageAdmin(null));
+  }, [responseMessage]);
 
   return (
     <>
@@ -52,8 +83,18 @@ const CountryWiseCityComponent = ({
               <span className="shift-sub-heading">
                 {" "}
                 {currentLanguage === "en"
-                  ? "(" + localStorage.getItem("countryName") + ")"
-                  : "(" + localStorage.getItem("countryNameArabic") + ")"}
+                  ? "(" +
+                    localStorage.getItem("countryName") +
+                    " -" +
+                    " " +
+                    localStorage.getItem("cityNameEnglish") +
+                    ")"
+                  : "(" +
+                    localStorage.getItem("countryNameArabic") +
+                    ")" +
+                    "(" +
+                    localStorage.getItem("cityNameArabic") +
+                    ")"}
               </span>
             </span>
           </Col>
@@ -111,6 +152,18 @@ const CountryWiseCityComponent = ({
           </Col>
         </Row>
       </section>
+
+      <Notification
+        show={countryNotification.notificationFlag}
+        hide={setCountryNotification}
+        message={countryNotification.notificationMessage}
+        severity={countryNotification.severity}
+        notificationClass={
+          countryNotification.severity === "error"
+            ? "notification-error"
+            : "notification-success"
+        }
+      />
     </>
   );
 };

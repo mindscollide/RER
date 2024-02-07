@@ -1,8 +1,15 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Row, Col } from "react-bootstrap";
 import "./ServiceCountryScreenComponent.css";
-import { Paper, Table, Button } from "../../../components/elements";
+import {
+  Paper,
+  Table,
+  Button,
+  Notification,
+} from "../../../components/elements";
 import { useTranslation } from "react-i18next";
+import { clearResponseMessageAdmin } from "../../../store/actions/Admin_action";
+import { useDispatch } from "react-redux";
 
 const ServiceCountryScreenComponent = ({
   closeServiceCountryScreen,
@@ -10,8 +17,38 @@ const ServiceCountryScreenComponent = ({
   ServiceCountryColumn,
   saveServiceCountryHandler,
   countryRow,
+  setCountryMainNotification,
+  countryMainNotification,
+  responseMessage,
 }) => {
   const { t } = useTranslation();
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    if (
+      responseMessage !== null &&
+      responseMessage !== undefined &&
+      responseMessage !== ""
+    ) {
+      if (
+        responseMessage ===
+        t("Admin_AdminServiceManager_UpdateCountryServicesList_01")
+      ) {
+        setTimeout(
+          setCountryMainNotification({
+            ...countryMainNotification,
+            notificationFlag: true,
+            notificationMessage: t(
+              "Admin_AdminServiceManager_UpdateCountryServicesList_01"
+            ),
+            severity: "success",
+          }),
+          3000
+        );
+      }
+    }
+    dispatch(clearResponseMessageAdmin(null));
+  }, [responseMessage]);
 
   return (
     <>
@@ -64,6 +101,18 @@ const ServiceCountryScreenComponent = ({
           </Col>
         </Row>
       </section>
+
+      <Notification
+        show={countryMainNotification.notificationFlag}
+        hide={setCountryMainNotification}
+        message={countryMainNotification.notificationMessage}
+        severity={countryMainNotification.severity}
+        notificationClass={
+          countryMainNotification.severity === "error"
+            ? "notification-error"
+            : "notification-success"
+        }
+      />
     </>
   );
 };

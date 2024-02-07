@@ -46,6 +46,11 @@ const ServiceCountryScreen = () => {
     severity: "none",
   });
 
+  console.log(
+    serviceNotification.notificationMessage,
+    "serviceNotificationserviceNotification"
+  );
+
   // useEffect to call get API of countryServiceScreen
   useEffect(() => {
     dispatch(getCountryServiceMainApi(t, navigate, loadingFlag));

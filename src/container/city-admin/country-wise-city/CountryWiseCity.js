@@ -1,7 +1,13 @@
 import React, { useEffect, useState } from "react";
 import { Row, Col } from "react-bootstrap";
 import "./CountryWiseCity.css";
-import { Paper, Table, Button, TextField } from "../../../components/elements";
+import {
+  Paper,
+  Table,
+  Button,
+  TextField,
+  Notification,
+} from "../../../components/elements";
 import { Switch } from "antd";
 import { useTranslation } from "react-i18next";
 import { useDispatch, useSelector } from "react-redux";
@@ -9,8 +15,10 @@ import { useNavigate } from "react-router";
 import {
   getCityServiceListApi,
   updateCityServiceListApi,
+  clearResponseMessageAdmin,
 } from "../../../store/actions/Admin_action";
 import { capitalizeKeysInArray } from "../../../commen/functions/utils.js";
+import { convertToGMT } from "../../../commen/functions/Date_time_formatter";
 
 const CountryWiseCity = () => {
   const { t } = useTranslation();
@@ -20,9 +28,20 @@ const CountryWiseCity = () => {
   const cityServiceListData = useSelector(
     (state) => state.admin.cityServiceListData
   );
+  // reducer for response message
+  const responseMessage = useSelector(
+    (state) => state.admin.admin_ResponseMessage
+  );
   const currentLanguage = localStorage.getItem("i18nextLng");
   const local = currentLanguage === "en" ? "en-US" : "ar-SA";
   const [rows, setRows] = useState([]);
+
+  //state for show notifications through response
+  const [countryWiseNotification, setCountryWiseNotification] = useState({
+    notificationFlag: false,
+    notificationMessage: null,
+    severity: "none",
+  });
 
   const columns = [
     {
@@ -73,31 +92,186 @@ const CountryWiseCity = () => {
     },
     {
       title: (
-        <span className="table-text">{t("Home-visit-charges-(Riyal)")}</span>
+        <span className="d-flex justify-content-center table-text text-center me-3">
+          {t("Service-slot")}
+        </span>
       ),
-      dataIndex: "homeVisitCharges",
-      key: "homeVisitCharges",
+      // homeVisitCharges
+      dataIndex: "homeServiceSlotDurationMinutes",
+      key: "homeServiceSlotDurationMinutes",
+      width: "200px",
+      render: (text, record, rowIndex) => (
+        <div className="d-flex flex-column gap-2 ms-3">
+          <TextField
+            className="for-inside-table-textfields"
+            labelClass="d-none"
+            value={record.homeServiceSlotDurationMinutes}
+            onChange={(e) => {
+              const inputValue = e.target.value;
+              const numericInput = inputValue.replace(/[^0-9]/g, "");
+              handleTextFieldChangeService(
+                numericInput,
+                rowIndex,
+                30,
+                360,
+                "homeServiceSlotDurationMinutes"
+              );
+            }}
+            type="number"
+            min={30}
+            max={360}
+          />
+        </div>
+      ),
+    },
+    {
+      title: (
+        <span className="d-flex justify-content-center table-text text-center me-2">
+          {t("Advance-roaster")}
+        </span>
+      ),
+      // homeServiceSlotDurationMinutes
+      dataIndex: "homeMaximumAdvanceRoasterDays",
+      key: "homeMaximumAdvanceRoasterDays",
       width: "200px",
       align: "center",
       render: (text, record, rowIndex) => (
-        <>
-          <span className="For-table-textfield">
-            <TextField
-              labelClass="d-none"
-              className="for-inside-table-textfiel"
-              value={text}
-              onChange={(e) => {
-                const inputValue = e.target.value;
-                const numericInput = inputValue.replace(/[^0-9]/g, "");
-                handleTextFieldChangeService(numericInput, rowIndex, 50, 1000);
-              }}
-              type="number"
-              min={50}
-              max={1000}
-            />
-          </span>
-        </>
+        <div className="d-flex flex-column gap-2 ms-3">
+          <TextField
+            className="for-inside-table-textfields"
+            labelClass="d-none"
+            value={record.homeMaximumAdvanceRoasterDays}
+            onChange={(e) => {
+              const inputValue = e.target.value;
+              const numericInput = inputValue.replace(/[^0-9]/g, "");
+              handleTextFieldChangeService(
+                numericInput,
+                rowIndex,
+                0,
+                30,
+                "homeMaximumAdvanceRoasterDays"
+              );
+            }}
+            type="number"
+            min={0}
+            max={30}
+          />
+        </div>
       ),
+    },
+    {
+      title: (
+        <span className="d-flex justify-content-center table-text text-center me-4">
+          {t("Prebooking-margin")}
+        </span>
+      ),
+      dataIndex: "homePrebookingDaysMarginForCity",
+      key: "homePrebookingDaysMarginForCity",
+      width: "200px",
+      align: "center",
+      render: (text, record, rowIndex) => (
+        <div className="d-flex flex-column gap-2 ms-3">
+          <TextField
+            className="for-inside-table-textfields"
+            labelClass="d-none"
+            value={record.homePrebookingDaysMarginForCity}
+            onChange={(e) => {
+              const inputValue = e.target.value;
+              const numericInput = inputValue.replace(/[^0-9]/g, "");
+              handleTextFieldChangeService(
+                numericInput,
+                rowIndex,
+                0,
+                90,
+                "homePrebookingDaysMarginForCity"
+              );
+            }}
+            type="number"
+            min={0}
+            max={90}
+          />
+        </div>
+      ),
+    },
+    {
+      title: (
+        <span className="d-flex justify-content-center table-text text-center me-4">
+          {t("Visit-charges")}
+        </span>
+      ),
+      dataIndex: "homeVisitCharges",
+      key: "homeVisitCharges",
+      align: "center",
+      width: "200px",
+      render: (text, record, rowIndex) => (
+        <div className="d-flex flex-column gap-2 ms-2">
+          <TextField
+            className="for-inside-table-textfields"
+            labelClass="d-none"
+            value={Math.min(record.homeVisitCharges, 1000)}
+            onChange={(e) => {
+              const inputValue = e.target.value;
+              const numericInput = Math.min(parseInt(inputValue, 10), 1000);
+              handleTextFieldChangeService(
+                numericInput,
+                rowIndex,
+                0,
+                1000,
+                "homeVisitCharges"
+              );
+            }}
+            type="number"
+            min={0}
+            max={1000}
+          />
+        </div>
+      ),
+    },
+    {
+      title: (
+        <span className="d-flex justify-content-center table-text text-center me-4">
+          {t("Start-time")}
+        </span>
+      ),
+      dataIndex: "homeVisitStartTime",
+      key: "homeVisitStartTime",
+      align: "center",
+      width: "130px",
+      render: (text, record) => {
+        if (
+          record?.homeVisitStartTime !== null &&
+          record?.homeVisitStartTime !== undefined
+        ) {
+          return (
+            <span className="table-inside-text">
+              {convertToGMT(record?.homeVisitStartTime, local)}
+            </span>
+          );
+        }
+      },
+    },
+    {
+      title: (
+        <span className="d-flex justify-content-center table-text text-center me-4">
+          {t("End-time")}
+        </span>
+      ),
+      dataIndex: "homeVisitEndTime",
+      key: "homeVisitEndTime",
+      align: "center",
+      width: "100px",
+      render: (text, record) => {
+        if (
+          record?.homeVisitEndTime !== null &&
+          record?.homeVisitEndTime !== undefined
+        ) {
+          return (
+            <span className="table-inside-text">
+              {convertToGMT(record?.homeVisitEndTime, local)}
+            </span>
+          );
+        }
+      },
     },
   ];
 
@@ -145,7 +319,13 @@ const CountryWiseCity = () => {
     } catch {}
   };
 
-  const handleTextFieldChangeService = (value, rowIndex, min, max) => {
+  const handleTextFieldChangeService = (
+    value,
+    rowIndex,
+    min,
+    max,
+    columnName
+  ) => {
     // Validate the input range
     const numericValue = Number(value);
     if (numericValue >= min && numericValue <= max) {
@@ -154,14 +334,12 @@ const CountryWiseCity = () => {
           if (index === rowIndex) {
             return {
               ...service,
-              homeVisitCharges: numericValue,
+              [columnName]: numericValue,
             };
           }
           return service;
         });
       });
-      // Handle invalid input (e.g., show an error message)
-      console.error("Invalid input. Please enter a value between 10 and 100.");
     }
   };
 
@@ -181,6 +359,11 @@ const CountryWiseCity = () => {
         CityServiceID: item.CityServiceID,
         HomeAvailability: item.HomeAvailability,
         HomeVisitCharges: item.HomeVisitCharges,
+        HomeServiceSlotDurationMinutes: item.HomeServiceSlotDurationMinutes,
+        HomeMaximumAdvanceRoasterDays: item.HomeMaximumAdvanceRoasterDays,
+        HomePrebookingDaysMarginForCity: item.HomePrebookingDaysMarginForCity,
+        HomeVisitStartTime: item.HomeVisitStartTime,
+        HomeVisitEndTime: item.HomeVisitEndTime,
       }));
       console.log(newArray, "newArraynewArray");
       let data = {
@@ -190,6 +373,63 @@ const CountryWiseCity = () => {
       dispatch(updateCityServiceListApi(t, navigate, Loading, data));
     } catch {}
   };
+
+  // useEffect for Country Wise Service
+  useEffect(() => {
+    if (
+      responseMessage !== null &&
+      responseMessage !== undefined &&
+      responseMessage !== ""
+    ) {
+      if (
+        responseMessage ===
+        t("Admin_AdminServiceManager_UpdateBranchServices_01")
+      ) {
+        setTimeout(
+          setCountryWiseNotification({
+            ...countryWiseNotification,
+            notificationFlag: true,
+            notificationMessage: t(
+              "Admin_AdminServiceManager_UpdateBranchServices_01"
+            ),
+            severity: "success",
+          }),
+          3000
+        );
+      } else if (
+        responseMessage ===
+        t("Admin_AdminServiceManager_UpdateCityServiceList_02")
+      ) {
+        setTimeout(
+          setCountryWiseNotification({
+            ...countryWiseNotification,
+            notificationFlag: true,
+            notificationMessage: t(
+              "Admin_AdminServiceManager_UpdateCityServiceList_02"
+            ),
+            severity: "error",
+          }),
+          3000
+        );
+      } else if (
+        responseMessage ===
+        t("Admin_AdminServiceManager_UpdateCityServiceList_03")
+      ) {
+        setTimeout(
+          setCountryWiseNotification({
+            ...countryWiseNotification,
+            notificationFlag: true,
+            notificationMessage: t(
+              "Admin_AdminServiceManager_UpdateCityBranch_03"
+            ),
+            severity: "error",
+          }),
+          3000
+        );
+      }
+    }
+    dispatch(clearResponseMessageAdmin(null));
+  }, [responseMessage]);
 
   return (
     <>
@@ -245,13 +485,40 @@ const CountryWiseCity = () => {
               </Row>
               <Row className="mt-2">
                 <Col lg={12} md={12} sm={12}>
-                  <Table rows={rows} column={columns} pagination={false} />
+                  <div className="top-background-color">
+                    <Row>
+                      <Col lg={6} md={6} sm={6} />
+                      <Col
+                        lg={6}
+                        md={6}
+                        sm={6}
+                        className="d-flex justify-content-center"
+                      >
+                        <span className="table-above-header-text">
+                          {t("Home-visit-settings")}
+                        </span>
+                      </Col>
+                    </Row>
+                    <Table rows={rows} column={columns} pagination={false} />
+                  </div>
                 </Col>
               </Row>
             </Paper>
           </Col>
         </Row>
       </section>
+
+      <Notification
+        show={countryWiseNotification.notificationFlag}
+        hide={setCountryWiseNotification}
+        message={countryWiseNotification.notificationMessage}
+        severity={countryWiseNotification.severity}
+        notificationClass={
+          countryWiseNotification.severity === "error"
+            ? "notification-error"
+            : "notification-success"
+        }
+      />
     </>
   );
 };

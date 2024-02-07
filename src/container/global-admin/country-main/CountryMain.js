@@ -70,6 +70,7 @@ const CountryMain = () => {
 
   // states for Service Country Screen page to set data in table
   const [countryRow, setCountryRow] = useState([]);
+  console.log(countryRow, "countryRowcountryRow");
 
   //state for show notifications through response
   const [countryMainNotification, setCountryMainNotification] = useState({
@@ -565,17 +566,19 @@ const CountryMain = () => {
           }),
           3000
         );
-      } else if (responseMessage === t("something_went_wrong")) {
-        setTimeout(
-          setCountryMainNotification({
-            ...countryMainNotification,
-            notificationFlag: true,
-            notificationMessage: t("something_went_wrong"),
-            severity: "error",
-          }),
-          3000
-        );
-      } else if (
+      }
+      // else if (responseMessage === t("something_went_wrong")) {
+      //   setTimeout(
+      //     setCountryMainNotification({
+      //       ...countryMainNotification,
+      //       notificationFlag: true,
+      //       notificationMessage: t("something_went_wrong"),
+      //       severity: "error",
+      //     }),
+      //     3000
+      //   );
+      // }
+      else if (
         responseMessage === t("Admin_AdminServiceManager_UpdateCountry_01")
       ) {
         setTimeout(
@@ -675,6 +678,9 @@ const CountryMain = () => {
               revertServiceCountryHandler={revertServiceCountryHandler}
               saveServiceCountryHandler={saveServiceCountryHandler}
               countryRow={countryRow}
+              setCountryMainNotification={setCountryMainNotification}
+              countryMainNotification={countryMainNotification}
+              responseMessage={responseMessage}
             />
           </>
         ) : (
@@ -722,7 +728,7 @@ const CountryMain = () => {
                   </Row>
 
                   <Row className="mt-3">
-                    <Col lg={6} md={6} sm={6} className="mt-1">
+                    <Col lg={5} md={5} sm={5} className="mt-1">
                       <Checkbox
                         checked={addCountryMain.IsCountryActive}
                         onChange={handleChange}
@@ -733,7 +739,7 @@ const CountryMain = () => {
                       />
                     </Col>
 
-                    <Col lg={6} md={6} sm={6} className="btn-class-Country">
+                    <Col lg={7} md={7} sm={7} className="btn-class-Country">
                       <Button
                         icon={<i className="icon-add-circle icon-space"></i>}
                         text={addUpdateCheckFlag ? t("Update") : t("Add")}

@@ -23,8 +23,8 @@ const BranchScreen = () => {
   const countryID = Number(searchParams.get("countryID"));
   const loadingFlag = useSelector((state) => state.Loader.Loading);
   const currentLanguage = localStorage.getItem("i18nextLng");
-  const searchParamsCountry = new URLSearchParams(location.search);
-  const CountryID = Number(searchParamsCountry.get("countryID"));
+  // const searchParamsCountry = new URLSearchParams(location.search);
+  // const countryID = Number(searchParamsCountry.get("countryID"));
 
   // To get Country List in dropdown
   const getCountryListData = useSelector(
@@ -44,13 +44,12 @@ const BranchScreen = () => {
   //To get City List
   const cityList = useSelector((state) => state.admin.cityList);
 
+  const [isInitialRender, setIsInitialRender] = useState(true);
+
   //States for Storing Country Drop down
   const [countryOptionEnglish, setCountryOptionEnglish] = useState([]);
   const [countryOptionArabic, setCountryOptionArabic] = useState([]);
-  const [countryOptionValue, setCountryOptionValue] = useState({
-    value: 1,
-    label: "",
-  });
+  const [countryOptionValue, setCountryOptionValue] = useState(null);
 
   //States for storing Services Dropdown
   const [servicesOptionsEnglish, setServicesOptionsEnglish] = useState([]);
@@ -75,16 +74,16 @@ const BranchScreen = () => {
   }, []);
 
   useEffect(() => {
-    if (CountryID !== null && CountryID !== 0) {
-      dispatch(getCountryCitiesApi(t, navigate, loadingFlag, 1, CountryID));
-    } else if (countryOptionValue.value !== 0) {
+    if (countryID !== null && countryID !== 0) {
+      dispatch(getCountryCitiesApi(t, navigate, loadingFlag, 1, countryID));
+    } else if (countryOptionValue?.value !== 0) {
       dispatch(
         getCountryCitiesApi(
           t,
           navigate,
           loadingFlag,
           1,
-          countryOptionValue.value
+          countryOptionValue?.value
         )
       );
     }
@@ -110,12 +109,12 @@ const BranchScreen = () => {
         let data;
         if (currentLanguage === "en") {
           if (
-            CountryID !== null &&
-            CountryID !== undefined &&
-            CountryID !== 0
+            countryID !== null &&
+            countryID !== undefined &&
+            countryID !== 0
           ) {
             const foundCountry = getCountryListData.find(
-              (country) => country.countryID === CountryID
+              (country) => country.countryID === countryID
             );
 
             console.log(foundCountry, "foundCountry");
@@ -128,25 +127,26 @@ const BranchScreen = () => {
               };
             } else {
               data = {
-                value: CountryID,
+                value: countryID,
                 label: t("No Country Found"),
               };
             }
-          } else {
-            data = {
-              value: getCountryListData[0].countryID,
-              label: getCountryListData[0].countryNameEnglish,
-            };
           }
-          setCountryOptionValue(data);
+          // else {
+          //   data = {
+          //     value: getCountryListData[0].countryID,
+          //     label: getCountryListData[0].countryNameEnglish,
+          //   };
+          // }
+          // setCountryOptionValue(data);
         } else {
           if (
-            CountryID !== null &&
-            CountryID !== undefined &&
-            CountryID !== 0
+            countryID !== null &&
+            countryID !== undefined &&
+            countryID !== 0
           ) {
             const foundCity = getCountryListData.find(
-              (country) => country.country === CountryID
+              (country) => country.country === countryID
             );
             if (foundCity) {
               data = {
@@ -155,16 +155,17 @@ const BranchScreen = () => {
               };
             } else {
               data = {
-                value: CountryID,
+                value: countryID,
                 label: t("No Country Found"),
               };
             }
-          } else {
-            data = {
-              value: getCountryListData[0].countryID,
-              label: getCountryListData[0].countryNameArabic, // Change to Arabic name for the first country in the list
-            };
           }
+          //  else {
+          //   data = {
+          //     value: getCountryListData[0].countryID,
+          //     label: getCountryListData[0].countryNameArabic, // Change to Arabic name for the first country in the list
+          //   };
+          // }
           setCountryOptionValue(data);
         }
       } else {
@@ -177,6 +178,7 @@ const BranchScreen = () => {
   }, [getCountryListData, currentLanguage]);
 
   // show Services in Services dropdown
+
   useEffect(() => {
     if (getGlobalServiceData !== null && Array.isArray(getGlobalServiceData)) {
       setServicesOptionsEnglish(
@@ -247,14 +249,22 @@ const BranchScreen = () => {
   //handle Search button hit \
 
   const handleSearchhit = () => {
-    let data = {
-      CountryID: Number(countryOptionValue.value),
-      ServiceID: Number(servicesOptionsValue),
-      CityID: Number(cityOptionsValue),
-    };
-    dispatch(
-      getAllCityBranchWiseServicesMainApi(t, navigate, loadingFlag, data)
-    );
+    if (
+      countryOptionValue !== null &&
+      servicesOptionsValue !== null &&
+      cityOptionsValue !== null
+    ) {
+      let data = {
+        countryID: Number(countryOptionValue?.value),
+        ServiceID: Number(servicesOptionsValue),
+        CityID: Number(cityOptionsValue),
+      };
+      dispatch(
+        getAllCityBranchWiseServicesMainApi(t, navigate, loadingFlag, data)
+      );
+      setIsInitialRender(false);
+    } else {
+    }
   };
 
   // data for the table
@@ -395,7 +405,9 @@ const BranchScreen = () => {
                     <label className="text-labels">{t("City")}</label>
                     <Select
                       isSearchable={true}
-                      isDisabled={countryOptionValue === null ? true : false}
+                      isDisabled={
+                        !countryOptionValue || countryOptionValue.value === 0
+                      }
                       className="select-dropdown-all"
                       options={
                         currentLanguage === "en"
@@ -423,7 +435,9 @@ const BranchScreen = () => {
 
               <Row className="mt-2">
                 <Col lg={12} md={12} sm={12}>
-                  <Table rows={rows} column={columns} pagination={false} />
+                  {isInitialRender ? null : (
+                    <Table rows={rows} column={columns} pagination={false} />
+                  )}
                 </Col>
               </Row>
             </Paper>

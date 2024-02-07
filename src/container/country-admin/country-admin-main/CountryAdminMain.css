@@ -13,7 +13,7 @@
 
 .btn-class-CountryAdmin {
   display: flex !important;
-  justify-content: flex-end !important;
+  justify-content: start !important;
   align-items: center !important;
   gap: 5px !important;
 }

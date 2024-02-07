@@ -23,10 +23,12 @@ import {
   updateGlobalServiceFail,
   updateGlobalServiceMainApi,
   getServiceWiseCountryMainApi,
+  updateServiceCountryMainApi,
 } from "../../../store/actions/Admin_action";
 import { loader_Actions } from "../../../store/actions/Loader_action";
 import { regexOnlyForNumberNCharacters } from "../../../commen/functions/regex";
 import { Switch } from "antd";
+import { capitalizeKeysInArray } from "../../../commen/functions/utils.js";
 
 const GlobalService = () => {
   const { t } = useTranslation();
@@ -71,6 +73,7 @@ const GlobalService = () => {
 
   // state for countryWiseRow upadte table
   const [countryWiseRow, setCountryWiseRow] = useState([]);
+  console.log(countryWiseRow, "countryWiseRowcountryWiseRow");
 
   //state for show notifications through response
   const [globalNotification, setGlobalNotification] = useState({
@@ -144,6 +147,15 @@ const GlobalService = () => {
     setGlobalModal(true);
   };
 
+  //Revert handler for Service Country Screen
+  const revertHandler = () => {
+    try {
+      if (getServiceWiseCountryData !== null) {
+        setCountryWiseRow(getServiceWiseCountryData);
+      }
+    } catch {}
+  };
+
   // open service country screen component
   const openServiceCountryScreenComponent = async (record) => {
     localStorage.setItem("serviceID", record.serviceID);
@@ -157,27 +169,31 @@ const GlobalService = () => {
   };
 
   //open city screen page
-  const openClickCityScreen = () => {
+  const openClickCityScreen = (record) => {
+    localStorage.setItem("serviceID", record.serviceID);
     localStorage.setItem("selectedKeys", ["23"]);
-    navigate("/GlobalAdmin/City");
+    navigate(`/GlobalAdmin/City?serviceID=${record.serviceID}`);
   };
 
   //open branch screen page
-  const openClickBranchScreen = () => {
+  const openClickBranchScreen = (record) => {
+    localStorage.setItem("serviceID", record.serviceID);
     localStorage.setItem("selectedKeys", ["24"]);
-    navigate("/GlobalAdmin/Branch");
+    navigate(`/GlobalAdmin/Branch?serviceID=${record.serviceID}`);
   };
 
   //open branch Counters page
-  const openClickCountersScreen = () => {
+  const openClickCountersScreen = (record) => {
+    localStorage.setItem("serviceID", record.serviceID);
     localStorage.setItem("selectedKeys", ["27"]);
-    navigate("/GlobalAdmin/Counters");
+    navigate(`/GlobalAdmin/Counters?serviceID=${record.serviceID}`);
   };
 
   //open branch shifts page
-  const openClickshiftsScreen = () => {
+  const openClickshiftsScreen = (record) => {
+    localStorage.setItem("serviceID", record.serviceID);
     localStorage.setItem("selectedKeys", ["26"]);
-    navigate("/GlobalAdmin/Shifts");
+    navigate(`/GlobalAdmin/Shifts?serviceID=${record.serviceID}`);
   };
 
   const handleCheckboxChange = (e) => {
@@ -293,25 +309,25 @@ const GlobalService = () => {
               className="icon-location icon-EDT-DLT-color"
               title={t("City")}
               aria-label={t("City")}
-              onClick={openClickCityScreen}
+              onClick={() => openClickCityScreen(record)}
             ></i>
             <i
               className="icon-branch icon-EDT-DLT-color"
               title={t("Branch")}
               aria-label={t("Branch")}
-              onClick={openClickBranchScreen}
+              onClick={() => openClickBranchScreen(record)}
             ></i>
             <i
               className="icon-counter icon-EDT-DLT-color"
               title={t("Counter")}
               aria-label={t("Counter")}
-              onClick={openClickCountersScreen}
+              onClick={() => openClickCountersScreen(record)}
             ></i>
             <i
               className="icon-repeat icon-EDT-DLT-color"
               title={t("Shifts")}
               aria-label={t("Shifts")}
-              onClick={openClickshiftsScreen}
+              onClick={() => openClickshiftsScreen(record)}
             ></i>
           </span>
         </>
@@ -341,7 +357,16 @@ const GlobalService = () => {
       width: "200px",
       render: (text, record) => (
         <span>
-          <Switch checked={text} />
+          <Switch
+            checked={text}
+            onChange={(value) =>
+              onChangeHandlerForServiceCountry(
+                "branchAvailability",
+                value,
+                record
+              )
+            }
+          />
         </span>
       ),
     },
@@ -352,7 +377,16 @@ const GlobalService = () => {
       width: "200px",
       render: (text, record) => (
         <span>
-          <Switch checked={text} />
+          <Switch
+            checked={text}
+            onChange={(value) =>
+              onChangeHandlerForServiceCountry(
+                "homeAvailability",
+                value,
+                record
+              )
+            }
+          />
         </span>
       ),
     },
@@ -491,6 +525,63 @@ const GlobalService = () => {
     } catch {}
   };
 
+  // handle change for toggle in Service COuntry Screen
+  const onChangeHandlerForServiceCountry = (name, value, record) => {
+    try {
+      if (name === "branchAvailability") {
+        setCountryWiseRow(
+          countryWiseRow.map((service) => {
+            console.log(countryWiseRow, "countryWiseRowcountryWiseRow");
+            if (
+              service.serviceCountry.countryID ===
+              record.serviceCountry.countryID
+            ) {
+              return {
+                ...service,
+                branchAvailability: value,
+              };
+            }
+            return service;
+          })
+        );
+      } else if (name === "homeAvailability") {
+        setCountryWiseRow(
+          countryWiseRow.map((service) => {
+            if (
+              service.serviceCountry.countryID ===
+              record.serviceCountry.countryID
+            ) {
+              return {
+                ...service,
+                homeAvailability: value,
+              };
+            }
+            return service;
+          })
+        );
+      }
+    } catch {}
+  };
+
+  const saveServiceCountryHandler = () => {
+    try {
+      let convertData = capitalizeKeysInArray(countryWiseRow);
+      const newArray = convertData.map((item) => ({
+        CountryID: item.ServiceCountry.CountryID,
+        BranchAvailability: item.BranchAvailability,
+        HomeAvailability: item.HomeAvailability,
+      }));
+
+      let data = {
+        ServiceID: Number(localStorage.getItem("serviceID")),
+        CountryServices: newArray,
+      };
+      dispatch(updateServiceCountryMainApi(t, navigate, loadingFlag, data));
+    } catch (error) {
+      console.log("Error", error);
+    }
+  };
+
   useEffect(() => {
     if (
       responseMessage !== null &&
@@ -539,17 +630,19 @@ const GlobalService = () => {
           }),
           3000
         );
-      } else if (responseMessage === t("something_went_wrong")) {
-        setTimeout(
-          setGlobalNotification({
-            ...globalNotification,
-            notificationFlag: true,
-            notificationMessage: t("something_went_wrong"),
-            severity: "error",
-          }),
-          3000
-        );
-      } else if (
+      }
+      // else if (responseMessage === t("something_went_wrong")) {
+      //   setTimeout(
+      //     setGlobalNotification({
+      //       ...globalNotification,
+      //       notificationFlag: true,
+      //       notificationMessage: t("something_went_wrong"),
+      //       severity: "error",
+      //     }),
+      //     3000
+      //   );
+      // }
+      else if (
         responseMessage ===
         t("Admin_AdminServiceManager_UpdateGlobalService_01")
       ) {
@@ -639,6 +732,36 @@ const GlobalService = () => {
           }),
           3000
         );
+      } else if (
+        responseMessage ===
+        t("Admin_AdminServiceManager_UpdateServiceWiseCountryList_01")
+      ) {
+        setTimeout(
+          setGlobalNotification({
+            ...globalNotification,
+            notificationFlag: true,
+            notificationMessage: t(
+              "Admin_AdminServiceManager_UpdateServiceWiseCountryList_01"
+            ),
+            severity: "success",
+          }),
+          3000
+        );
+      } else if (
+        responseMessage ===
+        t("Admin_AdminServiceManager_UpdateServiceWiseCountryList_02")
+      ) {
+        setTimeout(
+          setGlobalNotification({
+            ...globalNotification,
+            notificationFlag: true,
+            notificationMessage: t(
+              "Admin_AdminServiceManager_UpdateServiceWiseCountryList_02"
+            ),
+            severity: "error",
+          }),
+          3000
+        );
       }
     }
     dispatch(clearResponseMessageAdmin(null));
@@ -653,6 +776,8 @@ const GlobalService = () => {
               goBackServiceCountryButton={goBackServiceCountryButton}
               columnsWiseCountry={columnsWiseCountry}
               countryWiseRow={countryWiseRow}
+              saveServiceCountryHandler={saveServiceCountryHandler}
+              revertHandler={revertHandler}
             />
           </>
         ) : (

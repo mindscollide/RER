@@ -1,7 +1,12 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Row, Col } from "react-bootstrap";
 import "./CountryServiceScreenComponent.css";
-import { Paper, Table, Button } from "../../../components/elements";
+import {
+  Paper,
+  Table,
+  Button,
+  Notification,
+} from "../../../components/elements";
 import { Switch } from "antd";
 import { useTranslation } from "react-i18next";
 
@@ -9,6 +14,8 @@ const CountryServiceScreenComponent = ({
   goBackServiceCountryButton,
   columnsWiseCountry,
   countryWiseRow,
+  saveServiceCountryHandler,
+  revertHandler,
 }) => {
   const { t } = useTranslation();
 
@@ -52,10 +59,12 @@ const CountryServiceScreenComponent = ({
                   <Button
                     icon={<i className="icon-repeat icon-space"></i>}
                     text={t("Revert")}
+                    onClick={revertHandler}
                     className="revert-btn-Country-Service-Screen"
                   />
                   <Button
                     icon={<i className="icon-save icon-space"></i>}
+                    onClick={saveServiceCountryHandler}
                     text={t("Save")}
                     className="save-btn-Country-Service-Screen"
                   />
