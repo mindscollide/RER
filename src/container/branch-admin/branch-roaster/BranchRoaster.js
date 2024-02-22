@@ -44,6 +44,7 @@ const BranchRoaster = () => {
   const globalBranchServicesOptions = useSelector(
     (state) => state.admin.branchServicesData
   );
+  console.log(globalBranchServicesOptions, "globalBranchServicesOptions");
 
   //Response Message Reducer
   const responseMessage = useSelector(
@@ -239,16 +240,21 @@ const BranchRoaster = () => {
       globalBranchServicesOptions !== undefined &&
       globalBranchServicesOptions.length !== 0
     ) {
+      // Filter options based on isServiceAvailableAtBranch
+      const filteredOptions = globalBranchServicesOptions.filter(
+        (item) => item.isServiceAvailableAtBranch
+      );
+
       if (currentLanguage === "en") {
         setOptionsServices(
-          globalBranchServicesOptions.map((item) => ({
+          filteredOptions.map((item) => ({
             value: item.branchServiceID,
             label: item.branchService.serviceNameEnglish,
           }))
         );
       } else {
         setOptionsServices(
-          globalBranchServicesOptions.map((item) => ({
+          filteredOptions.map((item) => ({
             value: item.branchServiceID,
             label: item.branchService.serviceNameArabic,
           }))

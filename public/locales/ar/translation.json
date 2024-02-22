@@ -310,12 +310,12 @@
   "Edit": "يحرر",
   "Delete": "يمسح",
   "Day": "يوم",
-  "Admin_AdminServiceManager_GetAllCityBranchShiftCounterServices_01": "City Branch Shift Service Counter List Found",
-  "Admin_AdminServiceManager_GetAllCityBranchShiftCounterServices_02": "No City Branch Shift Service Counter Available",
-  "Admin_AdminServiceManager_GetServiceWiseCountryList_01": "Services Availability Countries List found",
-  "Admin_AdminServiceManager_GetServiceWiseCountryList_02": "Services Availability Countries List Not Found",
-  "Admin_AdminServiceManager_AddBranchRoasterEntry_07": "Roaster can be added after Branch Service Pre Booking and Advance Days",
-  "Admin_AdminServiceManager_AddBranchRoasterEntry_08": "Duplicate Record Cannot be Created",
-  "Admin_AdminServiceManager_UpdateServiceWiseCountryList_01": "Service Wise Country List Updated",
-  "Admin_AdminServiceManager_UpdateServiceWiseCountryList_02": "Service Wise Country List Not Updated"
+  "Admin_AdminServiceManager_GetAllCityBranchShiftCounterServices_01": "تم العثور على قائمة عدادات خدمة التحول في فرع المدينة",
+  "Admin_AdminServiceManager_GetAllCityBranchShiftCounterServices_02": "لا يتوفر عداد خدمة التحول في فرع المدينة",
+  "Admin_AdminServiceManager_GetServiceWiseCountryList_01": "تم العثور على قائمة البلدان التي توفرت فيها الخدمات",
+  "Admin_AdminServiceManager_GetServiceWiseCountryList_02": "لم يتم العثور على قائمة البلدان التي توفرت فيها الخدمات",
+  "Admin_AdminServiceManager_AddBranchRoasterEntry_07": "يمكن إضافة المحمصة بعد الحجز المسبق لخدمة الفرع والأيام المسبقة",
+  "Admin_AdminServiceManager_AddBranchRoasterEntry_08": "لا يمكن إنشاء سجل مكرر",
+  "Admin_AdminServiceManager_UpdateServiceWiseCountryList_01": "تم تحديث قائمة الدول الحكيمة للخدمة",
+  "Admin_AdminServiceManager_UpdateServiceWiseCountryList_02": "لم يتم تحديث قائمة الدول الحكيمة للخدمة "
 }
